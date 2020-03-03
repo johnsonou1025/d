@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>map direction game</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/gameScript.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <button class="question-button">Play</button>
+    <!-- 產出亂數 -->
+    <p class="question-number"></p>
+    <!-- 數字與圖向配對 -->
+    <table class="number-list">
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td><i class="icon-1"></i></td>
+            <td><i class="icon-2"></i></td>
+            <td><i class="icon-3"></i></td>
+            <td><i class="icon-4"></i></td>
+            <td><i class="icon-5"></i></td>
+            <td><i class="icon-6"></i></td>
+            <td><i class="icon-7"></i></td>
+        </tr>
+    </table>
+    <!-- 將亂數產生的地圖圖向化 -->
+    <div class="map-wrap">
+        <i class="icon-1 start"></i>
+    </div>
+    <!-- 答案點擊區 -->
+    <div class="answer-wrap">
+        <button class="icon-1" data-num="1"></button>
+        <button class="icon-2" data-num="2"></button>
+        <button class="icon-3" data-num="3"></button>
+        <button class="icon-4" data-num="4"></button>
+        <button class="icon-5" data-num="5"></button>
+        <button class="icon-6" data-num="6"></button>
+        <button class="icon-7" data-num="7"></button>
+    </div>
+    <!-- 點擊按鈕產生數字 -->
+    <p class="answer-number"></p>
+    <!-- 比對是否正確 -->
+    <button class="answer-match">Play</button>
+    <p class="answer-result"></p>
+</body>
+
+</html>
