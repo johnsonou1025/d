@@ -12,7 +12,8 @@ $(function() {
     });
     // step2 輸入答案
     var ans = new Array();
-    $(".answer-wrap button").click(function() {
+    $(".direction-wrap button").click(function() {
+        $(".answer-wrap .answer-direction").append($(this).clone());
         var clickNum = $(this).attr("data-num");
         ans.push(clickNum);
         $(".answer-number").text(ans);
@@ -21,13 +22,13 @@ $(function() {
     var walk;
     $(".answer-match").click(function() {
         if (que.join("") == ans.join("")) {
-            $(".answer-result").text("good");
+            $(".answer-result").text("你很利害喔!");
             // 正確則執行動畫
             $(".start").addClass("active");
             walk = setInterval(startWalk, 1000);
         } else {
             // 錯誤清空答案
-            $(".answer-result").text("try again");
+            $(".answer-result").text("差一點，再試試看～");
             resetAnswer();
         }
     });
@@ -42,6 +43,7 @@ $(function() {
         que[0] = 1;
         $(".map-wrap .start").empty();
         $(".map-wrap i").removeClass("active");
+        $(".answer-wrap .answer-direction").empty();
     }
     // 製作地圖
     function makeQue() {
@@ -86,6 +88,9 @@ $(function() {
         }
         // 將地圖圖像化
         addMap(num);
+        $(".map-wrap i")
+            .last()
+            .append("<i class='icon-end'></i>");
         // 將地圖數字化
         $(".question-number").text(que);
     }
