@@ -3,6 +3,7 @@ $(function() {
     var que = new Array();
     // step1 點擊啟動遊戲按鈕隨機產生路線
     $(".question-button").click(function() {
+        $(".popup").removeClass("show");
         // 舊地圖清除
         reset();
         // 製作地圖
@@ -30,10 +31,18 @@ $(function() {
             // 錯誤清空答案
             $(".answer-result").text("差一點，再試試看～");
             resetAnswer();
+            $("#answerWrong").addClass("show");
         }
     });
+    $(".tryAgain").click(function() {
+        $(".popup").removeClass("show");
+    })
+    $(".answer-reset").click(function() {
+        resetAnswer();
+    })
     // 清空答案
     function resetAnswer() {
+        $(".answer-wrap .answer-direction").empty();
         $(".answer-number").empty();
         ans.length = 0;
     }
@@ -111,6 +120,7 @@ $(function() {
             .children("i").length <= 0
         ) {
             clearInterval(walk);
+            $("#answerCorrect").addClass("show");
             console.log("stop");
         } else {
             $("i.active")
@@ -125,6 +135,33 @@ $(function() {
                 .last()
                 .children("i").length
             );
+        }
+    }
+
+    // 全螢幕
+    var elem = document.documentElement;
+
+    function openFullscreen() {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+        }
+    }
+
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
         }
     }
 })

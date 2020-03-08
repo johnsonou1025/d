@@ -38,6 +38,7 @@
         </div>
         <!-- 答案點擊區 -->
         <div class="direction-wrap">
+            <div onclick="openFullscreen();">W</div>
             <button class="direction-icon-1" data-num="1"></button>
             <button class="direction-icon-2" data-num="2"></button>
             <button class="direction-icon-3" data-num="3"></button>
@@ -46,19 +47,80 @@
             <button class="direction-icon-6" data-num="6"></button>
             <button class="direction-icon-7" data-num="7"></button>
         </div>
+        <script>
+            // 全螢幕
+    var elem = document.documentElement;
+
+    function openFullscreen() {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+        }
+    }
+
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+        </script>
         <div class="answer-wrap">
             <div class="answer-direction"></div>
-            <!-- 比對是否正確 -->
-            <button class="answer-match">開始走路</button>
+            <div class="answer-button">
+                <!-- 比對是否正確 -->
+                <button class="answer-match">GO</button>
+                <!-- 重新輸入答案 -->
+                <button class="answer-reset">X</button>
+            </div>
         </div>
         <!-- 點擊按鈕產生數字 -->
-        <p class="answer-number" style="display: none;"></p>
-        <!-- 產出亂數 -->
-        <button class="question-button">製作地圖</button>
+        <h3 class="answer-number" style="display: none;"></h3>
         <!-- question button 產生的亂數 -->
         <p class="question-number" style="display: none;"></p>
         <!-- 比對結果 你很利害喔/不對喔～再試試看 -->
-        <p class="answer-result"></p>
+        <p class="answer-result" style="display: none;"></p>
+    </div>
+    <!-- 彈跳視窗 -->
+    <!-- 第一次 -->
+    <div class="popup show" id="startGame">
+        <div class="popup-content">
+            <h3>
+                開始你的地圖遊戲囉~
+            </h3>
+            <!-- 產出亂數 -->
+            <button class="btn question-button">開始</button>
+        </div>
+    </div>
+    <!-- 答對 -->
+    <div class="popup" id="answerCorrect">
+        <div class="popup-content">
+            <h3>
+                你很利害喔！
+            </h3>
+            <!-- 產出亂數 -->
+            <button class="btn question-button">下一關</button>
+        </div>
+    </div>
+    <!-- 答錯 -->
+    <div class="popup" id="answerWrong">
+        <div class="popup-content">
+            <!-- 比對結果 你很利害喔/不對喔～再試試看 -->
+            <h3>
+                好像不對喔～
+            </h3>
+            <button class="btn tryAgain">再試試看</button>
+        </div>
     </div>
 </body>
 

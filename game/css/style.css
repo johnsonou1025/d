@@ -12,6 +12,15 @@ h3 {
     font-weight: bold;
 }
 
+.btn {
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: none;
+    background: #1DB954;
+    font-size: 20px;
+    color: #fff;
+}
+
 .game-wrap {
     position: relative;
     width: 1024px;
@@ -39,17 +48,6 @@ p {
     line-height: 40px;
 }
 
-.question-button {
-    height: 44px;
-    line-height: 44px;
-    padding: 0 40px;
-    margin-top: 40px;
-    border-radius: 22px;
-    border: none;
-    background: #1DB954;
-    font-size: 14px;
-    color: #fff;
-}
 
 .map-wrap {
     width: 1024px;
@@ -73,10 +71,18 @@ p {
     background: url(../images/rabbit.png) no-repeat center center;
     animation: 1s forwards linear;
 }
-/*.map-wrap .active.end:after{
+
+.icon-1.start:after {
+    content: "";
+    position: absolute;
     top: 50%;
-    left: 50%;
-}*/
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 146px;
+    height: 290px;
+    border-radius: 5px;
+    background: url(../images/rabbit.png) no-repeat center center;
+}
 
 .icon-1.active:after {
     animation-name: move1;
@@ -105,19 +111,22 @@ p {
 .icon-7.active:after {
     animation-name: move7;
 }
-.icon-1>.icon-end.active:after{
+
+.icon-1>.icon-end.active:after {
     top: 88px;
     left: 26px;
 }
-    
-.icon-4>.icon-end.active:after{
+
+.icon-4>.icon-end.active:after {
     top: 140px;
     left: 124px;
 }
-.icon-6>.icon-end.active:after{
+
+.icon-6>.icon-end.active:after {
     top: 60px;
     left: 119px;
 }
+
 @keyframes move1 {
     0% {
         top: 50%;
@@ -271,22 +280,25 @@ p {
 .icon-7 {
     top: 100%;
 }
-.map-wrap .icon-end{
+
+.map-wrap .icon-end {
     width: 250px;
     height: 140px;
     background-image: url(../images/home.png);
     background-size: 100% 100%;
 }
-.map-wrap .icon-1>.icon-end{
+
+.map-wrap .icon-1>.icon-end {
     left: 84px;
     bottom: 38px;
 }
-    
-.map-wrap .icon-4>.icon-end{
+
+.map-wrap .icon-4>.icon-end {
     bottom: 140px;
     right: 70px;
 }
-.map-wrap .icon-6>.icon-end{
+
+.map-wrap .icon-6>.icon-end {
     right: 65px;
     top: 40px;
 }
@@ -312,11 +324,14 @@ p {
     position: relative;
     width: 80px;
     height: 80px;
-    border: none;
+    border:5px solid #fff;
+    border-radius: 100%;
     background: center center no-repeat;
     background-size: cover;
 }
-
+[class*="direction-icon-"]+[class*="direction-icon-"]{
+    margin-top: 5px;
+}
 .direction-icon-1 {
     background-image: url(../images/1.png);
 }
@@ -344,8 +359,9 @@ p {
 .direction-icon-7 {
     background-image: url(../images/7.png);
 }
+
 /*輸入答案*/
-.answer-wrap{
+.answer-wrap {
     position: absolute;
     top: 0;
     right: 0;
@@ -353,16 +369,51 @@ p {
     background: #f8b62a;
     text-align: center;
 }
-.answer-match {
+.answer-button button{
     position: absolute;
     top: 100%;
     right: 6px;
     height: 80px;
     width: 80px;
-    line-height: 80px;
+    margin-top: 5px;
+    border:5px solid #fff;
     border-radius: 40px;
-    border: none;
-    background: #1DB954;
-    font-size: 14px;
-    color: #fff;
+    background: #F00000;
+    font-size: 38px;
+    font-weight: bold;
+    color:#fff;
+    line-height: 70px;
+    text-align: center;
+}
+.answer-button button+button{
+    margin-top: 90px;
+}
+
+
+/*彈窗樣式*/
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 240px;
+    padding: 40px 20px;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.popup.show {
+    display: block;
 }
