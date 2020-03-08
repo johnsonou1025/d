@@ -304,11 +304,21 @@ p {
 }
 
 
-
-
-
-
 /*方向按鈕*/
+.fullscreen-btn{
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+    margin-bottom: 5px;
+    border:5px solid #fff;
+    border-radius: 40px;
+    background: transparent;
+    font-size: 38px;
+    font-weight: bold;
+    color:#fff;
+    line-height: 70px;
+    text-align: center;
+}
 .direction-wrap {
     position: absolute;
     top: 0;
@@ -383,7 +393,7 @@ p {
     font-weight: bold;
     color:#fff;
     line-height: 70px;
-    text-align: center;
+    /*text-align: center;*/
 }
 .answer-button button+button{
     margin-top: 90px;
