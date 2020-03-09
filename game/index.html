@@ -50,7 +50,10 @@
         <script>
             // 全螢幕
     var elem = document.documentElement;
-
+        elem.mozRequestFullScreen();
+        elem.webkitRequestFullscreen();
+        elem.msRequestFullscreen();
+        elem.requestFullscreen();
     function openFullscreen() {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
