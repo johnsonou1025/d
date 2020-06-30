@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" />
+<meta id="viewport" name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.01, user-scalable=1">
+<meta content=”black” name=”apple-mobile-web-app-status-bar-style” />
+<meta content=”yes” name=”apple-mobile-web-app-capable” />
+<title>LETOU</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="styles/style.css" rel="stylesheet" type="text/css" /><!--SVG CSS-->
+<link href="styles/custom.css" rel="stylesheet" type="text/css" /><!--LETOU CSS-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/min/custom-min.js"></script>
+
+</head>
+	<body>
+
+		<div class="container-fluid">
+
+			<!-- Header 文字版開始 -->
+	    	<div class="row">
+	    		<div class="col-xs-12">
+	    			<div class="header-warp">
+	    				<div class="header-word">
+	    					<h1>交易纪录</h1>
+	    				</div>
+						<div class="nav-back-warp">
+							<a href="index.html">
+								<p>返回</p>
+							</a>
+						</div>
+                        <div class="nav-to-warp">
+                            <a href="bill.html">
+                                <p>取消</p>
+                            </a>
+                        </div>
+	    			</div>
+	    		</div>
+	    	</div>
+	        <!-- Header 文字版結束 -->
+
+			<!-- Header 灰底開始 -->
+	        <div class="row">
+	        	<div class="col-xs-12">
+	        		<div class="header-gray-bg2"></div>
+	        	</div>
+	        </div>
+	        <!-- Header 灰底結束 -->
+		<div class="list-bg">
+
+	        <!--filter開始 -->			
+	        <div class="row">
+            <div class="col-xs-12">
+             <form action="#" class="m-register">
+                <!-- 選擇時間開始 -->
+                <!-- title開始 -->
+        		<div class="col-xs-12">
+        			<div class="gray-title">时间</div>
+        		</div>
+	            <!-- title結束 -->
+    			<div class="col-xs-12">
+        			<div class="list-box">
+                    <ul class="filter-block">
+                    <li> 
+                    <input type="radio" id="radio-time01" name="filter-time" checked/>
+                    <label for="radio-time01" class="label-filter-name">
+                    <span>24小時</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-time02" name="filter-time" />
+                    <label for="radio-time02" class="label-filter-name">
+                    <span>48小時</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-time03" name="filter-time" />
+                    <label for="radio-time03" class="label-filter-name">
+                         <span>1周</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-time04" name="filter-time"/>
+                    <label for="radio-time04" class="label-filter-name">
+                         <span>1个月</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-time05" name="filter-time" />
+                    <label for="radio-time05" class="label-filter-name">
+                         <span>自订</span>
+                        </label></li></ul>
+        			</div><!-- list-box -->
+        		<!-- 欄位分隔線開始 -->
+    			<div class="field-endline"></div>
+    			<!-- 欄位分隔線結束 -->
+        		</div>
+                <!-- 選擇時間結束 -->
+							
+    			 <!-- 選擇分類開始 -->
+                <!-- title開始 -->
+                <div class="col-xs-12">
+                    <div class="gray-title">分类</div>
+                </div>
+                <!-- title結束 -->
+                <div class="col-xs-12">
+                    <div class="list-box">
+                    <ul class="filter-block">
+                    <li> 
+                    <input type="radio" id="radio-type01" name="filter-type" checked/>
+                    <label for="radio-type01" class="label-filter-name">
+                    <span>全部</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-type02" name="filter-type" />
+                    <label for="radio-type02" class="label-filter-name">
+                    <span>存款</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-type03" name="filter-type" />
+                    <label for="radio-type03" class="label-filter-name">
+                         <span>提款</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-type04" name="filter-type"/>
+                    <label for="radio-type04" class="label-filter-name">
+                         <span>红利</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-type05" name="filter-type" />
+                    <label for="radio-type05" class="label-filter-name">
+                         <span>调账</span>
+                        </label></li></ul>
+                    <ul class="filter-block">
+                    <li> 
+                    <input type="radio" id="radio-type06" name="filter-type" />
+                    <label for="radio-type06" class="label-filter-name">
+                    <span>体育</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-type07" name="filter-type" />
+                    <label for="radio-type07" class="label-filter-name">
+                    <span>娱乐场</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-type08" name="filter-type" />
+                    <label for="radio-type08" class="label-filter-name">
+                         <span>小游戏</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-type09" name="filter-type"/>
+                    <label for="radio-type09" class="label-filter-name">
+                         <span>彩票</span>
+                        </label></li>
+                    </ul>
+                    </div><!-- list-box -->
+                <!-- 欄位分隔線開始 -->
+                <div class="field-endline"></div>
+                <!-- 欄位分隔線結束 -->
+                </div>
+                <!-- 選擇分類結束 -->
+
+
+                <!-- 選擇狀態開始 -->
+                <!-- title開始 -->
+                <div class="col-xs-12">
+                    <div class="gray-title">状态</div>
+                </div>
+                <!-- title結束 -->
+                <div class="col-xs-12">
+                    <div class="list-box">
+                    <ul class="filter-block">
+                    <li> 
+                    <input type="radio" id="radio-status01" name="filter-
+                    status" checked/>
+                    <label for="radio-status01" class="label-filter-name">
+                    <span>全部</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-status02" name="filter-
+                    status" />
+                    <label for="radio-status02" class="label-filter-name">
+                    <span>成功</span>
+                    </label></li>
+                    <li>
+                    <input type="radio" id="radio-status03" name="filter-
+                    status" />
+                    <label for="radio-status03" class="label-filter-name">
+                         <span>失败</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-status04" name="filter-
+                    status"/>
+                    <label for="radio-status04" class="label-filter-name">
+                         <span>未结算</span>
+                        </label></li>
+                    <li>
+                    <input type="radio" id="radio-status05" name="filter-
+                    status" />
+                    <label for="radio-status05" class="label-filter-name">
+                         <span>已取消</span>
+                        </label></li></ul>
+                    </div><!-- list-box -->
+                <!-- 欄位分隔線開始 -->
+                <div class="field-endline"></div>
+                <!-- 欄位分隔線結束 -->
+                </div>
+                <!-- 選擇狀態結束 -->
+
+			</div><!--filter結束 -->
+
+            <div class="col-xs-12">
+                <!-- 按鈕開始 -->
+                <div class="continue-next">
+                    <button type="button" class="button" id="continue-btn" onclick="location.href='bill.html'">确认</button>
+                </div>
+                <!-- 按鈕結束 -->
+            </div>
+
+					  
+		</form>
+        </div>		
+        </div><!-- list-bg結束 -->
+
+		</div><!-- container-fluid -->
+
+	</body>
+</html>

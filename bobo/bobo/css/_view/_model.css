@@ -1,0 +1,8 @@
+html, body {
+  height: 100%; }
+
+body {
+  font-family: "PingFang SC","Hiragino SansGB","Helvetica Neue","Microsoft Yahei", Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace", sans-serif, serif; }
+
+.ClearBoth {
+  clear: both; }

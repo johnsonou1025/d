@@ -1,0 +1,451 @@
+.gray-bg-h {
+    width: 100%;
+    height: 20px;
+    background-color: $c-F2;
+}
+
+.explan-link {
+    text-align: right;
+    line-height: 24px;
+    vertical-align: middle;
+    padding-left: 12px;
+}
+
+.explan-link a {
+    font-size: $f-13;
+    color: $c-3E;
+}
+
+// 置於底部的須知連結
+.bottom-link a {
+    margin: 1.7rem 1rem 0;
+    text-align: center;
+    display: block;
+    font-size: $f-14;
+    color: $c-3E;
+}
+
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label .select-bonus {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background-color:$c-DE;
+    margin:-1px 17px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+ 
+}
+input[type=radio]:checked+label .select-bonus{
+	background-color:$c-3E;
+	border:4px solid $c-DE;
+	transition:background-color .4s linear;
+}
+.money-bonus{
+	font-size:$f-16;
+    width:100%;
+}
+.bonus-number{
+	display:inline;
+	color:$c-FF;
+}
+.label.short-width{
+    width:4.2rem;
+}
+.select-box2 select{
+    width:100%;
+    border:0;
+    font-size: $f-16;
+    color:$c-66;
+    background-color: $c-wh;
+    padding-right:36px;
+    background-image:url("images/arrow.png");
+    background-size: 9px 18px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.chosen-single{
+display: block;
+}
+.chosen-single span{
+    display: block;
+    font-size:$f-16;
+    color:$c-66;
+}
+.flex-select-box{
+    position:relative;  
+}
+
+.flex-image{
+    display: inline-block;
+    background-image:url("images/bank-logo/bank01.png");
+    background-size:21px 21px;
+    width:21px;
+    height:21px;
+    vertical-align:middle;
+    border:hidden;
+}
+.arrow-image{
+    background-image:url("images/arrow.png");
+    background-size:9px 18px;
+    width:9px;
+    height:18px;
+    vertical-align:middle;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.bank-title{
+    width: 100%;
+    height:37px;
+    background-color: $c-F2;
+    font-size:$f-13;
+    color:$c-B1;
+    padding:0rem 1.5rem;
+    padding-top:1rem;
+}
+
+.list-box.bank div{
+    display:inline-block;
+    vertical-align:middle;
+}
+.bank-icon{
+    width: 21px;
+    height: 21px;
+    // margin:0 auto;
+    background-size: cover;
+}
+
+// for 迴圈套用圖片
+@for $i from 1 through 9{
+    .bank-icon.bank00#{$i}{
+        background-image: url('images/bank-logo/001-00#{$i}.png');
+    }
+}
+// for 迴圈套用圖片
+@for $i from 10 through 99{
+    .bank-icon.bank0#{$i}{
+        background-image: url('images/bank-logo/001-0#{$i}.png');
+    }
+}
+.bank-icon.bank000{
+        background-image: url('images/bank-logo/000-000.png');
+    }
+
+.bank-name{
+    font-size: $f-16;
+    padding-left:1rem;
+    color:$c-33;
+    line-height:21px;
+    vertical-align:middle;
+    // font-weight:600;
+}
+.order-time ,.order-number ,.countdown{
+    flex:1;
+    text-align: right;
+    vertical-align: middle;
+    font-size:$f-16;
+    color:$c-66;
+}
+.countdown{
+    color:$c-red;
+}
+
+.pay-title-warp{
+    width: 100%;
+    background-color: $c-F2;
+    text-align: center;
+    padding-top:9px;
+}
+.pay-title-warp h3{
+    font-size: $f-16;
+    color: $c-3E;
+    line-height: 2rem;
+    height:2rem;
+}
+.pay-title-warp i,.list-title i{
+    padding:0 5px;
+}
+.pay-money{
+    font-size:$f-36;
+    color:$c-33;
+}
+.pay-money i{
+    font-size:$f-20;
+}
+
+.list-bg{
+    background-color: $c-F2;
+    -webkit-box-align: center;
+    color: $c-6D;
+    text-align: left;
+}
+a.list-box-link{
+    display:block
+}
+.list-value.add-arrow{
+    border:0;
+    background-color: $c-wh;
+    padding-right:36px;
+    background-image:url("images/arrow.png");
+    background-size: 9px 18px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.explan-warp{
+    position: relative;
+    padding: 0;
+    background-color: $c-F9;
+    animation: .5s explan;
+    animation-fill-mode: forwards;
+    transform-origin: center top;
+    transition: all .5s;
+}
+.explan-warp:before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8.5px 8px 8.5px;
+    border-color: transparent transparent $c-F9 transparent;
+    top: 0;
+    right: 30px;
+    margin-top: -8px;
+    transition: all .5s;
+}
+.explan-warp p{
+    font-size: $f-14;
+    color: $c-B1;
+}
+
+//彈出選擇存款方式
+.overblack{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: $z-pop;
+    background-color: $c-black-60;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+.overblack:before{
+    content:"";
+    display: inline-block;
+    width: 0;
+    height: 100%;
+}
+.choose-pop-warp{
+    display: inline-block;
+    width: 100%;
+    background-color: $c-wh;
+    vertical-align: bottom;
+    animation-name: fadeInUp;
+    animation-duration: .5s;
+}
+.choose-pop-warp .choose-pop-title{
+    position: relative;
+    text-align: center;
+}
+.choose-pop-warp .choose-pop-title p{
+    display: inline-block;
+    font-size: $f-21;
+    color: $c-33;
+    padding: 15px 0;
+}
+.choose-pop-warp .choose-pop-title a{
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background-image: url('images/pop-close.png');
+    background-size: cover;
+    margin-top: 23px;
+    left: 20px;
+}
+.choose-pop-warp .choose-pop-title:after{
+    content:"";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: $c-D3;
+}
+.choose-list-warp li{
+    position: relative;
+    padding: 20px 20px 22px;
+}
+.choose-list-warp li:after{
+    content:"";
+    position: absolute;
+    display: block;
+    left: 20px;
+    right: 20px;
+    margin-top: 22px;
+    height: 1px;
+    background-color: $c-DF;
+}
+.choose-list-warp li:last-child:after{
+    content:"";
+    position: absolute;
+    display: block;
+    width: 100%;
+    left: 0px;
+    margin-top: 22px;
+    height: 1px;
+    background-color: $c-DF;
+}
+.choose-list-warp li a{
+    display: block;
+}
+.choose-list-warp li p{
+    font-size: $f-16;
+    color: $c-33;
+    width: 100%;
+}
+.choose-list-warp li i{
+    width: 7px;
+    height: 13px;
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    background-image: url('images/arrow.png');
+    background-size: cover;
+}
+.choose-pop-bottom{
+    padding-bottom: 20%;
+}
+
+.select-button-warp{
+    position: relative;
+    background-color: $c-wh;
+}
+.select-button-warp .select-button{
+    padding: 11px 15px;
+}
+.select-button .word{
+    display: inline-block;
+    font-size: $f-16;
+    color: $c-33;
+    vertical-align: middle;
+    width: 64px;
+}
+.select-button a{
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    right: 15px;
+    left: 100px;
+}
+.select-button a .select-button-inner{
+    text-align: right;
+}
+.select-button a .select-button-inner span{
+    display: inline-block;
+    font-size: $f-16;
+    color: $c-66;
+    vertical-align: middle;
+}
+.select-button a .select-button-inner i{
+    display: inline-block;
+    font-size: 1.2rem;
+    vertical-align: middle;
+    margin-left: 20px;
+    color: $c-B1;
+}
+.list-box .left{
+    display: inline-block;
+    width: 30%;
+    background-color: $c-blue;
+    vertical-align: middle;
+}
+.list-box .left .qrcode{
+    width: 100%;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.20), 0 1px 2px 0 rgba(0,0,0,0.20);
+    img{
+        width: 100%;
+        height: 100%;
+    }
+}
+.list-box .right{
+    display: inline-block;
+    width: 70%;
+    vertical-align: top;
+    .word{
+        font-size: $f-14;
+        padding: 0 0 0 10px;
+        color: $c-6D;
+    }
+}
+.list-box .center{
+    text-align: center;
+}
+.table-warp{
+    padding: 15px;
+}
+.table-warp h3{
+    font-size: $f-23;
+    margin-bottom: 20px;
+}
+.table-warp p{
+    font-size: $f-14;
+    margin-bottom: 20px;
+}
+.table-warp table{
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.table-warp table tr:first-child{
+    color: $c-wh;
+    background-color: $c-blue;
+}
+.table-warp table tr td{
+    padding: 10px;
+}
+.table-warp table tr:first-child td{
+    border-right: 1px solid lighten($c-blue, 3%);
+}
+.table-warp table tr:first-child td:last-child{
+    border-right: 0px;
+}
+.table-warp table tr td{
+    border-right: 1px solid lighten($c-F2, 3%);
+}
+.table-warp table tr td:last-child{
+    border-right: 0px;
+}
+.table-warp table tr{
+    font-size: $f-14;
+    background-color: $c-F2;
+}
+//可得金額區塊
+.amount-available{
+    font-size:$f-16;
+    color:$c-66;
+    padding:1.1rem 1.5rem;
+    background-color:$c-wh;
+}
+.amount-available div{
+   display:inline-block;
+   vertical-align:middle;
+}
+.amount-available-number{
+    color:$c-3E;
+}
+// 修正選擇銀行點擊按鈕
+.list-box .deposit{
+    color:$c-6D;
+}
+.list-box .deposit span{
+    display: inline-block;
+    float: right;
+    padding-right: 36px;
+    color: $c-66;
+}
+
+

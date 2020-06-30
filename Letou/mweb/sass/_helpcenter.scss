@@ -1,0 +1,275 @@
+.list-box-link .list-box .title.no-padding{
+	padding-left:0px;
+}
+
+.list-box-link .list-box .title.no-padding.add-arrow{
+    width:100%;
+    border:0;
+    background-image:url("images/arrow.png");
+    background-size: 7px 13px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.tab-block{
+	padding:1.5rem 0rem 0.6rem 0rem;
+	// text-align: center;
+
+}
+.tab-block ul.tab{
+	list-style-type:none;
+	margin: 0 auto;
+	padding:0 1.5rem;
+}
+.tab-block ul.tab li{
+	font-size: $f-16;
+	color:$c-3E;
+	display: inline-block;
+	width: 50%;
+	border:1px solid $c-3E;
+	border-radius:5px 0 0 5px;
+	margin-right : -5px;
+	text-align: center;
+}
+.tab-block ul.tab li:nth-child(2){
+	border-radius:0 5px 5px 0;
+} 
+
+.tab-block ul.tab li a{
+	display:block;
+	padding:1rem 1rem;
+
+}
+
+
+.tab-block ul.tab li a.active{
+	color:$c-wh;
+	background-color: $c-3E;
+}
+
+// 背景滿版-白色
+.container-fluid.full-bg{
+  	min-height: 100%;
+}
+// 背景滿版-紅色
+.container-fluid.bg-red{
+  	background-color:$c-EE;
+
+}
+// 背景滿版-橘色
+.container-fluid.bg-orange{
+  	background-color:$c-FF
+
+}
+
+// 背景滿版-藍色
+.container-fluid.bg-blue{
+  	background-color:$c-0A;
+
+}
+
+// 幫助中心第二層
+.helpcenter-content{
+	padding:1.1rem 1.5rem;
+	background-color: $c-wh;
+	h1{
+	font-size:$f-23;
+	color:$c-33;
+	}
+	p{
+	font-size:$f-13;
+	padding:1rem 0;
+	color:$c-66;
+	}
+	&.blank-block{
+	width:100%;
+	height:10px;
+	}
+}
+
+
+// safesetting css 開始
+.safesetting-block{
+	margin:0.6rem 1rem;
+	background-color: $c-wh;
+	text-align: left;
+	border-radius:5px;
+	padding:1.5rem;
+	&.no-bg{
+		background-color:rgba(0,0,0,0);
+		text-align: center;
+		p{
+			font-size:$f-14;
+			color:$c-wh;
+			}
+		.number{
+			font-size:$f-66;
+			color:$c-wh;
+			line-height:80px;
+			padding-top:30px;
+				}
+	}
+	.title{
+		font-size:$f-14;
+		color:$c-EE;
+		margin-bottom:1.5rem;
+		p{
+		font-size:$f-15;
+		color:$c-EE;
+		margin-left: 56px;
+		}
+		.description{
+		font-size:$f-13;
+		color:$c-B1;
+		}
+		&.risk-mid p{
+		color:$c-FF;
+			&.description{
+			color:$c-B1;
+			}
+		}
+		&.risk-low p{
+		color:$c-0A;
+			&.description{
+			color:$c-B1;
+			}
+		}
+	}
+
+	.dashed-line {
+   	border-bottom:2px dashed $c-F2;
+   	margin-bottom: 13px;
+	}
+	
+}
+
+
+.safesetting-icon{
+    width: 40px;
+    height: 40px;
+    // margin:0 auto;
+    background-size: cover;
+    float:left;
+    
+}
+// for 迴圈套用圖片
+@for $i from 1 through 4{
+    .safesetting-icon.safe#{$i}{
+        background-image: url('images/safesetting#{$i}.png');
+    }
+}
+.authenticateto-list{
+	margin:8px 0;
+	font-size:$f-14;
+	color:$c-3A;
+	.list-value{
+		color:$c-B1;
+	}
+}
+.authenticateto-list:before,.authenticateto-list:after {
+  content: "";
+  display: table;
+}
+.authenticateto-list:after{
+	clear:both;
+}
+
+// 安全認證按鈕
+.setting-submit{
+	margin-top:1.5rem;
+	background-color: $c-F2;
+}
+.button.setting {
+    width: 100%;
+    height: 5rem;
+    line-height: 5rem;
+    border: 1px solid darken($c-1A, 2);
+    border-radius: 5px;
+    color: #fff;
+    background-color: $c-1A;
+    text-align: center;
+    font-size: $f-19;
+    display: block;
+}
+.setting-submit button:disabled{
+	color: $c-wh;
+	background-color: $c-3E;
+	border: 1px solid darken($c-3E, 2);
+    border-radius: 5px;
+}
+.button.setting.green{
+	background-color: $c-2A;
+	border: 1px solid darken($c-2A, 2);
+}
+.button.setting.yellow{
+	background-color: $c-FBB;
+	border: 1px solid darken($c-FBB, 2);
+}
+.button.setting.red{
+	background-color: $c-FA;
+	border: 1px solid darken($c-FA, 2);
+}
+
+// safesetting css 結束
+
+// account css 開始
+
+.list-value.addcircle-icon{
+	color:$c-3E;
+}
+.list-value.addcircle-icon i{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background-image:url("images/circle-add.png");
+	background-size:16px 16px;
+	background-repeat: no-repeat;
+	background-position: right;
+	margin-left:1rem;
+	margin-bottom:-3px;
+}
+.list-value.circlechecked-icon{
+	color:$c-66;
+}
+.list-value.circlechecked-icon i{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background-image:url("images/circle-checked.png");
+	background-size:16px 16px;
+	background-repeat: no-repeat;
+	background-position: right;
+	margin-left:1rem;
+	margin-bottom:-3px;
+}
+.field .field-control .left-words{
+	font-size:$f-16;
+	color:$c-3A;
+}
+.remind-block{
+	background-color: $c-wh;
+	text-align: center;
+	padding: 1.1rem 1.5rem;
+}
+.remind-block p{
+	font-size:$f-16;
+	color:$c-66;
+}
+.remind-block p.title{	
+	color:$c-3E;
+	padding-bottom: 0.6rem;
+	font-size: $f-18;
+}
+// account css 結束
+
+.qa{
+	font-size:$f-20;
+	color:$c-3A;
+	text-align: center;
+	padding-bottom:1.5rem;
+}
+
+.authenticateto-list .list-value a{
+	margin-left: 5px;
+	color: $c-blue;
+}

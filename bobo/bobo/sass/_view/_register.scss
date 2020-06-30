@@ -1,0 +1,37 @@
+.affiliate-content.register.Register {
+    background-image: url(../images/affiliate//home_banner2.jpg);
+    padding: 140px 0 40px;
+    text-align: right;
+    background-position: center;
+}
+.icon-phone {
+    background-image: url(../images/affiliate//icon-phone.png);
+}
+.InputBox .Description {
+  position: absolute;
+  font-size: 14px;
+  color: #FF6666;
+  line-height: 22px;
+  padding: 0 5px;
+  border: 1px solid #FF6666;
+  border-radius: 5px;
+  right: 10px;
+  top: 7px; }
+
+.InputBox .Description a {
+  display: block; }
+  .affiliate-content .lRMain #well {
+    border: 1px solid rgba(200, 207, 215, 0.75);
+    border-radius: 3px;
+    overflow: hidden;
+    color: #C8CFD7;
+    text-align: left;
+}
+
+@media screen and (max-width: 992px) {
+
+.affiliate-content.register.Register {
+    padding: 45px 0 0;
+}
+
+}

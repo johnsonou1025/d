@@ -1,0 +1,813 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>vwin.com</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.corner.js"></script>
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="js/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--自訂css與jquery-->
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<script src="js/custom.js"></script>
+</head>
+
+<body>
+<!--頁首未登入狀態-->
+<div id="header"> 
+        <!--建議瀏覽器升級訊息
+        <div class="notice-browser">
+                <div class="mw"><a><span class="icon-notice"></span><span class="vamd mgrt10">为了展现我们最好的体验效果，是时候更换或者升级您的浏览器了！</span><span class="icon-notice-close"></span></a></div>
+        </div>
+        <script>
+        $(function(){
+			$(".notice-browser").click(function(){
+				$(this).fadeOut();
+			})
+		})
+        </script>
+        -->
+        <div class="header">
+                <div class="mw">
+                        <div class="hd-info fltlft">
+                                <div class="info-default">
+                                        <div class="lg"> <span class="tw"></span><span>台湾-繁中</span><span class="downArrow"></span>
+                                                <div class="lg-select">
+                                                        <ul>
+                                                                <li><span class="cn"></span><span>中国-简中</span></li>
+                                                                <li><span class="en"></span><span>英国-English</span></li>
+                                                                <li><span class="vn"></span><span>越南-Tiếng Việt</span></li>
+                                                                <li><span class="thai"></span><span>泰国-ภาษาไทย</span></li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                        <span class="line"></span>
+                                        <div class="time">2014-03-17 15:47</div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">联络我们</a></div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">牌照展示</a></div>
+                                </div>
+                        </div>
+                        <div class="hd-info fltrt">
+                                <div class="info-default info-default-2">
+                                        <div id="popup-style-1" class="rltv"><span class="icon_login"></span><a class="loginPage">登录</a> / <a class="registerPage">免费注册</a> </div>
+                                        <script>
+                                        $(function(){
+											//呼叫登入視窗											
+											$(".loginPage").click(function(){												
+												//計算登入視窗位置
+												var _loginWidth=$(".loginPage").width();
+												var _loginTop=($(".loginPage").position()).top+23;
+												var _loginLeft=($(".loginPage").offset()).left-189+_loginWidth/2;												
+												if($("#registerPage").is(":visible")==true){
+													$(".popup-style-1").slideUp(function(){
+														//註冊頁回到第一步驟狀態
+														$(".layer-style-1").removeClass("img-bg-finish");
+														$("#registerPage").css("left",0);
+														$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+														$(".popup-style-1").find("#loginPage").show().siblings("div").hide();
+														$(".popup-style-1").slideDown();
+														//覆蓋視窗以外的區塊	
+														bgArea();
+													});
+												}else{	
+													$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+													$(".popup-style-1").find("#loginPage").show().siblings("div").hide();
+													$(".popup-style-1").slideDown();													
+												}														
+												//覆蓋視窗以外的區塊	
+												bgArea();
+												//重新計算彈跳視窗位置
+												$(window).resize(function(){
+													var _loginWidth=$(".loginPage").width();
+													var _loginTop=($(".loginPage").position()).top+23;
+													var _loginLeft=($(".loginPage").offset()).left-189+_loginWidth/2;											
+													$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+												})	
+											})
+											//呼叫註冊視窗
+											$(".registerPage").click(function(){														
+												//計算登入視窗位置
+												var _loginWidth=$(".registerPage").width();
+												var _loginTop=($(".registerPage").position()).top+23;
+												var _loginLeft=($(".registerPage").offset()).left-189+_loginWidth/2;												
+												if($("#loginPage").is(":visible")==true){
+													$(".popup-style-1").slideUp(function(){
+														//註冊頁回到第一步驟狀態
+														$(".layer-style-1").removeClass("img-bg-finish");
+														$("#registerPage").css("left",0);	
+														$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+														$(".popup-style-1").find("#registerPage").show().siblings("div").hide();
+														$(".popup-style-1").slideDown();
+														//覆蓋視窗以外的區塊	
+														bgArea();
+													});
+												}else{	
+													$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+													$(".popup-style-1").find("#registerPage").show().siblings("div").hide();
+													$(".popup-style-1").slideDown();													
+												}														
+												//覆蓋視窗以外的區塊	
+												bgArea();
+												//解決視窗小時,註冊框被裁到問題
+												if(($(window).width()>1290&$(window).width()<1390)){
+														var h = (1390-$(window).width())/2;
+														$(".layer-style-1").css("left",-h);
+													}else if($(window).width()<1290){
+														$(".layer-style-1").css("left","-50px");
+													}else{
+														$(".layer-style-1").css("left","0px");
+													}
+												//重新計算彈跳視窗位置
+												$(window).resize(function(){
+													var _loginWidth=$(".registerPage").width();
+													var _loginTop=($(".registerPage").position()).top+23;
+													var _loginLeft=($(".registerPage").offset()).left-189+_loginWidth/2;											
+													$(".popup-style-1").css({"left":_loginLeft,"top":_loginTop});
+													if(($(window).width()>1290&$(window).width()<1390)){
+														var h = (1390-$(window).width())/2;
+														$(".layer-style-1").css("left",-h);
+													}else if($(window).width()<1290){
+														$(".layer-style-1").css("left","-50px");
+													}else{
+														$(".layer-style-1").css("left","0px");
+													}
+												})													
+											})										
+											//點擊打叉按鈕可關閉彈跳視窗
+											$(".btn-close").click(function(){
+												$(".popup-style-1").slideUp("fast",function(){
+													//註冊頁回到第一步驟狀態
+													$(".layer-style-1").removeClass("img-bg-finish");
+													$("#registerPage").css("left",0);
+												});												
+											})		
+											function bgArea(){
+											//覆蓋視窗以外的區塊	
+												var _bgAreaTop = ($(".header").position()).top+40;
+												$(".popup-bgArea").css("top",_bgAreaTop).show();		
+											}
+											//點擊覆蓋視窗以外的區塊可關閉											
+											$(".popup-bgArea").click(function(){
+												$(".popup-style-1").slideUp("fast",function(){
+													//註冊頁回到第一步驟狀態
+													$(".layer-style-1").removeClass("img-bg-finish");
+													$("#registerPage").css("left",0);
+												});												
+											})	
+										})
+                                        </script> 
+                                        <span class="line"></span>
+                                        <div class="lc"><span class=" icon_lc3"></span><a href="#">在线客服</a></div>
+                                </div>
+                                <!--彈跳視窗-->
+                                <div class="popup-style-1" style="display:none;">
+                                        <div class="layer-arrow-top"></div>                                        
+                                        <div class="layer-style-1"> 
+                                        		<a class="btn-close"></a>
+                                                <!--登入頁-->
+                                                <div id="loginPage" style="display:none;">
+                                                        <h3>登录您的帐户</h3>
+                                                        <h4>亚洲最好的博彩网站</h4>
+                                                        <div class="thema-a">
+                                                                <div class="ui-input-text"> <span class="icon icon-user"></span>
+                                                                        <input type="text" value="请输入手机/邮箱/昵称"/>
+                                                                </div>
+                                                                <div class="clear mgbt10"></div>
+                                                                <div class="ui-input-text ui-input-text-wrong"> <span class="icon icon-lock"></span>
+                                                                        <input type="password" value="请输入密码"/>
+                                                                        <a class="btn-right">忘记 ?</a> </div>
+                                                                <p class="ui-msg-text"><span class="icon_er1 mgrt5"></span><span>密码错误，您还可以输入4次</span></p>
+                                                                <a class="btn-1 mgbt10">立即登录</a>
+                                                                <p class="tos fltlft"><span class="icon-checkbox mgrt5"></span><span>记住帐号</span></p>
+                                                                <script>
+																$(function(){
+																	$(".tos").click(function(){
+																		var _checkBox =$(this).children(".icon-checkbox");
+																		if(_checkBox.hasClass("icon-checkbox-checked")){
+																			_checkBox.removeClass("icon-checkbox-checked")
+																		}else{
+																			_checkBox.addClass("icon-checkbox-checked")
+																		}
+																	})
+																})
+																</script> 
+                                                                <a class="fltrt registerPage btn-text"><span>▶免费注册</span></a>
+                                                                <div class="clear mgbt10"></div>
+                                                                <p class="talft grey5"><span>登录时有任何问题，请联系</span><a href="#">在线沟通协助</a><span>和</span><a href="#">联系我们</a><span>本网站采用Global Trust最先进的128/256 bit SSL服务器加密机制</span></p>
+                                                        </div>
+                                                </div>
+                                                <!--登入頁結束--> 
+                                                <!--注册页-->
+                                                <div id="registerPage">
+                                                		<!--第一步-->
+                                                        <div class="register-step-1" style="width: 328px; margin-right:25px; float:left;">
+                                                                <h3>注册您的帐户</h3>
+                                                                <h4><img src="css/images/icon/register-tips-cn.png" alt="输入手机号即可领取38元现金" />
+                                                                		<!--各語系使用圖片
+                                                                		<img src="css/images/icon/register-tips-cn.png" alt="输入手机号即可领取38元现金" />
+                                                                		<img src="css/images/icon/register-tips-en.png" alt="Enter phone number to receive ¥38" />
+                                                                        <img src="css/images/icon/register-tips-kr.png" alt="휴대폰 인증보너스  2500원" />
+                                                                        <img src="css/images/icon/register-tips-th.png" alt="สมัครสมาชิก ฝาก 200 บ.ขึ้นไป รับ 350 บ.ทันที!" />
+                                                                        <img src="css/images/icon/register-tips-vn.png" alt="Xác thực điện thoại nhận 25K" />
+                                                                        -->
+                                                                </h4>
+                                                                <div class="thema-a">
+                                                                        <div class="step-style-1 mgbt10">
+                                                                                <div class="step-line"></div>
+                                                                                <div class="step-number-3 talft"><span class="icon-step-on">1</span></div>
+                                                                                <div class="step-number-3"><span class="icon-step-off">2</span></div>
+                                                                                <div class="step-number-3 fltrt tart"><span class="icon-step-off">✔</span></div>
+                                                                        </div>
+                                                                        <div class="ui-select"><span class="select-icon-flag cn"></span><span class="select-text">中国(+86)</span><span class="select-icon-right icon-arrow-down"></span>
+                                                                        <div class="select-choice">
+                                                                                <ul>
+                                                                                        <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                        <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                        <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                        <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                </ul>
+                                                                        </div>
+                                                                        <div class="select-choice-area"></div>
+                                                                </div>
+                                                                <script>
+                                                                $(function(){
+                                                                    $(".ui-select").click(function(){
+                                                                        if($(this).children(".select-choice:hidden").length){
+                                                                            $(this).children(".select-choice").fadeIn('fast');		
+                                                                            $(".select-choice-area").show();
+                                                                        }else{
+                                                                            $(this).children(".select-choice").fadeOut('fast');
+                                                                            $(".select-choice-area").hide();
+                                                                        }														
+                                                                    })
+                                                                    $(".ui-select li").click(function(){
+                                                                        $(this).parents(".ui-select").children(".select-text").text($(this).children("span:last").text())
+                                                                    })
+                                                                    $(".select-choice-area").click(function(){
+                                                                        $(".select-choice").fadeOut();
+                                                                        $(this).hide();
+                                                                    })							
+                                                                })
+                                                                </script>
+                                                                        <div class="ui-input-text"> <span class="icon icon-mobile-1"></span>
+                                                                                <input type="text" value="请输入手机号码"/>
+                                                                        </div>
+                                                                        <div class="clear mgbt10"></div>
+                                                                        <div class="ui-input-box" style="position:relative;">
+                                                                        <div class="ui-input-text ui-input-code"> <span class="icon icon-key"></span>
+                                                                                <input type="text" value="请输入验证码"/>                                                                                                                                                              
+                                                                        </div>
+                                                                        <div class="code-box"><div class="rltv"><span></span><a>获取验证码</a></div></div>  
+                                                                        </div>                                                                        
+                                                                        <p class="code-pass"><a  class="goToStep2">无法接收验码？</a></p>
+                                                                        <a class="btn-1 mgbt10 goToStep2">下一步</a>  
+                                                                        <script>
+                                                                        $(function(){
+                                                                            $(".goToStep2").click(function(){
+                                                                                $("#registerPage").animate({left:"-353px"});																				
+                                                                            })
+                                                                        })
+                                                                        </script>                                                  
+                                                                </div>
+                                                        </div>
+                                                		<!--第二步-->
+                                                        <div class="register-step-2" style="width: 328px; margin-right:25px; float:left;">
+                                                                <h3>注册您的帐户</h3>
+                                                                <h4>亚洲最好的博彩网站</h4>
+                                                                <div class="thema-a">
+                                                                        <div class="step-style-1 mgbt10">
+                                                                                <div class="step-line"></div>
+                                                                                <div class="step-number-3 talft"><span class="icon-step-off">1</span></div>
+                                                                                <div class="step-number-3"><span class="icon-step-on">2</span></div>
+                                                                                <div class="step-number-3 fltrt tart"><span class="icon-step-off">✔</span></div>
+                                                                        </div>
+                                                                        <div class="ui-input-text"> <span class="icon icon-user"></span>
+                                                                                <input type="text" value="请输入昵称"/>
+                                                                        </div>
+                                                                        <div class="clear mgbt10"></div>
+                                                                        <div class="ui-input-text"> <span class="icon icon-lock"></span>
+                                                                                <input type="text" value="请输入密码"/>
+                                                                                <div class="password-meter-box">
+                                                                                        <div class="password-meter weakest"></div>
+                                                                                        <!--密碼強度css名稱 弱:weakest 中:fair 強:strong-->
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="clear mgbt10"></div>
+                                                                        <div class="ui-input-text"> <span class="icon icon-openLock"></span>
+                                                                                <input type="text" value="请再次输入密码"/>
+                                                                        </div>                                                               
+                                                                        <a class="btn-1 mgbt10 goToStep3">立即注册</a>
+                                                                        <p class="tos"><span class="icon-checkbox mgrt5"></span><span>我确认已年满18岁，并已阅读和接受</span><a href="#">本网站政策、隐私声明、条款和条件</a></p>
+                                                                        <script>
+                                                                        $(function(){
+                                                                            $(".goToStep3").click(function(){
+                                                                                $("#registerPage").animate({left:"-706px"},function(){
+																					$(".layer-style-1").addClass("img-bg-finish");
+																				});																				
+                                                                            })
+                                                                        })
+                                                                        </script>      
+                                                                </div>
+                                                        </div>
+                                                        <!--第三步-->
+                                                        <div class="register-step-3" style="width: 328px; float:left;">                                                     
+                                                        		<span class="icon-personal-1"></span>
+                                                                <div class="clear"></div>
+                                                                <span class="icon-vwin"></span>
+                                                                <h4 class="h3" style="font-size:20px;">恭喜您已注册成功</h4>
+                                                                <div class="thema-a">                                                             
+                                                                        <a class="btn-1 mgbt10">立即存款</a>
+                                                                        <a class="btn-2 mgbt10">完善资料</a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <!--注册页-->                                                
+                                        </div>
+                                        <div class="popup-bgArea"></div>
+                                </div>
+                        </div>
+                        <div class="clear"></div>
+                </div>
+        </div>
+        <!--菜單欄-->
+        <div id="nav">
+                <div class="line"></div>
+                <div class="mw">
+                        <div class="hd-logo fltlft rltv hd-logo-cn"></div>
+                        <!--簡中市場加上hd-logo-cn，其餘市場則不需要-->
+                        <div class="nav-items">
+                                <ul>
+                                        <li class="active"><a href="index.html" class="icon-home">首页</a></li>
+                                        <li><span class="line"></span><a href="mobile.html" class="icon-mobile">手机版</a></li>
+                                        <li><span class="line"></span><a href="#">体育</a></li>
+                                        <li><span class="line"></span><a href="sport.html">沙巴体育</a></li>
+                                        <li><span class="line"></span><a href="#">真人娱乐场</a></li>
+                                        <li><span class="line"></span><a href="game.html">电子游戏</a></li>
+                                        <li><span class="line"></span><a href="#">快乐彩</a></li>
+                                        <li><span class="line"></span><a href="#">世界乐透</a></li>
+                                        <li><span class="line"></span><a href="#">最新优惠</a></li>
+                                        <li><span class="line"></span><a href="#">探索Vwin</a></li>
+                                </ul>
+                        </div>
+                </div>
+        </div>
+        <script>
+		$(function(){
+			$(document).scroll(function(){
+				if($(document).scrollTop()>0){
+					$("#header").addClass("header-color");
+				}else{
+					$("#header").removeClass("header-color");
+				}
+			})	
+		})
+		</script> 
+</div>
+<!--主視覺區塊-->
+<div id="main-banner">
+        <div class="hero">
+                <div class="hero-slide">
+                        <div class="prev"></div>
+                        <div class="next"></div>
+                </div>
+                <div class="hero-kv">
+                        <ul>
+                                <li class="slide-active"> <a href="promotion.html"><img src="css/images/demo_kv1.jpg"/></a></li>
+                                <li  style="display:none;"> <a href="promotion.html"><img src="css/images/demo_kv2.jpg"/></a></li>
+                                <li style="display:none;"><a href="promotion.html"><img src="css/images/demo_kv1.jpg"/></a></li>
+                                <li style="display:none;"><a href="promotion.html"><img src="css/images/demo_kv2.jpg"/></a></li>
+                        </ul>
+                </div>
+                <!--/.hero-kv-->
+                <div id="hero_nav">
+                        <ul class="adSlider">
+                                <li class="heroNavActive"></li>
+                                <li ></li>
+                                <li></li>
+                                <li></li>
+                        </ul>
+                        <br clear="all">
+                </div>
+        </div>
+        <!--最新公告-->
+        <div id="notice">
+                <div class="mw"><span>公告栏：Vwin 春季娱乐场活动火爆来袭，业界最高返水2%，红利直逼45万，赶紧参加吧！</span></div>
+        </div>
+</div>
+<div style="background-color:#fff; height:18px;"> <img src="css/images/index-hero-img-1.png" /> </div>
+<!--內容-->
+<div id="content" style="padding-top: 10px; background-color:#dddddd; padding-bottom: 17px;">
+        <div class="mw">
+                <div class="con1-1">
+                        <div class="casino"> <img src="css/images/index-con1-1-img-1.png" /> </div>
+                        <div class="con1-text">
+                                <h4><span></span>真人娱乐场</h4>
+                                <p>真人百家乐、21点、龙虎及骰宝等，亲临其境感受前所未有的真实体验和客户服务</p>
+                        </div>
+                        <!--娛樂場滑鼠移入顯示內容-->
+                        <div class="casino-on" style="opacity:0;"> 
+                                <!--上移後模糊背景-->
+                                <div class="casino-con casino-con-kr"> <img src="css/images/index-con1-1-img-3.png" />
+                                        <ul>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>翡翠厅 - AG</h5>
+                                                                <span><img src="css/images/index-con1-1-img-ag.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>夺宝岛 - GD</h5>
+                                                                <span><img src="css/images/index-con1-1-img-gd.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>星耀厅 - GPI</h5>
+                                                                <span><img src="css/images/index-con1-1-img-gpi.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>百乐门 - PT</h5>
+                                                                <span><img src="css/images/index-con1-1-img-pt.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>米兰站 - EV</h5>
+                                                                <span><img src="css/images/index-con1-1-img-ev.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box">
+                                                                <h5>波音馆 - BBIN</h5>
+                                                                <span><img src="css/images/index-con1-1-img-bbin.png" /></span> </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-1-img-2.png" /></div>
+                </div>
+                <script>
+                $(function(){
+					//顯示各館					
+					$(".con1-1").mouseenter(function(){
+						$(this).children(".casino-on").animate({opacity:1},250)						
+					})
+					$(".con1-1").mouseleave(function(){
+						$(this).children(".casino-on").animate({opacity:0},250)
+					})
+					
+					//滑鼠移入各館
+					$(".casino-con li").mouseenter(function(){
+						_this=$(this);
+						_boxWidth=_this.children("div").width();
+						_boxHeight=_this.children("div").height();
+						_brandWidth=_this.children("div").children("span").width();
+						_brandHeight=_this.children("div").children("span").height();
+						_brandMoveReight=(_boxWidth-_brandWidth)/2;
+						_this.children("div").children("span").stop().animate({right:_brandMoveReight},500);
+						//新增光點標籤
+						var $lightTop=$("<span>",{class:"lightTop"});
+						var $lightRight=$("<span>",{class:"lightRight"});
+						var $lightBottom=$("<span>",{class:"lightBottom"});
+						var $lightLeft=$("<span>",{class:"lightLeft"});						
+						_this.append($lightTop).children(".lightTop").append('<img src='+'css/images/index-con1-1-light-1.png'+'>');
+						_this.append($lightRight).children(".lightRight").append('<img src='+'css/images/index-con1-1-light-2.png'+'>');
+						_this.append($lightBottom).children(".lightBottom").append('<img src='+'css/images/index-con1-1-light-1.png'+'>');
+						_this.append($lightLeft).children(".lightLeft").append('<img src='+'css/images/index-con1-1-light-2.png'+'>');
+						_this.children(".lightTop").animate({left:_boxWidth/2,opacity:1},150).animate({left:_boxWidth,opacity:0},150);
+						_this.children(".lightRight").animate({bottom:_boxHeight/2,opacity:1},150).animate({bottom:_boxHeight,opacity:0},150);
+						_this.children(".lightBottom").delay(200).animate({right:_boxWidth/2,opacity:1},150).animate({right:_boxWidth,opacity:0},150);
+						_this.children(".lightLeft").delay(200).animate({top:_boxHeight/2,opacity:1},150).animate({top:_boxHeight,opacity:0},150);
+					})
+					$(".casino-con li").mouseleave(function(){
+						_this=$(this);
+						_this.children("span").remove();
+						_this.children("div").children("span").stop().animate({right:"-4px"},500)
+					})
+				})
+                </script> 
+                <a>
+                <div class="con1-2 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-2-img-1.png" /></div>
+                        <div class="con1-text">
+                                <h4><span></span>体育平台</h4>
+                                <p>更全面的投注玩法，更简捷的投注体验，覆盖世界各地赛事</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即投注</div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a> <a>
+                <div class="con1-3 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-3-img-1.png" /> </div>
+                        <div class="con1-text">
+                                <h4><span></span>电子游戏</h4>
+                                <p>最优秀的在线游戏平台，最丰富奖金和红利，更有机会赢得高额累积奖池</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即游戏</div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-3-img-2.png" /></div>
+                </div>
+                </a> <a>
+                <div class="clear mgbt10"></div>
+                <div class="con1-4 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-4-img-1.png" /></div>
+                        <div class="con1-text"> <img class=" mgbt10" src="css/images/index-con1-4-img-3.png" />
+                                <p>尊享八大特权，更多精彩等您选</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">了解详情</div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a> <a>
+                <div class="con1-5 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-5-img-1.png" /></div>
+                        <div class="con1-text">
+                                <h4><span></span>快乐彩</h4>
+                                <p>投注简单，中奖率高，颠覆传统单一模式满足不同需求</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即游戏</div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a> 
+                <script>
+				$(function(){			
+					$(".zoom").mouseenter(function(){
+						_this=$(this);
+						_img=_this.children(".zoom-img").children("img");				
+						_btn=_this.find(".btn-1");
+						_text=_this.children(".con1-text").children("p");
+						_imgWidth=_this.children(".zoom-img").width();
+						_imgHeight=_this.children(".zoom-img").height();		
+						_imgWidthBig=(_this.children(".zoom-img").children(".zoom-bg").width())*1.2;
+						_imgHeightBig=(_this.children(".zoom-img").children(".zoom-bg").height())*1.2;
+						_btn.stop().animate({"opacity":1},100);
+						_text.css("color","#f8efd2");
+						_this.children(".zoom-img").children("div").stop().animate({opacity:1},100);
+						_img.parent(".zoom-img").css({"width":_imgWidth,"height":_imgHeight,"overflow":"hidden","position":" relative"});
+						_img.css({"max-width":"none","max-height":"none","width":_imgWidth,"height":_imgHeight}).stop().animate({width:_imgWidthBig,height:_imgHeightBig,marginTop:-(_imgWidth*0.1),marginLeft:-(_imgHeight*0.1)},100)
+					})			
+					$(".zoom").mouseleave(function(){
+						_this=$(this);
+						_img=_this.children(".zoom-img").children("img");
+						_btn=_this.find(".btn-1");
+						_text=_this.children(".con1-text").children("p");
+						_text.css("color","#ffffff");
+						_imgWidth=_this.children(".zoom-img").children(".zoom-bg").width();
+						_imgHeight=_this.children(".zoom-img").children(".zoom-bg").height();		
+						_this.children(".zoom-img").children("div").stop().animate({opacity:0},100);
+						_btn.stop().animate({"opacity":0},100)
+						_img.stop().animate({width:_imgWidth,height:_imgHeight,marginTop:"0px",marginLeft:"0px"},100,function(){
+							//_img.css({"max-width":"100%","max-height":"100%","width":"auto"}).parent(".zoom-img").css({"width":"","height":"","overflow":"visible","position":"static"});
+						})					
+					})			
+					$(window).resize(function(){
+						$(".zoom").children(".zoom-img").children("img").css({"max-width":"100%","max-height":"100%","width":"auto","height":"auto"}).parent(".zoom-img").css({"width":"","height":""});
+					})		
+				})
+        </script>
+                <div class="con1-6">
+                        <div class="sport-outer"> <img src="css/images/index-con1-6-img-1.png"/> 
+                                <!--草皮-->
+                                <div class="sport-grass"><img src="css/images/index-con1-6-img-4.png"/> </div>
+                        </div>
+                        
+                        <!--比賽內容-->
+                        <div class="sport-inner"> 
+                                <!--GB體育標題-->
+                                <div class="con1-text">
+                                        <h4 class="ilblk"><span></span>体育 - 推荐赛事</h4>
+                                        <div class="fltrt"><a href="#"><span class="mgrt5">换一批</span><span class="reflash"></span></a></div>
+                                </div>
+                                <div class="sport-game-1"> 
+                                        <!--隊伍透明底圖-->
+                                        <div class="team-bg"><img src="css/images/team-sample-1.png" /></div>
+                                        <div class="team-bg team-bg-right"><img src="css/images/team-sample-2.png" /></div>
+                                        <!--隊伍資訊-->
+                                        <ul>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-1.png"  /> </div>
+                                                </li>
+                                                <li> 
+                                                        <!--分數區-->
+                                                        <div class="score">
+                                                                <div class="score-btn"> <a>立即投注</a> </div>
+                                                                <img src="css/images/index-con1-6-img-5.png" /> <span class="score-left"><img src="css/images/icon-socre-9.png" /><img src="css/images/icon-socre-9.png" /></span> <span class="score-right"><img src="css/images/icon-socre-1.png" /><img src="css/images/icon-socre-2.png" /><img src="css/images/icon-socre-5.png" /></span> </div>
+                                                        <!--按鈕-->
+                                                        <div class="score-btn"> <a class="btn-1">立即投注</a> </div>
+                                                </li>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-2.png" /> </div>
+                                                </li>
+                                                <div class="clear mgbt10"></div>
+                                                <li>
+                                                        <div>
+                                                                <h5>巴塞罗那</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                        <div>
+                                                                <h5 class="score-name">西班牙足球甲级联赛</h5>
+                                                                <h3><span>让</span>0.5<span>球</span></h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                        <div>
+                                                                <h5>皇家马德里</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <div class="clear"></div>
+                                        </ul>
+                                </div>
+                                <div class="clear "></div>
+                                <div class="sport-game-1"> 
+                                        <!--中間分隔線-->
+                                        <div class="sport-game-gap"><img src="css/images/index-con1-6-img-2.png"/> </div>
+                                        <!--隊伍透明底圖-->
+                                        <div class="team-bg"><img src="css/images/team-sample-1.png"/></div>
+                                        <div class="team-bg team-bg-right"><img src="css/images/team-sample-2.png"/></div>
+                                        <!--隊伍資訊-->
+                                        <ul>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-1.png"  /> </div>
+                                                </li>
+                                                <li> 
+                                                        <!--開賽時間-->
+                                                        <div class="score"><img src="css/images/index-con1-6-img-6.png" />
+                                                                <div class="score-time">
+                                                                        <p class="yellow">開賽時間</p>
+                                                                        <p>07/30 09:00</p>
+                                                                </div>
+                                                        </div>
+                                                        <!--按鈕-->
+                                                        <div class="score-btn"><a class="btn-1">立即投注</a> </div>
+                                                </li>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-2.png" /> </div>
+                                                </li>
+                                                <div class="clear mgbt10"></div>
+                                                <li>
+                                                        <div>
+                                                                <h5>巴塞罗那</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                        <h5  class="score-name">西班牙足球甲级联赛</h5>
+                                                        <h3><span>受让</span>-1.5 / -2<span>球</span></h3>
+                                                </li>
+                                                <li>
+                                                        <div>
+                                                                <h5>皇家马德里</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <div class="clear"></div>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-6-img-3.png" /></div>
+                </div>
+                <script>
+                $(function(){
+					$(".sport-game-1").hover(
+						function(){							
+							$(this).find(".score").stop().animate({opacity:0},200);
+							$(this).find(".score-btn").stop().animate({opacity:1},200);
+						},
+						function(){
+							$(this).find(".score").stop().animate({opacity:1},200);
+							$(this).find(".score-btn").stop().animate({opacity:0},200);
+						}
+					)
+				})
+                </script> 
+        </div>
+        <div class="clear"></div>
+</div>
+<div class="clear horizonLine"></div>
+        <div class="mw">
+                <ul class="con3">
+                        <li class="lv1">
+                                <h5>产品下载</h5>
+                                <ul>
+                                        <li><a href="#">铂金馆</a></li>
+                                        <li><a href="#">翡翠馆</a></li>
+                                        <li><a href="#">百乐门</a></li>
+                                        <li><a href="#">游戏大厅</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>关于</h5>
+                                <ul >
+                                        <li><a href="AboutUs.html">关于VWIN</a></li>
+                                        <li><a href="ResponsibleGaming.html">责任博彩</a></li>
+                                        <li><a href="TermsAndCondition.html">条款及条件</a></li>
+                                        <li><a href="TermsAndCondition_promotion.html">优惠活动规则与条款</a></li>
+                                        <li><a href="PrivatePolicy.html">隐私权政策</a></li>
+                                        <li><a href="Contact.html">联系我们</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>使用帮助</h5>
+                                <ul >
+                                        <li><a href="help1-2.html">存款流程 </a></li>
+                                        <li><a href="help1-3.html">提款流程  </a></li>
+                                        <li><a href="help1-1.html">如何开户  </a></li>
+                                        <li><a href="help1-5.html">常见问题  </a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                        <li><a href="help2-1.html">体育规则  </a></li>
+                                        <li><a href="help3-1.html">快乐彩规则  </a></li>
+                                        <li><a href="help4-1.html">世界乐透规则  </a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>社交工具</h5>
+                                <ul >
+                                        <li><a href="#"><span class="si1 ahover"></span>微信</a></li>
+                                        <li><a href="#"><span class="si2 ahover"></span>微博</a></li>
+                                        <li><a href="#"><span class="si4 ahover"></span>Facebook</a></li>
+                                        <li><a href="#"><span class="si10 ahover"></span>LINE</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                        <li><a href="#"><span class="si6 ahover"></span>土豆</a></li>
+                                        <li><a href="#"><span class="si3 ahover"></span>56.com</a></li>
+                                        <li><a href="#"><span class="si5 ahover"></span>YouTube</a></li>
+                                </ul>
+                        </li>
+                        <li  class="lv1 last">
+                                <h5>加盟合作</h5>
+                                <ul >
+                                        <li><a href="#">代理协议</a></li>
+                                        <li><a href="#">代理合作常见问题</a></li>
+                                        <li>24小时访客数量
+                                                <div class="olpp">
+                                                        <ul>
+                                                                <li class="olpp1">9
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp2">7
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp3">8
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp4">2
+                                                                        <hr />
+                                                                </li>
+                                                        </ul>
+                                                </div>
+                                                人</li>
+                                        <li>
+                                                <div class="call-box">
+                                                <div class="icon-call"></div>
+                                                <div class="ilblk vamd">
+                                                        <h3 class="yellow2 fmb">400-839-1888</h3>
+                                                        <p class="white">国内24小时免费电话</p>
+                                                </div>
+                                                <div>
+                                        </li>
+                                        <li><a class="btn3 ivt_btn"><span class="icon_enter"></span> <span>推荐朋友</span> 
+                                                <!--邀請朋友的iframe頁-->
+                                                <iframe class="ivt_iframe" src="inviteFriends.html" width="520" height="260" scrolling="no" frameborder="0"></iframe>
+                                                </a></li>
+                                </ul>
+                        </li>
+                        <div class="clear"></div>
+                </ul>
+        </div>
+<!--頁尾-->
+<div id="footer" class="rltv"> 
+        <!--聖誔節主題<div class="absl" style="height:19px; background-image:url(css/images/max_04.png); background-repeat:repeat-x; left:0; right:0; top:-19px;"></div>-->
+        <div class="mw">
+                <div class="pt-icon"> <a href="#" class="pt1 ahover"></a> <a href="#" class="pt2 ahover"></a> <a href="#" class="pt3 ahover"></a> <a href="#" class="pt4 ahover"></a> <a href="#" class="pt5 ahover"></a> <a href="#" class="pt6 ahover"></a> <a href="#" class="pt7 ahover"></a> <a href="#" class="pt8 ahover"></a> <a href="#" class="pt9 ahover"></a> <a href="#" class="pt10 ahover"></a> <a href="#" class="pt11 ahover"></a> <a href="#" class="pt12 ahover"></a> <a href="#" class="pt13 ahover last"></a> </div>
+                <div class="fc">
+                        <h6>VWIN.COM属于VW GROUP ASIA有限公司Morgan & Morgan Building, PO Box 958, Pasea Estate,Road Town, Tortola British Virgin Islands于2013年3月25日获得 菲律宾第一卡格杨( FCLRC )颁发的牌照( 牌照号码074 )并受其监督版权所有 © 2014 VWIN.COM </h6>
+                </div>
+        </div>
+</div>
+</body>
+</html>

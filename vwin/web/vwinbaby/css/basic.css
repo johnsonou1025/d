@@ -1,0 +1,248 @@
+@charset "utf-8";
+html,
+body {
+    height: 100%;
+    color: #333;
+    font-family: 'LiHei Pro', 'Microsoft Yahei', 微软雅黑, Arial, HELVETICA;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.clear {
+    clear: both;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    line-height: 42px;
+    color: #b82e2c;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #b82e2c;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+a {
+    text-decoration: none;
+}
+
+input[type="text"] {
+    font-family: 'LiHei Pro', 'Microsoft Yahei', 微软雅黑, Arial, HELVETICA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #FFECCF;
+    height: 100%;
+    width: 100%;
+    padding-left: 75px;
+    color: #333;
+    box-sizing: border-box;
+    line-height: 64px;
+}
+
+.username {
+    background: url(../images/username.gif) no-repeat #fff;
+}
+
+.address {
+    background: url(../images/address.gif) no-repeat #fff;
+}
+
+.phone {
+    background: url(../images/phone.gif) no-repeat #fff;
+}
+
+.wrap {
+    position: relative;
+    height: 100%;
+}
+
+.conLeft {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    background: url('../images/left_bg.jpg') no-repeat #a31414;
+    background-size: cover;
+    background-position: center bottom;
+}
+
+.kvbox {
+    padding: 10%;
+    text-align: center;
+}
+
+.kvbox img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+}
+
+
+/* 右边内容 */
+
+.conRight {
+    padding-left: 45%;
+    height: 100%;
+    width: 55%;
+    background-color: #ffeccf;
+}
+
+.uibox {
+    padding: 10%;
+}
+
+.text_textbox {
+    position: relative;
+    height: 64px;
+    margin-top: 15px;
+}
+
+.text_notice {
+    margin-top: 15px;
+}
+
+.text_notice ol {
+    list-style: decimal;
+    padding-left: 20px;
+}
+
+.text_notice li {
+    margin-top: 10px;
+}
+
+.btn-pop,
+.btn-pop:visited {
+    font-size: 16px;
+    color: #ffeccf;
+    background-color: #b63332;
+    border: 2px solid #b63332;
+    padding: 15px 100px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-pop:hover {
+    color: #b63332;
+    background: transparent;
+    transition: all 0.2s linear;
+}
+
+.xm_hide {
+    display: none;
+}
+
+.popup_box {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(1, 1, 1, .5);
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+
+.popup_box>.md {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.popup_box>.pp_inner {
+    width: 50%;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.popup_box>.pp_inner>h3 {
+    background-color: #b42d2e;
+    color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 20px;
+}
+
+.popup_box>.pp_inner>div {
+    color: #b42d2e;
+    padding:20px;
+    text-align: left;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+    h2 {
+        line-height: 50px;
+        margin-bottom: 10px;
+    }
+    .xm_hide {
+        display: block;
+    }
+    .sm_hide {
+        display: none;
+    }
+    h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .uibox {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    body {
+        font-size: 16px;
+    }
+    .conLeft {
+        display: none;
+    }
+    .conRight {
+        padding-left: 0;
+        width: 100%;
+    }
+    h2,
+    h3 {
+        text-align: left;
+    }
+    h2 {
+        font-size: 32px;
+        line-height: 42px;
+        margin-bottom: 10px;
+    }
+    h4 {}
+    .btn-pop,
+    .btn-pop:visited {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+.pp_btn{
+    text-align: center;
+}
+.pp_btn a{
+    font-size: 16px;
+    color: #ffeccf;
+    background-color: #b63332;
+    border: 2px solid #b63332;
+    padding: 10px 50px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,21 @@
+.login-submit{
+	margin: 2rem 1rem 0;
+	background-color:$c-F2;
+}
+.login-submit button:disabled{
+	color: $c-wh-50;
+}
+.register-password{
+	margin: 1.7rem 1rem 0;
+	font-size: $f-14;
+}
+.forget-password{
+	text-align:right;
+}
+.forget-password a{
+	color:$c-3A;
+}
+.new-user a{
+	color:$c-3A;
+}
+

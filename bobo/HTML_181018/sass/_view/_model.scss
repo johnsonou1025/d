@@ -1,0 +1,22 @@
+html,body {
+	height: 100%;
+}
+body {
+    font-family: "PingFang SC","Hiragino SansGB","Helvetica Neue","Microsoft Yahei", Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace", sans-serif, serif;
+}
+
+$MaxWidth:1200px;
+
+@mixin Centerenter {
+	max-width: 1200px;
+	padding: 0 10px;
+	height: 100%;
+}
+@mixin Membercenter {
+	max-width: 1080px;
+	padding: 0 10px;
+	height: 100%;
+}
+.ClearBoth {
+	clear: both;
+}

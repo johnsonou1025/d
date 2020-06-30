@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無標題文件</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+<script src="js/jquery.js"></script>
+<!--自訂css與jquery-->
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<script src="js/custom.js"></script>
+</head>
+
+<body>
+
+<div class="popup-style-1">
+                                		<div class="layer-arrow-top"></div>
+                                        <div class="layer-style-1">                                                
+                                                <!--登入頁-->
+                                                <div id="loginPage">
+                                                        <h3>登录您的帐户</h3>
+                                                        <h4>亚洲最好的博彩网站</h4>
+                                                        <div class="thema-a">
+                                                                <div class="ui-input-text"> <span class="icon icon-user"></span>
+                                                                        <input type="text" value="请输入手机/邮箱/昵称"/>
+                                                                </div>
+                                                                <div class="clear mgbt10"></div>
+                                                                <div class="ui-input-text ui-input-text-wrong"> <span class="icon icon-lock"></span>
+                                                                        <input type="password" value="请输入密码"/>
+                                                                        <a>忘记 ?</a> </div>
+                                                                <p class="ui-msg-text"><span class="icon_er1 mgrt5"></span><span>密码错误，您还可以输入4次</span></p>
+                                                                <a class="btn-1 mgbt10">立即登录</a>
+                                                                <p class="tos fltlft"><span class="icon-checkbox mgrt5"></span><span>记住帐号</span></p>
+                                                                <script>
+																$(function(){
+																	$(".tos").click(function(){
+																		var _checkBox =$(this).children(".icon-checkbox");
+																		if(_checkBox.hasClass("icon-checkbox-checked")){
+																			_checkBox.removeClass("icon-checkbox-checked")
+																		}else{
+																			_checkBox.addClass("icon-checkbox-checked")
+																		}
+																	})
+																})
+																</script> 
+                                                                <a href="#register-1" class="fltrt black "><span>▶免费注册</span></a>
+                                                                <div class="clear mgbt10"></div>
+                                                                <p class="talft grey5"><span>登录时有任何问题，请联系</span><a href="#">在线沟通协助</a><span>和</span><a href="#">联系我们</a><span>本网站采用Global Trust最先进的128/256 bit SSL服务器加密机制</span></p>
+                                                        </div>
+                                                </div>
+                                                <!--登入頁結束-->
+                                                <!--注册页第一步-->
+                                                <div id="registerPage-1">
+                                                        <h3>注册您的帐户</h3>
+                                                        <h4>亚洲最好的博彩网站</h4>
+                                                        <div class="thema-a">
+                                                        		<div class="step-style-1 mgbt10">
+                                                                        <div class="step-line"></div>
+                                                                        <div class="step-number-3 talft"><span class="icon-step-on">1</span></div>
+                                                                        <div class="step-number-3"><span class="icon-step-off">2</span></div>
+                                                                        <div class="step-number-3 fltrt tart"><span class="icon-step-off">✔</span></div>
+                                                                </div>
+                                                        		<div class="ui-select"><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span>
+                                                                <div class="select-choice">
+                                                                        <ul>
+                                                                                <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                                <li><span class="icon-flag cn"></span><span class="select-text">中国(+86)</span></li>
+                                                                        </ul>
+                                                                </div>
+                                                                <div class="select-choice-area"></div>
+                                                        </div>
+                                                        <script>
+                                                        $(function(){
+                                                            $(".ui-select").click(function(){
+                                                                if($(this).children(".select-choice:hidden").length){
+                                                                    $(this).children(".select-choice").fadeIn('fast');		
+                                                                    $(".select-choice-area").show();
+                                                                }else{
+                                                                    $(this).children(".select-choice").fadeOut('fast');
+                                                                    $(".select-choice-area").hide();
+                                                                }														
+                                                            })
+                                                            $(".ui-select li").click(function(){
+                                                                $(this).parents(".ui-select").children(".select-text").text($(this).children("span:last").text())
+                                                            })
+                                                            $(".select-choice-area").click(function(){
+                                                                $(".select-choice").fadeOut();
+                                                                $(this).hide();
+                                                            })							
+                                                        })
+                                                        </script>
+                                                                <div class="ui-input-text"> <span class="icon icon-user"></span>
+                                                                        <input type="text" value="请输入手机号码"/>
+                                                                </div>
+                                                                <div class="clear mgbt10"></div>
+                                                                <div class="ui-input-text"> <span class="icon icon-lock"></span>
+                                                                        <input type="password" value="请输入验证码"/>
+																</div>
+                                                                <a href="#registerPage-2" class="btn-1 mgbt10">下一步</a>                                                    
+                                                        </div>
+                                                </div>
+                                                <!--注册页第一步結束-->
+                                                <!--注册页第二步-->
+                                                <div id="registerPage-2">
+                                                        <h3>注册您的帐户</h3>
+                                                        <h4>亚洲最好的博彩网站</h4>
+                                                        <div class="thema-a">
+                                                        		<div class="step-style-1 mgbt10">
+                                                                        <div class="step-line"></div>
+                                                                        <div class="step-number-3 talft"><span class="icon-step-off">1</span></div>
+                                                                        <div class="step-number-3"><span class="icon-step-on">2</span></div>
+                                                                        <div class="step-number-3 fltrt tart"><span class="icon-step-off">✔</span></div>
+                                                                </div>
+                                                                <div class="ui-input-text"> <span class="icon icon-user"></span>
+                                                                        <input type="text" value="请输入手机号码"/>
+                                                                </div>
+                                                                <div class="clear mgbt10"></div>
+                                                                <div class="ui-input-text"> <span class="icon icon-lock"></span>
+                                                                        <input type="text" value="请输入密码"/>
+                                                                        <div class="password-meter-box">
+                                                                                <div class="password-meter weakest"></div>
+                                                                        </div>
+                                                                </div>                                                                
+                                                                <div class="clear mgbt10"></div>
+                                                                <div class="ui-input-text"> <span class="icon icon-lock"></span>
+                                                                        <input type="text" value="请再次输入密码"/>
+																</div>                                                                
+                                                                <a class="btn-1 mgbt10">立即注册</a>
+                                                                <p class="tos"><span class="icon-checkbox mgrt5"></span><span>我确认已年满18岁，并已阅读和接受</span><a href="#">本网站政策、隐私声明、条款和条件</a></p>
+                                                        </div>
+                                                </div>
+                                                <!--注册页第二步-->
+                                                <div class="popup-bgArea"></div>
+                                        </div>
+                                </div>
+</body>
+</html>

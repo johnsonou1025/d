@@ -1,0 +1,351 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>vwin.com</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/jquery.corner.js"></script>
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="js/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--自訂css與jquery-->
+<script src="js/custom.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/vip.css" media="screen" />
+
+<script>
+$(function(){
+		$(".vip-answer").hide();
+		$(".vip-question").click(function(){	                //當question的div被點擊
+				if($(this).hasClass("vip-active")){                 //檢查是否有active這個class,如果有的話就執行
+				   $(this).children(".vip-answer").slideUp("fast");   //answer向上關閉
+				   $(this).removeClass("vip-active");               //移除active
+				}else{                                          //如果沒有的話
+				$(this).parent().parent().find(".vip-active").children(".vip-answer").slideUp("fast");//則回到question的上一層,然後往下找到acitve,執行向上關閉,並移除acitve
+				$(this).parent().parent().find(".vip-active").removeClass("vip-active");
+				$(this).addClass("vip-active").children(".vip-answer").slideDown("fast");//然後在點擊的question下一層找到answer,執行向下打開,並加上active
+				}
+		})
+})
+</script>
+
+</head>
+
+<body>
+<!--頁首未登入狀態-->
+<div id="header">
+        <div class="header">
+                <div class="mw">
+                        <div class="hd-info fltlft">
+                                <div class="info-default">
+                                        <div class="lg"> <span class="tw"></span><span>台湾-繁中</span><span class="downArrow"></span>
+                                                <div class="lg-select">
+                                                        <ul>
+                                                                <li><span class="cn"></span><span>中国-简中</span></li>
+                                                                <li><span class="en"></span><span>英国-English</span></li>
+                                                                <li><span class="vn"></span><span>越南-Tiếng Việt</span></li>
+                                                                <li><span class="thai"></span><span>泰国-ภาษาไทย</span></li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                        <span class="line"></span>
+                                        <div class="time">2014-03-17 15:47</div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">联络我们</a></div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">牌照展示</a></div>
+                                </div>
+                        </div>
+                        <div class="hd-info fltrt">
+                                <div class="info-default info-default-2">
+                                        <div><span class="icon_login"></span><a href="#">登录</a> / <a href="#">免费注册</a></div>
+                                        <span class="line"></span>
+                                        <div class="lc"><span class=" icon_lc3"></span><a href="#">在线客服</a></div>
+                                </div>
+                        </div>
+                        <div class="clear"></div>
+                </div>
+        </div>
+        <!--菜單欄-->
+        <div id="nav">
+                <div class="line"></div>
+                <div class="mw">
+                        <div class="hd-logo fltlft rltv"></div>
+                        <div class="nav-items">
+                                <ul>
+                                        <li><a href="index.html" class="icon-home">首頁</a></li>
+                                        <li><span class="line"></span><a href="mobile.html" class="icon-mobile">手機版</a></li>
+                                        <li><span class="line"></span><a href="#">GB體育</a></li>
+                                        <li class="active"><span class="line"></span><a href="sport.html">體育</a></li>
+                                        <li><span class="line"></span><a href="#">真人娛樂場</a></li>
+                                        <li><span class="line"></span><a href="game.html">電子遊戲</a></li>
+                                        <li><span class="line"></span><a href="#">快樂彩</a></li>
+                                        <li><span class="line"></span><a href="#">世界樂透</a></li>
+                                        <li><span class="line"></span><a href="#">最新優惠</a></li>
+                                        <li><span class="line"></span><a href="#">探索Vwin</a></li>
+                                </ul>
+                        </div>
+                </div>
+        </div>
+        <script>
+		$(function(){
+			$(document).scroll(function(){
+				if($(document).scrollTop()>0){
+					$("#header").addClass("header-color");
+				}else{
+					$("#header").removeClass("header-color");
+				}
+			})	
+		})
+		</script>
+</div>
+<!--主視覺區塊-->
+<div id="main-banner">
+        <div class="kv3"></div>
+</div>
+<!--VIP連結-->
+<div id="notice" class="vip-link">
+        <div class="mw">
+             <ul>
+                 <li class="cols4 vip-navText"><h4><a href="vip1.html">騎士制度</a></h4></li>
+                 <li class="cols4 vip-navText"><h4><a href="vip2.html">領取獎勵</a></h4></li>
+                 <li class="cols4 last vip-navText"><h4>騎士課堂</h4></li>
+             </ul>
+        </div>
+</div>       
+<!--內容-->
+<div id="content">
+        
+        <div class="mw">                
+
+        <!--Q1-->
+        <div class="vip-question vip-question-top">
+               <h1>Q</h1>
+               <h2>什麼是騎士計畫？</h2>
+               <div class="vip-answer">
+                     <h1 class="active">A</h1>
+                     <h2>這是我們向所有玩家推出的獎勵方式。 騎士計畫非常簡單，所有玩家均可輕鬆加入並享受該計畫所提供的誘人回報。那些比較活躍的規律性客戶將收到日益增多的諸多獎勵。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+
+        <!--Q2-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>這個計畫會給我帶來什麼好處？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>非常簡單：您可獲得我們的豐富的騎士獎勵。我們會通過騎士經驗值運行騎士計畫，即當您進行各項遊戲時均可賺取經驗值，作為回報，您可將依據累積的經驗值獲得騎士計畫的獎勵。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q3-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>將提供什麼騎士計畫獎勵？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>您可獲得豐富的現金獎勵。所選擇的獎勵將直接加入您的帳戶。而且我們會定期推出誘人的特別獎勵，這些獎勵可能與正在進行的精彩活動相關。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q4-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>我如何賺取騎士計畫裡的經驗值？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>您可在進行各項遊戲時獲取經驗值。每投注100元即可獲得1個經驗值。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q5-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>為什麼有不同的騎士級別？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>根據尊貴級別的排列順序，我們的標準騎士級別分為四級，包括輕騎兵，重騎兵，圓桌騎士，皇家騎士。這些級別的設定，將使更經常進行遊戲的玩家，獲得更好的獎勵。隨著騎士計畫的廣受歡迎，我們將推出更豐富的騎士獎勵。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q6-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>如何達到相應的騎士級別？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>正如增進您的地位部分所顯示的，您的騎士級別取決於您每月或每年所賺取的經驗值。根據玩家所賺取的經驗值，相應的騎士級別將于下個月的第一天進行更新。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q7-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>我是否必須按照騎士級別的順序依次升級？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>不需要，這是我們騎士計畫的優勢特點，如果賺取了足夠的有效騎士計畫經驗值，您可直接升級更高騎士級別，同時可以一次性領取所有獎勵。但是，您需要等到下個月才可確認自己的新級別。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q8-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>我如何獲得騎士計畫獎勵？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>請訪問“會員中心”-“錢包”-“紅利”部分，所有您可獲得的獎勵都會在該頁面顯示出來，只需選擇立即申領並按照螢幕介紹進行操作即可。無需等待，騎士計畫獎勵將即時加入您的帳戶。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+        
+        <!--Q9-->
+        <div class="vip-question">
+               <h1>Q</h1>
+               <h2>我能否查看自己當前的騎士級別和經驗值數額？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>請前往“會員中心”-騎士部分。點擊打開該處，您當前的騎士級別及經驗值餘額資訊即會顯示。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>
+        <br clear="all" />
+                                               
+        <!--Q10-->
+        <div class="vip-question vip-question-last">
+               <h1>Q</h1>
+               <h2>我如何在騎士計畫中獲取更多回報？</h2>
+               <div class="vip-answer">
+                     <h1>A</h1>
+                     <h2>所有玩家均可輕鬆享受我們騎士計畫所帶來的回報，但最佳方法是更多的參與投注，贏得自己的經驗值並享受最高價值的騎士獎勵。 如需諮詢更多問題，請聯繫我們 , 我們將非常樂意為您提供幫助。</h2>
+               </div>               
+               <div class="vip-change"></div>
+        </div>                                        
+        </div>
+            
+     
+        <br clear="all" />
+        <div class="horizonLine"></div>           
+        <div class="mw">
+                <ul class="con3">
+                        <li class="lv1">
+                                <h5>產品下載</h5>
+                                <ul>
+                                        <li><a href="#">鉑金館</a></li>
+                                        <li><a href="#">翡翠館</a></li>
+                                        <li><a href="#">百樂門</a></li>
+                                        <li><a href="#">小遊戲大廳</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>關於</h5>
+                                <ul >
+                                        <li><a href="AboutUs.html">關於VWIN</a></li>
+                                        <li><a href="ResponsibleGaming.html">責任博彩</a></li>
+                                        <li><a href="TermsAndCondition.html">條款及條件</a></li>
+                                        <li><a href="TermsAndCondition_promotion.html">優惠活動規則與條款</a></li>
+                                        <li><a href="PrivatePolicy.html">隱私權政策</a></li>
+                                        <li><a href="Contact.html">聯係我們</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>使用幫助</h5>
+                                <ul >
+                                        <li><a href="help1-2.html">存款流程 </a></li>
+                                        <li><a href="help1-3.html">提款流程 </a></li>
+                                        <li><a href="help1-1.html">如何開戶 </a></li>
+                                        <li><a href="help1-5.html">常見問題 </a></li>                                        
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                		<li><a href="help2-1.html">體育規則 </a></li>
+                                        <li><a href="help3-1.html">快樂彩規則 </a></li>
+                                        <li><a href="help4-1.html">世界樂透規則 </a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>社交工具</h5>
+                                <ul >
+                                        <li><a href="#"><span class="si1 ahover"></span>微信</a></li>
+                                        <li><a href="#"><span class="si2 ahover"></span>微博</a></li>
+                                        <li><a href="#"><span class="si4 ahover"></span>Facebook</a></li>                                        
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                		<li><a href="#"><span class="si6 ahover"></span>土豆</a></li>
+                                        <li><a href="#"><span class="si3 ahover"></span>56.com</a></li>
+                                        <li><a href="#"><span class="si5 ahover"></span>YouTube</a></li>                                        
+                                </ul>
+                        </li>
+                        <li  class="lv1 last">
+                                <h5>加盟合作</h5>
+                                <ul >
+                                        <li><a href="#">代理權議</a></li>
+                                        <li><a href="#">代理合作常見問題</a></li>
+                                        <li>24小時訪客數量
+                                                <div class="olpp">
+                                                        <ul>
+                                                                <li class="olpp1">9
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp2">7
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp3">8
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp4">2
+                                                                        <hr />
+                                                                </li>
+                                                        </ul>
+                                                </div>
+                                                人</li>
+                                        <li><a class="btn3 ivt_btn"><span class="icon_enter"></span> <span>推薦朋友</span> 
+                                                <!--邀請朋友的iframe頁-->
+                                                <iframe class="ivt_iframe" src="inviteFriends.html" width="520" height="260" scrolling="no" frameborder="0"></iframe>
+                                                </a></li>
+                                </ul>
+                        </li>
+                        <br clear="all" />
+                </ul>
+        </div>
+</div>
+<!--頁尾-->
+<div id="footer">
+        <div class="mw">
+                <div class="pt-icon"> <a href="#" class="pt1 ahover"></a> <a href="#" class="pt2 ahover"></a> <a href="#" class="pt3 ahover"></a> <a href="#" class="pt4 ahover"></a> <a href="#" class="pt5 ahover"></a> <a href="#" class="pt6 ahover"></a> <a href="#" class="pt7 ahover"></a> <a href="#" class="pt8 ahover"></a> <a href="#" class="pt9 ahover"></a> <a href="#" class="pt10 ahover"></a> <a href="#" class="pt11 ahover"></a> <a href="#" class="pt12 ahover"></a> <a href="#" class="pt13 ahover last"></a> </div>
+                <div class="fc">
+                        <h6>VWIN.COM屬於VW GROUP ASIA有限公司Morgan & Morgan Building, PO Box 958, Pasea Estate,Road Town, Tortola British Virgin Islands於2013年3月25日獲得
+                                菲律賓第一卡格楊( FCLRC )頒發的牌照( 牌照號碼074 )並受其監督版權所有 © 2014 VWIN.COM</h6>
+                </div>
+        </div>
+</div>
+
+</body>
+</html>

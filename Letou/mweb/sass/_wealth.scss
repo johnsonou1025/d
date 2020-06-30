@@ -1,0 +1,336 @@
+.header-gray-bg2.blue{
+	background-color: $c-0A;
+}
+.header-gray-bg2.blue:before{
+	background-color: $c-0A;
+}
+// 補全身份信息
+.safety-warning-warp{
+	padding: 20px 15px;
+}
+.safety-warning-warp .text-warp i{
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	vertical-align: middle;
+	background-image: url('images/note-icon.png');
+	background-size: cover;
+}
+.safety-warning-warp .text-warp p{
+	display: inline-block;
+	font-size: $f-13;
+	color: $c-B1;
+	vertical-align: middle;
+	margin-left: 4px;
+}
+.safety-warning-warp .text-warp p a{
+	color: $c-FF;
+}
+.safety-warning-warp .btn-warp{
+	margin-top: 32px;
+}
+.wealth.gary-bg{
+	height: 20px;
+	background-color: $c-F2;
+}
+.wealth.gary-bg.tiny{
+	height: 10px;
+}
+// 按鈕們
+.wealth-list-warp li{
+	width: 100%;
+	border-bottom: 1px solid $c-DE;
+}
+.wealth-list-warp li:last-child{
+	border-bottom: 1px solid $c-D3;
+}
+.wealth-list-warp li:after{
+	content:"";
+	position: absolute;
+	display: block;
+	width: 15px;
+	height: 1px;
+	background-color: $c-wh;
+}
+.wealth-list-warp li:last-child:after{
+	display: none;
+}
+.wealth-list-warp li a{
+	display: block;
+	padding: 11px 15px;
+}
+.wealth-list-warp li a .btn-warp{
+	position: relative;
+	width: 100%;
+}
+.wealth-list-warp li a .btn-warp .icon{
+	display: inline-block;
+	width: 22px;
+	height: 15px;
+	vertical-align: middle;
+	margin-top: -1px;
+	background-size: cover;
+}
+.wealth-list-warp li a .btn-warp .icon.A{
+	background-image: url('images/wealth/deposit-icon.png');
+}
+.wealth-list-warp li a .btn-warp .icon.B{
+	background-image: url('images/wealth/withdrawal-icon.png');
+}
+.wealth-list-warp li a .btn-warp .icon.C{
+	background-image: url('images/wealth/transfers-icon.png');
+}
+.wealth-list-warp li a .btn-warp .icon.D{
+	width: 21px;
+	height: 21px;
+	background-image: url('images/wealth/total-icon.png');
+}
+.wealth-list-warp li a .btn-warp .word{
+	display: inline-block;
+	vertical-align: middle;
+	color: $c-33;
+	font-size: $f-16;
+	margin-left: 12px;
+}
+.wealth-list-warp li a .btn-warp .arrow{
+	display: inline-block;
+	vertical-align: middle;
+	color: $c-B1;
+	font-size: $f-13;
+	position: absolute;
+	right: 0px;
+	top: 6px;
+}
+// 圓餅圖
+.total-assets-title-warp{
+	border-bottom: 1px solid $c-DE;
+}
+.total-assets-title-warp:after{
+	content:"";
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 1px;
+	background-color: $c-wh;
+}
+.total-assets-title{
+	position: relative;
+	padding: 11px 15px;
+}
+.total-assets-title h3{
+	display: inline-block;
+	vertical-align: middle;
+	font-size: $f-16;
+	color: $c-3A;
+}
+.total-assets-title p{
+	display: inline-block;
+	vertical-align: middle;
+	position: absolute;
+	right: 15px;
+	text-align: right;
+	font-size: $f-16;
+	color: $c-3A;
+}
+.pie-warp{
+	position: relative;
+	padding: 33px 0px 33px 11%;
+	border-bottom: 1px solid $c-D3;
+}
+.pie-warp .pie-box{
+	width: 128px;
+}
+.pie-warp .pie-box.nodata{
+	width: 128px;
+	height: 128px;
+}
+.pie-warp .pie-box.nodata .img{
+	width: 100%;
+	height: 100%;
+	background-image: url(images/no-record.png);
+	background-size: cover;
+}
+.pie-warp .pie-box .pie-zone{
+	width: 100%;
+	height: 100%;
+}
+.pie-warp .pie-word-warp{
+	position: absolute;
+	top: 29px;
+	right: 6%;
+	width: auto;
+}
+.pie-word-warp .pie-word{
+	position: relative;
+	width: 100%;
+	display: table;
+}
+.pie-word .pie-tr{
+	display: table-row;
+	vertical-align: middle;
+	line-height: 2.5rem;
+}
+.pie-word .pie-td{
+	display: table-cell;
+	vertical-align: middle;
+	line-height: 2.5rem;
+}
+.pie-word .pie-td.right{
+	white-space: nowrap;
+	text-align: right;
+}
+.pie-word .pie-td.text{
+	white-space: nowrap;
+}
+.pie-word .pie-td.tag{
+	width: 19px;
+}
+.pie-word .pie-td i{
+	display: block;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	vertical-align: middle;
+	padding-right: 10%;
+}
+.pie-word .pie-td p{
+	display: block;
+	color: $c-B1;
+	font-size: $f-12;
+	vertical-align: middle;
+	padding-right: 30%;
+}
+.pie-word .pie-td span{
+	color: $c-3A;
+	font-size: $f-13;
+	vertical-align: middle;
+	width: 100%;
+	text-align: right;
+}
+
+// 資金明細
+.funds-title{
+	border-bottom: 1px solid $c-D3;
+}
+.funds-title h3{
+	padding: 11px 15px;
+	font-size: $f-16;
+	color: $c-3A;
+}
+.funds-list-warp{
+	position: relative;
+}
+.funds-list-warp li{
+	position: relative;
+	border-bottom: 1px solid $c-DE;
+}
+.funds-list-warp li:after{
+	content:"";
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 1px;
+	background-color: $c-wh;
+}
+.funds-list-warp li:last-child{
+	border-bottom: 1px solid $c-D3;
+}
+.funds-list-warp li:last-child:after{
+	display: none;
+}
+.funds-list-warp li a .funds-list div{
+	display: inline-block;
+	vertical-align: middle;
+}
+.funds-list-warp li a .funds-list{
+	position: relative;
+	padding: 11px 15px;
+}
+.funds-list-warp li a .funds-list .tag{
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+}
+.color-1{
+	background-color: #F8AA00;
+}
+.color-2{
+	background-color: #2C87D2;
+}
+.color-3{
+	background-color: #FA3B00;
+}
+.color-4{
+	background-color: #14869F;
+}
+.color-5{
+	background-color: #FDDC18;
+}
+.color-6{
+	background-color: #F37E10;
+}
+.color-7{
+	background-color: #008C6E;
+}
+.color-8{
+	background-color: #6D9A24;
+}
+.color-9{
+	background-color: #FACA6D;
+}
+.color-10{
+	background-color: #4AA9A6;
+}
+.funds-list-warp li a .funds-list .word{
+	font-size: $f-16;
+	color: $c-6D;
+	margin-left: 9px;
+}
+.funds-list-warp li a .funds-list .cash{
+	position: absolute;
+	font-size: $f-13;
+	color: $c-3A;
+	right: 42px;
+	margin-top: 2px;
+}
+_::-webkit-full-page-media, _:future, :root .funds-list-warp li a .funds-list .cash{
+	margin-top: 1px;
+}
+.funds-list-warp li a .funds-list .arrow{
+	position: absolute;
+	font-size: $f-13;
+	color: $c-B1;
+	right: 15px;
+	margin-top: 5px;
+}
+// 注意事項
+.notice{
+	display: table;
+	padding: 15px;
+}
+.notice span {
+	display: table-cell;
+	width: 14px;
+	vertical-align: top;
+}
+.notice span i{
+	display: block;
+	width: 14px;
+	height: 14px;
+	background-image: url('images/note-icon.png');
+	background-size: cover;
+	margin-top: 1px;
+}
+_::-webkit-full-page-media, _:future, :root .notice span i{
+	margin-top: 2px;
+}
+.notice p{
+	display: table-cell;
+	font-size: $f-13;
+	color: $c-B1;
+	vertical-align: top;
+	padding-left: 4px;
+}
+.notice-warp{
+	border-bottom: 1px solid $c-D3;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+    <!--置入圓餅圖-->
+    <script src="js/highcharts.js"></script>
+    <script src="js/custom2.js"></script>
+    <script>
+    $(document).ready(function() {
+        DChar.Init();
+    })
+    </script>
+    <!--自訂樣式-->
+    <link rel="stylesheet" href="css/custim-theme.css" />
+    <script src="js/custom.js"></script>
+</head>
+
+<body>
+    <div data-role="page">
+        <div data-role="header" data-theme="b">
+            <a href="index-1.html" data-ajax="false" data-iconpos="notext" data-role="buton" data-icon="flat-back" data-theme="a"></a>
+            <h1 class="h3">資金管理</h1>
+        </div>
+        <div data-role="content" role="main">
+            <div class="col-8">
+                <div style="position:absolute;z-index: 1; width:120px; height:50px;left: 50%; top:50%; margin-left:-60px;margin-top:-25px;text-align:center; ">
+                    <p class="h3">¥8,888</p>
+                    <p>總資金</p>
+                </div>
+                <div id="container"></div>
+            </div>
+            <div class="col-4 ">
+                <div class="pdlft10" style="margin-top:20px;">
+                    <div class="mgbt10 tcolor-8">
+                        <p>總資金</p>
+                        <p class="h3">¥1569</p>
+                    </div>
+                    <div class="mgbt10 tcolor-10">
+                        <p>主帳號</p>
+                        <p class="h3">¥1569</p>
+                    </div>
+                    <div class="mgbt10 tcolor-9">
+                        <p>可提資金</p>
+                        <p class="h3">¥1569</p>
+                    </div>
+                </div>
+            </div>
+            <div data-role="controlgroup" data-type="horizontal" data-theme="g">
+                <div class="col-4"><a href="deposit-1.html" data-ajax="false" data-role="button">存款</a></div>
+                <div class="col-4"><a href="transfer.html" data-ajax="false" data-role="button">轉帳</a></div>
+                <div class="col-4"><a href="withdraw.html" data-ajax="false" data-role="button">提款</a></div>
+            </div>
+            <div class="clear mgbt20"></div>
+            <ul data-role="listview" data-theme="f">
+                <li class="noArrow"><a href="#"><span class="icon34 icon-bank-1"></span>主帳戶<span class="tt2 pull-right">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-14"></span>體育<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-5"></span>鉑金館V<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-4"></span>彩票<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-12"></span>GameOs小遊戲<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-15"></span>Betsoft小遊戲<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-17"></span>NYX<span class="tt2"><span class="icon55 icon-bank2-7"></span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="bank-1.html" data-ajax="false"><span class="icon34 icon-bank-2"></span>沙巴體育<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-5"></span>鉑金館<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-6"></span>翡翠廳<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-8"></span>星耀廳<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-11"></span>波音館<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-9"></span>海盜城<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-10"></span>奪寶島<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-7"></span>米蘭站<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>
+                                <div class="hr2"></div>
+                                </a></li>
+                <li><a href="#"><span class="icon34 icon-bank-3"></span>Playtech小遊戲<span class="tt2">¥168<span class="tcolor-4 mglft10">(6%)</span></span>                                
+                                </a></li>
+            </ul>
+        </div>
+        <div data-role="footer" data-theme="a" class="tcolor-4">
+            <div class="clear mgbt10"><span class="head-logo-1"></span></div>
+            <p>© 2013-2016 Vwin.com</p>
+            <p>由VW集團亞洲有限公司(BVI)版權所有</p>
+            <div class="clear mgbt10"></div>
+        </div>
+    </div>
+</body>
+
+</html>

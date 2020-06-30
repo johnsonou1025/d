@@ -1,0 +1,38 @@
+﻿.con2 li.vip div.title {
+    background-image: url(images/vip-title.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 84px;
+    margin-bottom: 10px;
+}
+
+.pswStg {
+    background-image: url(images/psw-bg.png);
+}
+.pswStg2 {	
+	background-image: url("images/psw2-bg.png");
+}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+	margin-left:-10px !important;
+}
+
+.csn_milan div.bg {
+background-image: url(images/milan_img.png);
+}
+
+.csn_birgin div.bg {
+background-image: url(images/birgin_img.png);
+}
+
+.csn_kv3 {
+background-image: url(images/emerald_bg.jpg);
+}
+
+.csn_kv4 {
+background-image: url(images/pt_bg.jpg);
+}
+
+.kv2 {
+background: url(images/game_kv.jpg) center center no-repeat;
+}

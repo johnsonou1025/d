@@ -1,0 +1,127 @@
+.casinotitle-warp{
+	padding: 22px 0;
+	text-align: center;
+}
+.casinotitle-warp i{
+	display: inline-block;
+	width: 16px;
+	height: 17px;
+	background-image: url('images/casino/casino-icon.png');
+	background-size: cover;
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-right: 9px;
+}
+.casinotitle-warp h3{
+	display: inline-block;
+	font-size: $f-16;
+	vertical-align: middle;
+}
+.casinotitle-warp:after{
+	content:"";
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	pointer-events: none;
+	bottom: -30px;
+	background-image: url('images/casino/casino-shadow.png');
+	background-size: cover;
+}
+.casino-list-warp{
+	height: 100%;
+	padding: 15px;
+}
+.casino-list-warp.bg2{
+	background-color: $c-FAF;
+}
+.casino-list-warp .img-warp{
+	padding-right: 5%;
+}
+.casino-list-warp .img-warp .img{
+	width: 100%;
+	height: 100px;
+	background-color: $c-blue;
+	border-radius: 7px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.30);
+	background-size: cover;
+	background-position: center;
+}
+// for 迴圈套用圖片
+@for $i from 1 through 7{
+	.casino-list-warp .img-warp .img.img#{$i}{
+		background-image: url('images/casino/pg#{$i}.jpg');
+	}
+}
+.casino-list-warp .word-warp{
+	position: relative;
+	width: 100%;
+	height: 100px;
+}
+.casino-list-warp .word-warp a:nth-child(1){
+	display: block;
+}
+.casino-list-warp .word-warp h3{
+	width: 100%;
+	font-size: $f-14;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: $c-3A;
+}
+.casino-list-warp .word-warp p{
+	width: 100%;
+	font-size: $f-12;
+	color: $c-66;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+.casino-list-warp .word-warp .play{
+	position: absolute;
+	display: inline-block;
+	bottom: 5px;
+}
+.casino-list-warp .word-warp .play span{
+	display: inline-block;
+	font-size: $f-12;
+	color: $c-3E;
+	vertical-align: middle;
+}
+.casino-list-warp .word-warp .play i{
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background-image: url('images/slotgame/play-icon.png');
+	background-size: cover;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+.casino-list-warp .word-warp .app{
+	position: absolute;
+	display: inline-block;
+	bottom: 1px;
+	right: 0;
+	background-color: $c-FF;
+	padding: 4px 7px;
+	border-radius: 50px;
+}
+.casino-list-warp .word-warp .app span{
+	display: inline-block;
+	font-size: $f-12;
+	color: $c-wh;
+	vertical-align: middle;
+}
+.casino-list-warp .word-warp .app i{
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image: url('images/casino/download-icon.png');
+	background-size: cover;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+

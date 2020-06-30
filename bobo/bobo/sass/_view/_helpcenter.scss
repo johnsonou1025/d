@@ -1,0 +1,344 @@
+.ContentMain.Helpcenter {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start ;
+	align-content:flex-start ;
+	align-items: flex-start ;
+	max-width: 1300px;
+	padding: 145px 10px 50px;
+	margin: 0 auto;
+}
+.ContentMain.Helpcenter:after {
+	position: absolute;
+	content: "";
+	width: calc(100% - 20px);
+	height: calc(100% - 195px);
+	background-color: #CDCDCD;
+	z-index: 1;
+	top: 145px;
+}
+.HelpcenterNav {
+	position: relative;
+	width: 255px;
+	height: 100%;
+	background-color: #666666;
+	z-index: 3;
+}
+.HelpcenterNavBtn {
+	position: relative;
+	border-bottom: 1px solid #333;
+	border-top: 1px solid #666;
+}
+.HelpcenterNavBtn.Arrow:after {
+	display: none;
+	position: absolute;
+	content: "";
+	width: auto;
+	height: 10px;
+	border-style: solid;
+	border-width: 5px;
+	border-color:#fff transparent transparent transparent;
+	z-index: 1;
+	top: 50%;
+	margin-top: -5px;
+	right: 10px;
+}
+.HelpcenterNavBtn.BorderTopNone {
+	border-top: none !important;
+}
+.HelpcenterNavBtn.Active {
+	background-color: #901518;
+	border-bottom: 1px solid #690709;
+	border-top: 1px solid #C22B2F;
+}
+.HelpcenterNavBtn.Arrow.Active:after {
+	border-color:#E8C699 transparent transparent transparent;
+}
+.HelpcenterNavBtn a {
+	display: block;
+	font-size: 16px;
+	color: #fff;
+}
+.HelpcenterNavBtn.Active ul li a {
+	color: #fff;
+}
+.HelpcenterNavBtn p {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	width:calc(100% - 65px);
+	height: 85px;
+	line-height: 85px;
+	padding-left: 85px;
+}
+.HelpcenterNavBtn i {
+	position: absolute;
+	display: inline-block;
+	vertical-align: top;
+	width: 65px;
+	height: 100%;
+	background-color: #444444;
+}
+.HelpcenterNavBtn.Active i {
+	background-color: #690709;
+}
+.HelpcenterNavBtn i span {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 30px;
+	left: 50%;
+	transform:translateX(-50%);
+	background-image: url(../images/helpcenter/icon001.png);
+	background-size: 100%;
+}
+.HelpcenterNavBtn i span.Icon1 {
+	background-position: 0 0;
+}
+.HelpcenterNavBtn.Active i span.Icon1 {
+	background-position: 0 -20px;
+}
+.HelpcenterNavBtn i span.Icon2 {
+	background-position: 0 -40px;
+}
+.HelpcenterNavBtn.Active i span.Icon2 {
+	background-position: 0 -60px;
+}
+.HelpcenterNavBtn i span.Icon3 {
+	background-position: 0 -80px;
+}
+.HelpcenterNavBtn.Active i span.Icon3 {
+	background-position: 0 -100px;
+}
+.HelpcenterNavBtn i span.Icon4 {
+	background-position: 0 -120px;
+}
+.HelpcenterNavBtn.Active i span.Icon4 {
+	background-position: 0 -140px;
+}
+.HelpcenterNavBtn i span.Icon5 {
+	background-position: 0 -160px;
+}
+.HelpcenterNavBtn.Active i span.Icon5 {
+	background-position: 0 -180px;
+}
+.HelpcenterNavBtn i span.Icon6 {
+	background-position: 0 -200px;
+}
+.HelpcenterNavBtn.Active i span.Icon6 {
+	background-position: 0 -220px;
+}
+.HelpcenterNavBtn i span.Icon7 {
+	background-position: 0 -240px;
+}
+.HelpcenterNavBtn.Active i span.Icon7 {
+	background-position: 0 -260px;
+}
+.HelpcenterNavBtn i span.Icon8 {
+	background-position: 0 -280px;
+}
+.HelpcenterNavBtn.Active i span.Icon8 {
+	background-position: 0 -300px;
+}
+.HelpcenterNavBtn ul {
+	position: relative;
+	max-height: 0;
+	padding-left: 100px;
+	margin-top: 0;
+	padding-bottom: 0;
+	z-index: 2;
+	overflow: hidden;
+	transition:all .3s;
+}
+.HelpcenterNavBtn ul.Active {
+	max-height: 1000px;
+	margin-top: -20px;
+	padding-bottom: 30px;
+}
+.HelpcenterNavBtn ul li a {
+	font-size: 12px;
+	line-height: 24px;
+	color: #DADADA;
+}
+.HelpcenterNavBtn ul li a:hover {
+	color: #F7E6B0;
+}
+.HelpcenterMain {
+	position: relative;
+	width: calc(100% - 255px);
+	min-height:500px;
+	padding: 30px;
+	background-color: #CDCDCD;
+	z-index: 2;
+}
+.HelpcenterSecondNav {
+	overflow-y: hidden;
+	overflow-x: auto;
+	white-space:nowrap;
+}
+.HelpcenterMain .HelpcenterSecondNav ul li {
+	display: inline-block;
+	vertical-align: middle;
+	width: 130px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 45px;
+	margin: 0;
+}
+.HelpcenterMain .HelpcenterSecondNav ul li a {
+	display: block;
+}
+.HelpcenterMain .HelpcenterSecondNav ul li.Active {
+	background-color: #F2F2F2;
+}
+.HelpcenterMain .Article {
+	min-height: 400px;
+	padding: 20px;
+	background-color: #F2F2F2;
+}
+.HelpcenterMain  h2 {
+	position: relative;
+	font-size: 20px;
+	line-height: 50px;
+	color: #DD2527;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #C0C0C0;
+}
+.HelpcenterMain  h2:after {
+	display: block;
+	content: "";
+	width: 100%;
+	height: 1px;
+	background-color: #DADADA;
+}
+.HelpcenterMain  h3 {
+	font-size: 16px;
+	color: #4A4A4A;
+	margin-bottom: 20px;
+}
+.HelpcenterMain  p {
+	font-size: 13px;
+	line-height: 22px;
+	color: #4A4A4A;
+	margin-bottom: 30px;
+}
+.HelpcenterMain  p span {
+	color: #FF3333;
+}
+.HelpcenterMain ul li {
+	font-size: 13px;
+	line-height: 22px;
+	color: #4A4A4A;
+	margin-bottom: 10px;
+}
+.HelpcenterMain ul li span {
+	color: #FF3333;
+}
+.HelpcenterMain:before {
+	position: absolute;
+	content: "";
+	width: 255px;
+	height: 100%;
+	background-color: #666666;
+	top: 0;
+	left: -255px;
+	z-index: 1;
+}
+.HelpcenterMain:after {
+	position: absolute;
+	content: "";
+	width:65px;
+	height: 100%;
+	background-color: #444;
+	top: 0;
+	left: -255px;
+	z-index: 2;
+}
+@media only screen and (max-width: 1080px) {
+	.ContentMain.Helpcenter {
+		padding: 30px 10px 10px;
+		margin: 0 auto;
+	}
+	.HelpcenterNav {
+		width: 100%;
+		background-color: transparent;
+	}
+	.HelpcenterNavBtn {
+		display: inline-block;
+		vertical-align: middle;
+		width: calc((100% - 30px) / 3);
+		border-radius: 5px;
+		margin: 0 5px;
+		margin-bottom: 10px;
+		line-height: 30px;
+		border: none;
+		text-align: center;
+		background-color: #666;
+	}
+	.HelpcenterNavBtn.Active {
+		border: none;
+	}
+	.HelpcenterNavBtn a {
+		font-size: 14px;
+	}
+	.HelpcenterNavBtn i {
+		display: none;
+	}
+	.HelpcenterNavBtn p {
+	    position: relative;
+	    width: 100%;
+	    height: 35px;
+	    line-height: 35px;
+	    padding-left: 0;
+	}
+	.HelpcenterNavBtn ul {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 30px;
+		padding-left: 0;
+		background-color:#901518;
+		border-radius: 0 0 5px 5px;
+	}
+	.HelpcenterNavBtn ul.Active {
+		max-height: 1000px;
+		margin-top: 0;
+		padding:10px 0;
+	}
+	.HelpcenterNavBtn ul li a {
+	    font-size: 14px;
+	    line-height: 35px;
+	    text-align: left;
+	    text-indent: 10px;
+	}
+	.HelpcenterMain {
+		width: 100%;
+		min-height:0;
+		padding:20px 10px;
+	}
+	.HelpcenterMain:before ,.HelpcenterMain:after {
+		content: none;
+	}
+	.HelpcenterMain  h2 {
+		margin-bottom: 20px;
+	}
+	.HelpcenterSecondNav {
+		margin-bottom: 10px;
+	}
+	.HelpcenterMain .HelpcenterSecondNav ul li {
+		width: auto;
+		border-radius: 5px;
+		padding: 0 10px;
+		line-height: 35px;
+	}
+	.HelpcenterNavBtn.Arrow:after {
+		display: block;
+	}
+	.HelpcenterNavBtn.Active a {
+		color: #E8C699;
+	}
+}
+
+
+

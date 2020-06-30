@@ -1,0 +1,43 @@
+.iplimit-warp{
+	width: 100%;
+	text-align: center;
+	.img-warp{
+		width: 100%;
+		margin-top: 5%;
+        .img{
+        	width: 160px;
+        	height: 160px;
+        	background-image: url('images/no-record.png');
+        	background-size: cover;
+        	margin: 0 auto;
+        }
+	}
+}
+
+.iplimit-warp h3{
+	margin-top: 5%;
+	font-size: $f-72;
+	color: $c-4A;
+	letter-spacing: -3px; 
+}
+
+.iplimit-warp h4{
+	font-size: $f-28;
+	margin-left: 10px;
+	color: $c-FF;
+}
+.iplimit-warp p{
+	margin-top: 5%;
+	font-size: $f-18;
+	color: $c-33;
+}
+.iplimit-warp span{
+	display: block;
+	margin-top: 10%;
+	font-size: $f-14;
+	margin-bottom: 10%;
+	a{
+		display: inline-block;
+		color: $c-4A;
+	}
+}

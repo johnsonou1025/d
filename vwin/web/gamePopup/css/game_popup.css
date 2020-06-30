@@ -1,0 +1,125 @@
+@charset "utf-8";
+/* CSS Document */
+/*all*/
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #000;
+	font-family: "Microsoft yahei";
+}
+a{ text-decoration:none; color:#fff;}
+ul {list-style: none;margin: 0;padding: 0;}
+ul li {display: inline-block;}
+ul li a{display:block;}
+.pull_left {
+	float: left;
+}
+.pull_right {
+	float: right;
+}
+.title_1, .title_2, .title_3{
+	width:136px;
+	float:left;
+	text-align:center;
+	}
+.title_1{background-color:#6f1215;}
+.title_1 span{display:inline-block;}
+.title_2{background-color:#404040;}
+.title_3{font-size:16px;}
+.wrap_outer {
+	background: url(../images/xyx_nbg3.jpg) no-repeat top center #000;
+	background-size: cover;
+	max-width: 100%;
+	height: auto;
+	position: relative;
+	overflow: hidden;
+	color:#fff;
+}
+.wrap {
+	margin: 0 auto;
+	padding-top: 0px;	
+}
+.wrap2{
+	width:100%;
+	height:44px;
+	line-height:44px;
+	background: #202020;
+	width: 100%;
+	position: absolute;
+	bottom:0;
+	border-top:1px solid #474747;
+	}
+.wrap3{
+	position: absolute;
+	right: 0;
+	float:right;
+	bottom:8px;
+	}
+.mn_status, .mn_funds {
+	background: #98171a;
+	min-width: 675px;
+	height: 40px;
+	line-height:40px;
+	width: 100%;
+}
+.mn_funds{background-color:#404040;}
+.mn_status .icon{margin-top:12px;}
+.mn_funds{height:46px; line-height:46px;}
+.timebox{
+	background: #000;
+	width: 80px;
+	height: 27px;
+	margin-top: 9px;
+	margin-right: 20px;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 27px;
+	color:#fff;
+	}
+.mn_list ul {list-style: none;margin: 0;padding: 0;}
+.mn_list ul li {display: inline-block; float:left;}
+.mn_list ul li a { display:block; padding:0 10px;}
+.mn_list ul li a.btn_1{
+	color: #fff;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 20px;
+	text-align: center;
+	line-height: normal;
+	padding: 8px 20px;
+	margin-top: 6px;
+	font-size: 14px;
+}
+.mn_funds ul li{margin-right:10px;}
+.wrap2 ul li{padding-right:10px; float:left;}
+.wrap2 ul li a{width:74px; height:56px; margin-top:-10px; border:2px solid #111;}
+.wrap3 ul {padding: 0;}
+.wrap3 ul li a{display:block;}
+.wrap3 ul li span.icon{margin-bottom:-8px;}
+/*position*/
+.inline-block{ display:inline-block;}
+.mgrt20{margin-right:20px;}
+.mglft20{margin-left:20px;}
+/*color*/
+.bgcolor_1{background-color: #98171a;}
+.bgcolor_2{background-color: #595959;}
+/*icon*/
+.icon, .icon2, .icon3{width:16px;height:16px; float:left; margin-right:10px;margin-top: 2px;}
+.icon2{margin-top: 15px;}
+.icon3{ width:28px; height:28px;margin-bottom:-8px;}
+.icon_enter_g{background-image:url(../images/enter.png);}
+.icon_close_g{background-image:url(../images/close.png)}
+.icon_login_g{background-image:url(../images/login.png);}
+.icon_register_g{background-image:url(../images/register.png);}
+.icon_try_g{background-image:url(../images/enter.png)}
+.icon_turnIn_g{background-image:url(../images/turnIn.png)}
+.icon_turnOut_g{background-image:url(../images/turnOut.png)}
+.icon_up_g{background-image:url(../images/xia2.png);}
+.icon_down_g{background-image:url(../images/xia.png); }
+/*加入vwin main.css後調整*/
+.fm{padding-top:5px; color:#666;}
+.fm ul li{display: block;float: none;}
+.fm input{width:120px;}
+.fm div.slt div.slt-ct{top: initial;bottom: 35px;}
+.fm div.slt div.slt-ct li {line-height: initial;margin:0}
+

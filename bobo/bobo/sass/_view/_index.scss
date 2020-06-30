@@ -1,0 +1,693 @@
+//kv
+.Banner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  z-index: 1; 
+  border-bottom: 4px solid #ff5b1a;
+}
+.Banner .flexslider {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto; 
+}
+.Banner ul.slides li {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.Banner ul.slides li img {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+.Banner .flex-control-nav {
+  bottom: 50px;
+}
+.Banner .flex-control-nav li a {
+  position: relative;
+  width: 80px;
+  height: 10px;
+  background-color: rgba(255,255,255,.3);
+}
+.Banner .flex-control-nav li a.flex-active:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  background-color: #ff5b1a;
+  top: 0;
+  left: 0;
+  animation:FlexActiveMove 5s;
+  animation-fill-mode: forwards;
+}
+@keyframes FlexActiveMove {
+    0% {width: 0;}
+    100% {width:  100%;}
+}
+
+.Banner .Title {
+  position: absolute;
+  display: flex;
+  align-items:center;
+  max-width: 50%;
+  height: calc(100% - 155px);
+  bottom: 40px; 
+  z-index: 2;
+  opacity: 0;
+  transition:all .3s; 
+}
+.TitleMain {
+  background-color: rgba(20,20,25,.8);
+  padding:25px 35px;
+  margin-top: -80px;
+}
+.Banner.Games .Title ,.Banner.Casino .Title {
+  height: calc(100% - 115px);
+  bottom: 0px; 
+}
+.Banner.Games .TitleMain ,.Banner.Casino .TitleMain {
+  margin-top: 0;
+}
+.Banner ul li.flex-active-slide .Title {
+  opacity: 1;
+}
+.Banner .Title.Left {
+  left: 50%;
+  margin-left: -630px;
+  text-align: left;
+}
+.Banner .Title.Left .TitleMain {
+  padding:25px 75px 25px 35px; 
+}
+.Banner .Title.Right {
+  right: 50%;
+  margin-right: -630px;
+  text-align: right;
+}
+.Banner .Title.Right .TitleMain {
+  padding:25px 35px 25px 75px; 
+}
+.Banner .Title h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 15px;
+}
+.Banner .Title h2 span {
+  color: #fff100;
+}
+.Banner .Title p {
+  font-size: 23px;
+  line-height: 35px;
+  color: #fff;
+  margin-bottom: 35px;
+}
+.Banner .Title p span {
+  color: #fff100;
+}
+.Banner .Title br {
+  display: none;
+}
+.Banner .Title p br {
+  display: block;
+}
+.Banner .Title .Btn {
+  display: inline-block;
+  width: 140px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #ff5b1a;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  transition:all .3s;
+}
+.Banner .Title .Btn:hover {
+  background-color: #ba3907;
+}
+//公告
+.IndexPost {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background-color: rgba(20, 20, 25, 0.9);
+  bottom: 0;
+  font-size: 14px;
+  color: #fff;
+  line-height: 40px;
+  z-index: 10; 
+}
+.IndexPostMain {
+  display: flex;
+  justify-content: space-between ;
+  align-items:center;
+  @include Centerenter;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.IndexPostTitle {
+  width: 100px;
+  height: 100%;
+}
+.IndexPostMain marquee {
+  width: calc(100% -110px;);
+}
+//主要區塊
+.Content {
+  width: 100%;
+  height: auto;
+  padding: 30px 0 10px;
+  background-color: #1a1a20;
+}
+.Content.Index,.Content.MobileIndex {
+  background-color: #1a1a20;
+}
+.Content.MobileIndex {
+  display: none;
+}
+.ContentMain {
+  @include Centerenter;
+  margin: 0 auto;
+}
+.Content.Index .ContentMain {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.IndexBox {
+  position: relative;
+  width: calc((100% - 40px) / 3);
+  height: auto;
+  padding:30px 10px 10px;
+  background: linear-gradient(to bottom,#0d141e,#030305);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin: 0 auto 20px;
+  transition:all .3s ease-out;
+}
+.IndexBox:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.6);
+}
+.IndexBox.Full:hover {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.IndexBox.Full p {
+    background: -webkit-linear-gradient(bottom, #fff 0, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.IndexBox.Full:hover p {
+    background: -webkit-linear-gradient(bottom, #fff 0, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.IndexBox.Padding {
+  padding:30px 20px 10px;
+}
+.IndexBox.Full {
+  width: calc(100% - 15px);
+  height: 100px;
+  padding:20px 0;
+  text-align: center;
+  background-image: url("../images/bg001.png");
+  background-repeat: no-repeat;
+  background-position:70px 0;
+  background-color: #0e0e12;
+}
+.IndexBox .Pic {
+  position: relative;
+  width: 100%;
+  padding: 18%;
+  overflow: hidden;
+}
+.IndexBox img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 0;
+  left: 0;
+  transition:all .3s;
+}
+.IndexBox:hover img {
+  transform:scale(1.1);
+}
+.IndexBox h2 {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 30px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.IndexBox:hover h2,.IndexBox:hover p {
+  color: #ff5b1a;
+  opacity: 1;
+}
+.IndexBox h2 i {
+  display: inline-block;
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  background-image: url("../images/icon006.png");
+  background-size: 200%;
+  margin-right: 0px;
+}
+.IndexBox h2 i.Icon1 {
+  background-position: 0 0;
+}
+.IndexBox:hover h2 i.Icon1 {
+  background-position: 50px 0;
+}
+.IndexBox h2 i.Icon2 {
+  background-position: 0 -50px;
+}
+.IndexBox:hover h2 i.Icon2 {
+  background-position: 50px -50px;
+}
+.IndexBox h2 i.Icon3 {
+  background-position: 0 -100px;
+}
+.IndexBox:hover h2 i.Icon3 {
+  background-position: 50px -100px;
+}
+.IndexBox h2 i.Icon4 {
+  background-position: 0 -150px;
+}
+.IndexBox:hover h2 i.Icon4 {
+  background-position: 50px -150px;
+}
+.IndexBox h2 i.Icon5 {
+  background-position: 0 -200px;
+}
+.IndexBox:hover h2 i.Icon5 {
+  background-position: 50px -200px;
+}
+.IndexBox h2 span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.IndexBox p {
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 22px;
+   background: -webkit-linear-gradient(bottom,#999 0,#fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: .6;
+}
+.IndexBox:hover p {
+  background: -webkit-linear-gradient(bottom,#782b0f 0,#ff5b1a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+//月获奖排行
+.IndexBox h3 {
+  position: relative;
+  padding: 10px 0;
+  font-size: 24px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  margin-bottom: 35px;
+}
+.IndexBox h3 i {
+  display: inline-block;
+  vertical-align: middle;
+  width: 35px;
+  height: 27px;
+  margin-right: 5px;
+  background-image: url("../images/king.png");
+}
+.IndexBox h3 span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.IndexBox .Reflash {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/reflash.png");
+    background-size: 100%;
+    top: 50%;
+    margin-top: -15px;
+    right: 0;
+    cursor: pointer;
+    transition:all .3s;
+}
+.IndexBox .Reflash:hover {
+  transform:rotate(180deg);
+}
+.PercentBox {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  background-color: #271531;
+  margin-bottom: 3px;
+}
+.Percent {
+  position: absolute;
+  width: auto;
+  height: 30px;
+  background: linear-gradient(to right,#f808a9,#fca553);
+  border-radius: 30px;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  animation:PercentMove 1s;
+  transform-origin:0 0;
+}
+.Percent.Color {
+  background: linear-gradient(to right,#66d6d4,#9759fc);
+}
+@keyframes PercentMove {
+  0% {
+    transform:scale(0,1);
+  }
+  100% {
+    transform:scale(1,1);
+  }
+}
+
+.PercentBox i {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+   background-image: url("../images/star.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+     z-index: 1;
+}
+.PercentBox .Trophy {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 35px;
+  height: 40px;
+  background-image: url("../images/trophy.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: -20px;
+  margin-left: 10px;
+   z-index: 1;
+}
+.PercentBox .Sort {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #fff;
+  line-height: 30px;
+  margin: 0 10px 0 24px;
+   z-index: 1;
+}
+.PercentBox span {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #fff;
+  line-height: 30px;
+   z-index: 1;
+}
+.PercentBox b {
+  position: relative;
+  float: right;
+  font-size: 16px;
+  color: #fff;
+  line-height: 30px;
+  margin-right: 10px;
+  z-index: 1;
+}
+.IndexDeopsitPost {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  margin-left: 60px;
+  text-align: left;
+}
+.IndexDeopsitPost  h4 {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 24px;
+}
+.IndexDeopsitPost  h4 span {
+  font-size: 14px;
+}
+.IndexDeopsitPost  h5 {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 63px;
+  letter-spacing: -1.5px;
+  color: #e60012;
+  margin: 0 10px;
+ } 
+ .IndexDeopsitPost  p {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 14px;
+  line-height: 30px;
+  color: #fff;
+  opacity: 1;
+  margin: 0;
+ } 
+ul.IndexDeopsitPostList {
+  position: absolute;
+  right: 30px;
+  bottom: 20px;
+}
+ul.IndexDeopsitPostList li {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #cfa972;
+  text-decoration: underline;
+  margin-left: 10px;
+}
+//手機首頁
+.MobileIndexIcon {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between ;
+  align-items:center;
+}
+.MobileIndexIcon li {
+  width: 33.3333%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.MobileIndexIcon li .Pic {
+  position: relative;
+  display: block;
+  width: 80px;
+  height: auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  margin: 0 auto 15px;
+}
+.MobileIndexIcon li .Pic img {
+  width: 100%;
+}
+.MobileIndexIcon li p {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+}
+.MobileIndexDepositPost {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; 
+  justify-content: center ;
+  align-items:center;
+  margin-bottom: 30px;
+}
+.MobileIndexDepositPost li {
+  position: relative;
+  width: calc( (100% - 240px) / 6 * 2 + 120px - 1.5%); 
+  margin: 0 1.5% ;
+  padding:15px 10px 5px;
+  background-color: rgba(0,0,0,.5);
+  border-radius: 10px;
+}
+.MobileIndexDepositPost li h3 {
+  font-size: 14px;
+  color: #b28850;
+  margin-bottom: 10px;
+}
+.MobileIndexDepositPost li p {
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.MobileIndexDepositPost li h2 {
+  font-size: 12px;
+  color: #fff;
+  float: right;
+  margin-top: -15px;
+  margin-right: -5px;
+}
+.MobileIndexDepositPost li  h2 span {
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 32px;
+  letter-spacing: 1px;
+  color: #e60012;
+}
+//優惠
+.IndexPromotion {
+  display: none;
+  overflow: hidden;
+}
+.IndexPromotion h2 {
+  font-size: 18px;
+  color: #f39700;
+  text-decoration: underline;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.IndexPromotion p {
+  font-size: 14px;
+  line-height: 22px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.IndexPromotion .flexslider {
+    width: 75%;
+    margin: 0 auto 20px;
+}
+.IndexPromotion .flex-viewport {
+    overflow: inherit !important;
+}
+.IndexPromotion ul li {
+  padding: 0 5px;
+  opacity: .5;
+}
+.IndexPromotion ul li.flex-active-slide {
+  opacity: 1;
+}
+.IndexPromotion img {
+  width: 100%;
+}
+@media screen and (max-width: 1280px) {
+.Banner .TitleMain {
+  margin-top: 0;
+}
+}
+@media screen and (max-width: 1080px) {
+.Content.Index {
+  display: none;
+}
+.Content.MobileIndex {
+  display: block;
+}
+.Banner .flex-control-nav {
+  display: none;
+}
+.Banner .Title h2 {
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 5px;
+}
+.Banner .Title p {
+  font-size: 12px;
+  line-height: 22px;
+  margin-bottom: 0;
+}
+.Banner .Title .Btn {
+  display: none;
+  width: 90px;
+  height: 30px;
+  font-size: 14px;
+  line-height: 30px;
+}
+.Banner .Title {
+    max-width: inherit;
+}
+.Banner .Title.Left {
+  left:0;
+    margin-left:0;
+}
+.Banner .Title.Right {
+  right:0;
+  margin-right: 0;
+}
+.Banner .Title.Left .TitleMain,.Banner .Title.Right .TitleMain {
+  padding: 25px 20px;
+  margin-top: 0;
+}
+.IndexBox {
+  width: calc((100% - 20px) / 2);
+}
+.IndexBox.Full {
+  display: none;
+}
+// .MobileIndexDepositPost li {
+//   width: 40%;
+//   margin: 0 1.5%;
+// }
+
+}
+
+@media screen and (max-width: 1080px) {
+  .Banner .Title {
+    height: calc(100% - 85px);
+}
+.Banner.Games .Title, .Banner.Casino .Title {
+      bottom: 40px; 
+}
+
+}
+@media screen and (max-width: 617px) {
+.Banner ul.slides li {
+  height: 300px;
+}
+.Banner.Games ul.slides li,.Banner.Casino ul.slides li {
+  height: 200px;
+}
+.Banner ul.slides li img {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  left: 50%;
+  transform:translateX(-50%);
+}
+.Banner .Title br {
+  display: block;
+}
+.IndexBox {
+  width: 100%;
+}
+.IndexPromotion {
+  display: block;
+}
+
+}
+
+
+
+
+
+
+
+

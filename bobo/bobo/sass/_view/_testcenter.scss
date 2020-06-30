@@ -1,0 +1,237 @@
+.TestingCenterBg {
+	width: 100%;
+	height: auto;
+	padding: 225px 0 50px;
+	background-image: url("../images/testingcenter/bg.jpg");
+	background-position: bottom center;
+	background-size: cover;
+}
+.TestingCenterMain {
+	position: relative;
+	max-width: 1200px;
+	height: auto;
+	padding: 40px;
+	margin: 0 auto;
+	background-color: rgba(28,30,42,.9);
+}
+.TestingCenterMain:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.TestingCenterLeft {
+	width: 70%;
+	padding-right: 20px;
+	float: left;
+}
+.TestingCenterLeft .ReNew {
+	position: absolute;
+	width: 175px;
+	height: 175px;
+	border-radius: 100%;
+	background-image: linear-gradient(-180deg, #FD9969 0%, #FC6236 62%, #FD6663 100%);
+	border: 4px solid #FF8A8A;
+	box-shadow: 0 2px 18px 3px #FF4F4F;
+	top:-87.5px;
+	right:-87.5px; 
+	cursor: pointer;
+}
+.TestingCenterLeft .ReNewMain {
+	position: relative;
+	top:50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	text-align: center;
+}
+.TestingCenterLeft .ReNewMain i {
+	display: block;
+	width: 35%;
+	padding-top: 35%;
+	background-image: url("../images/testingcenter/re.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	margin:0 auto 10px;
+}
+.TestingCenterLeft h2 {
+	font-size: 18px;
+	color: #eee;
+	margin-bottom: 70px;
+}
+.TestingCenterLeft h2 span {
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 72px;
+	line-height: 100px;
+	color: #fff;
+}
+.TestingCenterLeft p {
+	font-size: 13px;
+	line-height: 22px;
+	color: #eee;
+	margin-bottom: 20px;
+}
+.TestingCenterRight {
+	position: relative;
+	width: 30%;
+	float: right;
+	padding-top: 160px;
+	padding-left: 20px;
+}
+.TestingCenterRight h3 {
+	font-size: 13px;
+	line-height: 22px;
+	color: #F1AB31;
+	margin-bottom: 10px;
+}
+.TestingCenterRight p {
+	font-size: 13px;
+	line-height: 22px;
+	color: #eee;
+	margin-bottom: 20px;
+}
+.TestingCenterRight img {
+	width: 100%;
+	margin-bottom: 20px;
+}
+.TestingCenterRight .Btn {
+	width: 100%;
+	height: 45px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 45px;
+	color: #fff;
+	background-image: linear-gradient(-180deg, #FF9059 2%, #FF4040 98%);
+	border-radius: 100px;
+	cursor: pointer;
+}
+.TestingCenterBox {
+	background: rgba(250,250,250,.15);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+	margin-bottom: 15px;
+	transition:all .3s;
+}
+.TestingCenterBox:hover {
+	transform:translateY(-10px);
+}
+.TestingCenterBox a {
+	display: flex;
+	justify-content:space-between;
+	align-items: center;
+	padding: 20px 20px;
+}
+.TestingCenterBox .Times h3 {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 26px;
+	color: #7ED321;
+}
+.TestingCenterBox .Times h3 i,.TestingCenterBox .Times h3 span {
+	display: inline-block;
+	vertical-align: middle;
+}
+.TestingCenterBox .Times h3 i {
+	width: 20px;
+	height: 20px;
+	background-image: url("../images/testingcenter/check.png");
+	background-size: 100%;
+	margin-right: 5px;
+}
+.TestingCenterBox .Times p {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	color: #fff;
+	line-height: 25px;
+	margin: 0 0 0 20px;
+	padding-left: 20px;
+	border-left: 1px solid #fff;
+}
+.TestingCenterBox .Btn {
+	width: 140px;
+	height: 35px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 35px;
+	color: #fff;
+	background-image: linear-gradient(-180deg, #FF9059 2%, #FF4040 98%);
+	border-radius: 100px;
+}
+
+
+@media screen and (max-width: 1200px) {
+.TestingCenterLeft .ReNew {
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	top:20px;
+	right:20px; 
+}
+
+}
+@media screen and (max-width: 1080px) {
+
+.TestingCenterBg {
+	padding: 45px 0 0;
+}
+
+}
+
+
+@media screen and (max-width: 767px) {
+
+.TestingCenterMain {
+	padding:20px 10px;
+}
+.TestingCenterLeft {
+	width: 100%;
+	padding-right: 0;
+	float: none;
+}
+.TestingCenterLeft h2 {
+	font-size: 18px;
+	line-height: 40px;
+	margin-bottom: 30px;
+}
+.TestingCenterLeft h2 span {
+	font-size: 32px;
+	line-height: 50px;
+}
+.TestingCenterBox a {
+	flex-wrap: wrap;
+	padding: 10px 5px;
+}
+.TestingCenterBox .Times {
+	margin-bottom: 10px;
+}
+.TestingCenterBox .Times h3 {
+	font-size: 14px;
+}
+.TestingCenterBox .Times p {
+	font-size: 14px;
+	padding-left: 10px;
+	margin: 0 0 0 10px;
+}
+.TestingCenterBox .Btn {
+	display: block;
+	width: 100%;
+}
+.TestingCenterLeft .ReNew {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	top:15px;
+	right:10px; 
+}
+.TestingCenterRight {
+	width: 100%;
+	float: none;
+	padding-top: 0;
+	padding-left: 0;
+}
+}
+@media screen and (max-width: 320px) {
+.TestingCenterLeft h2 span {
+	font-size: 26px;
+}
+}
+

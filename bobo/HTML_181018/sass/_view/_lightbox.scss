@@ -1,0 +1,637 @@
+//彈窗
+.LightBoxBg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.5);
+	top: 0;
+	left: 0;
+	z-index: 20;
+}
+.LightBoxMain {
+	position: absolute;
+	width: 100%;
+	max-width: 875px;
+	min-width: 320px;
+	border-radius: 5px;
+	background-color: #fff;
+	overflow: hidden;
+	top: 5vw;
+	left: 50%;
+	transform:translateX(-50%);
+	z-index: 21;
+	margin-bottom: 50px;
+}
+.LightBoxMain.w550 {
+	max-width: 550px;
+}
+.LightBoxMain.Alert {
+	max-width: 500px;
+	text-align: center;
+}
+//彈窗標題
+.LightBoxMain .Title {
+	position: relative;
+	font-size: 16px;
+	color: #fff;
+	text-align: center;
+	line-height: 55px;
+	background-image: -webkit-linear-gradient(left, #FF4040 2%, #FF9059 98%);
+	background-image: -o-linear-gradient(left, #FF4040 2%, #FF9059 98%);
+	background-image: linear-gradient(to right, #FF4040 2%, #FF9059 98%);
+}
+.LightBoxMain .X {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	background-color: #fff;
+	z-index: 2;
+	top: 50%;
+	right: 10px;
+	margin-top: -15px;
+	cursor: pointer;
+	transition:all ease-in-out .3s;
+}
+.LightBoxMain .X:hover {
+	transform: rotate(180deg);
+}
+.LightBoxMain .X:after,.LightBoxMain .X:before {
+	position: absolute;
+	content: "";
+	width: 2px;
+	height: 20px;
+	border-radius: 2px;
+	background-color: #4A4A4A;
+	top: 50%;
+	left: 50%;
+	margin: -10px 0 0 -1px;
+}
+.LightBoxMain .X:after {
+	transform: rotate(45deg);
+}
+.LightBoxMain .X:before {
+	transform: rotate(-45deg);
+}
+.LightBoxMain .Title.White {
+	padding: 0 15px;
+	color: #4a4a4a;
+	background-image: none;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+	text-align: left;
+}
+.LightBoxMain .Title.White .X:after,.LightBoxMain .Title.White .X:before {
+	height: 15px;
+	margin: -7.5px 0 0 -1px;
+	background-color: #9B9B9B;
+}
+//彈窗內容
+.LightBoxContent {
+	padding: 20px 30px;
+}
+.LightBoxContent.TextCenter {
+	text-align: center;
+}
+.LightBoxContent.TextLeft {
+	text-align: left;
+}
+.LightBoxContent h1 {
+	font-size: 16px;
+	line-height: 24px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.LightBoxContent h1 span {
+	display: inline-block;
+	vertical-align: middle;
+}
+.LightBoxContent h1:before {
+	display: inline-block;
+	vertical-align: middle;
+	content: "";
+	width: 4px;
+	height: 20px;
+	border-radius: 4px;
+	background-color: #FF002E;
+	margin-right: 10px;
+}
+.LightBoxContent h2 {
+	font-size: 16px;
+	line-height: 24px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.LightBoxContent h2 i {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	background-color: #19B847;
+	margin-right: 10px;
+}
+.LightBoxContent h2 i:after,.LightBoxContent h2 i:before {
+	position: absolute;
+	content: "";
+	width: 4px;
+	height: 10px;
+	border-radius: 3px;
+	background-color: #fff;
+	top: 50%;
+	left: 40%;
+	margin-top: -5px;
+	margin-left: -2px;
+	transform-origin:100% 100%;
+}
+.LightBoxContent h2 i:after {
+	transform: rotate(45deg);
+	height: 15px;
+	margin-top: -7.5px;
+}
+.LightBoxContent h2 i:before {
+	transform: rotate(-45deg);
+	height: 10px;
+	margin-top: -5px;
+	margin-left: 0;
+}
+.LightBoxContent h2 span {
+	display: inline-block;
+	vertical-align: middle;
+}
+.LightBoxContent h4 {
+	font-size: 20px;
+	line-height: 30px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.LightBoxContent p {
+	font-size: 14px;
+	line-height: 22px;
+	color: #666;
+	margin-bottom: 20px;
+}
+.LightBoxContent p a {
+	color: #FF6666;
+}
+.LightBoxTableBox {
+	overflow-y: hidden;
+	overflow-x: auto;
+}
+.LightBoxContent .LightBoxTableBox table {
+	min-width: 800px;
+}
+.LightBoxContent table {
+	width: 100%;
+	border:1px solid #ddd;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+.LightBoxContent table th {
+	position: relative;
+	padding: 10px 0;
+	font-size: 14px;
+	text-align: center;
+	line-height: 22px;
+	color: #333;
+	background-color: #DADADA;
+}
+.LightBoxContent table th.Arrow:after {
+	position: relative;
+	display: inline-block;
+	content: "";
+	border-style: solid;
+	border-color: #333 transparent transparent transparent;
+	border-width: 5px;
+	margin-left: 5px;
+	transform:translateY(30%);
+}
+.LightBoxContent table th.Arrow.Up:after {
+	border-color:transparent transparent #333 transparent;
+	transform:translateY(-30%);
+}
+.LightBoxContent table tr {
+	background-color: #fafafa;
+}
+.LightBoxContent table tr:nth-child(even) {
+	background-color: #fff;
+}
+.LightBoxContent table td {
+	padding: 10px 0;
+	font-size: 14px;
+	text-align: center;
+	line-height: 22px;
+	color: #666;
+	border-top: 1px solid #ddd;
+}
+.LightBoxTableBox.Blue table td {
+	color: #5CC4F9;
+}
+.LightBoxContent ul.List li {
+	display: block;
+	font-size: 14px;
+	color: #666;
+	line-height: 22px;
+	margin-bottom: 5px;
+}
+.LightBoxContent ul {
+	text-align: left;
+}
+.LightBoxContent ul li {
+	display: inline-block;
+	vertical-align: middle;
+}
+.LightBoxContent ul.Step i {
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 60px;
+	background-color: #424953;
+	background-image: url("../images/stepIcon.png");
+	background-size: 100%;
+	margin:0 auto 10px;
+}
+.LightBoxContent ul.Step i.Icon2 {
+	background-position: 0 -50px;
+}
+.LightBoxContent ul.Step i.Icon3 {
+	background-position: 0 -100px;
+}
+.LightBoxContent ul.Step p {
+	font-size: 14px;
+	text-align: center;
+	color: #333;
+}
+.LightBoxContent ul li.Arrow {
+	width: 50px;
+	height: 50px;
+	background-image: url("../images/arrow001.png");
+	background-repeat:  no-repeat;
+	background-position: center;
+	background-size: 100%;
+	vertical-align: top;
+	margin: 0 10px;
+}
+.LightBoxContent .Total h3 {
+	font-size: 16px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.LightBoxContent .Total ul li {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	font-size: 14px;
+	line-height: 22px;
+	color: #666;
+}
+.LightBoxContent .Total ul li span {
+	color: #FC6236;
+}
+.LightBoxContent .Line {
+	display: block;
+	width: calc(100% + 60px);
+	height: 1px;
+	background-color: #eee;
+	margin: 30px 0 30px -30px;
+}
+//團窗輸入框
+.LightBoxContent .InputBox label {
+	color: #333;
+}
+.LightBoxContent .InputBox input {
+	color: #666;
+	border:1px solid #ddd;
+}
+.LightBoxContent .InputBox.Error input {
+    border: 1px solid #FF6666;
+    -webkit-box-shadow: 0 0 5px rgba(255, 0, 45, 0.7);
+    box-shadow: 0 0 5px rgba(255, 0, 45, 0.7);
+}
+.LightBoxContent .InputBox input::placeholder {
+	color:#999;
+}
+.LightBoxContent .InputBox input:focus {
+	border:1px solid #4A4A4A;
+}
+.LightBoxContent .MemberBtn.Gray {
+	background-color: #F1F2F4;
+	border:1px solid #C8CFD7;
+}
+.LightBoxContent .MemberBtn.Gray a {
+	color: #333;
+}
+//彈窗发送验证
+.LightBoxContent .InputBox.Send  {
+	max-width: 100%;
+}
+.LightBoxContent .SelectBox label {
+	color: #333;
+}
+.LightBoxContent .SelectBox.Three {
+	max-width: 100%;
+}
+.LightBoxContent .SelectBox.Three select {
+	width: calc((100% - 20px) / 3);
+	margin-right: 10px;
+}
+.LightBoxContent .SelectBox.Three select.MarginNo {
+	margin: 0;
+}
+.LightBoxContent .SelectBox select ,.LightBoxContent .InputBox select{
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+	padding: 0 40px 0 15px;
+	height: 40px;
+	font-size: 14px;
+	color: #333;
+	border-radius: 5px;
+	background-color: #F1F2F4;
+	border:1px solid #C8CFD7;
+	background-image: url("../images/arrow002.png");
+	background-repeat: no-repeat;
+	background-position:center right;
+	background-size:auto 100%;
+	outline: none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+.LightBoxContent .SelectBox:after,.LightBoxContent .SelectBox:before  {
+	content: none;
+}
+.LightBoxContent .InputBox select {
+	max-width:100px;
+}
+.LightBoxContent .InputBox.Send input {
+	display: inline-block;
+	vertical-align: middle;
+	width: calc(100% - 210px);
+	margin-right: 10px;
+}
+.LightBoxContent .InputBox.Number input {
+	display: inline-block;
+	vertical-align: middle;
+	width: 40px;
+	height: 60px;
+	font-size: 30px;
+	line-height: 60px;
+	margin-right: 10px;
+}
+.LightBoxContent .InputBox.Number input.MarginNone {
+	margin: 0;
+}
+.LightBoxContent .SendPhone {
+	display: inline-block;
+	vertical-align: middle;
+	width: calc(100% - 100px);
+	padding: 0 10px;
+	line-height: 40px;
+	border:1px solid #ddd;
+	border-radius: 5px;
+	margin:0 10px 0 0;
+}
+.LightBoxContent .SendBtn {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+    max-width: 90px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #19B847;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    letter-spacing: 0;
+    cursor: pointer;
+}
+.LightBoxContent .SendBtn.Active {
+	background-color: #C8CFD7;
+}
+//彈窗公告
+ul.Post li {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #eee;
+}
+ul.Post li i {
+	display: inline-block;
+	vertical-align: top;
+	width: 50px;
+	height: 50px;
+	background-image: url("../images/icon001.png");
+	background-size: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 10px;
+}
+ul.Post li .Text {
+	display: inline-block;
+	vertical-align: top;
+	width: calc(100% - 60px;)
+}
+ul.Post li p {
+	font-size: 14px;
+	color: #666;
+}
+ul.Post li .Times {
+	font-size: 14px;
+	color: #999;
+	float: left;
+}
+ul.Post li .Name {
+	font-size: 14px;
+	color: #999;
+	float: right;
+}
+//彈窗增加銀行卡
+.LightBoxContent .AddBankBoxMain {
+	margin-bottom: 20px;
+}
+//彈窗步驟
+.LightBoxStep {
+	margin-bottom: 20px;
+}
+.LightBoxStep ul li {
+	position: relative;
+	width: 33.3333%;
+	height: 40px;
+	background-color: #9B9B9B;
+	font-size: 14px;
+	line-height: 40px;
+	text-align: center;
+	color: #fff;
+}
+.LightBoxStep ul li.Active {
+	background-image: -webkit-linear-gradient(left, #FF4040 2%, #FF9059 98%);
+    background-image: -o-linear-gradient(left, #FF4040 2%, #FF9059 98%);
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(2%, #FF4040), color-stop(98%, #FF9059));
+    background-image: linear-gradient(to right, #FF4040 2%, #FF9059 98%);
+}
+.LightBoxStep ul li.ArrowRight:before {
+	position: absolute;
+	content: "";
+	width: 40px;
+	height: 40px;
+	background-image: url("../images/arrow004.png");
+	top: 0;
+	left: -20px;
+}
+.LightBoxStep ul li.ArrowLeft:after {
+	position: absolute;
+	content: "";
+	width: 40px;
+	height: 40px;
+	background-image: url("../images/arrow004.png");
+	top: 0;
+	right: -20px;
+}
+.LightBoxStep ul li b {
+	font-size: 24px;
+	margin-right: 10px;
+}
+//彈窗驗證選擇
+.LightBoxSetSelect {
+	text-align: center;
+}
+.LightBoxSetSelect ul  {
+	display: inline-block;
+}
+.LightBoxSetSelect ul li {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 10px;
+}
+.LightBoxSetSelect ul li .Icon {
+	width: 100px;
+	height: 100px;
+	border-radius: 10px;
+	background-color: #9B9B9B;
+	background-image: url("../images/setIcon.png");
+	background-size: 100%;
+	margin-bottom: 10px;
+}
+.LightBoxSetSelect ul li .Icon.Icon1 {
+	background-position: 0 0;
+}
+.LightBoxSetSelect ul li .Icon.Icon2 {
+	background-position: 0 -100px;
+}
+.LightBoxSetSelect ul li .Icon.Icon3 {
+	background-position: 0 -200px;
+}
+.LightBoxSetSelect ul li.Active .Icon {
+    background-color: #FC6236;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon1 {
+	background-position: 0 -300px;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon2 {
+	background-position: 0 -400px;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon3 {
+	background-position: 0 -500px;
+}
+.LightBoxSetSelect ul li p {
+	font-size: 14px;
+	line-height: 22px;
+	color: #4a4a4a;
+	text-align: center;
+	margin: 0;
+}
+.LightBoxSetSelect ul li p.Red {
+	color: #FF6666;
+}
+.LightBoxSetSelect ul li.Active p.Red {
+	display: none;
+}
+
+@media screen and (max-width:767px) {
+
+.LightBoxMain {
+	min-height: 100%;
+	border-radius: 0;
+	top: 0;
+	margin-bottom: 0;
+}
+.LightBoxContent {
+	padding: 20px 15px;
+}
+.LightBoxMain.Alert {
+	min-width: 300px;
+	max-width: 300px;
+	min-height: auto;
+	top: 5vw;
+}
+.LightBoxContent ul.Step {
+	text-align: center;
+}
+.LightBoxContent ul.Step i {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+} 
+.LightBoxContent ul li.Arrow {
+	width: 30px;
+	height: 50px;
+	margin: 0 5px;
+}
+.LightBoxContent .InputBox select {
+	max-width: 100%;
+	margin-bottom: 10px;
+}
+.LightBoxContent .InputBox.Send input {
+    width: calc(100% - 100px);
+}
+.LightBoxContent .InputBox.Number input {
+	width: calc((100% - 50px) / 6);
+}
+.LightBoxStep ul li b {
+	font-size: 16px;
+	margin-right: 5px;
+}
+.LightBoxSetSelect ul li {
+	margin: 0 5px;
+}
+.LightBoxSetSelect ul li .Icon {
+	width: 80px;
+	height: 80px;
+}
+.LightBoxSetSelect ul li .Icon.Icon1 {
+	background-position: 0 0;
+}
+.LightBoxSetSelect ul li .Icon.Icon2 {
+	background-position: 0 -80px;
+}
+.LightBoxSetSelect ul li .Icon.Icon3 {
+	background-position: 0 -160px;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon1 {
+	background-position: 0 -240px;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon2 {
+	background-position: 0 -320px;
+}
+.LightBoxSetSelect ul li.Active .Icon.Icon3 {
+	background-position: 0 -400px;
+}
+
+
+}
+@media screen and (max-width:767px) {
+	.LightBoxStep ul li b {
+		display: none;
+	}
+}
+
+
+
+
+
+
+

@@ -1,0 +1,540 @@
+.Banner.Promotion .flex-control-nav {
+	bottom: 20px;
+}
+.ContentMain.Promotion {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: flex-start;
+   flex-wrap: wrap;
+   padding: 0;
+}
+.PromotionBox {
+  position: relative;
+  width: calc((100% - 60px) / 3);
+  height: auto;
+  background: -webkit-gradient(linear, left top, left bottom, from(#0d141e), to(#030305));
+  background: -webkit-linear-gradient(top, #0d141e, #030305);
+  background: -o-linear-gradient(top, #0d141e, #030305);
+  background: linear-gradient(to bottom, #0d141e, #030305);
+  border-radius: 10px;
+  margin:0 10px 20px;
+  overflow: hidden;
+  transition: all .3s ease-out; 
+}
+.PromotionBox:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); 
+}
+.PromotionBox .Pic {
+	width: 100%;
+	padding-top: 36%;
+	overflow: hidden;
+}
+.PromotionBox img {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	transition:all .3s;
+}
+.PromotionBox:hover img {
+	transform:scale(1.1);
+}
+.PromotionBox .Article {
+	padding: 15px;
+	text-align: center;
+}
+.PromotionBox .Article h2 {
+	font-size: 20px;
+	color: #fff;
+	margin-bottom: 10px;
+}
+.PromotionBox .Article .HighLight {
+	display: block;
+	width: 100%;
+	padding: 5px 0;
+	background-color: #1a1a1c;
+	font-size: 24px;
+	color: #e60012;
+	margin-bottom: 10px;
+}
+.PromotionBox .Article .HighLight span {
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 64px;
+}
+.PromotionBox .Article p {
+	font-size: 16px;
+	line-height: 24px;
+	color: #fff;
+	text-align: left;
+	margin-bottom: 20px;
+}
+.PromotionBox .Article .Btn {
+	position: relative;
+	font-size: 20px;
+	line-height: 40px;
+	border-radius: 10px;
+	color: #fe4c05;
+	text-align: center;
+	border: 1px solid #fe4c05;
+	margin-bottom: 15px;
+	transition:all .3s;
+}
+.PromotionBox .Article .Btn:hover {
+	color: #fff;
+	background-color: #fe4c05;
+}
+.PromotionBox .Article .Btn a {
+	display: block;
+}
+.PromotionNav {
+	width: 100%;
+	height: 85px;
+	background-color: #080e17;
+	margin-top: -30px;
+	margin-bottom: 20px;
+}
+.PromotionNav.Active {
+	position: fixed;
+    z-index: 10;
+    top: 115px;
+    left: 0;
+    margin-top: 0;
+}
+.PromotionMain {
+	display: block;
+	 @include Centerenter;
+	 margin: 0 auto;
+	 text-align: center;
+	 line-height: 85px;
+}
+.PromotionMain ul  {
+	display: inline-block;
+	width: 100%;
+    text-align: center;
+    overflow-y: hidden;
+	 overflow-x:auto; 
+	 vertical-align: middle;
+	 white-space: nowrap;
+     -webkit-overflow-scrolling: touch;
+}
+.PromotionMain ul li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 19px;
+	color: #fff;
+	margin: 0 25px;
+	cursor: pointer;
+}
+.PromotionMain ul li:hover {
+	color: #ff5b1a;
+}
+.PromotionMain ul li.Active {
+	color: #ff5b1a;
+}
+.PromotionMain ul li i {
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	background-image: url("../images/promotionicon.png");
+	background-size: 200%;
+}
+.PromotionMain ul li i.Icon1 {
+	background-position: 0 0;
+}
+.PromotionMain ul li.Active i.Icon1 {
+	background-position: 30px 0;
+}
+.PromotionMain ul li i.Icon2 {
+	background-position: 30px -30px;
+}
+.PromotionMain ul li.Active i.Icon2 {
+	background-position: 30px -30px;
+}
+.PromotionMain ul li i.Icon3 {
+	background-position: 30px -60px;
+}
+.PromotionMain ul li.Active i.Icon3 {
+	background-position: 30px -60px;
+}
+.PromotionMain ul li i.Icon4 {
+	background-position: 30px -90px;
+}
+.PromotionMain ul li.Active i.Icon4 {
+	background-position: 30px -90px;
+}
+.PromotionMain ul li i.Icon5 {
+	background-position: 30px -120px;
+}
+.PromotionMain ul li.Active i.Icon5 {
+	background-position: 30px -120px;
+}
+.PromotionMain ul li i.Icon6 {
+	background-position: 30px -150px;
+}
+.PromotionMain ul li.Active i.Icon6 {
+	background-position: 30px -150px;
+}
+.PromotionMain ul li i.Icon7 {
+	background-position: 30px -180px;
+}
+.PromotionMain ul li.Active i.Icon7 {
+	background-position: 30px -180px;
+}
+.PromotionMain ul li i.Icon8 {
+	background-position: 30px -210px;
+}
+.PromotionMain ul li.Active i.Icon8 {
+	background-position: 30px -210px;
+}
+.PromotionMain ul li p {
+	display: inline-block;
+	vertical-align: middle;
+}
+//新頁
+.PromotionHeader {
+	width: 100%;
+	height: 70px;
+	background-color: #172437;
+}
+.PromotionHeaderMain {
+	display: flex;
+    justify-content: space-between;
+   	align-items: center;
+    max-width: 1300px;
+    padding: 0 10px;
+    height: 100%;
+    margin: 0 auto;
+}
+.PromotionHeader .Logo {
+    position: relative;
+    width: 150px;
+    height: 35px;
+    background-image: url(../images/logo.png);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    text-indent: -9999px;
+}
+.PromotionHeader .Btn {
+	width: 120px;
+	height: 35px;
+	border-radius: 10px;
+	background-color: #FC6E41;
+	font-size: 14px;
+	color: #fff;
+	line-height: 35px;
+	text-align: center;
+}
+.PromotionHeader .Btn a {
+	display: block;
+}
+.PromotionBanner {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+.PromotionBanner img {
+	width: 100%;
+}
+.PromotionArticle {
+	max-width: 1300px;
+    padding: 20px 10px;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+}
+.PromotionArticle h2 {
+	display: block;
+	padding: 20px 0;
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 40px;
+	color: #4A4A4A;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 40px;
+}
+.PromotionArticle h2 span {
+	color: #FC6E41;
+}
+.PromotionArticle p {
+	font-size: 20px;
+	line-height: 30px;
+	text-align: center;
+	color: #9B9B9B;
+	margin-bottom: 20px;
+}
+.PromotionArticle table {
+	width: 100%;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+}
+.PromotionArticle table th {
+	padding: 20px 0;
+	font-size: 20px;
+	color: #fff;
+	text-align: center;
+	background-color: #FC6E41;
+}
+.PromotionArticle table td {
+	padding: 20px 0;
+	font-size: 20px;
+	color: #9B9B9B;
+	text-align: center;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+.PromotionArticle h3 {
+	display: block;
+	padding: 20px 0;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 50px;
+	color: #4A4A4A;
+	text-align: center;
+	margin-bottom: 40px;
+}
+ul.PromotionFreeBox {
+	display: flex;
+	max-width: 915px;
+	margin: 0 auto;
+    justify-content: center;
+   	align-items: center;
+   	flex-wrap: wrap;
+}
+ul.PromotionFreeBox  li {
+	display: flex;
+	justify-content: center;
+   	align-items: center;
+   	align-content:center;
+   	flex-wrap:wrap;
+	width: 225px;
+	height: 225px;
+	margin: 0 40px 80px;
+	border-radius: 20px;
+	border: 1px solid #FC6E41;
+}
+ul.PromotionFreeBox  li:hover {
+	background-color: #FC6E41;
+}
+ul.PromotionFreeBox li h4 {
+	display: block;
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FC6E41;
+	text-align: center;
+}
+ul.PromotionFreeBox li p {
+	display: block;
+	width: 100%;
+	font-size: 20px;
+	color: #FC6E41;
+	margin: 0;
+}
+ul.PromotionFreeBox  li:hover h4,ul.PromotionFreeBox  li:hover p {
+	color: #fff;
+}
+.PromotionDepositBox {
+	position: relative;
+	display: inline-block;
+	text-align: right;
+}
+.PromotionDepositBox label {
+	font-size: 18px;
+	color: #9B9B9B;
+	margin-right: 10px;
+}
+.PromotionDepositBox input {
+	width: 235px;
+	height: 45px;
+	margin-bottom: 20px;
+	border:1px solid #979797;
+	font-size: 18px;
+	color: #4a4a4a;
+	text-indent: 10px;
+}
+.PromotionDepositBox input::placeholder {
+	color: #9B9B9B;
+}
+.PromotionDepositBox button {
+	width: 235px;
+	height: 45px;
+	border-radius: 45px;
+	background-color: #FC6E41;
+	font-size: 18px;
+	color: #fff;
+	margin-bottom: 60px;
+}
+.PromotionDepositBox .Alert {
+	position: absolute;
+	top: 0;
+	left: 320px;
+	font-size: 14px;
+	color: #fff;
+	white-space:nowrap;
+	line-height: 45px;
+	padding: 0 15px;
+	background: #FD8484;
+	border: 1px solid #FF6666;
+	border-radius: 0 19px 0 19px;
+
+}
+.PromotionRule {
+	width: 100%;
+	height: auto;
+	background-color: #FEF9E7;
+}
+.PromotionRuleMain {
+    max-width: 1300px;
+    padding: 50px 10px;
+    height: auto;
+    margin: 0 auto;
+}
+.PromotionRuleMain h2 {
+	position: relative;
+	font-size: 24px;
+	line-height: 30px;
+	color: #4a4a4a;
+	margin-bottom: 20px;
+}
+.PromotionRuleMain h2 span {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+}
+.PromotionRuleMain h2:before {
+	display: inline-block;
+	vertical-align: top;
+	content: "";
+	width: 10px;
+	height: 30px;
+	background-color: #FC6E41;
+	margin-right: 10px;
+}
+.PromotionRuleMain ul li {
+	font-size: 18px;
+	line-height: 30px;
+	color: #9B9B9B;
+	margin-bottom: 10px;
+}
+.PromotionFooter {
+	width: 100%;
+	font-size: 12px;
+	color: #717171;
+	line-height: 80px;
+	text-align: center;
+	background-color: #172437;
+}
+@media only screen and (max-width: 1080px) {
+	.PromotionNav.Active {
+	    top: 45px;
+	}
+}
+@media screen and (max-width: 736px) {
+.PromotionBox {
+  width: calc((100% - 20px) / 2);
+   margin: 0 5px 20px;
+}
+
+.PromotionBox .Article h2 {
+	font-size: 14px;
+	color: #fff;
+	margin-bottom: 10px;
+}
+.PromotionBox .Article .HighLight {
+	font-size: 14px;
+}
+.PromotionBox .Article .HighLight span {
+	font-size: 32px;
+}
+.PromotionBox .Article p {
+	font-size: 12px;
+	line-height: 22px;
+}
+.PromotionBox .Article .Btn {
+	font-size: 14px;
+	line-height: 35px;
+}
+
+.PromotionNav {
+	height: auto;
+}
+.PromotionMain {
+	 line-height: inherit;
+}
+.PromotionMain ul {
+	display: block;
+	width: 100%;
+	padding: 10px 0;
+}
+.PromotionMain ul li {
+	font-size: 14px;
+	margin: 0 10px;
+}
+.Banner.Promotion ul.slides li {
+    height: 155px;
+}
+.PromotionArticle h2 {
+	font-size: 20px;
+	line-height: 24px;
+	margin-bottom: 20px;
+}
+.PromotionArticle p {
+	font-size: 14px;
+	line-height: 22px;
+	margin-bottom: 10px;
+}
+.PromotionArticle table th {
+	padding: 10px 0;
+	font-size: 14px;
+}
+.PromotionArticle table td {
+	padding: 10px 0;
+	font-size: 14px;
+}
+.PromotionArticle h3  {
+	font-size: 20px;
+	margin-bottom: 0;
+}
+ul.PromotionFreeBox {
+	margin-bottom: 30px;
+}
+ul.PromotionFreeBox  li {
+	width: 140px;
+	height: 140px;
+	margin: 0 5px 10px;
+}
+ul.PromotionFreeBox li h4 {
+	font-size: 16px;
+}
+ul.PromotionFreeBox li p {
+	font-size: 14px;
+}
+.PromotionDepositBox .Alert {
+	display: none;
+
+}
+.PromotionDepositBox label {
+	font-size: 14px;
+}
+.PromotionDepositBox input {
+	font-size: 14px;
+}
+.PromotionDepositBox button {
+	width: 100%;
+	font-size: 14px;
+}
+.PromotionRuleMain h2 {
+	font-size: 16px;
+}
+.PromotionRuleMain ul li {
+	font-size: 14px;
+	line-height: 22px;
+	margin-bottom: 10px;
+}
+
+}

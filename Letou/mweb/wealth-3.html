@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" />
+<meta id="viewport" name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.01, user-scalable=1">
+<meta name="wap-font-scale" content="no"><!-- 解決UC自作聰明 -->
+<!-- iOS APP圖示 -->
+<link rel="apple-touch-icon-precomposed" href="#" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="#" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="#" />
+<!-- iOS APP啟動圖 -->
+<link rel="apple-touch-startup-image" href="#" />
+<!-- wap 上方設定 -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- wap 設定 -->
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<title>LETOU</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" /><!--SVG CSS-->
+<link href="styles/custom.css" rel="stylesheet" type="text/css" /><!--LETOU CSS-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/min/include-min.js"></script><!-- 讀入view -->
+<script type="text/javascript" src="js/min/anime.min.js"></script><!-- 動畫指令 -->
+<script type="text/javascript" src="js/min/custom-btn-min.js"></script><!-- 首頁按鈕 -->
+<script type="text/javascript" src="js/Chart.min.js"></script>
+
+</head>
+	<body>
+
+		<div class="container-fluid">
+
+			<!-- Header 文字版開始 -->
+	    	<div class="row">
+	    		<div class="col-xs-12">
+	    			<div class="header-warp">
+	    				<div class="header-word">
+	    					<h1>总资产</h1>
+	    				</div>
+						<div class="nav-back-warp">
+							<a href="wealth-1.html">
+								<p>返回</p>
+							</a>
+						</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	        <!-- Header 文字版結束 -->
+
+			<!-- Header 灰底開始 -->
+	        <div class="row">
+	        	<div class="col-xs-12">
+	        		<div class="header-gray-bg2"></div>
+	        	</div>
+	        </div>
+	        <!-- Header 灰底結束 -->
+
+	        <!-- 灰色間隔 開始 -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="wealth gary-bg tiny"></div>
+				</div>
+			</div>
+			<!-- 灰色間隔 結束 -->
+
+			<!-- 圓餅圖 開始 -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="total-assets-title-warp">
+						<div class="total-assets-title">
+							<h3>总资产</h3>
+							<p><a href="#">目前无资金</a></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="pie-warp">
+						<div class="pie-box ds-none">
+							<canvas id="myChart" class="pie-zone"></canvas>
+						</div>
+						<div class="pie-box nodata">
+							<div class="img"></div>
+						</div>
+						<div class="pie-word-warp">
+							<div class="pie-word">
+								<div class="pie-tr">
+									<div class="pie-td tag">
+										<i class="color-1"></i>
+									</div>
+									<div class="pie-td text">
+										<p>主帐户</p>
+									</div>
+									<div class="pie-td right">
+										<span>0.00</span>
+									</div>
+								</div>
+								<div class="pie-tr">
+									<div class="pie-td tag">
+										<i class="color-5"></i>
+									</div>
+									<div class="pie-td text">
+										<p>财神馆</p>
+									</div>
+									<div class="pie-td right">
+										<span>0.00</span>
+									</div>
+								</div>
+								<div class="pie-tr">
+									<div class="pie-td tag">
+										<i class="color-6"></i>
+									</div>
+									<div class="pie-td text">
+										<p>金誉城</p>
+									</div>
+									<div class="pie-td right">
+										<span>0.00</span>
+									</div>
+								</div>
+								<div class="pie-tr">
+									<div class="pie-td tag">
+										<i class="color-10"></i>
+									</div>
+									<div class="pie-td text">
+										<p>其他</p>
+									</div>
+									<div class="pie-td right">
+										<span>0.00</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!-- 圓餅圖 結束 -->
+
+			<!-- 灰色間隔 開始 -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="wealth gary-bg tiny"></div>
+				</div>
+			</div>
+			<!-- 灰色間隔 結束 -->
+
+			<!-- 資金明細 開始 -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="funds-title">
+						<h3>资金明细</h3>
+					</div>	
+				</div>
+				<div class="col-xs-12">
+					<ul class="funds-list-warp">
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-1"></div>
+									<div class="word">主帐户</div>
+									<div class="cash">¥1,999.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-2"></div>
+									<div class="word">沙巴体育</div>
+									<div class="cash">¥999.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-3"></div>
+									<div class="word">瑞宝阁</div>
+									<div class="cash">¥99.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-4"></div>
+									<div class="word">至尊坊</div>
+									<div class="cash">¥9.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-5"></div>
+									<div class="word">财神馆</div>
+									<div class="cash">¥9,487.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-6"></div>
+									<div class="word">金誉城</div>
+									<div class="cash">¥0.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-7"></div>
+									<div class="word">钻石厅</div>
+									<div class="cash">¥0.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-8"></div>
+									<div class="word">吉运楼</div>
+									<div class="cash">¥0.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="funds-list">
+									<div class="tag color-9"></div>
+									<div class="word">盘龙殿</div>
+									<div class="cash">¥0.00</div>
+									<div class="icon-list-arrow arrow"></div>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 資金明細 結束 -->
+
+			<!-- 灰色間隔 開始 -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="wealth gary-bg"></div>
+				</div>
+			</div>
+			<!-- 灰色間隔 結束 -->
+
+		</div>
+	<script type="text/javascript" src="js/min/custom-chart-min.js"></script>
+	</body>
+
+</html>

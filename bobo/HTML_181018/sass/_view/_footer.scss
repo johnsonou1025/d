@@ -1,0 +1,157 @@
+.Footer {
+	width: 100%;
+	height: auto;
+	background-color: #131319;
+}
+.FooterMain {
+	@include Centerenter;
+	margin: 0 auto;
+	padding: 30px 0 50px;
+}
+.FooterMain .Line {
+	width: 100%;
+	height: 1px;
+	background-color: #27272d;
+	margin-bottom: 35px;
+}
+.FooterBox {
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 35px;
+}
+.FooterBox.w60 {
+	width: 60%;
+}
+.FooterBox.w20 {
+	width: 20%;
+}
+.FooterBox h2 {
+	position: relative;
+	display: block;
+	font-size: 16px;
+	line-height: 30px;
+	color: #fff;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+.FooterBox h2:after {
+	position: absolute;
+	display: none;
+	content: "";
+	width: 20px;
+	height: 10px;
+	background-image: url("../images/arrow006.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	top: 50%;
+	margin-top: -5px;
+	right: 0;
+	transition:all .3s;
+}
+.FooterBox h2.Active:after {
+	transform:rotate(180deg);
+}
+.FooterBox p {
+	font-size: 14px;
+	line-height: 22px;
+	color: #626262;
+	margin-bottom: 20px;
+	padding-right: 75px;
+}
+.FooterBox ul.Brand li {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	height: 40px;
+	margin-right: 60px;
+	filter: grayscale(1);
+	opacity: .7;
+	transition:all .3s;
+}
+.FooterBox ul.Brand li:hover {
+	opacity: 1;
+	filter: grayscale(0);
+}
+.FooterBox ul.Brand li img {
+	height: 100%;
+}
+.FooterBox ul.Brand.Margin li {
+	margin-right: 30px;
+}
+.FooterBox ul.List li {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	line-height: 30px;
+	margin-right: 30px;
+}
+.FooterBox ul.List li a {
+	color: #626262;
+}
+.FooterBoxMain {
+	overflow: hidden;
+	transition:all .3s;
+}
+.FooterBoxMain.Active {
+	max-height: 300px;
+}
+@media screen and (max-width: 1080px) {
+.FooterMain {
+	padding: 0;
+}
+.FooterMain .Line {
+	display: none;
+}
+.FooterBox {
+	display: block;
+	padding: 0 15px;
+	border-bottom: 1px solid #27272d;
+	margin-bottom: 0;
+}
+.FooterBox.w60 {
+	width: 100%;
+}
+.FooterBox.w20 {
+	width: 100%;
+}
+.FooterBox ul.Brand,.FooterBox ul.List  {
+	margin-bottom: 20px;
+}
+.FooterBox ul.Brand li {
+	opacity: 1;
+	filter: grayscale(0);
+	margin:0 30px 20px 0;
+}
+.FooterBoxMain {
+	max-height: 0;
+}
+.FooterBox h2 {
+	line-height: 60px;
+	margin-bottom: 0;
+}
+.FooterBox h2:after{
+	display: block;
+}
+.FooterBox p {
+	margin-bottom: 40px;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

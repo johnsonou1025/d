@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" />
+<meta id="viewport" name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.01, user-scalable=1">
+<meta name="wap-font-scale" content="no"><!-- 解決UC自作聰明 -->
+<!-- iOS APP圖示 -->
+<link rel="apple-touch-icon-precomposed" href="#" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="#" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="#" />
+<!-- iOS APP啟動圖 -->
+<link rel="apple-touch-startup-image" href="#" />
+<!-- wap 上方設定 -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- wap 設定 -->
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<title>LETOU</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" /><!--SVG CSS-->
+<link href="styles/custom.css" rel="stylesheet" type="text/css" /><!--LETOU CSS-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/min/include-min.js"></script><!-- 讀入view -->
+<script type="text/javascript" src="js/min/anime.min.js"></script><!-- 動畫指令 -->
+<script type="text/javascript" src="js/min/custom-btn-min.js"></script><!-- 首頁按鈕 -->
+
+</head>
+<body>
+<!-- Header 開始 -->
+<div class="include" data-include="header-search"></div>
+<!-- Header 結束 sort-->
+
+<!-- VIEW 開始  -->
+<div class="container-fluid" id="AAA">
+	<!-- 上面空間 開始 -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="headertop"></div>
+		</div>
+	</div>
+	<!-- 上面空間 結束 -->
+	<!-- 選擇分類 開始 -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="sorttab-warp">
+				<ul>
+					<li class="active"><a href="#">全部分类</a></li>
+					<li><a href="#">老虎机</a></li>
+					<li><a href="#">桌面游戏</a></li>
+					<li><a href="#">刮刮卡</a></li>
+					<li><a href="#">游戏厅</a></li>
+					<li><a href="#">视频扑克</a></li>
+					<li><a href="#">累积大奖</a></li>					
+				</ul>
+			</div>
+			<div class="sorttab-line"></div>
+		</div>
+	</div>
+	<!-- 選擇分類 結束 -->
+	<!-- 本月熱門遊戲 開始-->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="hotgame-title-warp">
+				<div class="hotgame-title">
+					<i></i><h3>编辑精选</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<div class="hotgamelist-warp">
+				<ul>
+					<li class="img1">
+						<h3>奖金巨人</h3><p>提供中文 容易上手</p>
+					</li>
+					<li class="img2">
+						<h3>连环夺宝</h3><p>消除宝石 获取大奖</p>
+					</li>
+					<li class="img3">
+						<h3>糖果派对</h3><p>堆堆叠叠 缤纷连击</p>
+					</li>
+					<li class="img4">
+						<h3>奖金巨人</h3><p>提供中文 容易上手</p>
+					</li>
+					<li class="img5">
+						<h3>连环夺宝</h3><p>消除宝石 获取大奖</p>
+					</li>
+					<li class="img6">
+						<h3>糖果派对</h3><p>堆堆叠叠 缤纷连击</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 本月熱門遊戲 結束-->
+	<!-- 灰色區隔 開始 -->
+    <div class="row">
+        <div class="col-xs-12 gary-line"></div>
+    </div>
+    <!-- 灰色區隔 結束 -->
+    <!-- 猜你喜歡標題 開始-->
+    <div class="row">
+    	<div class="col-xs-12">
+    		<div class="slotgamelist-title-warp">
+    			<div class="slotgamelist-title">
+					<i></i><h3>热门游戏</h3>
+				</div>
+    		</div>
+    	</div>
+    	
+    </div>
+    <!-- 猜你喜歡標題 結束-->
+    <!-- 猜你喜歡List 開始 -->
+    <div class="row">
+    	<div class="slotgamelist-warp">
+    		<ul class="col-xs-12 col-sm-6 pad-left">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img1">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">BBIN</div><!-- <p class="tag">大热门</p> -->
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img2">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">PT</div><p class="tag">推荐</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-right">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img4">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">AG</div><p class="tag">特色</p>
+	    					</div>
+	    					<div class="jackpot-warp">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img5">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">GamesOS</div><p class="tag">推荐</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-left">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img6">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">BBIN</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img1">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">PT</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-right">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img2">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">GD</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img4">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">AG</div><p class="tag">最新</p>
+	    					</div>
+	    					<div class="jackpot-warp">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-left">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img1">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">BBIN</div><!-- <p class="tag">大热门</p> -->
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img2">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">PT</div><p class="tag">推荐</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-right">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img4">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">AG</div><p class="tag">特色</p>
+	    					</div>
+	    					<div class="jackpot-warp">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img5">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">GamesOS</div><p class="tag">推荐</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-left">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img6">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">BBIN</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img1">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">PT</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    	<ul class="col-xs-12 col-sm-6 pad-right">
+	    		<li class="col-xs-6">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img2">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">GD</div><p class="tag">大热门</p>
+	    					</div>
+	    					<div class="jackpot-warp ds-none">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    		<li class="col-xs-6 right">
+	    			<div class="slotgamecard-warp">
+	    				<div class="slotgame-img img4">
+	    					<!-- Tag 開始 -->
+	    					<div class="gamefirm-warp">
+	    						<!-- 這邊結構不能斷行 -->
+	    						<div class="gamefirm digital-font">AG</div><p class="tag">最新</p>
+	    					</div>
+	    					<div class="jackpot-warp">
+	    						<span class="digital-font"><i class="digital-font">¥</i>999,999,999.00</span>
+	    					</div>
+	    					<!-- Tag 結束 -->
+	    				</div>
+	    				<div class="slotgame-word-warp">
+	    					<h3>海豚探宝海豚探宝海豚探宝海豚探宝</h3>
+	    					<a href="#">
+	    						<i></i><p>进入游戏</p>
+	    					</a>
+	    					<span>刮刮卡</span>
+	    				</div>
+	    			</div>
+	    		</li>
+	    	</ul>
+    	</div>
+    </div>
+	<!-- 猜你喜歡List 結束 -->
+	<!-- 灰色壓底 開始 -->
+    <div class="row bg-c">
+        <div class="col-xs-12">
+            <div class="garyword-warp">
+                <div class="garyword">- 我是有底线的 -</div>
+            </div>
+        </div>
+    </div>
+    <!-- 灰色壓底 結束 -->
+    <!-- footer選單 開始 -->
+	<div class="include" data-include="footer-nav"></div>
+	<!-- footer選單 結束 -->
+</div>
+
+
+<script type="text/javascript" src="js/min/custom-min.js"></script><!-- 自訂JS -->
+</body>
+</html>

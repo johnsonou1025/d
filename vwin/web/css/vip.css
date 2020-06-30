@@ -1,0 +1,383 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* 共用 */
+.clear{
+	clear:both;
+	}
+
+/* 皇家騎士俱樂部*/
+#main-banner{
+	height:420px;
+}
+.kv3 {
+	height: 420px;
+	background: url(ct/images/vip-kv.jpg) center center no-repeat #000000;
+}
+#notice.vip-link{
+	background-color: #dddddd;
+	position: relative;
+}
+
+/* 皇家騎士俱樂部 - 選單顏色定義*/
+.vip-navText {
+	color: #ae191c;
+	text-align:center;
+	font-size:14px;
+}
+
+.vip-navText a{
+	color: #000000;
+}
+
+.vip-navText a:hover{
+	color: #ae191c;
+}
+
+/* 皇家騎士俱樂部 - 积累经验值*/
+.vip-title {
+	color: #ae191c;
+	margin-bottom:10px;
+}
+
+.vip-first{
+	visibility:hidden; 
+	padding-top:75px;
+}
+
+.vip-experience img{
+	width: auto;
+	height: auto;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.vip-article {
+	margin:35px 0;
+	line-height:22px;
+	font-size:14px;
+}
+
+.vip-article h1{
+	margin:35px 0;
+	line-height:22px;
+	font-size:14px;
+}
+
+.vip-article p{
+	height:15px;
+}
+
+/* 皇家騎士俱樂部 - 授剑仪式*/
+.vip-background{
+	background:url(images/vip-bg.gif) #e5e5e5 no-repeat bottom right;
+	padding-top:30px;
+}
+
+/*共用-１２分格*/
+.vip-background .cols1, .cols2 {
+	margin-right: 1.1%;
+}
+
+.vip-background .cols1 {
+	width:2%;
+}
+.vip-background .cols2 {
+	width: 17%;
+}
+
+.vip-qualifications{
+	text-align:left;
+}
+
+.vip-qualifications h1{
+	font-size:16px;
+	color:#333;
+	font-weight: bold;
+	letter-spacing:0;
+	margin:40px 0 7px 0;
+}
+
+.vip-qualifications h2{
+	font-size:13px;
+	color:#666;
+}
+
+.gray-triangle
+{
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 8px 0 8px 16px;
+	border-color: transparent transparent transparent #999999;
+	margin-top:130px;
+}
+
+.vip-level{
+	text-align:center;
+	margin-top:30px;
+}
+
+.vip-level h1{
+	font-size:16px;
+	color:#333;
+	font-weight:bold;
+	margin-bottom:15px;	
+}
+
+.vip-level h2{
+	font-size:30px;
+	font-family: "futura_bdcn_btbold";
+	color:#666;	
+	margin:40px 0 25px 0;
+	letter-spacing:0;
+	line-height:70px;	
+}
+
+a .vip-level:hover{
+	cursor:default;
+}
+
+a .vip-level:hover h1,a .vip-level:hover h2{
+	color:#ae191c;
+}
+
+a .vip-level:hover img{
+
+}
+
+/* 皇家騎士俱樂部 - 骑士准则*/
+.note{
+	list-style-type:decimal;
+	list-style-position: outside;
+	margin-left:22px;
+	line-height:25px;
+}
+
+.note li{
+	margin-bottom:7px;
+}
+
+
+/* 皇家騎士俱樂部 - 领取奖励*/
+.vip-table{
+	font-size:14px;
+	display:table;
+	width:100%;
+	text-align:center;
+	color:#333;
+	line-height:22px;
+	margin-bottom:40px;
+}
+
+.vip-table li{
+	list-style-type:disc;
+	list-style-position: outside;
+	margin-left:20px;	
+}
+
+.vip-table .vip-experience img{
+	margin-bottom:20px;
+    display: block;
+    width: 85%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+	max-width: 220px \9;
+	max-height: 188px \9;
+	padding-left: 15px;					
+}
+
+.vip-table .gray-triangle
+{
+	margin-bottom:110px;
+	margin-top:0px;
+}
+
+.vip-table span
+{
+	display:inline-block;
+	vertical-align: middle;
+}
+
+.vip_icon
+{
+	background:url(images/vip-icon.png) no-repeat;
+	width:35px;
+	height:30px;
+	margin-right:5px;
+}
+
+.icon1
+{
+	background-position:-0px -0px;
+}
+
+.icon2
+{
+	background-position:-0px -30px;
+}
+
+.icon3
+{
+	background-position:-0px -60px;
+}
+
+.icon4
+{
+	background-position:-0px -90px;
+}
+
+.icon5
+{
+	background-position:-0px -120px;
+}
+
+.icon6
+{
+	background-position:-0px -150px;
+}
+
+.icon7
+{
+	background-position:-0px -180px;
+}
+
+.icon8
+{
+	background-position:-0px -210px;
+}
+
+.icon9
+{
+	background-position:-0px -240px;
+}
+
+.vip-table h1{
+	font-size:16px;
+	font-weight:bold;
+	padding:20px 0;
+}
+
+.vip-table h2{
+	font-size:16px;
+	font-weight:bold;
+	padding:7px 0;	
+}
+
+.vip-table h3{
+	font-family: "futura_bdcn_btbold";
+	font-size:30px;
+	color:#666;
+}
+
+.vip-table h4{
+	display:inline;
+}
+
+.vip-table h5{
+	display:inline;
+	font-size:12px;
+}
+
+.vip-table h6{
+	font-family: "futura_mdcn_btmedium";
+	font-size:18px;
+	color:#666;
+}
+
+.vip-table th{
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:5px;
+}
+
+.vip-table_col{
+	padding:0 0 10px 40px;
+	text-align:left;
+	font-weight:bold;	
+}
+
+.vip_row1{
+	background-color:#d9d9d9;
+}
+
+/* 皇家騎士俱樂部 - 骑士課堂*/
+.vip-question{
+	width:100%;
+	position:relative;
+	background:url(images/vip-q-bg.gif) repeat-y;
+	padding:20px 0;			
+}
+
+.vip-question-top{
+	margin-top:40px;		
+}
+
+.vip-question-last{
+	margin-bottom:40px;		
+}
+
+.vip-question h1{
+	font-family: "futura_bdcn_btbold";
+	font-size: 25px;
+	color:#eee;
+	position:absolute;
+	left:20px;
+	top:15px;	
+}
+
+.vip-question h2{
+	font-size: 16px;
+	color:#333;
+	padding-left:70px;	
+}
+
+.vip-change{
+	width:14px;
+	height:14px;
+	background:url(images/vip-change.png) no-repeat 0px 0px;
+	position:absolute;
+	right:15px;
+	top:20px;
+}
+
+.vip-question:hover, .vip-active{
+	cursor:pointer;
+	background:url(images/vip-a-bg.gif) repeat-y;
+}
+
+.vip-question:hover h1, .vip-active h1{
+	color:#f7e6b0;
+}
+
+.vip-question:hover h2, .vip-active h2{
+	color:#fff;	
+}
+
+.vip-question:hover div.vip-change{
+	background-position:-14px -0px;
+}
+
+.vip-active div.vip-change, .vip-active:hover div.vip-change{
+	background-position:-14px -14px;	
+}
+
+.vip-answer{
+}
+
+.vip-answer h1{
+	padding-top:35px;
+	padding-left:1px;
+	color:#f7e6b0;	
+}
+
+.vip-answer h2{
+	font-size: 14px;
+	color:#fff;
+	padding-top:15px;
+	font-weight:normal;
+	line-height:20px;
+	padding-right:40px;
+}
