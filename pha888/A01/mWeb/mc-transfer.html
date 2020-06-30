@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content">
+        <div class="container">
+            <ul class="nav-box">
+                <li>
+                    <a href="mc-deposit.html">
+                        <i class="glyphicon glyphicon-deposit h3 margin-bottom-8"></i>
+                        <p>存款</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="mc-withdraw.html">
+                        <i class="glyphicon glyphicon-withdraw h3 margin-bottom-8"></i>
+                        <p>提款</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="mc-transfer.html">
+                        <i class="glyphicon glyphicon-transfer h3 margin-bottom-8"></i>
+                        <p>轉帳</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="mc-bill.html">
+                        <i class="glyphicon glyphicon-bill h3 margin-bottom-8"></i>
+                        <p>歷史記錄</p>
+                    </a>
+                </li>
+            </ul>
+            <h3 class="margin-top-24 margin-bottom-8 text-primary"></h3>
+            <div class="text-primary margin-bottom-16">
+                <div class="col-6">主帳號：1,045.37</div>
+                <div class="col-6 text-right">可提資金：0</div>
+                <hr class="clear">
+            </div>
+            <!-- <div>
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="form-input">
+                        <a href="" class="btn">一鍵轉回主帳戶</a>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <hr class="clear">
+            </div> -->
+            <div class="form-input form-input-2">
+                <label>轉帳來源</label>
+                <div class="select">
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <select name="" id="">
+                        <option value="">請選擇平台</option>
+                    </select>
+                </div>
+                <!-- <p class="form-text text-info">底部說明文字</p> -->
+            </div>
+            <div class="form-input form-input-2">
+                <label>轉帳目的</label>
+                <div class="select">
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <select name="" id="">
+                        <option value="">請選擇平台</option>
+                    </select>
+                </div>
+                <!-- <p class="form-text text-info">底部說明文字</p> -->
+            </div>
+            <div class="form-input form-input-2">
+                <label>轉帳金額</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="form-input form-input-2">
+                <div class="form-text">
+                    <div class="padding-gap-8">
+                        <div class="col-4"><a href="" class="btn btn-case">10</a></div>
+                        <div class="col-4"><a href="" class="btn btn-case">30</a></div>
+                        <div class="col-4"><a href="" class="btn btn-case">50</a></div>
+                        <hr class="clear margin-bottom-16">
+                        <div class="col-4"><a href="" class="btn btn-case">100</a></div>
+                        <div class="col-4"><a href="" class="btn btn-case">200</a></div>
+                        <div class="col-4"><a href="" class="btn btn-case">300</a></div>
+                        <hr class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="padding-gap-8 margin-top-24">
+                <div class="col-6">
+                    <a href="#popup-style-1" class="btn btn-secondary popup-btn">一鍵轉回主帳戶</a>
+                </div>
+                <div class="col-6">
+                    <a href="" class="btn">提交</a>
+                </div>
+                <hr class="clear">
+            </div>
+            <div class="popup-wrap" id="popup-style-1">
+                <a class="popup-close-block popup-close" href=""></a>
+                <div class="popup-box transform-out">
+                    <div class="popup-content">
+                        <h4>是否轉回所有遊戲錢包中的餘額？</h4>
+                    </div>
+                    <div class="form-btn">
+                        <div class="gap-padding-8">
+                            <div class="col-6">
+                                <a href="mc-transfer-1.html" class="btn popup-close">確認</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="" class="btn btn-secondary popup-close">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="close-btn popup-close" href=""><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

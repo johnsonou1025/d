@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 載入百分比圓形工具circles.js -->
+    <script src="js/circles.js"></script>
+    <!-- 載入header和footer -->
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content membercenter-content">
+        <div class="container">
+            <!-- 會員資料 -->
+            <div class="personal-info">
+                <div class="padding-gap-16">
+                    <div class="col-6">
+                        <div class="padding-gap-8">
+                            <div class="col-3"><i class="glyphicon glyphicon-user-pic"></i></div>
+                            <div class="col-9">
+                                <h2>Daria(dar****)</h2>
+                                <p>真實姓名：張**</p>
+                                <p>電子郵箱：emm****@gmail.com</p>
+                                <p>手機號碼：86 - 1314514****</p>
+                            </div>
+                            <hr class="clear">
+                            <div>
+                                <p><i class="glyphicon glyphicon-time"></i>您好，您上次登錄時間是2017/0524 15:52:11</p>
+                                <div>
+                                    <p><i class="glyphicon glyphicon-wallet"></i>帳戶餘額</p>
+                                    <p class="h3">¥653.37</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="verify-percent">
+                            <div>
+                                <i class="glyphicon glyphicon-safe"></i>
+                                <h3 class="text-right">安全指數</h3>
+                            </div>
+                            <div class="verify-circle" id="verify-circle"></div>
+                        </div>
+                    </div>
+                    <hr class="clear">
+                </div>
+            </div>
+            <!-- 會員選單 -->
+            <div class="personal-menu">
+                <div onclick="location.href='membercenter.html';">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <p>帳號信息</p>
+                </div>
+                <div class="active" onclick="location.href='mc-verify.html';"><i class="glyphicon glyphicon-password"></i>
+                    <p>安全中心</p>
+                </div>
+                <div onclick="location.href='mc-message.html';"><i class="glyphicon glyphicon-messages"></i>
+                    <p>消息公告</p>
+                </div>
+            </div>
+            <div class="personal-content text-center">
+                <div class="verify-wrap text-left">
+                    <div class="verify-menu">
+                        <a href="mc-verify-1-1.html">實名認證</a>
+                        <a class="active" href="mc-verify-2-1.html">手機認證</a>
+                        <a href="mc-verify-3-1.html">郵箱認證</a>
+                        <a href="mc-verify-4-1.html">提款密碼</a>
+                        <a href="mc-verify-5-1.html">登入密碼</a>
+                    </div>
+                    <!-- 手機認證 -->
+                    <div class="verify-content">
+                        <p class="margin-bottom-16">完成手機綁定，可通過以驗證的手機找回密碼，為了您的帳號資訊與資金安全，請盡快完成手機綁定。</p>
+                        <div class="step-wrap">
+                            <ul>
+                                <li class="active">1 輸入手機號碼<i class="arrow-end"></i></li>
+                                <li>2 完成驗證<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                            </ul>
+                        </div>
+                        <div class="from-input">
+                            <label>手機號碼：</label>
+                            <div class="from-dd">
+                                <div class="padding-gap-8">
+                                    <div class="col-4">
+                                        <div class="select">
+                                            <div class="placeholder">+86</div>
+                                            <i class="glyphicon glyphicon-chevron-down"></i>
+                                            <ul class="hide">
+                                                <li>+86</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-1 text-center">-</div>
+                                    <div class="col-7">
+                                        <input type="text" placeholder="">
+                                    </div>
+                                    <hr class="clear">
+                                </div>
+                            </div>
+                            <a href="" class="btn-style-3 background-color-3">發送驗證碼</a>
+                        </div>
+                        <div class="from-input">
+                            <label>手機號碼：</label>
+                            <div class="from-dd">
+                                <div class="padding-gap-8">
+                                    <div class="col-4">
+                                        <div class="select">
+                                            <div class="placeholder">+86</div>
+                                            <i class="glyphicon glyphicon-chevron-down"></i>
+                                            <ul class="hide">
+                                                <li>+86</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-1 text-center">-</div>
+                                    <div class="col-7">
+                                        <input type="text" placeholder="">
+                                    </div>
+                                    <hr class="clear">
+                                </div>
+                            </div>
+                            <div class="info-wrap-outer">
+                                <a href="" class="btn-style-3 btn-disable">
+                                    <i class="text-middle glyphicon glyphicon-remove"></i>
+                                    <span>己達發放上限</span></a>
+                                <div class="info-wrap">
+                                    <p>驗證碼己發送（剩餘次數:0）</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="from-input">
+                            <label>驗證碼：</label>
+                            <div class="from-dd">
+                                <input type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="from-input">
+                            <label for=""></label>
+                            <div class="inline-block margin-top-16"><a href="mc-verify-2-2.html" class="btn">提交</a></div>
+                        </div>
+                    </div>
+                    <!-- 認証內容結束 -->
+                </div>
+            </div>
+        </div>
+        <!-- containerv結束 -->
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

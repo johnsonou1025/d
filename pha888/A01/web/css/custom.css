@@ -1,0 +1,77 @@
+.casino-prod-item, .sport-prod-item, .lotto-prod-item {
+    display: block;
+}
+
+
+/*體育*/
+.SportsBBIN {
+    top: 380px;
+    margin-left: 224px;
+    height: 56px;
+}
+.SportsIM {
+    top: 520px;
+    margin-left: 304px;
+}
+
+.SportsFalo {
+    top: 660px;
+    margin-left: 284px;
+    height: 120px;
+}
+.SportsSaba{
+    display: none;
+}
+
+/* 真人娛樂館 */
+.CasinoAGIN {
+    top: 80px;
+    margin-left: 110px;
+}
+
+.CasinoAGQ {
+    top: 214px;
+    margin-left: 174px;
+}
+
+.CasinoBBIN {
+    top: 380px;
+    margin-left: 246px;
+}
+
+.CasinoGDX {
+    top: 495px;
+    margin-left: 290px;
+}
+
+.CasinoEBet {
+    top: 620px;
+    margin-left: 220px;
+}
+
+.CasinoFalo {
+    top: 780px;
+    margin-left: 190px;
+    height: 136px;
+}
+.CasinoAllBet{
+    display: none;
+}
+
+
+/* 數字彩 */
+.LotteryBBIN {
+    top: 320px;
+    margin-left: 168px;
+}
+
+.LotteryRuYi {
+    top: 434px;
+    margin-left: 200px;
+}
+
+.LotteryFalo {
+    top: 570px;
+    margin-left: 172px;
+    height: 112px;
+}

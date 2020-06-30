@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 載入header和footer -->
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content">
+        <div class="container">
+            <!-- 會員資料 -->
+            <div class="personal-info">
+                <h2>Daria(dar****)</h2>
+                <p class="h7"><i class="glyphicon glyphicon-time"></i>您好，上次登錄時間2017/05/24 15:52:11</p>
+                <div class="col-4">
+                    <p><i class="glyphicon glyphicon-wallet"></i>帳戶餘額</p>
+                </div>
+                <div class="col-8 text-right">
+                    <p class="h3">¥653.37</p>
+                </div>
+                <div class="verify-percent">
+                    <div class="padding-gap-8">
+                        <div class="col-4">
+                            <i class="h2 glyphicon glyphicon-safe"></i>
+                            <h5>安全<br>指數</h5>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-center margin-bottom-8">50%</div>
+                            <div class="verify-circle"><span style="width: 50%;"></span></div>
+                        </div>
+                        <hr class="clear">
+                    </div>
+                </div>
+                <p>真實姓名：張**</p>
+                <p>電子郵箱：emm****@gmail.com</p>
+                <p>手機號碼：86 - 1314514****</p>
+                <hr class="clear">
+                <!-- 會員選單 -->
+                <div class="personal-menu">
+                    <a href="mc-deposit.html">
+                        <i class="glyphicon glyphicon-deposit"></i>
+                        <span>申請存款</span>
+                    </a>
+                    <a href="mc-withdraw.html"><i class="glyphicon glyphicon-withdraw"></i>
+                        <span>申請提款</span>
+                    </a>
+                    <a href="mc-transfers.html"><i class="glyphicon glyphicon-transfer"></i>
+                        <span>資金轉帳</span>
+                    </a>
+                    <a class="active" href="mc-bill.html"><i class="glyphicon glyphicon-bill"></i>
+                        <span>帳戶歷史記錄</span>
+                    </a>
+                    <a href="mc-bonus.html"><i class="glyphicon glyphicon-bonus"></i>
+                        <span>紅利領取</span>
+                    </a>
+                </div>
+            </div>
+            <!-- 資金轉帳 -->
+            <div class="personal-content">
+                <div class="text-center margin-bottom-16">
+                    <div class="wallet-title">帳戶歷史記錄</div>
+                </div>
+                <div class="from-input text-center">
+                    <span>查詢項目：</span>
+                    <div class="from-dd margin-right-8">
+                        <div class="select">
+                            <div class="placeholder">主帳戶</div>
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                            <ul class="hide">
+                                <li>電子遊戲</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="clear margin-bottom-16">
+                    <span>查詢區間：</span>
+                    <div class="from-dd margin-right-8">
+                        <div class="padding-gap-8">
+                            <div class="col-3">
+                                <div class="select">
+                                    <div class="placeholder">週</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>月</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="select h6">
+                                    <div class="placeholder">2017/08/09-2017/08/15</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                </div>
+                            </div>
+                            <hr class="clear">
+                        </div>
+                    </div>
+                    <div class="inline-block">
+                        <a href="" class="btn">查詢</a>
+                    </div>
+                </div>
+                <table class="table-style-2">
+                    <tr>
+                        <th>日期</th>
+                        <th>餘額</th>
+                        <th>存款</th>
+                        <th>提款</th>
+                        <th>轉出</th>
+                        <th>轉入</th>
+                        <th>紅利</th>
+                    </tr>
+                    <tr>
+                        <td>2017/08/11</td>
+                        <td><a href="#billList" class="text-color-1 popup-btn">643.37</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>10.00</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+                <!-- 帳戶歴史記錄結束 -->
+                <!-- 彈窗 -->
+                <div class="popup-wrap" id="billList">
+                    <div class="modal-popup modal-popup-1 transform-out">
+                        <div class="popup-info">
+                            <a href="" class="popup-close-btn popup-close"><i class="glyphicon glyphicon-remove"></i></a>
+                            <h5 class="margin-bottom-16">帳戶歷史記錄 - 2017-10-06</h3>
+                            <h5 class="margin-bottom-16">你可在此瀏覽全部的歷史明細記錄</h5>
+                            <table class="table-style-3">
+                                <tr>
+                                    <th>申請時間</th>
+                                    <th>餘額</th>
+                                    <th>交易類型</th>
+                                    <th>資金變化</th>
+                                    <th>狀態</th>
+                                </tr>
+                                <tr>
+                                    <td>2017/10/06 11:52:53
+                                        <br>ADTB1507261973001</td>
+                                    <td>1,446.37</td>
+                                    <td>從 [BBIN平台轉出]</td>
+                                    <td>60.00</td>
+                                    <td>失敗</td>
+                                </tr>
+                                <tr>
+                                    <td>2017/10/06 11:52:53
+                                        <br>ADTB1507261973001</td>
+                                    <td>1,446.37</td>
+                                    <td>轉入至 [BBIN平台]</td>
+                                    <td>100.00</td>
+                                    <td>成功</td>
+                                </tr>
+                                <tr>
+                                    <td>2017/10/06 11:52:53
+                                        <br>ADTB1507261973001</td>
+                                    <td>1,446.37</td>
+                                    <td>從 [BBIN平台轉出]</td>
+                                    <td>60.00</td>
+                                    <td>失敗</td>
+                                </tr>
+                                <tr>
+                                    <td>2017/10/06 11:52:53
+                                        <br>ADTB1507261973001</td>
+                                    <td>1,446.37</td>
+                                    <td>從 [BBIN平台轉出]</td>
+                                    <td>60.00</td>
+                                    <td>失敗</td>
+                                </tr>
+                            </table>
+                            <div class="page-nav">
+                                <a href=""><i class="glyphicon glyphicon-chevron-left"></i></a>
+                                <a href="" class="active">1</a>
+                                <a href="">2</a>
+                                <a href="">3</a>
+                                <a href="">4</a>
+                                <a href="">5</a>
+                                <a href=""><i class="glyphicon glyphicon-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="close-block popup-close"></div>
+                </div>
+                <!-- 彈窗結束 -->
+            </div>
+        </div>
+        <!-- containerv結束 -->
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

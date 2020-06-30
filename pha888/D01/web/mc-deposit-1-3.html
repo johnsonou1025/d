@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 載入header和footer -->
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content">
+        <div class="container">
+            <!-- 會員資料 -->
+            <div class="personal-info">
+                <h2>Daria(dar****)</h2>
+                <p class="h7"><i class="glyphicon glyphicon-time"></i>您好，上次登錄時間2017/05/24 15:52:11</p>
+                <div class="col-4">
+                    <p><i class="glyphicon glyphicon-wallet"></i>帳戶餘額</p>
+                </div>
+                <div class="col-8 text-right">
+                    <p class="h3">¥653.37</p>
+                </div>
+                <div class="verify-percent">
+                    <div class="padding-gap-8">
+                        <div class="col-4">
+                            <i class="h2 glyphicon glyphicon-safe"></i>
+                            <h5>安全<br>指數</h5>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-center margin-bottom-8">50%</div>
+                            <div class="verify-circle"><span style="width: 50%;"></span></div>
+                        </div>
+                        <hr class="clear">
+                    </div>
+                </div>
+                <p>真實姓名：張**</p>
+                <p>電子郵箱：emm****@gmail.com</p>
+                <p>手機號碼：86 - 1314514****</p>
+                <hr class="clear">
+                <!-- 會員選單 -->
+                <div class="personal-menu">
+                    <a class="active" href="mc-deposit.html">
+                        <i class="glyphicon glyphicon-deposit"></i>
+                        <span>申請存款</span>
+                    </a>
+                    <a href="mc-withdraw.html"><i class="glyphicon glyphicon-withdraw"></i>
+                        <span>申請提款</span>
+                    </a>
+                    <a href="mc-transfers.html"><i class="glyphicon glyphicon-transfer"></i>
+                        <span>資金轉帳</span>
+                    </a>
+                    <a href="mc-bill.html"><i class="glyphicon glyphicon-bill"></i>
+                        <span>帳戶歷史記錄</span>
+                    </a>
+                    <a href="mc-bonus.html"><i class="glyphicon glyphicon-bonus"></i>
+                        <span>紅利領取</span>
+                    </a>
+                </div>
+            </div>
+            <!-- 申請存款 -->
+            <div class="personal-content">
+                <div class="text-center">
+                    <div class="wallet-title">尊敬的客戶您好，請選擇您的存款方式，並填寫存款金額</div>
+                </div>
+                <div class="wallet-menu">
+                    <a href="mc-deposit-1-1.html" class="active">微信快捷支付</a>
+                    <a href="mc-deposit-2-1.html">支付寶</a>
+                    <a href="mc-deposit-3-1.html">銀行轉帳</a>
+                    <a href="mc-deposit-4-1.html">微信在線支付</a>
+                    <a href="mc-deposit-5-1.html">在線支付</a>
+                </div>
+                <!-- 微信快捷支付 2.填寫對帳資料 -->
+                <div class="step-wrap step-wrap-4">
+                    <ul>
+                        <li>1 申請存款<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                        <li>2 進行轉帳<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                        <li class="active">3 填寫對帳資料<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                        <li>4 財務審核中<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                    </ul>
+                </div>
+                <p>尊貴的客戶您好，您的存款己經生效，請紀錄以下官方帳號信息及存款金額，在3小時內登入您的網上銀行／手機銀行進行轉帳。</p>
+                <p>轉帳完成後，請保留銀行回執並填寫對帳資料，以便確認轉帳資訊，請聯係<a href="" class="text-color-1">線上客服</a>取得扶助。</p>
+                <p class="text-color-1 margin-bottom-16">匯款完成後，請務必填寫對帳戶所需資料以便財務核對您的存款。</p>
+                <div class="h5 margin-bottom-8">
+                    <div class="col-6">收款資訊</div>
+                    <div class="col-6 text-right">訂單狀態：<span class="text-color-1">請提供對帳資料</span></div>
+                    <hr class="clear">
+                </div>
+                <table class="table-style-1">
+                    <tr>
+                        <th>付款時間</th>
+                        <td class="text-left">
+                            <div class="from-select">
+                                <div class="select border-style-1">
+                                    <div class="placeholder">中國香港新加坡(GMT+8)</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>中國香港新加坡(GMT+8)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="from-input margin-0">
+                                <input class="border-style-1" type="text" placeholder="2017/09/29 19:02:42">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="h5 margin-bottom-8">
+                    <div class="col-6">收款銀行帳戶</div>
+                    <div class="col-6"></div>
+                    <hr class="clear">
+                </div>
+                <table class="table-style-1">
+                    <tr>
+                        <th>收款金額</th>
+                        <td>100.00</td>
+                        <th>收款二維碼</th>
+                        <td class="text-left"><img src="images/qrcode-demo.png" alt=""></td>
+                    </tr>
+                    <tr>
+                        <th>訂單編號</th>
+                        <td>ADPM1506682962001</td>
+                        <th>申請時間</th>
+                        <td class="text-left">2017/09/28 19:02:42 中國香港新加坡(GMT+8)</td>
+                    </tr>
+                    <tr>
+                        <th>存款類型</th>
+                        <td>微信快捷支付</td>
+                        <th>收款帳號</th>
+                        <td class="text-left">jenny@gmail.com</td>
+                    </tr>
+                </table>
+                <div class="from-btn">
+                    <a href="" class="btn">取消訂單</a><a href="mc-deposit-1-4.html" class="btn">完成存款申請</a>
+                    <p class="inline-block text-color-1 margin-top-16">匯款完成後，請務必填寫對帳所需資料以便財務和對您的存款</p>
+                </div>
+                <div class="counttime-wrap">
+                    訂單失效時間還剩<span>00</span><span>59</span><span>53</span>
+                </div>
+                <!-- 存款流程結束 -->
+            </div>
+            <!-- 消息公結束 -->
+        </div>
+        <!-- containerv結束 -->
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

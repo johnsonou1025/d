@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 載入header和footer -->
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content membercenter-content">
+        <div class="container">
+            <!-- 會員資料 -->
+            <div class="personal-info">
+                <h2>Daria(dar****)</h2>
+                <p class="h7"><i class="glyphicon glyphicon-time"></i>您好，上次登錄時間2017/05/24 15:52:11</p>
+                <div class="col-4">
+                    <p><i class="glyphicon glyphicon-wallet"></i>帳戶餘額</p>
+                </div>
+                <div class="col-8 text-right">
+                    <p class="h3">¥653.37</p>
+                </div>
+                <div class="verify-percent">
+                    <div class="padding-gap-8">
+                        <div class="col-4">
+                            <i class="h2 glyphicon glyphicon-safe"></i>
+                            <h5>安全<br>指數</h5>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-center margin-bottom-8">50%</div>
+                            <div class="verify-circle"><span style="width: 50%;"></span></div>
+                        </div>
+                        <hr class="clear">
+                    </div>
+                </div>
+                <p>真實姓名：張**</p>
+                <p>電子郵箱：emm****@gmail.com</p>
+                <p>手機號碼：86 - 1314514****</p>
+                <hr class="clear">
+                <!-- 會員選單 -->
+                <div class="personal-menu">
+                    <a class="active" href="membercenter.html">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>帳號信息</span>
+                    </a>
+                    <a href="mc-verify.html"><i class="glyphicon glyphicon-password"></i>
+                        <span>安全中心</span>
+                    </a>
+                    <a href="mc-message.html"><i class="glyphicon glyphicon-messages"></i>
+                        <span>消息公告</span>
+                    </a>
+                </div>
+            </div>
+            <!-- 帳號信息 -->
+            <div class="personal-content">
+                <p class="margin-bottom-16">為了您的帳號與資金安全，請填寫以下資訊，方便我們與您取得及時的聯繫。若在操作過程中出現任何問題，請立即點擊線上客服與我們 7x24 小時線上客服咨詢尋求幫助。</p>
+                <div class="step-wrap">
+                    <ul>
+                        <li class="active">1 輸入真實資訊<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                        <li>2 完成<i class="arrow-front"></i><i class="arrow-end"></i></li>
+                    </ul>
+                </div>
+                <div class="from-input">
+                    <label>暱稱</label>
+                    <div class="from-dd">
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+                <!-- <div class="from-input">
+                    <label for=""></label><p class="inline-block">注意：如暱稱與其它人衝突，本網站將有權利收回該暱稱。</p>
+                </div> -->
+                <div class="from-input">
+                    <label>微信號</label>
+                    <div class="from-dd">
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>生日</label>
+                    <div class="from-dd">
+                        <div class="padding-gap-8">
+                            <div class="col-6">
+                                <div class="select">
+                                    <div class="placeholder">年份</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>2016</li>
+                                        <li>2017</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="select">
+                                    <div class="placeholder">月</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>9</li>
+                                        <li>10</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="select">
+                                    <div class="placeholder">日</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>9</li>
+                                        <li>10</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>姓別</label>
+                    <div class="from-dd">
+                        <div class="padding-gap-8">
+                            <div class="col-6">
+                                <div class="from-checkbox">
+                                    <label class="control">
+                                        <input type="radio" name="radio">
+                                        <div class="checkbox-indicator"><i class="glyphicon glyphicon-ok"></i></div>
+                                        男
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="from-checkbox">
+                                    <label class="control">
+                                        <input type="radio" name="radio">
+                                        <div class="checkbox-indicator"><i class="glyphicon glyphicon-ok"></i></div>
+                                        女
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>國籍</label>
+                    <div class="from-dd">
+                        <div class="select">
+                            <div class="placeholder">請選擇國籍</div>
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                            <ul class="hide">
+                                <li>中國</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>郵遞區號</label>
+                    <div class="from-dd">
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>省 / 市</label>
+                    <div class="from-dd">
+                        <div class="padding-gap-8">
+                            <div class="col-6">
+                                <input type="text" placeholder="">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label>住址</label>
+                    <div class="from-dd">
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="from-input">
+                    <label for=""></label>
+                    <div class="inline-block"><a href="mc-personal-1-2.html" class="btn">提交</a></div>
+                </div>
+                <!-- 輸入結束 -->
+            </div>
+        </div>
+        <!-- containerv結束 -->
+    </div>  
+    <div id="footer"></div>
+</body>
+
+</html>

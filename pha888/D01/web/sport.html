@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 載入遊戲館別入口位置 -->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- 載入header和footer -->
+    <script src="js/include-html.js"></script>
+    <script>
+    $(function() {
+        $(document).mousemove(function(e) {
+            var leftMove = -451-e.pageX / 200;
+            var topMove = -e.pageY / 200;
+            $(".sport-people").css({'margin-left':leftMove+'px','margin-top':topMove+'px'})
+        });
+    })
+    </script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content">
+        <div class="sport-wrap">
+            <div class="container">
+                <div class="sport-people"></div>
+                <div class="sport-text"></div>
+                <div class="sport-prod-item SportsBBIN">
+                    <img src="images/SportsBBIN.png" alt=""><a href="" class="inline-block">進入遊戲</a>
+                </div>
+                <div class="sport-prod-item SportsIM">
+                    <img src="images/SportsIM.png" alt=""><a href="" class="inline-block">進入遊戲</a>
+                </div>
+                <div class="sport-prod-item SportsFalo sport-prod-pending">
+                    <img src="images/SportsFalo.png" alt=""><span>近期推出</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

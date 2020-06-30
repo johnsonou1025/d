@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body style="padding-top: 136px;">
+    <div id="header">
+        <div class="header">
+            <div class="container">
+                <div class="col-5 logo">
+                    <img src="images/logo.png" alt="">
+                </div>
+                <div class="col-7 header-member">
+                    <div class="text-left">
+                        <h5>Robertpan</h5>
+                        <h5>主錢包￥1500.00</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header header-2" style="position: static;">
+            <div class="container">
+                <div class="col-12 text-center-middle">
+                    <h3>幫助</h3></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <!-- 按鈕 -->
+            <h3 class="margin-top-24">按鈕<hr class="gap"></h3>
+            <div class="text-center">
+                <div class="form-input"><a href="" class="btn">頁面主操作 Normal</a></div>
+                <div class="form-input"><a href="" class="btn btn-loading">頁面主操作 Loading</a></div>
+                <div class="form-input"><a href="" class="btn btn-disabled">頁面主操作 Disabled</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary">頁面次操作 Normal</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary btn-loading">頁面次操作 Loading</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary btn-disabled">頁面次操作 Disabled</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary-2">頁面次操作 Normal</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary-2 btn-loading">頁面次操作 Loading</a></div>
+                <div class="form-input"><a href="" class="btn btn-secondary-2 btn-disabled">頁面次操作 Disabled</a></div>
+                <div class="form-input">
+                    <div class="gap-padding-8">
+                        <div class="col-6"><a href="" class="btn btn-round">按鈕</a></div>
+                        <div class="col-6"><a href="" class="btn btn-round-2">按鈕</a></div>
+                        <hr class="clear">
+                    </div>
+                </div>
+                <div class="form-input">
+                    <div class="gap-padding-8">
+                        <div class="col-6"><a href="" class="btn btn-case">送出</a></div>
+                        <div class="col-6"><a href="" class="btn btn-round-2 btn-case">送出</a></div>
+                        <hr class="clear">
+                    </div>
+                </div>
+            </div>
+            <!-- 表單 -->
+            <h3 class="margin-top-24">表單<hr class="gap"></h3>
+            <div class="form-input form-input-2">
+                <label>輸入</label>
+                <input type="text" placeholder="">
+                <p class="form-text text-info">底部說明文字底部說明文字</p>
+            </div>
+            <div class="form-input form-input-2 form-warning">
+                <label>錯誤輸入</label>
+                <input type="text" placeholder="">
+                <p class="form-text text-warning">底部說明文字底部說明文字</p>
+            </div>
+            <div class="form-input form-input-2">
+                <label>密碼輸入</label>
+                <div class="input-password fair">
+                    <input type="text" placeholder="请输入密码">
+                    <a href="">顯示</a>
+                </div>
+                <p class="form-text text-info">weak / fair / strong 三種等級</p>
+            </div>
+            <div class="form-input form-input-2">
+                <label>驗証碼輸入</label>
+                <div class="text-center">
+                    <div class="form-verify-password">
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" placeholder="-">
+                        </div>
+                        <hr class="clear">
+                    </div>
+                </div>
+            </div>
+            <div class="form-input form-input-2">
+                <label>選擇</label>
+                <div class="select">
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <select name="" id="">
+                        <option value="">中文</option>
+                        <option value="">英文</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-input">
+                <label>單行多欄選擇</label>
+                <div class="padding-gap-8">
+                    <div class="col-4">
+                        <div class="select">
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                            <select name="" id="">
+                                <option value="">+61</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+                <hr class="clear">
+            </div>
+            <div class="form-input">
+                <label>複選列表欄</label>
+                <div class="form-checkbox">
+                    <label class="control">
+                        <input type="checkbox">
+                        <div class="checkbox-indicator"><i class="glyphicon glyphicon-ok"></i></div>
+                        格式標準為你而定
+                    </label>
+                </div>
+                <hr class="clear gap">
+                <div class="form-checkbox">
+                    <label class="control">
+                        <input type="checkbox" checked="checked">
+                        <div class="checkbox-indicator"><i class="glyphicon glyphicon-ok"></i></div>
+                        格式標準因你有定
+                    </label>
+                </div>
+            </div>
+            <div class="form-input">
+                <label>單選列表欄</label>
+                <div class="form-radio">
+                    <label class="control">
+                        <input type="radio" name="radio">
+                        <div class="radio-indicator"></div>
+                        格式很標準
+                    </label>
+                </div>
+                <hr class="clear gap">
+                <div class="form-radio">
+                    <label class="control">
+                        <input type="radio" name="radio" checked="checked">
+                        <div class="radio-indicator"></div>
+                        格式都標準
+                    </label>
+                </div>
+            </div>
+            <!-- 步驟 -->
+            <h3 class="margin-top-24">步驟<hr class="gap"></h3>
+            <div class="step-wrap step-wrap-2 margin-bottom-16">
+                <ul>
+                    <li class="active">
+                        <div>
+                            <i class="arrow-front"></i>1<span>.填寫對帳資料</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <i class="arrow-front"></i>2<span>.完成申請</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="step-wrap step-wrap-3 margin-bottom-16">
+                <ul>
+                    <li>
+                        <div>
+                            <i class="arrow-front"></i>1<span>申請存款</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li class="active">
+                        <div>
+                            <i class="arrow-front"></i>2<span>.填寫對帳資料</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <i class="arrow-front"></i>3<span>.完成申請</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="step-wrap margin-bottom-16">
+                <ul>
+                    <li>
+                        <div><i class="arrow-front"></i>1<span>.存款方式</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <i class="arrow-front"></i>2<span>申請存款</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li class="active">
+                        <div>
+                            <i class="arrow-front"></i>3<span>.填寫對帳資料</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <i class="arrow-front"></i>4<span>.完成申請</span>
+                            <i class="arrow-end"></i>
+                        </div>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <!-- 導航欄 -->
+            <h3 class="margin-top-24">導航欄<hr class="gap"></h3>
+            <ul class="nav-box">
+                <li class="active"><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>基本資料</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>安全中心</p>
+                </li>
+            </ul>
+            <ul class="nav-box">
+                <li class="active"><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>基本資料</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>安全中心</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>消息公告</p>
+                </li>
+            </ul>
+            <ul class="nav-box">
+                <li class="active"><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>基本資料</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>安全中心</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>消息公告</p>
+                </li>
+                <li class=""><i class="glyphicon glyphicon-home h3 margin-bottom-8"></i>
+                    <p>線上客服</p>
+                </li>
+            </ul>
+            <!-- <p class="margin-top-16 margin-bottom-8">多欄導航欄</p>
+            <div class="game-nav">
+                <ul class="nav-box">
+                    <li class="active">全部遊戲</li>
+                    <li>推薦遊戲</li>
+                    <li>老虎機</li>
+                    <li>桌面遊戲</li>
+                    <li>視訊撲克</li>
+                    <li>其它遊戲</li>
+                </ul>
+            </div> -->
+            <!-- 列表 -->
+            <h3 class="margin-top-24">列表<hr class="gap"></h3>
+            <p class="margin-top-16 margin-bottom-8">帶說明的列表項</p>
+            <div class="list-item">
+                <ul>
+                    <li>標題文字</li>
+                    <li>標題文字
+                        <p>說明文字</p>
+                    </li>
+                </ul>
+            </div>
+            <p class="margin-top-16 margin-bottom-8">帶說明、跳轉的列表項</p>
+            <div class="list-item">
+                <ul>
+                    <li><a href="">標題文字</a></li>
+                    <li>
+                        <a href="">
+                            <div class="col-7">標題文字</div>
+                            <div class="col-5"><span class="btn btn-round">連結按鈕</span></div>
+                            <hr class="clear">
+                            <p>說明文字說明文字說明文字</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p class="margin-top-16 margin-bottom-8">帶說明、圖、跳轉的列表項</p>
+            <div class="list-item-1">
+                <ul>
+                    <li onclick="location.href='mc-bill-1.html';">
+                        <div class="col-6">
+                            <span class="text-info">次標題文字</span>
+                            <h5>標題文字</h5>
+                        </div>
+                        <div class="col-5 text-right">
+                            <span>次說明文字</span>
+                            <h5>說明文字</h5>
+                        </div>
+                        <div class="col-1 text-center">
+                            <i class="glyphicon glyphicon-ok-circle"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="col-6">
+                            <span class="text-info">次標題文字</span>
+                            <h5>標題文字</h5>
+                        </div>
+                        <div class="col-5 text-right">
+                            <span>次說明文字</span>
+                            <h5>說明文字</h5>
+                        </div>
+                        <div class="col-1 text-center">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <p class="margin-top-16 margin-bottom-8">帶內文的列表項</p>
+            <div class="list-item-2">
+                <ul>
+                    <li>
+                        <a href="javascript: void(0)">
+                            <h5>標題文字<span>次標題文字</span></h5>
+                        </a>
+                        <div class="message-item">
+                            <p>火星文</p>
+                            <p>火星文種類繁多，而且沒有統一標準，可以為簡、繁文字以及異體字或者是英文、日文等外語的混合，甚至產生同一句由不同人解讀可能有完全不同的結果。</p>
+                            <p>偶醉洗翻載空嫌滴淑後看輸哩
+                                <br>（我最喜歡在空閒的時候看書了）</p>
+                            <a href="javascript: void(0)" class="btn btn-case">刪除訊息</a>
+                        </div>
+                    </li>
+                    <li class="read">
+                        <a href="javascript: void(0)">
+                            <h5>己讀標題文字<span>己讀資標題文字</span></h5>
+                        </a>
+                        <div class="message-item">
+                            <p>火星文</p>
+                            <p>火星文種類繁多，而且沒有統一標準，可以為簡、繁文字以及異體字或者是英文、日文等外語的混合，甚至產生同一句由不同人解讀可能有完全不同的結果。</p>
+                            <p>偶醉洗翻載空嫌滴淑後看輸哩
+                                <br>（我最喜歡在空閒的時候看書了）</p>
+                            <a href="javascript: void(0)" class="btn btn-case">刪除訊息</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 字型 -->
+            <h3 class="margin-top-24">字型<hr class="gap"></h3>
+            <p class="margin-top-16 margin-bottom-8">字級</p>
+            <h1>h1.56級字</h1>
+            <h2>h2.32級字</h2>
+            <h3>h3.24級字</h3>
+            <h4>h4.20級字</h4>
+            <h5>h5.16級字</h5>
+            <p>p.14級字</p>
+            <p class="margin-top-16 margin-bottom-8">訊息字</p>
+            <p class="text-info">輔助訊息</p>
+            <p class="text-primary">提示訊息</p>
+            <p class="text-warning">錯誤訊息</p>
+            <p class="text-success">成功訊息</p>
+            <!-- 布局 -->
+            <h3 class="margin-top-24">圖型<hr class="gap"></h3>
+            <div class="gap-padding-8 demo-grid">
+                <div class="col-12">318</div>
+            </div>
+            <div class="gap-padding-8 demo-grid">
+                <div class="col-6">318</div>
+                <div class="col-6">318</div>
+            </div>
+            <div class="gap-padding-8 demo-grid">
+                <div class="col-4">318</div>
+                <div class="col-4">318</div>
+                <div class="col-4">318</div>
+            </div>
+            <div class="gap-padding-8 demo-grid">
+                <div class="col-3">318</div>
+                <div class="col-3">318</div>
+                <div class="col-3">318</div>
+                <div class="col-3">318</div>
+            </div>
+            <div class="gap-padding-8 demo-grid">
+                <div class="col-2">318</div>
+                <div class="col-8">318</div>
+                <div class="col-2">318</div>
+            </div>
+            <!-- 圖標 -->
+            <h3 class="margin-top-24">圖標<hr class="gap"></h3>
+            <div class="text-center h3">
+                <div class="col-2"><i class="glyphicon glyphicon-chevron-left"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-chevron-right"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-step-backward"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-step-forward"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-chevron-up"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-chevron-down"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-ok"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-arrow-left"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-question-sign"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-list-alt"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-remove-circle"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-ok-circle"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-align-justify"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-exclamation-sign"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-remove"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-home"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-search"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-bullhorn"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-time"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-glyphicon-list"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-user"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-plus"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-remove-sign"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-chat"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-announcement"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-card"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-bill"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-custom-service"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-deposit"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-bonus"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-messages"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-problem"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-wallet"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-withdraw"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-transfer"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-password"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-sport"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-casino"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-games"></i></div>
+                <div class="col-2"><i class="glyphicon glyphicon-lotto"></i></div>
+                <div class="col-2"><i class="glyphicon"></i></div>
+                <div class="col-2"><i class="glyphicon"></i></div>
+                <hr class="clear">
+            </div>
+            <!-- 分頁頁籤 -->
+            <h3 class="margin-top-24">分頁頁籤<hr class="gap"></h3>
+            <div class="form-pagination">
+                <ul>
+                    <li class="page-prev"><a href=""><i class="glyphicon glyphicon-chevron-left"></i>上頁</a></li>
+                    <li>
+                        <div class="select">
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                            <select name="" id="">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="page-next"><a href="">下頁<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                </ul>
+            </div>
+            <!-- 加載更多 -->
+            <h3 class="margin-top-24">加載更多<hr class="gap"></h3>
+            <p class="loading-item margin-bottom-16"><span class="loading-icon"></span>正在加載</p>
+            <p class="loading-item-finish margin-bottom-16"><span>暫無數據</span></p>
+            <p class="loading-item-finish"></p>
+            <hr class="clear">
+            <!-- 表格 -->
+            <h3 class="margin-top-24">表格<hr class="gap"></h3>
+            <h5>表格樣式一</h5>
+            <div class="form-table">
+                <table>
+                    <tr>
+                        <th>表格標題文字</th>
+                        <th>表格標題文字</th>
+                    </tr>
+                    <tr>
+                        <td>表格內容文字</td>
+                        <td>表格內容文字</td>
+                    </tr>
+                </table>
+            </div>
+            <h5 class="margin-top-16">表格樣式二</h5>
+            <div class="form-table-2 form-table-success">
+                <table>
+                    <tr>
+                        <th class="text-left">表格標題文字</th>
+                        <th class="text-right">表格標題文字</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">表格內容文字</td>
+                    </tr>
+                </table>
+            </div>
+            <h5 class="margin-top-16">表格樣式三</h5>
+            <div class="form-table-3">
+                <table>
+                    <tr>
+                        <th>表格標題文字</th>
+                        <td>表格內容文字</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="background-color-2 text-center">訂單失效時還剩
+                            <br>02小時47分15</td>
+                    </tr>
+                    <tr>
+                        <th>表格標題文字</th>
+                        <td>
+                            <div class="payment-qrcode-item">
+                                <img class="qricon" src="https://t.alipayobjects.com/images/rmsweb/T1XjNgXX8XXXXXXXXX.png">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- 面板 -->
+            <h3 class="margin-top-24">面板<hr class="gap"></h3>
+            <div class="mc-bonus-content margin-0 background-color-1">
+                <div class="col-3"><i class="glyphicon glyphicon-user h1"></i></div>
+                <div class="col-9">
+                    <h3>用名名</h3>
+                    <h5>金額 1,500.00</h5>
+                </div>
+                <div class="clear"></div>
+                <hr class="line margin-top-8 margin-bottom-8">
+                <h6><i class="glyphicon glyphicon-time text-top margin-right-4"></i>你好，您上次登錄時間是2017/05/24 15:52:11</h6>
+            </div>
+            <div class="mc-bonus-content">
+                <h3>標題文字</h3>
+                <h4>次標題文字</h4>
+                <div class="message-item">
+                    <h5>說明標題文字</h5>
+                    <p>說明文字</p>
+                    <h5>火星文</h5>
+                    <ol>
+                        <li>偶口以跟你作朋友嗎？</li>
+                        <li>偶醉洗翻載空嫌滴淑後看輸哩</li>
+                        <li>好久不賤</li>
+                        <li>醬很好阿！</li>
+                    </ol>
+                </div>
+            </div>
+            <p class="margin-top-16 margin-bottom-8">圖文組合列表</p>
+            <div class="list-item-1">
+                <ul>
+                    <li class="gap-padding-8">
+                        <div class="col-5">
+                            <div class="bonus-list-img"><img src="http://cdn.wallpapersafari.com/87/75/15fleF.jpg" alt=""></div>
+                        </div>
+                        <div class="col-7">
+                            <h5>標題文字</h5>
+                            <span>說明內容說明內容</span>
+                            <hr class="gap">
+                            <div class="col-6">
+                                <p class="bold text-primary">次標題</p>
+                            </div>
+                            <div class="col-6"><a href="mc-bonus-1.html" class="btn btn-round">按鈕</a></div>
+                        </div>
+                    </li>
+                    <li class="gap-padding-8">
+                        <div class="col-5">
+                            <div class="bonus-list-img"><img src="http://cdn.wallpapersafari.com/87/75/15fleF.jpg" alt=""></div>
+                        </div>
+                        <div class="col-7">
+                            <h5>火星文</h5>
+                            <span>火星文種類繁多，而且沒有統一標準，可以為簡、繁文字以及異體字或者是英文、日文等外語的混合，甚至產生同一句由不同人解讀可能有完全不同的結果。</span>
+                            <hr class="gap">
+                            <div class="col-6">
+                                <p class="bold text-primary">捰朱道惹</p>
+                            </div>
+                            <div class="col-6"><a href="mc-bonus-1.html" class="btn btn-round">屎軌</a></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <p class="margin-top-16 margin-bottom-8">表單</p>
+            <div class="list-item">
+                <ul>
+                    <li>標題文字<span>內容文字內容文字</span></li>
+                    <li>標題文字<span class="text-notice">重要內容重要內容</span></li>
+                    <li>
+                        <div class="payment-qrcode-item">
+                            <div class="col-4"><img class="qricon" src="https://t.alipayobjects.com/images/rmsweb/T1XjNgXX8XXXXXXXXX.png"></div>
+                            <div class="col-8">這裡可以放圖這裡可以放圖這裡可以放圖這裡可以放圖這裡可以放圖這裡可以放圖這裡可以放圖這裡可以放圖</div>
+                            <hr class="clear">
+                        </div>
+                    </li>
+                    <li>標題文字<span class="countdown">倒數時間00:00:00</span></li>
+                </ul>
+            </div>
+            <h3 class="margin-top-24">消息公告<hr class="gap"></h3>
+            <div class="message-wrap">
+                <div class="col-4 message-dt">
+                    <p>2017-04-19</p>
+                    <h2>17:13</h2>
+                    <h5><a href="javascript: void(0)"><i class="glyphicon glyphicon-trash"></i></a></h5>
+                </div>
+                <div class="col-8 message-dd">
+                    <a href="#messageInfo" class="popup-btn">
+                        <div class="message-circly"><i></i></div>
+                        <h5>紅利己達領取條件-AG捕魚遊戲流水紅利</h5>
+                        <p>尊敬的客戶您好：恭喜您達成AG捕魚遊戲流水紅利所有領取條件。祝您心想事成，好運不斷。</p>
+                    </a>
+                </div>
+                <hr class="clear">
+            </div>
+            <div class="message-wrap read">
+                <div class="col-4 message-dt">
+                    <p>2017-04-19</p>
+                    <h2>17:13</h2>
+                    <h5><a href="javascript: void(0)"><i class="glyphicon glyphicon-trash"></i></a></h5>
+                </div>
+                <div class="col-8 message-dd">
+                    <a href="#messageInfo" class="popup-btn">
+                        <div class="message-circly"><i></i></div>
+                        <h5>紅利己達領取條件-AG捕魚遊戲流水紅利</h5>
+                        <p>尊敬的客戶您好：恭喜您達成AG捕魚遊戲流水紅利所有領取條件。祝您心想事成，好運不斷。</p>
+                    </a>
+                </div>
+                <hr class="clear">
+            </div>
+            <!-- 對話框 -->
+            <h3 class="margin-top-24">對話框<hr class="gap"></h3>
+            <div class="form-input margin-top-16">
+                <a class="btn btn-form popup-btn" href="#popup-style-1">樣式一</a>
+            </div>
+            <div class="form-input">
+                <a class="btn btn-form popup-btn" href="#popup-style-2">樣式二</a>
+            </div>
+            <div class="form-input">
+                <a class="btn btn-form popup-btn" href="#popup-style-3">樣式三</a>
+            </div>
+            <div class="form-input">
+                <a class="btn btn-form popup-btn" href="#popup-style-4">樣式四</a>
+            </div>
+            <div class="popup-wrap" id="popup-style-1">
+                <a class="popup-close-block popup-close" href=""></a>
+                <div class="popup-box transform-out">
+                    <div class="popup-content">
+                        <h3>彈窗標題</h3>
+                        <p>彈窗內容，告知當前狀態、信息和解決方式，文字內容盡量控制在三行內</p>
+                    </div>
+                    <div class="form-btn">
+                        <div class="gap-padding-8">
+                            <div class="col-6">
+                                <a href="" class="btn popup-close">主操作</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="" class="btn btn-secondary popup-close">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="close-btn popup-close" href=""><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="popup-wrap" id="popup-style-2">
+                <a class="popup-close-block popup-close" href=""></a>
+                <div class="popup-box transform-out">
+                    <div class="popup-content">
+                        <h3>彈窗標題</h3>
+                        <p>彈窗內容，告知當前狀態、信息和解決方式，文字內容盡量控制在三行內</p>
+                    </div>
+                    <a class="close-btn popup-close" href=""><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="popup-wrap" id="popup-style-3">
+                <div class="popup-box popup-black transform-out">
+                    <div class="popup-content">
+                        <h2><i class="glyphicon glyphicon-ok"></i></h2>
+                        <p>內容最多八個字數</p>
+                    </div>
+                </div>
+                <a class="popup-close-block popup-close" href=""></a>
+            </div>
+            <div class="popup-wrap popup-wrap-2" id="popup-style-4">
+                <a class="popup-close-block popup-close" href=""></a>
+                <div class="popup-box transform-out">
+                    <div class="popup-content">
+                        <h3>彈窗標題</h3>
+                        <p>彈窗內容，告知當前狀態、信息和解決方式，文字內容盡量控制在三行內</p>
+                    </div>
+                    <div class="form-btn">
+                        <div class="gap-padding-8">
+                            <div class="col-6">
+                                <a href="" class="btn popup-close">主操作</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="" class="btn btn-secondary popup-close">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="close-btn popup-close" href=""><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- container end -->
+    </div>
+    <!-- content end -->
+    <div class="footer">
+        <div class="container">
+            <p class="bold">KIRI-TECH WEBDESIGN</p>
+        </div>
+    </div>
+    <!-- 底部導航欄 -->
+    <div class="nav-bottom">
+        <ul>
+            <li class="active"><a href="index-login.html"><i class="glyphicon glyphicon-home"></i>遊戲大廳</a></li>
+            <li><a href="promotion.html"><i class="glyphicon glyphicon-bonus"></i>優惠</a>
+                <!-- <span class="redboll">4</span> --></li>
+            <li><a href="mc-wallet.html"><i class="glyphicon glyphicon-wallet"></i>我的錢包</a></li>
+            <li><a href="outsite.html"><i class="glyphicon glyphicon-online-info"></i>線上資訊</a></li>
+            <li><a href="helpcenter.html"><i class="glyphicon glyphicon-custom-service"></i>客服中心</a></li>
+            <li><a href="mc-personal.html"><i class="glyphicon glyphicon-personal"></i>會員中心</a></li>
+        </ul>
+    </div>
+</body>
+<script src="js/custom.js"></script>
+
+</html>
