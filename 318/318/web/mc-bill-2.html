@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content member-center">
+        <div class="container">
+            <div class="mc-left">
+                <a href="membercenter.html">帐号信息</a>
+                <a href="mc-message.html">消息公告</a>
+                <a href="mc-wallet.html">资金管理</a>
+                <a href="mc-deposit.html">存款</a>
+                <a href="mc-withdraw.html">提款</a>
+                <a href="mc-bill.html" class="active">交易记录</a>
+                <a href="mc-bonus.html">领取红利</a>
+                <!-- mc-left end -->
+            </div>
+            <div class="mc-right">
+                <div class="mc-box">
+                    <div class="from-title">
+                        <h3>交易記錄</h3>
+                    </div>
+                    <div class="nav-tabs">
+                        <ul>
+                            <li><a href="mc-bill-1.html">红利歷史記錄</a></li>
+                            <li class="active"><a href="mc-bill-2.html">支付明细</a></li>
+                            <li><a href="mc-bill-3.html">投注明细</a></li>
+                            <li><a href="mc-bill-4.html">遊戲統計</a></li>
+                        </ul>
+                    </div>
+                    <div class="from-search">
+                        <span>支付類型</span>
+                        <div class="select mc-bonus-select">
+                            <div class="placeholder">全部</div>
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                            <ul class="hide">
+                                <li>存款</li>
+                                <li>提款</li>
+                                <li>轉帳</li>
+                            </ul>
+                        </div>
+                        <hr class="clear">
+                        <span>開始日期</span>
+                        <input type="text" placeholder="2017/07/01">
+                        <span class="margin-left-8">結束日期</span>
+                        <input type="text" placeholder="2017/07/01">
+                        <div class="btn margin-left-8">搜尋</div>
+                    </div>
+                    <div class="from-table-2">
+                        <table>
+                            <tr>
+                                <th>交易方式</th>
+                                <th class="left">交易金額</th>
+                                <th>交易狀況</th>
+                                <th class="right">交易時間</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>存款</td>
+                                <td class="left">2,000.00
+                                    <br>No.20170702144212</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"><a href="#secTable" class="popup-btn"><i class="glyphicon glyphicon-list-alt"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>存款</td>
+                                <td class="left">2,000.00
+                                    <br>No.20170702144212</td>
+                                <td>失敗</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"><a href="#secTable" class="popup-btn"><i class="glyphicon glyphicon-list-alt"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>提款</td>
+                                <td class="left">2,000.00
+                                    <br>No.20170702144212</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"><a href="#secTable" class="popup-btn"><i class="glyphicon glyphicon-list-alt"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                            <tr>
+                                <td>轉帳</td>
+                                <td class="left">2,000.00
+                                    <br>主帳號 > 體育</td>
+                                <td>成功</td>
+                                <td class="right">2017/07/02
+                                    <br>14:42:12</td>
+                                <td class="middle"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="from-pagination">
+                        <ul>
+                            <li><a href=""><i class="glyphicon glyphicon-step-backward"></i></a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                            <li><a href="" class="active">1</a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li>...</li>
+                            <li><a href="">8</a></li>
+                            <li><a href="">9</a></li>
+                            <li><a href="">10</a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-step-forward"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 投注遊戲彈窗 -->
+            <div class="popup-wrap" id="secTable">
+                <div class="modal-popup transform-out">
+                    <div class="popup-dt">
+                        <div class="from-title">
+                            <h4>存款明細</h4>
+                        </div>
+                    </div>
+                    <div class="popup-footer from-table-2">
+                        <table>
+                            <tr>
+                                <th>金額</th>
+                                <td>1000.58</td>
+                                <th>存款類型</th>
+                                <td>銀行轉帳</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="left">帳戶資訊</td>
+                            </tr>
+                            <tr>
+                                <th>入款用戶</th>
+                                <td>殷賓</td>
+                                <th>入款卡號</th>
+                                <td>1234-5678-9012-3456</td>
+                            </tr>
+                            <tr>
+                                <th>分行名稱</th>
+                                <td>廣廈分行</td>
+                                <th>分行城市</th>
+                                <td>浙江省 蘇州市</td>
+                            </tr>
+                            <tr>
+                                <th>申請時間</th>
+                                <td>2017/08/18 10:00</td>
+                                <th>訂單編號</th>
+                                <td>D201708181023451</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="left">對帳資料</td>
+                            </tr>
+                            <tr>
+                                <th>付款時間</th>
+                                <td>2017/08/08 10:00 AM</td>
+                                <th>付款銀行</th>
+                                <td>中國招財銀行</td>
+                            </tr>
+                            <tr>
+                                <th>分行名稱</th>
+                                <td>廣廈分行</td>
+                                <th>分行城市</th>
+                                <td>浙江省 蘇州市</td>
+                            </tr>
+                            <tr>
+                                <th>帳戶姓名</th>
+                                <td>李運才</td>
+                                <th>卡號末六號</th>
+                                <td>123456</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="close-block popup-close"></div>
+            </div>
+            <!-- 投注遊戲彈窗結束 -->
+            <!-- mc-right end -->
+            <div class="clear"></div>
+        </div>
+        <!-- container end -->
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

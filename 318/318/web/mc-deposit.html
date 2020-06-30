@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/include-html.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="content member-center">
+        <div class="container">
+            <div class="mc-left">
+                <a href="membercenter.html">帐号信息</a>
+                <a href="mc-message.html">消息公告</a>
+                <a href="mc-wallet.html">资金管理</a>
+                <a class="active" href="mc-deposit.html">存款</a>
+                <a href="mc-withdraw.html">提款</a>
+                <a href="mc-bill.html">交易记录</a>
+                <a href="mc-bonus.html">领取红利</a>
+                <!-- mc-left end -->
+            </div>
+            <div class="mc-right">
+                <div class="mc-box">
+                    <div class="from-title">
+                        <h3>存款</h3>
+                    </div>
+                    <div class="padding-gap-16">
+                        <div class="from-card margin-bottom-16">
+                            <label>選擇存款方式</label>
+                            <div class="col-3">
+                                <div class="bankcard active" onclick="location.href='mc-deposit-1-1.html';">
+                                    <span>在線支付</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="bankcard" onclick="location.href='mc-deposit-2-1.html';">
+                                    <span>支付寶</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="bankcard" onclick="location.href='mc-deposit-4-1.html';">
+                                    <span>微信快捷支付</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="bankcard" onclick="location.href='mc-deposit-3-1.html';">
+                                    <span>銀行轉帳</span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="from-select margin-bottom-16">
+                                <label>合作銀行</label>
+                                <div class="select">
+                                    <div class="placeholder">中國工商銀行</div>
+                                    <i class="glyphicon glyphicon-chevron-down"></i>
+                                    <ul class="hide">
+                                        <li>中國工商銀行</li>
+                                        <li>招商銀行</li>
+                                        <li>中國光大銀行</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="from-input">
+                                <label>存款金額</label>
+                                <input type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="from-table">
+                                <label>存款金额提示</label>
+                                <table>
+                                    <tr>
+                                        <td>單筆存款限額（元）</td>
+                                        <td>5.00 - 10,000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>每日存款限額（元）</td>
+                                        <td>500,000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>本日己存款金額（元）</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>累計己存款金額（元）</td>
+                                        <td>100.35</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr class="clear">
+                    </div>
+                    <a href="mc-deposit-1-2.html" class="btn btn-from margin-top-16">下一步</a>
+                    <p class="text-center"><a href="">存款需知</a></p>
+                </div>
+            </div>
+            <!-- mc-right end -->
+            <div class="clear"></div>
+        </div>
+        <!-- container end -->
+    </div>
+    <div id="footer"></div>
+</body>
+
+</html>

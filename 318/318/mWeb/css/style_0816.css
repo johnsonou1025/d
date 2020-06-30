@@ -1,0 +1,519 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+
+
+
+
+
+
+
+/* 圖示 */
+
+.glyphicon {
+    position: relative;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+}
+
+.glyphicon-chevron-left:before {
+    content: "\e079";
+}
+
+.glyphicon-chevron-right:before {
+    content: "\e080";
+}
+
+.glyphicon-step-backward:before {
+    content: "\e069";
+}
+
+.glyphicon-step-forward:before {
+    content: "\e077";
+}
+
+.glyphicon-chevron-up:before {
+    content: "\e113";
+}
+
+.glyphicon-chevron-down:before {
+    content: "\e114";
+}
+
+.glyphicon-ok:before {
+    content: "\e013";
+}
+
+.glyphicon-arrow-left:before {
+    content: "\e091";
+}
+
+.glyphicon-question-sign:before {
+    content: "\e085";
+}
+
+.glyphicon-list-alt:before {
+    content: "\e032";
+}
+
+.glyphicon-remove-circle:before {
+    content: "\e088";
+}
+
+.glyphicon-align-justify:before {
+    content: "\e055";
+}
+
+.glyphicon-exclamation-sign:before {
+    content: "\e101";
+}
+
+.glyphicon-remove:before {
+    content: "\e014";
+}
+
+.glyphicon-home:before {
+    content: "\e021";
+}
+
+.glyphicon-search:before {
+    content: "\e003";
+}
+
+.glyphicon-bullhorn:before {
+    content: "\e122";
+}
+
+.glyphicon-time:before {
+    content: "\e023";
+}
+
+
+
+
+
+
+
+
+/* 原生共用元件 */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font: 13px/1.5 PingFang TC, Microsoft YaHei, tahoma, arial, Hiragino Sans GB, sans-serif;
+    letter-spacing: 1px;
+    padding-top: 44px;
+}
+
+a {
+    text-decoration: none;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    height: 1px;
+    margin: 0;
+    clear: both;
+}
+
+hr.dashed {
+    clear: both;
+    border-top: 1px dashed #ddd;
+}
+
+hr.gap {
+    margin: 0 0 8px 0;
+}
+
+hr.clear {
+    border: none;
+    margin: 0;
+}
+
+.decimal {
+    list-style-type: decimal;
+    padding-left: 24px;
+}
+
+input,
+select {
+    font: 12px/1.5 Microsoft YaHei, tahoma, arial, Hiragino Sans GB, sans-serif;
+    outline: none;
+    border: 2px solid #DDDDDD;
+    border-radius: 3px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+input:focus,
+select:focus {
+    border-color: #FFB80C;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .3);
+}
+
+input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #999;
+}
+
+input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #999;
+}
+
+input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #999;
+}
+
+input:-moz-placeholder {
+    /* Firefox 18- */
+    color: #999;
+}
+
+table {
+    display: table;
+    width: 100%;
+}
+
+tr {
+    display: table-row;
+}
+
+th,
+td {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+
+
+/* 新增class共用文件 */
+
+.visible-inline-blcok {
+    display: inline-block;
+}
+
+.margin-bottom-16 {
+    margin-bottom: 16px;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.hide {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.icon24 {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.icon18 {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #1e1e1e;
+    border-radius: 9px;
+    display: inline-block;
+}
+
+.clear {
+    clear: both;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.btn {
+    border-radius: 3px;
+    display: inline-block;
+    background: #ffb80c;
+    color: #1e1e1e;
+    line-height: 24px;
+    padding: 0 24px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.btn:active {
+    background: #FFC73F;
+}
+
+.btn-black {
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.btn-black:active {
+    background: #5B5B5B;
+}
+
+.btn-from {
+    line-height: 48px;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.btn-loading:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 4px solid #FFEAB8;
+    border-top-color: #FFB80C;
+    margin-right: 8px;
+    animation: rotating 1s infinite;
+    display: inline-block;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    padding: 0 8px;
+}
+
+
+
+
+/* 格線系統 */
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-11 {
+    width: 91.66666667%;
+}
+
+.col-10 {
+    width: 83.33333333%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-8 {
+    width: 66.66666667%;
+}
+
+.col-7 {
+    width: 58.33333333%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-5 {
+    width: 41.66666667%;
+}
+
+.col-4 {
+    width: 33.33333333%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-2 {
+    width: 16.66666667%;
+}
+
+.col-1 {
+    width: 8.33333333%;
+}
+
+.demo-grid>div:after {
+    content: "";
+    display: block;
+    clear: both;
+    margin-bottom: 8px;
+}
+
+.demo-grid>div div {
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    line-height: 24px;
+    padding-left: 8px;
+}
+
+
+
+
+
+
+
+/* 頁頭 */
+
+.header {
+    background: #ffb80c;
+    color: #1e1e1e;
+    height: 44px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.header .container {
+    height: 100%;
+}
+
+.header a {
+    height: 100%;
+    display: table;
+}
+
+.header a i {
+    font-size: 20px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.btn-left-menu {
+    float: left;
+}
+
+.live-chat {
+    float: right;
+}
+
+.nav {
+    overflow: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    background-color: #303030;
+}
+
+.slide-menu-left {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .3);
+    z-index: 100;
+    transform: translateX(-100%);
+    opacity: 0;
+    animation: slideMenuLeftClose .5s forwards;
+}
+@keyframes slideMenuLeftClose {
+    0%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    99%{
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+.slide-menu-left.active {
+    animation: slideMenuLeftOpen .1s forwards;
+}
+@keyframes slideMenuLeftOpen {
+    0%{
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.slide-menu-left .menu-inner {
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 304px;
+    transform: translateX(-100%);
+    background: #1e1e1e;
+    color: #fafafa;
+    transition: all .2s ease;
+}
+
+.slide-menu-left.active .menu-inner {
+    transform: translateX(0);
+}
+
+/* 頁尾 */
+
+
+/* 內容 */
+
+.content {}
+
+.quick-link .title-container {
+    height: 32px;
+    line-height: 32px;
+}
+
+.quick-link .title-container h3 a {
+    float: right;
+    font-size: 12px;
+}
