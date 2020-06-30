@@ -1,0 +1,638 @@
+@charset "utf-8";
+
+.bet-option .option-7 li a del { font-family: inherit; line-height: 1}
+/*clear*/
+.option-wrap:after, .bet-option li a:after, .bet-option:after, .bet-option ul:after, .keno-wrap:after, .record-bar:after, .bet-statistics .menu:after, .bet-title:after {
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;	
+}
+
+/*keno*/
+.keno-wrap { vertical-align: top;}
+.keno {
+vertical-align: top;
+display: block;	
+margin-bottom: 10px;
+margin-right: 1%;
+margin-left: 0.3%;
+position: relative;	
+outline: none; 
+/*overflow: hidden;*/ /*for JS toggle effect*/
+width:49%;
+float:left;
+}
+
+.keno.close { overflow: hidden;}
+
+.keno .bet-title h1 {
+float: left;
+margin: 11px 0 0 54px;
+font-weight: normal;
+}
+.keno .bet-title.map-00020 h1, .keno .bet-title.map-00021 h1 { 
+	margin: 10px 0 0 0;
+	padding: 0 0 0 30px;
+	height: 24px;
+	background: url(../Images/gb-game-icons-24.png) 0 0 no-repeat;
+}
+.keno .bet-title.map-00021 h1 { 
+	background-position: 0 -26px;
+}
+/*.keno .bet-title b {
+content: "";
+text-indent: -9999px;
+position: absolute;
+width: 26px;
+height: 26px;
+top: 9px;
+left: 16px;
+display: block;
+}*/
+.keno .bet-title b {
+content: "";
+text-indent: -9999px;
+position: absolute;
+width: 74px;
+height: 24px;
+top: 11px;
+right:53px;
+display: block;
+}
+.keno .bet-title b {
+background: url(../Images/GoToWeb.png?0801) 0px 0px no-repeat;
+}
+.keno .bet-title b:hover, .keno .bet-title b:active { 
+background: url(../Images/GoToWeb.png?0801) 0px -25px no-repeat;
+}
+.keno-close, .keno-open { 
+width: 36px;
+height: 36px;
+display: block;
+margin: 4px 4px 0 0;
+}
+.flag { 
+width: 10px;
+height: 10px;
+display: block;
+margin: 0;
+}
+.cell .flag { 
+position: absolute;
+left: 0;
+bottom: 0;
+}
+.leftmenu .flag {
+    width: 18px;
+    height: 15px;
+    position: absolute;
+    top: 27px;
+    left: 0;
+}
+.keno .bet-Frame{
+	background:#EEE;
+	width:100%;
+	height:382px;
+	position:relative;
+	z-index:1;
+	overflow:hidden;
+}
+.keno .bet-Frame .Frame2{
+	width:100%;
+	height:auto;
+	float:left;
+	position:absolute;
+	z-index:2;
+	top: -184px;
+	left:0;
+}
+/*counter*/
+
+.countdown {
+float: left;
+margin: -3px 0 0 5px;
+}
+.countdown ul {text-align: right;}
+.countdown li{ float:right}
+.countdown li, .countdown-s2 li span { line-height: 26px;width: 45px;}
+.countdown-s {
+position: absolute;
+width: 100px;
+right: 47px;
+top: 17px;
+font-family: simhei, Arial
+}
+.countdown-s li { width:auto !important}
+.countdown-s .date { line-height: 12px;}
+.countdown-s2 { float: right; display: none}
+.countdown-s2 li.one, .countdown-s2 li:first-child { top: 17px;display: none;}
+.countdown-s2 li { 
+text-align: center; 
+white-space: nowrap;
+width: 45px;
+height: 39px;
+padding-top: 6px;
+overflow: hidden;
+}
+.countdown-s2 li span { display: inline-block; vertical-align: top;}
+.countdown-s2 .counter {
+display: inline-block;
+position: relative;
+top: 2px;
+width: 38px;
+line-height: 24px;
+height: 24px;
+text-align: center;
+letter-spacing: 1px;
+}
+.countdown-s2 li span:first-child {
+font-weight: bold;
+margin: 0;
+}
+
+.lottery-info {
+    width: 25%;
+    padding: 10px 0;
+    text-align: center;
+}
+/*countdown animation*/
+.CountDownArea {
+    width: 150px;
+    height: 150px;
+    margin: 8px auto 0;
+}
+.timer_txt01, .timer_txt02 {font-size: 22px;margin: 0;padding: 50px 0;font-family: 'Arial black', arial, sans-serif;}
+.lottery-info .status {
+font-size: 14px;
+position: relative;
+z-index: 1;
+}
+.lottery-info, .bet-option, .past-number { float: left}
+/*lottery*/
+.lottery-info h2 {
+margin: 6px auto 7px;
+font-size: 16px;
+font-weight: normal;
+}
+.lottery .balls li {
+width: 41px;
+height: 41px;
+line-height: 41px;
+font-size: 20px;
+margin: 0 2px;
+display: inline-block;
+text-indent: -2px;
+transition: .5s ease-in-out;
+-webkit-transition: .5s ease-in-out;
+}
+.lottery-table {
+font-size: 12px;
+width: 92%;
+margin: 5px auto 10px;
+overflow: hidden
+}
+.lottery-table .title {
+float: left;
+width: 24%;
+font-size: 12px;
+line-height: 26px;
+height: 26px;
+font-weight: normal;
+margin: 0
+}
+.lottery-table li { line-height: 26px; height: 26px; float: left; padding: 0 5px; position: relative; width: 25.333%}
+.lottery-table li:after {
+content: "";
+display: block;
+position: absolute;
+width: 5px;
+height: 6px;
+top: 50%;
+margin-top: -3px;
+margin-top: -1px\0;
+right: -2px;	
+}
+.lottery-table li.title:after, .lottery-table li.three:after { content: none}
+
+.option-wrap { overflow: hidden;width: 100%;}
+.bet-option {
+    padding: 15px 13px 0;
+    width: 75%;
+}
+.bet-option, .bet-alert, .blockU I, .lottery-info {height: 280px;}
+.keno.org-outer .record-bar { visibility:hidden;}
+.bet-option li { float: left; position: relative;}
+.bet-option li a {display: block;width: 100%;height: 35px;padding: 4px 8px 0 8px;position: relative;text-align: center;white-space: nowrap;}
+.bet-option li b, .bet-option li a span {display: block;float: left;}
+.bet-option li b {font-weight: normal;white-space: nowrap;text-align: left;font-size: 19px;}
+.bet-option li a span {font-size: 13px;text-align: right;margin-top: 11px;float: right;font-weight: bold;font-family: Notosans, Arial;}
+.bet-option li a del { display: none}
+.bet-option .option-6 li a {padding: 9px 0;}
+.bet-option .option-7 li a {font-size: 0;}
+.bet-option .option-7 li b, .bet-option .option-7 li a span, .bet-option .option-7 li a del {display: inline-block;width: auto;float: none;margin: 3px 3px;font-size: 14px;}
+.bet-option .option-6 li b {text-align: center;float: none;}
+.bet-option .option-4 li b, .bet-option .option-3 li b, .bet-option .option-1 li:nth-child(2) b {
+    margin: -3px 0 0;
+}
+.bet-option .option-7 li b, .bet-option .option-6 li b, .bet-option .option-4 li b, .bet-option .option-3 li b, 
+.bet-option .option-8 li b, .bet-option .option-1 li:nth-child(2) b {
+    font-size: 14px;
+    font-weight: bold;
+}
+.bet-option .option-2 li b, .bet-option .option-5 li b {font-size: 18px;margin: -3px 0 0;}
+
+.unbet a { cursor: default}
+.cell-active:before, .cell.active:before, .active-gray:before {
+content: '';
+position: absolute;
+height: 20px;
+width: 20px;
+z-index: 1;
+right: -1px;
+top: -3px;
+}
+.number-box {
+position: absolute;
+padding: 0 10px;
+z-index: 100;
+right: 0;
+top: 2em;
+display: none
+}
+
+/*keno option width*/
+.bet-option .option-2, .bet-option .option-3, .bet-option .option-4, .option-5,.option-6 { 
+width: 50%; float: left}
+.bet-option .option-7, .bet-option .option-8 { width: 100%; float: left}
+.bet-option .option-7 {/* display: none */}
+.bet-option .option-3 li, .bet-option .option-4 li {
+  width: 33.33%
+}
+.bet-option .option-1 li { width: 41%}
+.bet-option .option-1 li:nth-child(2) { width: 18%}
+.bet-option .option-2 li { width: 50%}
+.bet-option .option-5 li {width: 50%;}
+.bet-option .option-6 li { width: 33.33%}
+.bet-option .option-7 li { width: 50%}
+.bet-option .option-8 li { width: 20%}
+.option-2, .option-5 {padding-right: 3px;}
+.option-3, .option-4, .option-6 {padding-left: 3px;}
+
+/*bet-option*/
+.bet-option li {padding: 2px 0.5px 5px;}
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+/* Safari*/
+::i-block-chrome, .bet-option li {padding: 2px 1px;}
+}
+
+/*record-bar */
+.record-bar {position: absolute;width: 19.5%;left: 4.5%;top: 243px;width: 20%;left: 2.5%;}
+.record-bar .number {width: 100%;text-align: center;position: relative;top: 0;letter-spacing: 0;height: 26px;color: #383a3b; font-size:12px;line-height: 27px;}
+.record-bar .number b {font-weight: normal}
+.btn-left, .btn-right, .btn-left-ov, .btn-right-ov {
+display: block;
+width: 14px;
+height: 20px;
+position: absolute;
+top: 50%;
+margin-top: -10px;
+}
+.btn-left, .btn-left-ov { left: 0}
+.btn-right, .btn-right-ov { right: 0;}
+.btn-left-ov, .btn-right-ov { cursor: default!important}
+.record-bar .latest-result {
+width: 100%;
+float: left;
+text-align: center;
+padding: 3px 20px;
+height: auto;
+}
+.record-bar .latest-result li {width: 20%;float: left;font-size: 12px;line-height: normal;}
+.record-bar .latest-result li:nth-child(6) {display: block;padding-right: 5px;text-align: right;width: 100%;font-size: 14px;/* line-height: 1.5; */}
+_:-ms-lang(x), .record-bar .latest-result li:nth-child(6) { line-height: 1; margin-top: 8px} /*IE10 and above*/
+.record-bar .latest-result li:nth-child(7) { display: none}
+
+.record-bar .latest-result .link { float: right; padding: 0 5px 0 0; display: none;}
+.record-bar .latest-result .link a {
+padding: 2px 7px;
+display: inline-block;
+line-height: normal;
+margin: 4px 0;
+font-size: 12px;
+}
+
+/*past-number*/
+.past-number {line-height: 30px;/*position: relative;
+overflow: hidden;
+z-index: 1;*/padding: 18px 16px;width: 100%;}
+.bet-statistics {width: 100%;}
+.open { display: block;}
+.menu {text-align: left;}
+.menu li {display: block;zoom: 1;_height: 30px;float: left;}
+.menu li a {line-height: 20px; padding: 0 9.6px; text-align: center;display: block;margin: 0;border-left: 1px solid;}
+/*.menu li:nth-child(6) a {padding: 0 8.5px;}*/
+.menu li a:hover, .menu li.active a, .menu li.active a:hover {
+padding: 0 9.6px;
+}
+/*.menu li:nth-child(6) a:hover, .menu li:nth-child(6) li.active a, .menu li:nth-child(6) li.active.active a:hover {
+padding: 0 4.5px;
+}*/
+.menu li.reflash {width: 42px!important;float: right!important;}
+.menu li.reflash a {width: 100%;height: 20px;float: none;border-left: 1px solid;}
+.menu li.reflash:hover, .menu li.reflash.active {margin: 0;height: 20px;}
+
+.statistics-cont {display: none;position:relative;overflow: hidden;max-height: 120px;white-space: nowrap;/* width: 3000px; */}
+.statistics-cont ul { float:left;}
+.statistics-cont ul li {text-align: center;line-height: 19px;}
+
+.road-box {position: absolute;bottom: 0;z-index: 1;width: 44px;height: 20px;top: 0;right: 42px;}
+.road-box input[type="button"] {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+padding: 0;
+}
+.btn-prev, .btn-next, .btn-prev-ov, .btn-next-ov {width: 22px;height: 20px;display: block;float: left;text-indent: -9999px;}
+
+/*keno-detail*/
+.keno-detail, .keno-detail .keno { width: 100%!important; margin-right: 0;}
+
+.keno-detail .past-number .bet-statistics { display: block;}
+.keno-detail .past-number .bet-statistics .data-option li { width: 10%; margin: 0 2px;}
+
+.keno-detail .bet-option { width: 70%; float: left;}
+.keno-detail .bet-alert { width: 30%; float: right; position: static; padding: 29px 0;}
+
+/*Lightbox*/
+.bests-btn div { font-weight: normal}
+/*ball*/
+.bests ul { margin-bottom: 3px; border-left: 1px solid #BFBFBF; border-bottom: 1px solid #BFBFBF}
+.bests li a,
+.bests li a:hover,
+.bests li b {
+width: 100%;
+height: 28px;
+line-height: 28px;
+display: block;
+float: left;
+font-weight: bold;
+text-align: center;
+}
+.bests-btn div {
+text-align: center;
+margin: 5px 0
+}
+.bests .bests-btn a { width: 100%;}
+
+.bests .pb-btn, .howtoplay .rule-btn { width: 76px;}
+.bests input { 
+width: 100%;
+line-height: 24px;
+margin-bottom: 5px;
+}
+
+#poptip table th, 
+#poptip table td, 
+#quickbet table td, 
+#quickbet table th, 
+#playtable table th, 
+#playtable table td, 
+#bests table td, 
+#bests table th { 
+line-height: 24px;}
+#poptip table td, 
+#quicknote table td, 
+#quickbet table td, 
+#playtable table td, 
+#bests table td, 
+#bs_total table td {text-align: center;border-bottom: 1px solid #bbb;color: #D73A3A;}
+.bests li {border-top: 1px solid #BFBFBF;border-right: 1px solid #BFBFBF;float: left;width: 10%;}
+.bests .colorball-wrap ul.colorball li { cursor: pointer}
+#poptip table, 
+#quicknote table, 
+#quickbet table, 
+#playtable table, 
+#bests table, 
+#bs_total table {border: 1px solid #BFBFBF;}
+#poptip table th, #quicknote th, 
+#quickbet table th, 
+#playtable table th, 
+#bests table th, 
+#bs_total table th, 
+#bs_total table td {border-bottom: 1px solid #bbb;background-color: #f0edec;margin-bottom: 1px;}
+
+#poptip table tr:last-child th, 
+#playtable table tr:last-child th,
+#poptip table tr:last-child td, 
+#playtable table tr:last-child td {
+border-bottom: none;
+}
+.howtoplay .txt-black p {border-top: 1px solid #CECECE;padding: 5px 0 0 0;margin-top: 5px;}
+
+.playtable .total-btns li:first-child a { margin-left: 5px}
+.playtable .total-btns .lb-btn { width: 76px}
+.total-list {
+margin-top:5px; 
+padding:5px 0 5px;
+width:100%;
+margin-left:2px;
+}
+.total-list li{ float:left; margin:2px 0; font-weight: normal;}
+.total-list span{ margin-right:4px; }
+.betcontent .total a.lb-btn { width: 100%; margin-top: 5px;}
+.total-betNow span, .total-betNow b {
+height: 25px;
+line-height: 25px;
+float: left;
+display: block;
+margin-bottom: 5px;
+}
+.total-betNow b { padding: 0 10px; width: 100%;}
+.bests-btn div, .total-betNow b { border-radius: 4px;}
+.total-betNow span { margin-left: 6px;width: 100%;margin-bottom: 0;}
+
+/*big small*/
+.betcontent .total {width: 165px; left: 816px;}
+/*ball*/
+.bests { width: 333px; left: 230px;}
+.playtable { width: 242px; left: 563px; z-index: 102;}
+/*rule*/
+.howtoplay { width: 470px; left: 994px}
+.howtoplay .lb-btn { width: 50px}
+
+/*KENO animation*/  
+.bet-alert, .blockUI {
+position: absolute;
+text-align: center;
+z-index: 2;
+top: 48px;
+width: 100%;
+right: 0;
+}
+.bet-option .blockUI.blockElement {
+    width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 280px !important;
+}
+.black02 {text-align: center;width: 222px;width: auto;display: block;font-weight: normal;margin: 110px 0 0 0;letter-spacing: 5px; font-size:20px;}
+.black02 p {     margin: 0;
+    width: 30% !important;
+    margin: 0 auto;}
+
+/*new status area & animation*/
+.second {height: 280px;position: absolute;text-align: center;float: left;width: 25%;display: none;left: 0;top: 45px;z-index: 100;background: #F0F0F0;}
+
+.red-outer .second, .org-outer .second {display: block}
+/*.red-outer .bet-statistics, .org-outer .bet-statistics {display: none}*/
+/*.red-outer .past-number, .org-outer .past-number { height: 0; padding: 0;}*/
+.red-outer .second #div_wiat ,.blue-outer .second #div_wiat  ,.gray-outer .second #div_wiat{
+height: 268px;
+margin: 0 auto;
+display: none !important;
+}
+.second .text { font-size: 15px; font-weight:bold; display: inline-block; vertical-align: middle;}
+/* ----------------------Keno_box-------------------------------- */
+.Keno_box {
+	padding: 0 0 0 10px;
+    height: 90%;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.lottery_get h1{
+font-size: 14px;
+letter-spacing: 0;
+line-height: 1.45em\0;
+width: 100%;
+margin: 0;
+padding: 28px 0 10px 0;
+text-indent: -10px;
+color:#636262;
+}
+.Keno_bar {height: auto;}
+.Keno_ball {
+width: 100%;
+padding: 0;
+margin: 0;
+position: relative;
+display: inline-block;
+}
+.Keno_ball li {
+    float: left;
+    width: 27px;
+    height: 27px;
+    position: relative;
+    z-index: 100;
+    margin: 0;
+    line-height: 27px;
+    margin: 4px 2px 0 0;
+}
+.Keno_ball li span {
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 101;
+    top: 0;
+}
+.Keno_total {
+    width: 100%;
+    height: 28px;
+    line-height: 98px;
+    line-height: 106px\0;
+    font-size: 26px;
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    left: 0;
+    bottom: -10px;
+}
+.Keno_total span { 
+width: 90px;
+height: 28px;
+line-height: 30px;
+line-height: 34px\0;
+font-size: 22px;
+text-align: center;
+display: inline-block;
+border-radius:14px;
+}
+
+/*game record*/
+.bet-statistics {position: relative;/* margin: 3px 16px; */font-family: sans-serif;}
+.past-number {height: 177px;}
+.RecentDrawNo_Body, .title-bar { width: 100%}
+.title-bar {position: relative; z-index: 0}
+.bet-statistics .menu li, .result-list li { }
+.bet-statistics .menu li, .result-list li { text-align: center}
+.bet-statistics .menu .restult-ball { width: 50%}
+.result-list li.restult-ball { width: 2.5%}
+.result-list, .bet-statistics .menu { width: 100%}
+.restult-title { width: 8%!important}
+
+.menu_main_00008, .menu_main_00009, .menu_main_00011, .menu_main_00012, .menu_main_00013, .menu_main_00014, .menu_main_00015, .menu_main_00016, .menu_main_00017, .menu_main_00019 {
+  float: left;
+  content: "";
+  width: 30px;
+  height: 38px;
+  margin-top: 1px;
+  background: url(../images/lotto/lotto_menu_004.png) no-repeat;
+}
+.menu_main_00008 { background-position: -5px -389px;} /*hk*/
+.menu_main_00009 { background-position: -5px 1px;} /*cn*/
+.menu_main_00011 { background-position: -5px -129px;} /*nzl*/
+.menu_main_00012 { background-position: -5px -173px;} /*deu*/
+.menu_main_00013 { background-position: -5px -216px;} /*uk*/
+.menu_main_00014 { background-position: -5px -258px;} /*esp*/
+.menu_main_00015 { background-position: -5px -303px;} /*zaf*/
+.menu_main_00016 { background-position: -5px -42px;} /*ca*/
+.menu_main_00017 { background-position: -5px -86px;} /*us*/
+.menu_main_00019 { background-position: -5px -347px;} /*sgp*/
+
+.time-stroke{ stroke:#EAC6C6}
+
+.info-main-inner{margin-right:10px;}
+
+.h127{ height:121px !important;}
+.org-outer #div_wiat {
+    height: 280px;
+    margin: 0 auto;
+    display: block;
+}
+.org-outer #div_wiat span {
+    background: #FFF;
+    color: #b8393a;
+    box-shadow: 0px 2px 5px #999;
+    padding: 10px 20px;
+    border-radius: 35px;
+    width: auto;
+    height: auto;
+    margin-top: 120px;
+}
+.second.Sec2 .text{margin-top: 120px;}
+
+.keno:nth-child(2n) {
+    margin-right: 0;
+}
+
+.betslip:before, .right-aside section.right-title:before {width: 210px;}
+
+/*right aside setting*/
+.right-aside-inner {/* padding: 0 0 0 20px */}
+.aside-title-account .btn-black { /*right: 0*/}
+.right-aside {padding: 0 10px;}
+.right-aside-inner.report-account { padding: 0 10px}
+/*betslip receipt*/
+.bet-area .receipt .yellow {position: static;width: 100%;padding: 5px 0 0 0;}
+.bet-area .receipt .yellow .left { font-weight: bold; font-size: 14px; line-height: 17px; min-height: 19px;}
+
+
+

@@ -1,0 +1,152 @@
+<div class="right-aside-inner">
+       <div class="account-bar">
+          <div class="icon-member"></div>
+          <b id="b_UserName">Guest</b>
+          <del id="del_AC_Balance">55253000</del>
+        </div>        
+        <div class="aside-title-account">
+            <div class="bet-form list-01">
+                <div class="btn-black"><a id="a_historybtn" href="javascript:Report.SwitchContent(1);">History</a></div>
+                <div class="betslip-title" id="span_receipt" style="display: none;">ใบเสร็จ</div> 
+                <div class="betslip-title" id="span_betslip" style="display: none;">สลากเลือกแทง</div>
+                <div class="betslip-title" style=""><a id="a_betslip" href="javascript:Betslip.show();" class="active">投注單</a></div>   
+            </div>
+            <div class="bet-form list-02">
+                <ul class="drop-down drop-down-mybet">
+                    <li class="relative">
+                        <a id="a_unsettled" href="javascript:void(0);">我的投注</a>
+                        <ul id="ul_list_betslip">
+                            <li><a id="a_list_unsettled">未結算注單<b id="b_UnsettledCounts"> ( 0 )</b></a></li>
+                            <li><a id="a_list_settled">Settlement of betting list</a></li>
+                            <li><a id="a_list_history">ประวัติผลออกสลาก</a></li>    
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="quick-bet"><a href="#" class="quick-tip-link">如何快速投注?</a><a id="a_quickBet" href="javascript:void(0);" class=""></a><b>快速投注</b></div>  
+        </div>
+        <div class="aside-title-right clear">
+          <div id="div_Rightaside">
+              <aside class="right-aside sidemenu">
+                        <div class="bet-area-wrap">
+                          <section class="bet-area">
+                              <div class="alert-wrap">
+                                <div class="clear"></div>
+                                <div class="betslip"><!--alert-->
+                                  <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                                  <header class="bet-header clear margin-bottom-2">
+                                      <hgroup class="left clear bgred">
+                                          <span class="name left odds-3"><b class="type">41 特码</b></span>
+                                          <span class="right yellow odds-2">2.75</span>
+                                      </hgroup>
+                                      <div>香港六合彩&nbsp;&nbsp;15/1223期</div>
+                                  </header>
+                                  <form class="clear margin-bottom-2">
+                                      <input type="text" value="500000.00" class="left txt-red"> <!-- 點擊後套用txt-red class -->
+                                      <label class="backmoney">返还: 155150.00</label>
+                                  </form>
+                                  <div><a href="javascript:void();" class="highest margin-right-2">最高投金</a> <a href="javascript:void();" class="highest">重复输入投金</a></div>
+                                </div><!--alert END-->
+                                <div class="betslip"><!--alert-->
+                                  <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                                  <header class="bet-header clear margin-bottom-2">
+                                      <hgroup class="left clear bgred">
+                                          <span class="name left"><b class="type">4全中-连码</b></span>
+                                          <span class="right yellow">2.75</span>
+                                      </hgroup>
+                                      <div>香港六合彩&nbsp;&nbsp;15/1223期</div>
+                                  </header>
+                                  <form class="clear margin-bottom-2">
+                                      <input type="text" value="本金" class="left"> <!-- Chinese -->
+                                      <label class="backmoney">返还: 750.00</label>
+                                  </form>
+                                  <div><a href="javascript:void();" class="highest margin-right-2">最高投金</a> <a href="javascript:void();" class="highest">重复输入投金</a></div>
+                                </div><!--alert END-->
+                                <div class="betslip"><!--alert-->
+                                  <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                                  <header class="bet-header clear margin-bottom-2">
+                                      <hgroup class="left clear">
+                                          <span class="name left"><b class="type">合大 正码1</b></span>
+                                          <span class="right yellow odds-2">2.75</span>
+                                      </hgroup>
+                                      <div>香港六合彩&nbsp;&nbsp;15/1223期</div>
+                                  </header>
+                                  <form class="clear margin-bottom-2">
+                                      <input type="text" value="Stake" class="left"> <!-- English -->
+                                      <label class="backmoney">返还: 750.00</label>
+                                  </form>
+                                  <div><a href="javascript:void();" class="highest margin-right-2">最高投金</a> <a href="javascript:void();" class="highest">重复输入投金</a></div>
+                                </div><!--alert END-->
+                                <div class="betslip"><!--alert-->
+                                  <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                                  <header class="bet-header clear margin-bottom-2">
+                                      <hgroup class="left clear">
+                                          <span class="name left odds-3"><b class="type">总分 111 ~ 140</b></span>
+                                          <span class="right yellow">2.10</span>
+                                      </hgroup>
+                                      <div>德国乐透&nbsp;&nbsp;20150627期</div>
+                                  </header>
+                                  <form class="clear margin-bottom-2">
+                                      <input type="text" value="베팅금" class="left"> <!-- Korean -->
+                                      <label class="backmoney">返还: 750.00</label>
+                                  </form>
+                                  <div><a href="javascript:void();" class="highest margin-right-2">最高投金</a> <a href="javascript:void();" class="highest">重复输入投金</a></div>
+                                </div><!--alert END-->
+                                
+                                <div class="betslip" id="div_betTypeInfo"><!--过关投注项目-->
+                                  <div class="mix-title">过关投注项目</div>
+                                  <ul class="bet-area2">
+                                    <li class="clear">
+                                      <span class="left margin-right">独赢</span>
+                                      <span class="left margin-right-2">3@ </span>
+                                      <input type="text" value="500.00" class="left">
+                                    </li>
+                                    <li class="clear">
+                                      <span class="left margin-right">3串1 </span>
+                                      <span class="left margin-right-2">1@</span>
+                                      <input type="text" value="500.00" class="left">
+                                    </li> 
+            
+                                    <li class="clear">
+                                      <span class="left margin-right">3串3</span>
+                                      <span class="left margin-right-2">3@ </span>
+                                      <input type="text" value="500.00" class="left">
+                                    </li> 
+                                    <li class="clear">
+                                      <span class="left margin-right">3串4</span>
+                                      <span class="left margin-right-2">4@ </span>
+                                      <input type="text" value="500.00" class="left">
+                                    </li> 
+                                  </ul>
+                                </div><!--END 过关投注项目-->
+                                
+                                <a href="javascript:void();" class="del-all right">全部删除</a>
+                                <div class="clear"></div>
+                                <div class="alert-box">
+                                  <span>您的注單衝突，無法串關投注</span>
+                                  <a href="javascript:void(0);" class="btn-accept" style="display:none">接受</a>
+                                </div>
+                                <div class="alert-box" style="display:none">
+                                  <span>赔率或盘口已变更。</span>
+                                  <a href="javascript:void(0);" class="btn-accept">接受</a>
+                                </div>
+                                
+                              </div> <!--alert-wrap-->
+            
+                          </section>
+                          
+                          <section class="right-title clear">
+                              <div class="total">
+                                  <div class="left price">投注总额 : <span>950.00</span></div>
+                                  <a href="javascript:void();" class="btn btn-j right">投注</a>
+                              </div>
+                          </section>
+                        </div> <!--bet-area-wrap-->
+              </aside>
+          </div>   
+        </div>
+</div>
+
+
+
+

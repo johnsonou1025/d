@@ -1,0 +1,66 @@
+<!DOCTYPE> 
+<html class="mm-opened">
+<head>
+<meta charset="utf-8" />
+<meta equiv="Content-Language" content="zh-CN">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width">
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>LOTTO - </title>
+<!-- TemplateEndEditable -->
+<link href="../Css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../css/Main/base.css"/>
+<link rel="stylesheet" href="../css/Main/main.css"/>
+<link rel="stylesheet" href="../Css/Main/main_color_002.css"/>
+<link rel="stylesheet" href="../css/Main/report.css"/>
+<link rel="stylesheet" href="../css/Layout/lotto.css"/>
+<link rel="stylesheet" href="../css/Color/lotto_color_002.css"/>
+<link rel="stylesheet" href="../css/Mq/lotto_mq.css"/>
+
+
+</head>
+
+<!-- TemplateParam name="article" type="boolean" value="true" -->
+
+<!--[if (gte IE 6)&(lte IE 9)]>
+<script type="text/javascript" src="../js/respond.src.js"></script>
+<![endif]-->
+
+<body>
+<!--***HTML5 tag for old IE browser***-->
+<!--[if (gte IE 6)&(lte IE 9)]>
+  <script type="text/javascript" src="../js/html5shiv.js"></script>
+  <script>document.createElement("header")</script>
+  <script>document.createElement("nav")</script>
+  <script>document.createElement("section")</script>
+  <script>document.createElement("article")</script>
+  <script>document.createElement("aside")</script>
+  <script>document.createElement("hgroup")</script>
+  <script>document.createElement("figure")</script>
+  <script>document.createElement("figcaption")</script>
+  <script>document.createElement("footer")</script>
+  <script>document.createElement("date")</script>
+  <script>document.createElement("time")</script>
+<![endif]-->
+
+<!-- TemplateBeginIf cond="_document['article']" --><!-- TemplateBeginEditable name="article" -->
+
+
+<!-- TemplateEndEditable --><!-- TemplateEndIf -->
+
+<!--[if (gte IE 6)&(lte IE 8)]>
+<script type="text/javascript" src="../js/selectivizr-min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 7]>
+<script type="text/javascript" src="../js/IE7.js"></script>
+<![endif]-->
+
+<script src="../js/jquery.min.js"></script> 
+<script src="../js/jquery.blockUI.js"></script> 
+<script src="../js/jquery.mCustomScrollbar.js"></script>
+<script src="../js/pushmenu.js"></script>
+<script src="../js/function4.js"></script>
+
+</body>
+</html>

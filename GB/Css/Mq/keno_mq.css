@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+@media only screen and (min-width: 1366px) {
+
+.menu li.reflash { width: 30px!important;}
+.road-box { right: 30px}
+	
+}
+
+@media only screen and (min-width: 1440px) {
+
+.keno { width: 49%; margin-right: 0.5%; margin-left: 0.5%; float: left; display: inline-block}
+
+.lottery-info,.second {width: 28%;}
+.record-bar {width: 21%;left: 3.5%}
+.bet-option {width: 72%;} 
+
+.menu li.reflash { width: 25px!important;}
+.road-box { right: 25px}
+
+.Keno_box { padding: 0 0 0 21px;}
+	
+}
+
+
+@media only screen and (min-width: 1680px) {
+
+.right-aside-inner.report-account{margin-right: 10px;}
+.menu li.reflash { width: 31px!important;}
+.road-box { right: 31px}
+
+}
+
+
+@media only screen and (max-width: 1365px) {
+
+.top-bar .news_box { width: 75%}
+
+/*font-size*/
+.keno .bet-title h1 {font-size: 19px}
+.result-list, .RecentDrawNo .menu { font-size: 12px}
+
+.record-bar span { letter-spacing: -0.25px;}
+.menu li.reflash { width: 32px!important;}
+.road-box { right: 32px}
+
+.result-list, .RecentDrawNo .menu { font-size: 12px;}
+.RecentDrawNo .menu li, .result-list li { width: 4%;}
+.restult-title { width: 9%!important}
+.RecentDrawNo .menu li.bs, .result-list li.bs { width: 7%;}
+.RecentDrawNo .menu li.bs {letter-spacing: -1px}
+.RecentDrawNo .menu .restult-ball { width: 60%;}
+.result-list li.restult-ball { width: 3%;}
+.keno {
+	width:100%;
+	margin-right: 0;
+    margin-left: 0;
+}
+
+}
+
+
+@media only screen and (min-width: 1366px) and (max-width: 1439px) {
+.CountDownArea {
+    background:none;
+	width: 110px;
+    height: 110px;
+}
+.CountDownArea .time-box{
+	width:110px;
+	height:110px;
+}
+.record-bar .latest-result {
+    padding: 3px;
+}
+.second .text {
+    font-size: 12px;
+}
+.lottery_get h1 {
+    word-break: break-all;
+	text-indent: -4px;
+}
+.Keno_box { padding: 0 0 0 14px;}
+.Keno_ball li {
+    margin: 0 0.5px 0.5px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-indent: 1px;
+}
+.Keno_ball li span {
+	font-size:12px;
+}
+
+.btn-right, .btn-right-ov { right: -5px}
+.btn-left, .btn-left-ov { left: -5px}
+
+}
+
+@media only screen and (min-width: 1280px) and (max-width: 1365px) {
+
+.Keno_box {
+    padding: 0 0 0 28px;
+}
+.Keno_ball li {
+    margin: 4px 3px 0 0;
+}
+
+}
+
+
+@media screen and (max-width: 1279px){
+
+.Keno_box { padding: 0 0 0 16px;}
+.Keno_ball li {margin: 4px 1px 0 0;}
+
+}

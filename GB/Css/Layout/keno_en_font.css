@@ -1,0 +1,267 @@
+@charset "utf-8";
+
+/*------------------- main -------------------*/
+.price span {
+    width: 100%;
+    text-align: left;
+    letter-spacing: 1px;
+}
+.leftmenu > li > a:before {
+    top: 12px;
+}
+.leftmenu > li#menuid_00020 > a:before, .leftmenu > li#menuid_00021 > a:before {
+    top: 5px;
+}
+.leftmenu li a {
+    padding-right: 5px;
+}
+.leftmenu a, .bet-area .bet-header .name {
+    font-size: 12px;
+}
+.bet-area2 li .margin-right {width: 49%;text-align: left;margin-right: 5px;}
+.bet-area2 li .margin-right-2 {width: 16%;}
+.right-aside .bet-area2 li input {width: 59px;}
+
+.quickbet-area-wrap .bet-area .name { 
+width: auto!important;
+max-width: 125px!important;
+padding: 0 10px 0 2px!important
+}
+/********ONLY KENO REMOVE THE BTN*********/
+.quickbet-area-wrap .betslip form { width: 100%;}
+.drop-down-mybet ul { width: 185px; width: 182px\0; max-width: initial; max-width: 182px\0; right: 0;}
+
+.leftmenu li a {
+padding-right: 0;
+line-height: 18px;
+padding-top: 7px;
+padding-bottom: 8px;
+padding-left: 33px;
+}
+.bet-form .betslip-title a.active {
+    padding-left: 30px;
+}
+.betslip form {
+    border-bottom: none;
+}
+.bet-area .betslip a.highest, .label_check {
+    margin: 2px 0 !important;
+    display: block;
+    float: left;
+    width: 100%;
+	background:#FFF;
+	border:1px solid #D4D4D4;
+	padding: 4px 8px;
+	border-radius: 12px;
+}
+.keno .bet-title b {
+	background: url(../Images/GoToWeb-en.png?0801) 0px 0px no-repeat;
+}
+.keno .bet-title b:hover, .keno .bet-title b:active { 
+	background: url(../Images/GoToWeb-en.png?0801) 0px -24px no-repeat;
+}
+@media screen and (max-width: 1279px) {
+
+.bet-area2 li .margin-right { width: 54%; margin-right: 3px;}
+.right-aside .bet-area2 li input { width: 55px;}
+
+}
+
+/*------------------- keno -------------------*/
+.leftmenu .flag {
+display: block;
+position: absolute;
+margin: 0;
+top: -1px;
+right: 40px;
+height: 10px;
+display: none
+}
+.label_check { width: 100%}
+.checkboxes > div:nth-of-type(1), .checkboxes > div:nth-of-type(3) { width: 64%}
+.checkboxes > div:nth-of-type(2) { float: none!important; display: inline-block;}
+.checkboxes > div:nth-of-type(3) .mr5 { margin-left: 0!important}
+.keno {
+    max-height: 581px !important;
+}
+.bet-option, .bet-alert, .blockU I, .lottery-info, .second {
+    height: 348px;
+}
+.bet-option {
+    padding: 12px 13px 0;
+}
+.bet-option .option-4{
+    width: 100%;
+}
+.option-2, .option-5 {
+     padding-right:0; 
+}
+.bet-option .option-5, .bet-option .option-6 { width: 100%}
+.bet-option .option-5 li {
+    width: 25%;
+}
+.bet-option .option-5 li:last-child { border-right: none}
+.bet-option .option-7 li a {/* padding: 2px 0; */}
+.bet-option .option-7 li b { display: block; width: 100%; margin-bottom: -3px}
+.bet-option .option-4 li b, .bet-option .option-3 li b, .bet-option .option-1 li:nth-child(2) b {
+    margin: 0;
+}
+.option-4, .option-6 {
+    padding-left: 0;
+}
+.bet-option li a {
+    height: 40px;
+	padding: 3px 6px;
+}
+.bet-option li b {
+    font-size: 15px;
+    width: 100%;
+    min-height: 18px;
+    line-height: 18px;
+}
+.bet-option li a span {
+    margin-top: 0;
+    width: 100%;
+}
+.bet-option .option-2 li b, .bet-option .option-5 li b,
+.bet-option .option-7 li b, .bet-option .option-6 li b, .bet-option .option-4 li b, 
+.bet-option .option-3 li b, .bet-option .option-8 li b, .bet-option .option-1 li:nth-child(2) b,
+.bet-option .option-7 li b, .bet-option .option-7 li a span, .bet-option .option-7 li a del {
+    font-size: 14px;
+    margin: 0;
+    font-weight: normal
+}
+.bet-option .option-7 li b { margin: 0 0 -2px}
+
+
+.second #div_wiat {
+    height: 348px;
+}
+.bet-option .blockUI.blockElement {
+    height: 348px !important;
+}
+.record-bar {
+    top: 290px;
+}
+.record-bar .latest-result {
+    padding: 3px 8px;
+}
+.record-bar .latest-result li { width: auto; padding: 1px 2px;}
+.bet-alert, .bet-option .blockUI {height: 348px !important;}
+.black02 { margin-top: 158px}
+
+.w50 {width: 50% !important;}
+.lottery_get h1 {
+    padding: 40px 0 20px 0;
+}
+.lottery-info .status {
+    margin-top: 15px;
+}
+.Keno_box {
+    height: 100%;
+}
+.Keno_total {
+    bottom: -40px;
+}
+/*@media only screen and (min-width: 1280px) and (max-width: 1439px) {
+
+.bet-option .option-6 li b { 
+margin: 9px auto;
+width: 100%;
+height: 16px;
+line-height: 1.2;
+}
+
+}*/
+
+/*keno lightbox*/
+.lb-btn, .bests .bests-btn a { letter-spacing: 1px}
+.total-list li:nth-of-type(1), .total-list li:nth-of-type(3), .total-list li:nth-of-type(5) { width: 100%!important}
+.playtable .total-btns .lb-btn { width: auto; padding: 0 4px; margin: 1px;}
+
+
+/*------------------- report -------------------*/
+
+@media only screen and (min-width: 1280px) {
+	
+.main-content2 .report-option .drop-down-odds {
+  margin-right: 10px;
+  width: 210px;
+}
+	
+}
+
+@media only screen and (min-width: 1440px) {
+.main-content2 .report-option .drop-down-odds { width: 219px}
+
+}
+
+@media only screen and (min-width: 1680px) {
+.report-list .table .two { width: 16%;}
+.report-list .table .six { width: 14%;}
+
+}
+
+@media only screen and (max-width: 1679px) {
+
+.report-list .table .two { width: 18%;}
+.report-list .table .three { width: 41%;}
+.report-list .table .five { width: 12%;}
+
+.report-list .table2 .two { width: 20%;}
+.report-list .table2 .three { width: 35%;}
+
+}
+
+@media only screen and (max-width: 1439px) {
+.record-bar {
+    top: 274px;
+}
+.report-list .table .two { width: 21%;}
+.report-list .table .three { width: 35%;}
+.report-list .table .six { width: 17%;}
+
+.report-list .table2 .three { width: 29%;}
+.report-list .table2 .five { width: 14%;}
+.report-list .table2 .six { width: 11%;}
+
+}
+
+@media only screen and (max-width: 1279px) {
+
+.main-content2 .report-option .drop-down-odds { width: auto}
+.report-option .center, .main-content2 .report-option .drop-down-odds { margin-right: 5px;}
+	
+.report-list .table .two { width: 27%;}
+.report-list .table .three { width: 26%;}
+.report-list .table .six { width: 20%;}
+
+.report-list .table2 .two { width: 27%;}
+.report-list .table2 .three { width: 22%;}
+.report-list .table2 .five { width: 17%;}
+.report-list .table2 .six { width: 11%;}
+.report-list .table2 .seven { width: 8%;}
+
+.report-option {
+    padding: 10px 5px;
+}
+.report-option input[type="button"] {
+    padding: 2px 10px;
+    margin: 0 0 0 5px;
+}
+}
+/*.org-outer #div_wiat span, .red-outer .Sec2 span {
+    margin-top: 130px;
+}
+.red-outer #div_wiat span {
+    margin-top: 130px;
+}*/
+
+.black02 p {
+    width: 50% !important;
+    margin: 0 auto;
+    letter-spacing: 0px;
+}
+.countdown p, .game-title2, .bet-title h1 {
+    font-size: 18px;
+}

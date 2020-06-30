@@ -1,0 +1,326 @@
+<div class="right-aside-inner">
+       <div class="account-bar">
+          <div class="icon-member"></div>
+          <b id="b_UserName">Guest</b>
+          <del id="del_AC_Balance">55253000</del>
+        </div>        
+       <!--<div class="aside-title-account hide-for-device">
+                <div class="bet-form clear">
+                    <ul class="drop-down drop-down-mybet">
+                      <li class="relative">
+                          <a href="javascript: void(0)">我的投注</a>
+                      </li>
+                    </ul>
+                    <div class="btn-black"><a href="javascript:void(0);">历史记录</a></div>
+                    <ul class="drop-down-list">
+                        <li><a href="javascript: void(0)">未結算注單<b>( 99 )</b></a></li>
+                        <li><a href="javascript: void(0)">已結算注單</a></li>
+                        <li><a href="javascript: void(0)">下注歷史</a></li>
+                    </ul>
+                </div>
+                <div class="quick-bet">快速投注 <a href="javascript:void();" class=" active">快速投注</a></div>
+                <div class="betslip-title"><a href="javascript: void(0)">投注单</a></div>
+            </div>-->
+      <div class="aside-title-account">
+          <div class="bet-form list-01">
+              <div class="btn-black"><a id="a_historybtn" href="javascript:Report.SwitchContent(1);">History</a></div>
+              <div class="betslip-title" id="span_receipt" style="display: none;">ใบเสร็จ</div> 
+              <div class="betslip-title" id="span_betslip" style="display: none;">สลากเลือกแทง</div>
+              <div class="betslip-title" style=""><a id="a_betslip" href="javascript:Betslip.show();" class="active">投注單</a></div>   
+          </div>
+          <div class="bet-form list-02">
+              <ul class="drop-down drop-down-mybet">
+                  <li class="relative">
+                      <a id="a_unsettled" href="javascript:void(0);">我的投注</a>
+                      <ul id="ul_list_betslip">
+                          <li><a id="a_list_unsettled" href="../keno/keno_betslip_2.html">未結算注單<b id="b_UnsettledCounts"> ( 0 )</b></a></li>
+                          <li><a id="a_list_settled" href="#">Settlement of betting list</a></li>
+                          <li><a id="a_list_history" href="#">ประวัติผลออกสลาก</a></li>    
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+          <div class="quick-bet"><a href="#" class="quick-tip-link">如何快速投注?</a><a id="a_quickBet" href="javascript:void(0);" class=""></a><b>快速投注</b></div>  
+      </div>
+      
+</div>
+
+<div class="aside-title-right clear">
+  <div id="div_Rightaside">
+      <aside class="right-aside sidemenu">
+            <div class="bet-area-wrap">  
+                <section class="bet-area">
+                    <div class="alert-wrap">
+                      <div class="clear"></div>
+                      <div id="div_mybetlist">
+                        <div class="betslip"><!--alert-->
+                          <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                          <header class="bet-header clear margin-bottom-2">
+                              <hgroup class="left clear bgred">
+                                  <span class="name odds-3 left"><b class="type">大&nbsp;&nbsp;大小</b></span>
+                                  <span class="right yellow odds-2">2.75</span>
+                              </hgroup>
+                              <div>北京&nbsp;&nbsp;700967</div>
+                          </header>
+                          <form class="clear margin-bottom-2">
+                              <input type="text" value="500000.00" class="left txt-red"> <!-- 點擊後套用txt-red class -->
+                              <label class="backmoney">返还 <del>155150</del></label>
+                          </form>
+                          <div>
+                            <a href="javascript:void(0);" class="highest margin-right-2">最低投金</a> 
+                            <a href="javascript:void(0);" class="highest">重复投金</a>
+                            <label class="label_check c_on" for="checkbox-03"><input type="checkbox" name="sample-checkbox-03" value="1">追号倍投</label>
+                          </div>
+                          <div class="set-js" style="display: block">
+                            <div class="checkboxes clear">
+                              <div class="left">
+                                 <label class="mr5" for="checkbox-03">追号</label>
+                              </div>
+                              <div class="left">
+                                 <ul class="bet-select">
+                                      <li class="less"><a href="javascript:void(0);"></a></li>
+                                      <li><input type="text" value="2" size="2"></li>
+                                      <li class="more"><a href="javascript:void(0);"></a></li>
+                                 </ul>
+                              </div>
+                              <div class="left">
+                                  <label class="ml5 mr5" for="checkbox-04">倍投</label>
+                              </div>
+                              <div class="left">
+                                <ul class="bet-select">
+                                    <li class="less"><a href="javascript:void(0);"></a></li>
+                                    <li><input type="text" value="1.0"></li>
+                                    <li class="more"><a href="javascript:void(0);"></a></li>
+                                </ul>
+                              </div>
+                            </div>              
+                          </div>
+                        </div><!--alert END-->
+                        <div class="betslip"><!--alert-->
+                          <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                          <header class="bet-header clear margin-bottom-2">
+                              <hgroup class="left clear bgred">
+                                  <span class="name left"><b class="type">珠仔反赌&nbsp;&nbsp;珠仔</b></span>
+                                  <span class="right yellow">2.75</span>
+                              </hgroup>
+                              <div>北京&nbsp;&nbsp;700967</div>
+                          </header>
+                          <form class="clear margin-bottom-2">
+                              <input type="text" value="本金" class="left"> <!-- Chinese -->
+                              <label class="backmoney">返还 <del>750</del></label>
+                          </form>
+                          <div>
+                            <a href="javascript:void(0);" class="highest margin-right-2">最低投金</a> 
+                            <a href="javascript:void(0);" class="highest">重复投金</a>
+                            <label class="label_check" for="checkbox-03"><input type="checkbox" name="sample-checkbox-03" value="1">追号倍投</label>
+                          </div>
+                          <div class="set-js" style="display: none">
+                            <div class="checkboxes clear">
+                              <div class="left">
+                                 <label class="mr5" for="checkbox-03">追号</label>
+                              </div>
+                              <div class="left">
+                                 <ul class="bet-select">
+                                      <li class="less"><a href="javascript:void(0);"></a></li>
+                                      <li><input type="text" value="2" size="2"></li>
+                                      <li class="more"><a href="javascript:void(0);"></a></li>
+                                 </ul>
+                              </div>
+                              <div class="left">
+                                  <label class="ml5 mr5" for="checkbox-04">倍投</label>
+                              </div>
+                              <div class="left">
+                                <ul class="bet-select">
+                                    <li class="less"><a href="javascript:void(0);"></a></li>
+                                    <li><input type="text" value="1.0"></li>
+                                    <li class="more"><a href="javascript:void(0);"></a></li>
+                                </ul>
+                              </div>
+                            </div>              
+                          </div>
+                        </div><!--alert END-->
+                        <div class="betslip"><!--alert-->
+                          <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                          <header class="bet-header clear margin-bottom-2">
+                              <hgroup class="left clear">
+                                  <span class="name left"><b class="type">珠仔反赌&nbsp;&nbsp;珠仔</b></span>
+                                  <span class="right yellow odds-2">2.75</span>
+                              </hgroup>
+                              <div>北京&nbsp;&nbsp;700967</div>
+                          </header>
+                          <form class="clear margin-bottom-2">
+                              <input type="text" value="Stake" class="left"> <!-- English -->
+                              <label class="backmoney">返还 <del>750</del></label>
+                          </form>
+                          <div>
+                            <a href="javascript:void(0);" class="highest margin-right-2">最低投金</a> 
+                            <a href="javascript:void(0);" class="highest">重复投金</a>
+                            <label class="label_check" for="checkbox-03"><input type="checkbox" name="sample-checkbox-03" value="1">追号倍投</label>
+                          </div>
+                          <div class="set-js" style="display: none">
+                            <div class="checkboxes clear">
+                              <div class="left">
+                                 <label class="mr5" for="checkbox-03">追号</label>
+                              </div>
+                              <div class="left">
+                                 <ul class="bet-select">
+                                      <li class="less"><a href="javascript:void(0);"></a></li>
+                                      <li><input type="text" value="2" size="2"></li>
+                                      <li class="more"><a href="javascript:void(0);"></a></li>
+                                 </ul>
+                              </div>
+                              <div class="left">
+                                  <label class="ml5 mr5" for="checkbox-04">倍投</label>
+                              </div>
+                              <div class="left">
+                                <ul class="bet-select">
+                                    <li class="less"><a href="javascript:void(0);"></a></li>
+                                    <li><input type="text" value="1.0"></li>
+                                    <li class="more"><a href="javascript:void(0);"></a></li>
+                                </ul>
+                              </div>
+                            </div>              
+                          </div>
+                        </div><!--alert END-->
+                        <div class="betslip"><!--alert-->
+                          <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                          <header class="bet-header clear margin-bottom-2">
+                              <hgroup class="left clear">
+                                  <span class="name left odds-3"><b class="type">水&nbsp;&nbsp;五行</b></span>
+                                  <span class="right yellow">2.10</span>
+                              </hgroup>
+                              <div>北京&nbsp;&nbsp;700967</div>
+                          </header>
+                          <form class="clear margin-bottom-2">
+                              <input type="text" value="베팅금" class="left"> <!-- Korean -->
+                              <label class="backmoney">返还 <del>750</del></label>
+                          </form>
+                          <div>
+                            <a href="javascript:void(0);" class="highest margin-right-2">最低投金</a> 
+                            <a href="javascript:void(0);" class="highest">重复投金</a>
+                            <label class="label_check" for="checkbox-03"><input type="checkbox" name="sample-checkbox-03" value="1">追号倍投</label>
+                          </div>
+                          <div class="set-js" style="display: none">
+                            <div class="checkboxes clear">
+                              <div class="left">
+                                 <label class="mr5" for="checkbox-03">追号</label>
+                              </div>
+                              <div class="left">
+                                 <ul class="bet-select">
+                                      <li class="less"><a href="javascript:void(0);"></a></li>
+                                      <li><input type="text" value="2" size="2"></li>
+                                      <li class="more"><a href="javascript:void(0);"></a></li>
+                                 </ul>
+                              </div>
+                              <div class="left">
+                                  <label class="ml5 mr5" for="checkbox-04">倍投</label>
+                              </div>
+                              <div class="left">
+                                <ul class="bet-select">
+                                    <li class="less"><a href="javascript:void(0);"></a></li>
+                                    <li><input type="text" value="1.0"></li>
+                                    <li class="more"><a href="javascript:void(0);"></a></li>
+                                </ul>
+                              </div>
+                            </div>              
+                          </div>
+                        </div><!--alert END-->
+                        <div class="betslip"><!--alert-->
+                          <button type="button" class="close top-right" data-dismiss="alert" aria-hidden="true"></button>
+                          <header class="bet-header clear margin-bottom-2">
+                              <hgroup class="left clear">
+                                  <span class="name left"><b class="type">大双&nbsp;&nbsp;大小單雙</b></span>
+                                  <span class="right yellow">1.83</span>
+                              </hgroup>
+                              <div>北京&nbsp;&nbsp;700967</div>
+                          </header>
+                          <form class="clear margin-bottom-2">
+                              <input type="text" value="Tiền cược" class="left"> <!-- Vitnem -->
+                              <label class="backmoney">返还 <del>750</del></label>
+                          </form>
+                          <div>
+                            <a href="javascript:void(0);" class="highest margin-right-2">最低投金</a> 
+                            <a href="javascript:void(0);" class="highest">重复投金</a>
+                            <label class="label_check mr5 c_on" id="chk_bet-select_00003_013" for="checkbox-03">
+                            <input type="checkbox" name="sample-checkbox-03" id="checkbox-03_00003_013" value="1" checked="checked">ลงแบบเดิมดับเบิ้ลเดิมพัน</label>
+                          </div>
+                          <div class="set-js" style="display: none">
+                                <div class="checkboxes clear">
+                                
+                                  <div class="left">
+                                      <label class="mr5" for="checkbox-03">ลงแบบเดิม</label>
+                                  </div>
+                                  <div class="left" id="tdUnwork">
+                                      <ul class="bet-select" id="ul_bet-select_00003_013">
+                                          <li class="less"><a id="a_bet-select_less" href="javascript:void(0);"></a></li>
+                                          <li><input type="text" id="txt_bet-select_00003_013" value="2" size="2"></li>
+                                          <li class="more"><a id="a_bet-select_more" href="javascript:void(0);"></a></li>
+                                      </ul>
+                                  </div>
+                                  <div class="left">
+                                      <label class="ml5 mr5" id="chk_bet-double_00003_013" for="checkbox-04">ดับเบิ้ลเดิมพัน</label>
+                                  </div>
+                                  <div class="left" id="trUnwork">
+                                      <ul class="bet-select" id="ul_bet-double_00003_013">
+                                          <li class="less"><a id="a_bet-double_less" href="javascript:void(0);"></a></li>
+                                          <li><input type="text" id="txt_bet-double_00003_013" value="1.0"></li>
+                                          <li class="more"><a id="a_bet-double_more" href="javascript:void(0);"></a></li>
+                                      </ul>
+                                  </div>
+                                </div>              
+                            </div>
+                        </div><!--alert END-->
+                      </div>
+                      
+                      <div class="betslip" id="div_betTypeInfo"><!--过关投注项目-->
+                        <div class="mix-title">过关投注项目</div>
+                        <ul class="bet-area2">
+                          <li class="clear">
+                            <span class="left margin-right">独赢</span>
+                            <span class="left margin-right-2">3@ </span>
+                            <input type="text" value="500" class="left">
+                          </li>
+                          <li class="clear">
+                            <span class="left margin-right">3串1 </span>
+                            <span class="left margin-right-2">1@</span>
+                            <input type="text" value="500" class="left">
+                          </li> 
+                          <li class="clear">
+                            <span class="left margin-right">3串3</span>
+                            <span class="left margin-right-2">3@ </span>
+                            <input type="text" value="500" class="left">
+                          </li> 
+                          <li class="clear">
+                            <span class="left margin-right">3串4</span>
+                            <span class="left margin-right-2">4@ </span>
+                            <input type="text" value="500" class="left">
+                          </li> 
+                        </ul>
+                      </div><!--END 过关投注项目-->
+                      
+                      <a href="javascript:void();" class="del-all right">全部删除</a>
+                      <div class="clear"></div>
+                      <div class="alert-box">
+                        <span>您的注單衝突，無法串關投注</span>
+                        <a href="javascript:void(0);" class="btn-accept" style="display:none">接受</a>
+                      </div>
+                      <div class="alert-box" style="display:none">
+                        <span>赔率或盘口已变更。</span>
+                        <a href="javascript:void(0);" class="btn-accept">接受</a>
+                      </div>
+                      
+                    </div><!--alert-wrap-->
+  
+                  </section>
+                <section class="right-title clear">
+                  <div class="total">
+                      <div class="left price">投注总额 : <span>950.00</span></div>
+                      <a href="javascript:void();" class="btn btn-j right">投注</a>
+                  </div>
+                </section>   
+            </div> <!--bet-area-wrap-->                                     
+      </aside>
+  </div>
+</div>
+
+

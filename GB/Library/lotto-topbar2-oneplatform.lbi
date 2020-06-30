@@ -1,0 +1,13 @@
+<div class="top-bar top-bar-oneplat report-topbar">
+      <!--Top bar-->
+      <section>
+        <div class="top-bar-inner relative clear">
+          <div class="time">15:41:29 UTC +8</div>
+          <div class="news_box"><span>网站系统升级中，提款时间暂時受影响；已完成３项安全验证的用户，仍可正常快速提款。网站系统升级中，提款时间暂時受影响；已完成３项安全验证的用户，仍可正常快速提款。网站系统升级中，提款时间暂時受影响；已完成３项安全验证的用户，仍可正常快速提款。网站系统升级中，提款时间暂時受影响；已完成３项安全验证的用户，仍可正常快速提款。</span></div>
+          <a href="javascript: void(0)" class="btn btn-g right"></a> 
+          <a href="javascript: void(0)" class="btn btn-e right"></a>
+          <a href="javascript: void(0)" class="btn btn-click btn-rule right">玩法规则</a>
+          <!--<a href="javascript: void(0)" class="btn btn-click btn-newfunc right">新功能介绍</a>-->
+        </div>
+      </section>
+    </div>

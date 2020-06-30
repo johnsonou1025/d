@@ -1,0 +1,575 @@
+@charset "utf-8";
+/* left menu*/
+.leftmenu {
+	min-height: 780px;
+    background: url(../Images/lotto/001/leftmenu_bg.png?1215) 14px 22px no-repeat;
+}
+.leftmenu > li > a#a_menu_main_00008:before { 
+    width: 24px;
+    height: 24px;
+    left: -8px;
+    top: 3px;
+}
+
+/* right aside*/
+.aside-title-right {
+	top: 120px;
+}
+/*--------------------------------------------*/
+.lotto-bet li a, .lotto-option-b, .lotto-option-03, .report-tit, .report-cont02, .lotto-tab, .lotto-tab-s, .lotto-tab-03,
+.lotto-option li a, .lotto-option-03 li a, .lotto-option-b li a, .lotto-option-q, .btn-wrap, .zodiac-wrapper, .lotto-wrapper, .bet-title, .lotto-left { 
+display: block;
+}
+.lotto-bet li a:after, .lotto-number:after, .report-tit:after, .report-cont02:after, .lotto-option:after, .lotto-option-b:after, .lotto-option-03:after,
+.lotto-option li a:after, .lotto-option-03 li a:after, .lotto-option-b li a:after, .lotto-bet:after, .lotto-option-q:after, .btn-wrap:after, .zodiac-wrapper:after, .lotto-wrapper:after, .bet-title:after,
+.lotto-left:after, .lotto-tab:after, .lotto-tab-s:after, .lotto-tab-03:after, .lotto-number-wrap:after, .ba-numbers, .ba-bottom:after, .lotto-right-inner .lotto-option:after {
+content: " ";
+display: block;
+height: 0;
+clear: both;
+}
+.lotto-left:after, .lotto-record:after, .combo-wrapper .lotto-right-inner.mt10:after {
+content: " ";
+display: block;
+height: 18px;
+clear: both;
+}
+.lotto-left-inner:after, .lotto-right-inner .lotto-option:after {
+content: " ";
+display: block;
+height: 8px;
+clear: both;
+}
+
+/*top-bar*/
+.top-bar a.btn-e, .top-bar a.btn-g { display: none}
+.btn-history {margin-right: 0}
+
+/*lotto*/
+.lotto-wrapper { padding: 0; position: relative;}
+dd { margin: 0; padding: 0; color: inherit;}
+.lotto-record, .lotto-rule, .box-4 { float: left;width: 100%; }
+.box-4 { margin-top: 0}
+.lotto-option-q {padding: 8px 0 8px 6px;}
+.lotto-left .lotto-option, .lotto-option-q, .gray-box, .lotto-tab.height65, .lotto-number-wrap, .lotto-tab-s {background:#FFF; width: calc(100% - 286px)}
+.lotto-left.w100 .lotto-option, .w100 .lotto-option-q, .w100 .gray-box, .w100 .lotto-tab.height65, .w100 .lotto-number-wrap, .w100 .lotto-tab-s { width: 100%!important}
+/* IE 8&9 */	
+@media \0screen {
+.lotto-left .lotto-option, .lotto-option-q, .gray-box, .lotto-tab.height65, .lotto-number-wrap, .lotto-tab-s { width: 72%;}
+}
+
+.game-title2 .time-wrap { 
+line-height: 14px; 
+padding-right: 10px;
+margin-top: 4px;
+margin-right: -10px;
+}
+.game-title, .bet-title-s {line-height: 37px;width: 100%;}
+.lotto-option .game-title2 { margin-top: -2px; height: 34px; line-height: 31px; display: none}
+.mt10 .game-title2 { text-indent: 26px!important}
+.lotto-option.sum .game-title2 { height: 38px; margin-top: 0}
+.bet-title h1 {line-height: 44px;font-weight: normal;margin: 0 0 0 8px;float: left;}
+.bet-title a, .bet-title a b { float: none; display: block}
+.bet-title a b {width: 74px;height: 24px;text-indent: -9999px;float: right; margin: 10px 0 0 0; background: url(../Images/GoToWeb.png?0801) 0px 0px repeat;}
+.bet-title a:hover b, .bet-title a:active b  { background: url(../Images/GoToWeb.png?0801) 0px -25px no-repeat;}
+.bet-title-s h2 { font-size: inherit; font-weight: normal; margin: 0; line-height: inherit}
+.bet-title-s .more a { 
+line-height: 19px;
+height: 22px;
+padding: 0 7px;
+display: block;
+margin-top: 5px;
+display: none
+}
+.countdown { float: right}
+.countdown-s2 {margin: 10px 5px 0 0;}
+.countdown-s2 li { padding: 5px 10px; border-radius:12.5px; font-size: 13px;}
+.countdown b, .countdown-s2 b {
+padding: 0 5px;
+width: 72px;
+height: auto;
+text-align: right;
+font-weight: normal;
+line-height:1.1em;
+}
+.countdown p {
+	margin: 0;
+	position: absolute;
+	text-align: center;
+	z-index: 3;
+	line-height: 44px;
+	left: 6px;
+	width: 90px;
+	padding: 0;
+	font-size: 19px;
+}
+.countdown p b { display:none}
+
+/*lotto colorball*/
+.lotto-option li, .lotto-option-03 li, .lotto-option-b li, .lotto-option li a { width: 100%;}
+.lotto-option li a, .lotto-option-03 li a, .lotto-option-b li a {display: block;position: relative;}
+.lotto-option li a, .lotto-option-b li a { height: 56px}
+.lotto-option li a { padding: 10px 8px;}
+.lotto-option-b li a, .lotto-option.width179 li a { padding: 10px 6px}
+.lotto-option.large-ball li a, .lotto-option.sum li a { padding-right: 0}
+.lotto-option b { left: 8px;}/*For firefox*/
+.lotto-option.width179 b, .lotto-option.large-ball li a b  { left: 10px;}
+.lotto-option.width179 b, .lotto-option.large-ball li a b, .lotto-option.sum li a b{ left: 0px;}
+
+.colorball-s4 li a span { float: left; display: block;}
+.lotto-number-wrap.w50 { width: 50%;}
+.lotto-number-wrap.w33 { width: 33.33333%;}
+.lotto-number-wrap.w20 { width: 20%;}
+
+/*check*/
+.lotto-option .on a:before, .lotto-option-b .on a:before {position: absolute;width: 22px;height: 22px;content: "";z-index: 2;display: block;right: 26px;top: 17px;}
+.lotto-option.width179 .on a:before, .lotto-option-b .on a:before { right: 6px}
+.lotto-option .lotto-combo .on b:before,
+.lotto-bet li.on a:before, .lotto-option-q li.on a:before {
+position: absolute;
+width: 20px;
+height: 20px;
+content: "";
+z-index: 2;
+display: block;
+}
+.lotto-option.width179 .on b:before, .lotto-option-b .on b:before, .lotto-option .lotto-combo .on b:before,
+.lotto-bet li.on a:before, .lotto-option-q li.on a:before {top: -4px;right: -7px;}
+.lotto-option-q li.on a:before { right: -9px;}
+.lotto-option .lotto-combo b {position: relative;left: auto;top: auto;}
+
+/*all sizes of colorball*/
+.lotto-option b, 
+.lotto-number-tiny dd,
+.colorball b,
+.colorball-s5 dd,
+.colorball-s4 b,
+.colorball-s4 dd {
+float: left;
+font-weight: normal;
+text-align: center;
+position: relative;
+}
+.lotto-option b, 
+.lotto-number-tiny dd,
+.colorball-s5 dd,
+.colorball-s4 dd {
+font-family: ArialRoundedMTBold, 'SimHei', sans-serif;
+font-size: 17px;
+}
+.lotto-option-b.colorball-s4 b, .width179.colorball b, .colorball-s3 b { font-family: inherit}
+.lotto-number-tiny dd,
+.colorball b,
+.colorball-s4 dd,
+.colorball-s3 b {
+width:41px;
+line-height: 0;
+}
+.lotto-option b {width: 52px;height: 52px;padding-top: 26px;text-indent: -12px;position: absolute;top: 2px;}
+
+.colorball-s4 b, .colorball-s4 dd { margin: 0;}
+.lotto-record .three span { padding: 0 3px 0 0; font-weight: normal}
+.colorball-s5 dd, .combo-columns .lotto-number-tiny dd {font-weight: normal;min-width: 27px; width:auto; line-height: 27px;margin: 0 2px;margin-top: 6px;font-size: 13px;}
+.colorball-s5 dd:last-child {
+  margin-right: 0;
+  margin-left: 0;
+}
+.colorball-s5 .plus { float: left}
+
+/*two sides ball1-6 width179 b*/
+.lotto-option.width179 b { 
+min-width: 80px;
+width: auto;
+height: 34px;
+line-height: 34px;
+border-radius:17px;
+text-align: center;
+font-size: 15px;
+font-weight: bold;
+padding: 0 5px 0 5px;
+margin-right: 5px;
+text-indent: 0;
+position: relative;
+}
+.lotto-option.width179 .odds { margin: 11px 0 0 5px;}
+
+/*tens/single digit zodiac colorball-s4*/
+.colorball-s4 dd {line-height: 35px;width: 38px; min-height:40px; background: url(../images/Lotto/001/colorball-shadow_blue.png) 0px -3px no-repeat;}
+.lotto-option-b.colorball-s4 b {
+min-width: 52px;
+height: 34px;
+line-height:34px;
+border-radius:17px;
+padding: 0 5px;
+margin-top: 1px;
+font-size: 15px;
+font-weight: bold;
+box-shadow:0 1px 1px #777 inset;
+}
+.lotto-option-combozod.lotto-option-b.colorball-s4 b { }
+.lotto-record li{
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+/*RECORD colorball-s5 dd*/
+.lotto-option .point {line-height: 38px; margin-left:8px;}
+
+/*tab*/
+.gray-box { overflow: hidden\9}
+.lotto-tab, .lotto-tab-s, .lotto-tab-03 { text-align: left; padding-left: 10px;}
+
+.lotto-tab li, .lotto-tab-s li, .lotto-tab-03 li { text-align: center;float: left;}
+.lotto-tab li { width: 20%}
+.box-1 .lotto-tab li, .box-2 .lotto-tab li { width: 18%;}
+.lotto-tab-s li, .lotto-tab.height65 li { width: 14%}
+.lotto-tab-03 li{ width: 16%;}
+.lotto-tab-s.zo-tab li { width: 16%;}
+
+.lotto-tab li a, .lotto-tab-s li a, .lotto-tab-03 li a {
+  display: block;
+  width: 100%;
+  line-height: 18px;
+  margin-top: 11px;
+  padding: 8px 6px 8px 6px;
+  border-radius: 4px 4px 0 0;
+}
+
+.lotto-tab.height65 { padding: 7px 8px 20px 8px; text-align: center}
+.lotto-tab.height65 li { 
+text-align: left;
+padding: 0 0 6px 4px;
+position: relative;
+vertical-align: top;
+}
+.lotto-tab.height65 li a { line-height: 1.3; margin-top: 0!important; padding: 7px 0px 0px 6px}
+.lotto-tab.height65 li.on:before { 
+content: "";
+width: 18px;
+height: 18px;
+right: -5px;
+top: -5px;
+position: absolute;
+display: block;
+margin:0;
+z-index: 1;
+}
+
+.lotto-tab.height65 li a:after, .lotto-tab-03.combo li a:before { 
+content: none!important
+}
+
+
+.lotto-option li { width: 20%; float: left;}
+.lotto-option.width179 li { width: 33.33333%; float: left;}
+.lotto-option.width179.large-ball li, .lotto-option.width179.sum li { width: 25%}
+.lotto-option-b.width269 { width: 100%}
+.lotto-option-b li { width: 50%; float: left;}
+.lotto-option-b.width100, .lotto-option-b.width100 li { width: 100%; float: none}
+
+.lotto-option .odds, .lotto-option-b .odds, .lotto-bet .odds {line-height: 1;padding-left: 12px;margin: 11px 0 0 42px;float: left!important;font-family: 'SimHei', sans-serif;font-size: 15px; font-size: 14px\0; padding-top: 1px\0}
+.lotto-bet li .odds {display: inline-block;margin: 9px 0 0 5px;letter-spacing: -0.5px;padding-left: 13px;}
+.colorball-s4 .odds { margin: 11px 0 0 10px}
+
+.lotto-number-null .odds { background: none!important}
+
+/*lotto-record*/
+.lotto-record{ margin-top:10px;}
+.lotto-record ul { display: block}
+.lotto-record li { float: left}
+.lotto-record .report-tit, .lotto-record .content { text-align: center; border-bottom:1px solid}
+.lotto-record .content { overflow: hidden; border-radius: 0 0 4px 4px;}
+.lotto-record .bet-title-s, .lotto-record104 .bet-title-s { display: none}
+.lotto-record .report-tit li, .lotto-record .content li,
+.record104 th, .record104 td {
+  height: 37px;
+  padding: 10px 0;
+}
+.lotto-record .content li { line-height: 37px; padding: 0; white-space: nowrap}
+.lotto-record .content li dd:first-child { margin-left: 0}
+.lotto-record .content .three { padding: 0 0 0 6px}
+.lotto-record .mid { display: none}
+
+/*no-zodiac CN NZL US no-zodiac&sum DEU*/
+.record-00009 .four, 
+.record-00011 .four, 
+.record-00017 .four,
+.record-00012 .four, 
+.record-00012 .five, 
+.record-00012 .six { 
+display: none!important}
+
+/*lotto-rule*/
+.lotto-rule { min-height: 257px; display: none}
+.lotto-rule p { padding: 9px 12px; margin: 0; line-height: 17px}
+.lotto-rule .content { display: table; width: 100%}
+.lotto-rule .content li, .lotto-rule .content li ul {
+width: 100%}
+.lotto-rule .content li { display: table-row; vertical-align: middle}
+.lotto-rule b, .lotto-rule .content li div {
+width: 9.95%;
+text-indent: 0;
+text-align: center;
+display: table-cell;
+vertical-align: middle;
+}
+.lotto-rule .content li div {
+text-align: left;
+width: auto;
+padding: 0 12px;}
+.lotto-rule .content li div p {
+line-height: 19px;
+padding: 0;
+margin: 8px 0;
+}
+.lotto-rule .content li ul { width: 90%; float: left}
+.lotto-rule .content li ul li {
+margin-bottom: 3px;
+width: 100%;
+line-height: 16px}
+
+/*record104*/
+.lotto-record104 { padding: 10px;}
+.record104 { font-size: 13px;}
+.record104 td { text-align: center}
+.record104 th { width: 15%}
+.record104 .one { width: 25%}
+
+/*lotto-right---lotto-bet*/
+.lotto-right {position: absolute;top: 44px;right:0 ;width: 286px;padding: 24px 8px;z-index: 0;}
+.lotto-right .lotto-right-inner:last-child { margin: 0}
+.lotto-right .game-title {display: none;}
+.lotto-bet li {float: left;width: 50%;padding: 2px 2.5px;border: none;}
+.lotto-bet li.nodata { height: 46px}
+.lotto-bet li a {font-weight: normal;text-align: center;display: block;white-space: nowrap;position: relative;height: 33px;padding: 0 0 0 7px;}
+.lotto-bet li a b{
+min-width: 33px; 
+font-weight: normal;
+padding: 0 3px;
+letter-spacing: -0.5px;
+position: static;
+height: 33px;
+line-height: 33px;
+}
+
+/*lotto-option-q*/
+.lotto-option-q li {
+  text-align: center;
+  float: left;
+  margin: 2.5px;
+}
+.lotto-option-q li a {
+  display: block;
+  position: relative;
+  width: 38px;
+  line-height: 30px;
+  text-align: center;
+}
+.lotto-option-q li.null { height: 39px; display: none}
+_:-moz-tree-row(hover), .lotto-option-q li { }
+
+/*lotto-COMBO*/
+.lotto-option-combo .lotto-number-color { padding: 0;}
+.lotto-option-combo .lotto-number-wrap { padding: 8px}
+.lotto-option-combo { position: relative; width: 100%!important;}
+.lotto-option-combo .lotto-number-color {width: 65%;position: absolute;left: 0;top: 0;z-index: 1;height: 216px;padding: 6px 8px 1px;}
+.lotto-option-combo .lotto-number-wrap {width: 100%;float: left;position: relative;}
+.combo-columns-wrap {margin-left: 65%; min-height: 206px;}
+
+.lotto-combo {width: 10%;float: left;padding: 0 1px;}
+.lotto-combo li {position: relative;float: none;height: 40px;width: 100%;padding: 2px 0;margin: 2px 0;}
+.lotto-combo li:last-child { margin-bottom: 0}
+.lotto-combo li .check { top: -8px}
+.lotto-option .lotto-combo b {
+    float: none;
+    display: block;
+    margin: 3px auto 0;
+    width: 30px;
+    height: 30px;
+    padding-top: 15px;
+    text-indent: -1px;
+    font-size: 14px;
+    background: url(../images/Lotto/001/colorball_blue_30.png) 0 0 no-repeat;
+}
+
+.combo-columns-wrap .btn-wrap {width: 100%;margin-top: 2px;display: inline-block;}
+.combo-columns { margin-bottom: 5px; vertical-align: top;}
+.combo-columns li, .combo-columns2 li {width: 100%}
+.combo-columns .th {line-height: 28px;height: 28px;text-align: center;margin-top: 2px;padding: 0;border: 1px solid transparent!important;}
+.combo-columns .lotto-number li, .combo-columns2 .lotto-number li { margin: 0px 2px 7px}
+_:-moz-tree-row(hover), .lotto-number li { padding: 10px 9px}
+
+.combo-columns .lotto-number-tiny dd {margin: 0 4px 8px 4px;}
+.lotto-number-tiny dd:before, .colorball-s4 dd:before, .colorball-s5 dd:before { display: none}
+
+.combo-columns li.th:hover { padding: 0}
+.combo-columns .td {
+padding: 11px 0 8px 4px;
+height: 35px;
+line-height: 35px;	
+}
+/*combo-random*/
+.lotto-option .combo-columns2 > li { float: none}
+.combo-columns2 .td {height: 130px;}
+/*combo-columns*/
+.combo-columns1, .combo-columns3 { width: 49%; padding: 0 1px;}
+.combo-columns1:nth-child(2n+1), .combo-columns3 { float: left}
+.combo-columns1:nth-child(2n) { float: right}
+.combo-columns1 .td, .combo-columns3 .td {padding: 11px 0 0 4px;height: 51px;}
+
+/*combo-bile drag*/
+.combo-columns3 { width: 100%; float:left;}
+
+.combo-columns-wrap a.submit, .combo-columns-wrap a.cancel { 
+width: 49%;
+text-align: center;
+letter-spacing: 3px;
+overflow: hidden;
+margin: 0;
+padding: 7px 5px;
+}
+.combo-columns-wrap a.submit { float: left}
+.combo-columns-wrap a.cancel { float: right}
+
+/*combo zodiac*/
+.lotto-option-combozod { width: 67%; float: left; border-right: 1px solid}
+.combo-columns-wrap-zod { padding: 8px; margin-left: 0!important; width: 33%; float: right}
+.combo-columns-wrap-zod .combo-columns2 .td { height: 129px;}
+.combo-columns-wrap-zod .combo-columns3 .td { padding: 11px 0 0 4px; height: 51px;}
+.lotto-tab.height65-zod {text-align: left}
+.lotto-tab.height65-zod li { padding-bottom: 0}
+.lotto-tab.height65-zod li a { padding: 13px 0px 13px 6px}
+
+.bet-title h1#h1_SourceTitle { margin: 0 0 0 90px}
+.lotto-right02{float: left; display: block; width:100%}
+.lotto-right03{float: left; display: block; width:100%}
+.width100 .right{ float:left !Important; margin-left:10px;}
+
+
+/*FOR color*/
+.color-wrapper .lotto-record, .color-wrapper .lotto-rule { width: 100%!important; padding-right: 0!important}
+
+.box-3  ,.box-4{ float:left}
+.box-1 .lotto-option-b, .box-2 .lotto-option-b, .zodiac-wrapper .lotto-option-b { margin-bottom: -3px\9}
+
+
+/*------------------border style----------------------*/
+/*cursor*/
+.lotto-tab.height65 li, .bet-title-s .more a,
+.lotto-option li:hover, .lotto-option-b li:hover,
+.lotto-bet li:hover, .lotto-combo li b,
+.combo-columns .td:hover,
+.combo-columns .lotto-number-tiny dd:hover, .lotto-number-combo li:hover { 
+cursor: pointer;}
+.lotto-number-null, .nodata { cursor: default!important}
+.lotto-option .lotto-number-null > * { height: 56px; margin: 0; padding: 0}
+
+/*tab*/
+.lotto-tab.height65 { border-bottom: none}
+.lotto-tab.height65 li { 
+border-bottom: none!important; 
+width: 15.9%;
+margin: 0 1px;
+display: inline-block;
+float: none;
+}
+.lotto-tab.height65 li:last-child { border: none}
+.lotto-tab.height65 li a { background: none!important; border: none; word-break: break-word;}
+
+/*lotto-option*/
+.lotto-right-inner .lotto-option{ border-radius: 0 0 4px 4px; /*overflow: hidden;*/}
+.lotto-option.sum li:nth-child(5), .lotto-option.sum li:nth-child(5) a { border-radius: 0 0 0 4px}
+.lotto-option li, .lotto-option-03 li, .lotto-option-b li, .lotto-record .content li, 
+.record104 th, .record104 td, .lotto-option.width179 li:nth-last-child(-n+5), 
+.lotto-option.width179.large-ball li:nth-last-child(-n+4), .lotto-option.width179.sum li:nth-last-child(-n+4) {
+	border-bottom: 1px solid;
+}
+.lotto-option.width179 li:nth-last-child(-n+3),
+.lotto-option-b li:nth-last-child(-n+2),
+.record104 tr:last-of-type td,
+.lotto-bet li:nth-last-child(-n+2) { 
+border-bottom: none} /*DO NOT ADD Two Side rule in here (US NY has only four section)*/
+.lotto-option-b.width100 li:nth-last-child(2) { 
+border-bottom: 1px solid;
+}
+.lotto-option.width179.large-ball li:nth-of-type(4n),
+.lotto-option.width179.sum li:nth-of-type(4n) { 
+border-right: none!important}
+
+/*lotto-bet*/
+.combo-wrapper .lotto-bet:nth-of-type(2) { border-top: none}
+
+/*combo*/
+.lotto-option-combo .lotto-number-wrap, .lotto-option-combo .lotto-number-wrap:hover { cursor: default!important}
+.lotto-option-combo .lotto-combo li {border: none!important;}
+.lotto-option-combo li.on, .lotto-option-combo li:hover { }
+.combo-columns .td {border: 1px solid transparent!important;border-top: none!important;}
+
+/*lotto-rule*/
+.lotto-rule p, .lotto-rule b, .lotto-rule .content li div { border-bottom: 1px solid}
+.lotto-rule .content li li, .lotto-rule .content li div p { border-bottom: none}
+.lotto-rule .content ul, .lotto-rule .content div { border-left: 1px solid}
+
+/*record*/
+.lotto-record .content ul:last-child li { border-bottom: none}
+
+
+.wrapper { border-radius: 4px; overflow: hidden}
+.betcontent { overflow: hidden; padding: 0 10px; width: 100%;}
+.face{float: left; width: 100%;}
+.lotto-number-null{ height: 57px;}
+
+/* ------------ scrollbar ------------ */
+
+.mCustomScrollBox {
+    padding-right: 10px !important;
+}
+.left-aside .mCustomScrollBox {
+    padding-right: 0 !important;
+}
+.mCSB_inside > .mCSB_container {
+    margin-right: 0;
+}
+
+/* ------------ right-aside ------------ */
+.bet-header div { float: left;}
+.right-aside .bet-area-wrap { padding-left: 10px;}
+.bet-area .receipt .bet-header .name b { word-break: break-word; color: #333!important}
+
+/* ------------ bet-against ------------ */
+.bet-against-wrap .td, .bet-against-wrap .th { cursor: default!important}
+.bet-against-wrap .td { height: 137px!important; padding: 4px 4px 0!important}
+.bet-against {height: 103px;overflow: hidden;overflow-y: scroll;line-height: normal;}
+.bet-against li {padding: 5px 5px 0;cursor: pointer;border-bottom: 1px solid;}
+.bet-against li:last-child { border-bottom: none}
+.bet-against li span { }
+.bet-against .ba-numbers li {
+    float: left;
+    width: auto;
+    height: auto;
+    line-height: normal;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0 8px 0 0;
+}
+.bet-against .odds {margin: 0 0 0 8px; padding: 0; display: inline-block; background: none!important; position: relative; top: -1px;}
+.bet-against dd { display: inline-block; margin-right: 4px; font-family: Arial;position: relative;top: -1px;}
+.bet-against a.ba-del {
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	float: right;
+	border-radius: 50%!important;
+	border: none;
+	box-shadow: none;
+	color: #333;
+	position: relative;
+	top: -2px;
+}
+
+.ba-bottom {line-height: normal;border-top: 1px solid;}
+.ba-bottom div {float: right; padding: 5px;}
+.ba-bottom .numbers {margin: 0 10px; font-size: 15px; font-weight: bold}
+
+

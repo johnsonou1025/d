@@ -1,0 +1,1455 @@
+@charset "utf-8";
+.quick-bet,
+.top-bar,
+.top-bar {
+    color: #707070;
+}
+
+
+/*------------------------------universe color--------------------------*/
+
+.mm-opened {
+    background: #fff;
+}
+
+body,
+.main-content {
+    color: #414141;
+}
+
+.lotto-option a,
+a,
+a:visited,
+a:active,
+a:hover {
+    color: #383838;
+}
+
+
+/*leftmenu*/
+
+.leftmenu {
+    background: url(../Images/leftmenu_bg_002.png) 14px 30px no-repeat;
+}
+
+.leftmenu a {
+    color: #333;
+}
+
+.leftmenu a:hover,
+.leftmenu a:active,
+.leftmenu .active a,
+.leftmenu li.option-on a {
+    color: #fda24a;
+}
+
+.leftmenu > li > a:before {
+    background: url(../Images/uni_icon_002.png) -44px 0 no-repeat
+}
+
+.leftmenu > li:hover > a:before,
+.leftmenu > li:active > a:before {
+    background: url(../Images/uni_icon_002.png) -44px 0 no-repeat
+}
+
+.leftmenu > li.txt-gray > a:before {
+    background: url(../Images/uni_icon_002.png) -44px -39px no-repeat;
+}
+
+.leftmenu .txt-gray a {
+    color: #8e929c !important
+}
+
+.leftmenu .count {
+    background: #fcf2dc;
+    border-radius: 15px;
+    color: #7a7a7a;
+    box-shadow: 1px 1px 0 #aaa;
+}
+
+.leftmenu .txt-gray .count {
+    background: #bdbdbd;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 0 rgba(0, 0, 0, 0.3);
+    color: #8e929c;
+}
+
+.leftmenu .icon-new {
+    background: url(../Images/Lotto/002/new_icon_002.gif) no-repeat -2px -2px;
+}
+
+.leftmenu > li#menuid_00020 > a:before {
+    background-position: 0 -95px
+}
+
+.leftmenu > li#menuid_00021 > a:before,
+.leftmenu > li > a#a_menu_main_00034:before {
+    background-position: 0 -119px
+}
+
+.leftmenu > li > a#a_menu_main_00035:before {
+    background-position: 0 -167px
+}
+
+
+/* RIGHT ASIDE */
+
+.quick-bet a {
+    color: #313131;
+    background: url(../Images/quick-bet_002.png) right top no-repeat;
+}
+
+.quick-bet a:hover {
+    background: url(../Images/quick-bet_002.png) right -34px no-repeat;
+}
+
+.quick-bet a.active {
+    background: url(../Images/quick-bet_002.png) right -68px no-repeat;
+}
+
+.quick-bet a.active:hover {
+    background: url(../Images/quick-bet_002.png) right -102px no-repeat;
+}
+
+.quick-wrap {
+    background: none!important
+}
+
+.quick-wrap a.btn-quick {
+    border: 1px solid #ddd;
+    background: #fffaee;
+    color: #777;
+}
+.quick-box, .quick-box2{
+    background: #fff;
+    color: #333;
+    -webkit-box-shadow: 0 1px 1px #c2cbd5 !important;
+    box-shadow: 0px 1px 1px #c2cbd5 !important;
+    border: 1px solid #ddd !important;
+}
+
+.quick-wrap a.btn-quick:hover,
+.quick-wrap a.btn-quick:active {
+    background: #777;
+    color: #fff;
+}
+
+.quick-box2 .input-edit {
+        border: 1px solid #ddd;
+    background: #fffaee;
+    color: #777;
+}
+
+.quick-box2 .input-edit:hover,
+.quick-box2 .input-edit:focus {
+    background: #777!important;
+    color: #fff!important;
+}
+
+.quick-box .form1 .input:hover,
+.quick-box .form1 .input:focus {
+    background: #777;
+    color: #fff;
+}
+
+.quick-box a.edit,
+.quick-box2 a.finish-edit {
+    background: #f9ae0c;
+    border-radius: 3px;
+    color: #fff;
+}
+.quick-box2 a.finish-edit {
+    border-bottom: 3px solid #e49e42;
+}
+
+.quick-box a.edit:hover,
+.quick-box a.edit:active,
+.quick-box2 a.finish-edit:hover,
+.quick-box2 a.finish-edit:active {
+    background: #e49e42;
+}
+
+.oneplatform .account-area {
+    background: none
+}
+
+.account-bar {
+    border-radius: 6px 6px 0 0;
+    border-bottom: 1px solid #1B1E25;
+}
+
+.icon-member {
+    background: url(../Images/uni_icon_002.png) 0 0 no-repeat;
+}
+
+.report-account .account-bar .icon-member {
+    background: url(../Images/icon_acc_002.png) left top no-repeat!important
+}
+
+.betslip {
+    border-radius: 6px;
+    color: #707070;
+}
+
+.receipt-header {
+    border: 1px solid #292929;
+    background-color: #5D5D5D;
+    border-radius: 2px;
+    color: #fff;
+}
+
+.betslip .bet-content,
+.betslip .bet-type,
+.betslip .bet-note li {
+    border-bottom: 1px solid #4d4d4d;
+}
+
+.parlay-area li {
+    border-bottom: 1px solid #3E3E3E;
+}
+
+.betslip .bet-type,
+.betslip .bet-note li,
+.betslip-option {
+    padding: 6px 0;
+}
+
+.betslip .odds {
+    background-color: #616161;
+    margin: 6px 0;
+}
+
+.betslip input,
+.parlay-area input {
+    background: none;
+    border: 1px solid #949494;
+    border-radius: 2px;
+}
+
+.betslip input:hover,
+.betslip input:focus {
+    background-color: #777;
+}
+
+.unwork {
+    color: #8E8E8E
+}
+
+
+/*top-bar*/
+
+.news_box span {
+    background: url(../Images/icon_dot_002.png) left 17px no-repeat
+}
+
+.top-bar .news_box span:hover,
+.top-bar .news_box span:active {
+    color: #f9ae0c;
+}
+
+.top-bar .btn-rule {
+    background: url(../Images/uni_icon_002.png) -134px 2px no-repeat;
+}
+
+.top-bar .btn-rule:hover,
+.top-bar .btn-rule:active {
+    background: url(../Images/uni_icon_002.png) -134px -31px no-repeat
+}
+
+.report-topbar a.btn-g {
+    background: url(../Images/uni_icon_002.png) -518px 2px no-repeat;
+}
+
+.report-topbar a.btn-g:hover,
+.report-topbar a.btn-g:active {
+    background: url(../Images/uni_icon_002.png) -518px -31px no-repeat;
+}
+
+
+/*news_lightbox*/
+
+.news_lightbox {
+    background: #fff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.54);
+}
+
+.news_lightbox button.close {
+    background: url(../Images/uni_icon_002.png) -948px -2px no-repeat;
+}
+
+.news_lightbox button.close:hover,
+.news_lightbox button.close:active {
+    background: url(../Images/uni_icon_002.png) -985px -2px no-repeat;
+}
+
+.news_lightbox h2 {
+    background: url(../Images/Keno/002/bet-title_010.png) repeat-x 0 0;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    color: #333;
+    border-radius: 6px 6px 0 0;
+    line-height: 28px;
+}
+
+.news_lightbox .article li {
+    border-bottom: 1px solid #D6D6D6;
+}
+
+.news_lightbox .page-wrap {
+    border-top: 1px solid #D6D6D6;
+    margin-left: 0;
+}
+
+.news_lightbox .page-wrap li {
+    background: #D6D8D9;
+    border-radius: 50%;
+}
+
+.news_lightbox .page-wrap li:hover {
+    background: #757576;
+}
+
+.news_lightbox .page-wrap li.active {
+    background: #FF9300;
+}
+
+.betcontent .blockOverlay {
+    opacity: 0.8!important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"!important;
+    background-color: #616161!important;
+}
+
+#div_betcontent .blockOverlay {
+    top: 44px !important;
+}
+
+
+/*---------------------------END universe color--------------------------*/
+
+
+/*scrollbar*/
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: #797979!important;
+    opacity: .5;
+    right: 1px;
+}
+
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background-color: #8C8C8C!important;
+}
+
+
+/*slimScrollBar*/
+
+.slimScrollBar {
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    background: #797979!important;
+    opacity: .5!important;
+}
+
+.slimScrollBar:hover,
+.slimScrollBar:active {
+    background: #8C8C8C!important
+}
+
+.slimScrollRail {
+    background: transparent!important
+}
+
+
+/*------------------- Betslip status -------------------*/
+
+.odds-1 {
+    background: #E45D63
+}
+
+.odds-1.bet-content li {
+    padding-left: 4px;
+}
+
+.odds-1 .odds {
+    margin: 2px 2px 0 0;
+}
+
+.betslip .odds-2 {
+    background: #ec3e51;
+}
+
+.odds-4 .betslip {
+    background-color: #4D4D4D;
+    color: #6F6F6F;
+}
+
+.odds-4 .bet-content,
+.odds-4 .bet-type,
+.odds-4 .bet-note li {
+    border-bottom: 1px solid #5F5F5F;
+}
+
+.odds-4 .odds-1 {
+    border-bottom: none;
+    background-color: #5A5A5A;
+    color: #7B7B7B;
+}
+
+.odds-4 .odds {
+    background: #484848;
+    color: #6F6F6F;
+}
+
+.odds-4 .odds-2 {
+    background: #3C3C3C;
+    color: #6D7175;
+}
+
+.odds-4 .odds-1 .odds {
+    margin: 2px 2px 0 0;
+}
+
+.odds-4 .odds-1 .odds-2 {
+    background: #43464A;
+    color: #777777;
+}
+
+.odds-4 .betslip-option a,
+.odds-4 .betslip-option a:hover {
+    color: #6F6F6F;
+    border: 1px solid #4D4D4D;
+    background: none;
+}
+
+.odds-4 a,
+.odds-4 a:hover,
+.odds-4 input {
+    cursor: default
+}
+
+.odds-4 .betslip-option .on,
+.odds-4 .betslip-option .on:hover {
+    color: #7B7B7B;
+}
+
+.odds-4 .checkboxes {
+    background-color: #5A5A5A;
+    border: 1px solid #444444;
+}
+
+.odds-4 .checkboxes p {
+    color: #7B7B7B
+}
+
+.odds-4 input,
+.odds-4 input:hover,
+.odds-4 input:focus {
+    background-color: #484848;
+    border: 1px solid #484848;
+    color: #6F6F6F;
+}
+
+
+/*------------------- report -------------------*/
+
+
+/*Calendar*/
+
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.ui-datepicker .ui-datepicker-prev-hover,
+.ui-datepicker .ui-datepicker-next-hover {
+    top: 3px;
+}
+
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-prev-hover {
+    left: 2px;
+}
+
+.ui-datepicker .ui-datepicker-next,
+.ui-datepicker .ui-datepicker-next-hover {
+    right: 2px;
+}
+
+.ui-datepicker .ui-datepicker-header {
+    height: auto!important
+}
+
+.ui-widget-header {
+    border: 1px solid #333333;
+    background: #333;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+    color: #696969;
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-default.ui-state-highlight {
+    border: 1px solid #EF8116;
+    background: #FFE7D3;
+    color: #EF8116;
+}
+
+.ui-widget-content .ui-state-hover,
+.ui-widget-content .ui-state-focus,
+.ui-state-highlight.ui-state-active:hover {
+    border: 1px solid #EF8116;
+    font-weight: bold;
+    color: #EF8116;
+    outline: none;
+}
+
+.ui-datepicker-header .ui-state-hover,
+.ui-datepicker-header .ui-state-focus {
+    border: 1px solid #ddd;
+    color: #fff;
+    background: none;
+    outline: none;
+}
+
+.ui-slider-handle.ui-state-hover,
+.ui-slider-handle.ui-state-focus {
+    background: #50545A;
+    border: 1px solid #50545A;
+}
+
+.ui-slider .ui-widget-header {
+    background: #EF8116;
+}
+
+.ui-state-default.ui-state-active,
+.ui-widget-content .ui-state-default.ui-state-active,
+.ui-widget-content .ui-datepicker-close.ui-state-hover {
+    border: 1px solid #EF8116;
+    background: #EF8116;
+    color: #fff;
+}
+
+
+/*------------------customization 002----------------------*/
+
+
+/*------------------ MAIN ----------------------*/
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.slimScrollBar {
+    background-color: #000!important;
+    opacity: 0.2!important;
+}
+
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar,
+.slimScrollBar:hover,
+.slimScrollBar:active {
+    background-color: #000!important;
+    opacity: 0.4!important;
+}
+
+.account-bar {
+    border: 1px solid #dcdadb;
+    color: #707070;
+    background: #fff;
+  /*  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+    background: url(../Images/Keno/002/bet-title_004.png) repeat-x 0 0;
+}
+
+.drop-down-mybet {
+    border-left: 1px solid #ff9e00;
+}
+
+.drop-down-mybet li a {
+    background: url(../Images/icon_mybet2_002.png) 8px center no-repeat;
+    color: #525252;
+    border-radius: 0 0 6px 0;
+    border: 1px solid #dcdadb;
+    border-top: none;
+}
+
+.drop-down-mybet li a:hover {
+    background: url(../Images/icon_mybet2_hover_002.png) 8px center no-repeat;
+    color: #ef8116;
+}
+
+.drop-down-mybet li a.active,
+.drop-down-mybet li a.active:hover {
+    background: url(../Images/icon_mybet2_active_002.png) 0 0 no-repeat;
+    color: #fff;
+}
+
+.bet-form .betslip-title {
+    display: table;
+}
+
+.list-01 .betslip-title a {
+    border-radius: 0 0 0 6px;
+    background: url(../Images/icon_mybet1_002.png) 8px center no-repeat;
+    padding-left: 38px;
+    color: #525252;
+}
+
+.list-01 .betslip-title a:hover {
+    background: url(../Images/icon_mybet1_hover_002.png) 8px center no-repeat;
+    color: #ef8116;
+}
+
+.list-01 .betslip-title a.active,
+.list-01 .betslip-title a.active:hover {
+    background: url(../Images/icon_mybet1_active_002.png) 0 -4px no-repeat;
+    color: #fff !important;
+}
+
+.bet-form .btn-black a {
+    color: #707070;
+    background: #eff2f7;
+   /* background: -moz-linear-gradient(top, #ffffff 0.5%, #e9e9e9 7%, #ffffff 99%);
+    background: -webkit-linear-gradient(top, #ffffff 0.5%, #e9e9e9 7%, #ffffff 99%);
+    background: linear-gradient(to bottom, #ffffff 0.5%, #e9e9e9 7%, #ffffff 99%);*/
+    border: 2px solid #707070;
+}
+
+.bet-form .btn-black a:hover,
+.bet-form .btn-black a:active {
+    background: #f9ae0c;
+    color: #fff;
+    box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.3)
+}
+
+.betslip,
+.aside-title-account,
+.right-aside section.right-title,
+.drop-down-list {
+    background: #FFFFFF;
+    /*box-shadow: inset 0 1px 0 0 #FFF, 0 1px 2px #000;*/
+    -webkit-box-shadow: 0 1px 1px #c2cbd5;
+    box-shadow:0px 1px 1px #c2cbd5;
+}
+
+.aside-title-account {
+    border-radius: 0 0 6px 6px;
+}
+
+.mix-title {
+    background: none
+}
+
+.bet-area .betslip.odds-4 {
+    background: url(../Images/Lotto/002/white11_002.png) repeat!important;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border-color: #383838;
+}
+
+.betslip.odds-4 form {
+    border-bottom: 1px solid #797979;
+}
+
+.betslip.odds-4 > div:last-child {
+    background: none;
+}
+
+.drop-down-mybet ul,
+.drop-down-mybet ul li a {
+    border-color: #2D2D2D;
+}
+
+.drop-down-mybet ul {
+    background: #ffffff;
+}
+
+.drop-down-mybet ul li a {
+    border-radius: 0;
+    color: #525252
+}
+
+.drop-down-mybet ul li a:hover {
+    background: #fff;
+}
+
+.bet-area button.close {
+    background: url(../Images/uni_icon_002.png) -68px 0 no-repeat;
+}
+
+.bet-area button.close:hover,
+.bet-area button.close:focus {
+    background: url(../Images/uni_icon_002.png) -68px -28px no-repeat;
+}
+
+.betslip form {
+    border-bottom: 1px solid #cccccc;
+    color: #707070;
+}
+
+.bet-area input {
+    background: #fffaee;
+    border: 1px solid #ddd ;
+    color: #777777!important;
+    padding: 1px 5px;
+    height: 18px;
+}
+
+.bet-area input:hover,
+.bet-area input:focus {
+    /*border: 1px solid #fff;*/
+    background: #777;
+    color: #fff!important;
+}
+
+.bet-area a.del-all {
+    color: #999999;
+}
+
+.bet-area a.del-all:hover,
+.bet-area a.del-all:active {
+    color: #FF9E00;
+}
+
+.bet-area a:hover,
+.bet-area a:active,
+.check-odds label:hover,
+.check-odds input[type="checkbox"]:hover + label,
+.check-odds input[type="checkbox"]:checked + label,
+.label_check:hover {
+    color: #FF9E00;
+}
+
+.right-aside section.right-title {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+a.btn-j,
+a.section-close,
+.w-area05 a,
+#a_continute {
+    border-bottom: 3px solid #e49e42 !important;
+    background: #f9ae0c;
+    border-radius: 3px;
+    color: #fff;
+}
+
+a.btn-j:hover,
+a.btn-j:active,
+a.section-close:hover,
+a.section-close:active,
+.w-area05 a:hover,
+.w-area05 a:active,
+#a_continute:hover,
+#a_continute:active {
+    background: #e49e42;
+}
+
+.right-aside .total a#a_betsKeepOption,
+#a_reserve {
+   border-bottom: 3px solid #777;
+    background: #888;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.right-aside .total a#a_betsKeepOption:hover,
+.right-aside .total a#a_betsKeepOption:active,
+#a_reserve:hover,
+#a_reserve:active {
+    background: #777;
+}
+
+.quickbet-area-wrap .btn-black a {
+    background: #cd161e;
+    border: 1px solid #cd161e;
+    color: #FFF;
+}
+
+.quickbet-area-wrap .btn-black a:hover,
+.quickbet-area-wrap .btn-black a:active {
+    background: #80060b;
+}
+
+.quick-box-tip {
+    background: url(../Images/Lotto/002/black18_002.png) repeat;
+    color: #ffffff;
+}
+
+.alert-box span {
+    color: #fda24a;
+    background: url(../Images/icon_alert_002.png) 3px 10px no-repeat;
+}
+
+.mix-title {
+    background: none!important
+}
+
+
+/*bet-select*/
+
+.bet-select input {
+    border-radius: 0;
+    padding: 0;
+}
+
+.label_check input {
+    background: url(../Images/uni_icon_002.png) no-repeat -269px 0;
+    border: none;
+    padding: 0;
+}
+
+.label_check input:hover,
+.label_check input:focus {
+    border: none!important
+}
+
+.label_check.c_on {
+    color: #FF9E00;
+}
+
+.label_check.c_on input,
+.label_check input:hover,
+.label_check input:focus {
+    background: url(../Images/uni_icon_002.png) no-repeat -269px -19px;
+}
+
+.checkboxes {
+    background: #fff;
+}
+
+.bet-select input {
+    background: #fff;
+    border: 1px solid #ffffff;
+    border-left: 1px solid #e1e1e1;
+    border-right: 1px solid #e1e1e1;
+    color: #545454;
+}
+
+.bet-select input:hover,
+.bet-select input:focus {
+    background: #FF9E00;
+    border: 1px solid #FF9E00;
+    border-left: 1px solid #e1e1e1;
+    border-right: 1px solid #e1e1e1;
+}
+
+.bet-select .less a {
+    background: #fff url(../images/keno/002/keno_icon_002.png) -194px -1px no-repeat;
+    border-radius: 3px 0 0 3px;
+    border: none;
+}
+
+.bet-select .less a:hover {
+    background: #fff url(../images/keno/002/keno_icon_002.png) -194px -39px no-repeat;
+    border-radius: 3px 0 0 3px;
+}
+
+.bet-select .more a {
+    background: #fff url(../images/keno/002/keno_icon_002.png) -211px -1px no-repeat;
+    border-radius: 0 3px 3px 0;
+    border: none;
+}
+
+.bet-select .more a:hover {
+    background: #fff url(../images/keno/002/keno_icon_002.png) -211px -39px no-repeat;
+    border-radius: 0 3px 3px 0;
+}
+
+
+/*bet-status*/
+
+.odds-1 hgroup,
+.bgred {
+    background-color: #fcf2dc!important;
+}
+
+.odds-1,
+.odds-3.name,
+.bgred {
+    border-color: #FF9E00!important;
+}
+
+.odds-2,
+.oddcheck .yellow {
+    color: #fff!important;
+    background-color: #FF9E00!important;
+}
+
+.odds-1,
+.odds-1 .name,
+.odds-3.name,
+.bgred,
+.bgred .name,
+.oddcheck header {
+    color: #FF9E00!important;
+}
+
+.odds-4 .bet-header,
+.odds-4 .name,
+.odds-4 .type,
+.odds-4 .backmoney,
+.odds-4 .odds-3.name,
+.odds-4 a,
+.odds-4,
+.odds-4 .yellow,
+.odds-4 .label_check,
+.odds-4 .odds-1 hgroup,
+.odds-4 .b-highlight,
+.odds-4 .checkboxes label,
+.odds-4 .label_check,
+.odds-4 .label_check.c_on {
+    color: #8e929c;
+}
+
+.odds-4 input,
+.odds-4 .odds-2,
+.odds-4 .oddcheck .yellow {
+    color: #AFAFAF !important;
+    background: #717171!important;
+    border: 1px solid #525252;
+    background: rgba(255, 255, 255, .2)!important;
+}
+
+.odds-4 a:hover,
+.odds-4 a:active {
+    color: #989898 !important;
+}
+
+.odds-4 input:hover,
+.odds-4 input:focus,
+.odds-4 input:hover,
+.odds-4 nput:focus,
+.odds-4 input:active {
+    background: #717171;
+    border: 1px solid #525252;
+}
+
+
+/*rules*/
+
+.rules {
+    border: 1px solid #2F2F2F;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.rules_top {
+    color: #FFF;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    background: url(../Images/Keno/002/bet-title_008.png) repeat-x 0 0;
+}
+
+.rules_top span {
+    color: #333;
+    font-size: 16px;
+    margin-left: 1em;
+}
+
+.rules_menu > li {
+    /*width: auto;
+min-width: 170px;
+display: inline-block;
+padding-right: 36px;*/
+    border-radius: 5px;
+    border: 1px solid #fcb200;
+    color: #fff;
+    background: url(../Images/keno/002/button_bg9.png) repeat-x 0 0;
+}
+
+.rules_menu > li:hover {
+    background: #fcb200;
+    box-shadow: inset 0px 1px 0 #ffe0bc, inset 0 -1px 0 #ca852a;
+}
+
+.rules_menu > li ul {
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    background: #fff;
+    border: 1px solid #fff;
+}
+
+.rules_menu > li ul li {
+    color: #666;
+    background: none;
+    /*border-top: 1px solid #8b8d90;*/
+}
+
+.rules_menu > li ul li:hover {
+    background: none;
+    color: #FF9300;
+}
+
+.rules_menu > li ul li:first-child {
+    border-top: none!important
+}
+
+.rules_arrow {
+    background: url(../Images/uni_icon_002.png) no-repeat -600px -3px;
+    position: relative;
+    top: 2px;
+}
+
+.rules_menu li:hover .rules_arrow {
+    background: url(../Images/uni_icon_002.png) no-repeat -600px -38px;
+}
+
+ul.rules_list > li > h3 {
+    color: #FF9300;
+}
+
+.rules_top:before,
+.pop_open {
+    background: url(../Images/Lotto/002/icon_002.png) no-repeat;
+}
+
+.rules_top:before {
+    background-position: -25px 0;
+    display: none
+}
+
+.rules_tb th,
+.rules_tb td {
+    border: 1px solid #aaa;
+}
+
+.rules_tb th {
+    background: #aaa;
+    color: #fff;
+}
+
+.pop_close {
+    background: url(../Images/uni_icon_002.png) -948px -2px no-repeat;
+    top: 14px;
+}
+
+.pop_close:hover,
+.pop_close:active {
+    background: url(../Images/uni_icon_002.png) -985px -2px no-repeat;
+}
+
+
+/*quickbet box*/
+
+.quick,
+.bests,
+.playtable,
+.howtoplay,
+.betcontent .total {}
+
+a.lb-btn,
+.bests .bests-btn a {
+   border-bottom: 3px solid #e49e42;
+    background: #f9ae0c;
+    border-radius: 3px;
+    color: #fff;
+}
+
+a.lb-btn:hover,
+a.lb-btn:active,
+.bests .bests-btn a:hover,
+.bests .bests-btn a:active {
+    background: #e49e42;
+}
+
+/*.playtable .total-btns .lb-btn,
+.howtoplay .lb-btn {
+    background: #6d6c6c;
+    background: -moz-linear-gradient(top, #9c9c9c 0%, #6d6c6c 88%, #848484 100%);
+    background: -webkit-linear-gradient(top, #9c9c9c 0%, #6d6c6c 88%, #848484 100%);
+    background: linear-gradient(to bottom, #9c9c9c 0%, #6d6c6c 88%, #848484 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 1px 0 rgba(0, 0, 0, 0.5);
+}*/
+
+.playtable .total-btns .lb-btn:hover,
+.playtable .total-btns .lb-btn:active,
+.howtoplay .lb-btn:hover,
+.howtoplay .lb-btn:active {
+    background: #e49e42;
+}
+
+.quick input,
+.bests-btn div,
+.betcontent .total input {
+    background: #fffaee;
+    border: 1px solid #ddd;
+    color: #777777;
+    border-radius: 2px;
+}
+
+.bests-btn div,
+.total-betNow b {
+    color: #545454;
+    background: #D6D8D9;
+}
+
+.quick input:hover,
+.quick input:focus,
+.bests input:hover,
+.bests input:focus,
+.betcontent .total input:hover,
+.betcontent .total input:focus {
+    background: #777;
+    color: #ffffff !important;
+}
+.bests li{
+    border: none!important;
+}
+.bests li,
+.bests ul {
+    border-color: #D6D8D9!important;
+}
+
+.bests li a {
+    background-color: #F1F1F1;
+    background: url(../Images/keno/002/button_bg4.png) repeat-x 0 0;
+    box-shadow: inset 0 0px 0 1px rgba(152, 152, 152, 0.18);
+    color: #777;
+}
+
+.bests li a:hover,
+.bests li b {
+    background: #777;
+    color: #fff;
+}
+
+.bests li b {
+    background: #ee8b2b;
+    background: url(../Images/keno/002/button_bg5.png) repeat-x 0 0;
+}
+
+#poptip table,
+#quicknote table,
+#quickbet table,
+#playtable table,
+#bests table,
+#bs_total table {
+    border-color: #BFBFBF;
+}
+
+#poptip table th,
+#quicknote th,
+#quickbet table th,
+#playtable table th,
+#bests table th,
+#bs_total table th,
+#bs_total table td {
+    background-color: #f1f1f1;
+    border-color: #d6d8d9;
+    color: #666;
+}
+
+#poptip table td,
+#quicknote table td,
+#quickbet table td,
+#playtable table td,
+#bests table td,
+#bs_total table td {
+    border-color: #d6d8d9;
+    color: #ec3e51;
+    background: none!important;
+}
+
+.howtoplay .txt-black p {
+    border-color: #CECECE;
+}
+
+.btn-close-b a {
+    background: url(../images/uni_icon_002.png) -342px 2px no-repeat;
+}
+
+
+/*------------------ REPORT ----------------------*/
+
+.report-option {
+    clear: both;
+    border-radius: 6px;
+    background: #e8e8e8;
+   /* box-shadow: 0 1px 2px #000;*/
+}
+
+.report-option.game-title {
+    color: #414141;
+}
+
+.report-option input[type="text"] {
+    border-color: #aaa!important;
+    background: #aaa;
+    color:#fff;
+}
+
+.main-content2 .report-option .drop-down-odds a {
+    border-color: #aaa!important;
+    background: #aaa;
+    color: #fff;
+}
+
+.main-content2 .report-option .drop-down-odds a:hover,
+.main-content2 .report-option .drop-down-odds a:active {
+    background: #777;
+    border: 1px solid #777!important;
+}
+
+.main-content2 .report-option .drop-down-odds a:after {
+    background: #989898 url(../Images/uni_icon_002.png) -556px 3px;
+}
+
+.main-content2 .report-option .drop-down-odds ul {
+    border-color: #989898!important;
+    box-shadow: 2px 2px 5px #111;
+}
+
+.main-content2 .report-option .drop-down-odds ul a {
+    border: 1px solid #aaaaaa!important;
+    border-bottom: none !important;
+    color: #fff
+}
+
+.main-content2 .report-option .drop-down-odds ul a:hover,
+.main-content2 .report-option .drop-down-odds ul a:active {
+    background: #777;
+    border: 1px solid #777!important;
+    border-bottom: none !important;
+}
+
+
+/*input*/
+
+.report-option input[type="button"] {
+    background: #f9ae0c;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.report-option input[type="button"]:hover,
+.report-option input[type="button"]:focus {
+    background: #e49e42;
+}
+
+.report-option input[type="text"] {
+    color: #fff;
+}
+
+.report-option input[type="text"]:hover,
+.report-option input[type="text"]:focus {
+    background: #777;
+}
+
+.report-option input[type="radio"]:checked + label,
+.report-option input[type="radio"] + label:hover {
+    color: #ff9300;
+}
+
+.report-option input[type="radio"] + label:before {
+    background: url(../Images/uni_icon_002.png) -316px 1px no-repeat;
+}
+
+.report-option input[type="radio"] + label:hover:before {
+    background: url(../Images/uni_icon_002.png) -316px -11px no-repeat;
+}
+
+.report-option input[type="radio"]:checked + label:before {
+    background: url(../Images/uni_icon_002.png) -316px -23px no-repeat;
+}
+
+
+/*table*/
+
+.report-list .history:first-child table {
+    border-radius: 0 !important;
+}
+
+.report-list > .history:first-child table {
+    border-radius: 5px 5px 0 0 !important;
+}
+
+.report-list div:first-of-type .table {
+    border-radius: 5px 5px 0 0;
+}
+
+.report-list .game-event-wrap {
+    background: #ff9d00;
+    background: url(../Images/Keno/002/bet-title_007.png) repeat-x 0 0;
+}
+
+.report-list table.table {
+    border: none;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.report-list table.table,
+.report-list .table tr td {
+    background: #ffffff;
+}
+
+.report-list .table th {
+    color: #333;
+    border-color: #ccc!important;
+    border-top: none;
+}
+
+.report-list .table td {
+    border-color: #D6D8D9!important;
+}
+
+.report-list table.table-result th {
+    border-top: none;
+}
+
+.report-list .table .yellow {
+    color: #FF9300!important
+}
+
+.report-list .history:last-of-type table {
+    border-radius: 0!important;
+}
+
+.report-list > .history:last-of-type table {
+    border-radius: 0 0 6px 6px!important;
+    border-bottom: none;
+}
+
+.report-list > .history:last-of-type table tr td {
+    background: #868686;
+    border-color: #717171!important;
+    color: #fff;
+}
+
+.report-list > .history:first-child table {
+    border-bottom: none;
+}
+
+.info-main-inner section.text-center {
+    color: #333;
+}
+
+
+/*toggle*/
+
+.table.bg-blue tr td,
+.report-list .table tr.multi-title td {
+    background: #E4E4E4;
+    border-color: #ccc!important;
+}
+
+.report-list .history[name="divMixGame"] .table tr.multi-title td,
+.report-list table tr.multi-child td {
+    background: #F3F3F3;
+    border-color: #D6D6D6!important;
+}
+
+.main-content2 a.btn-j {
+    border-bottom: none;
+}
+
+.page-wrap a,
+.page-wrap strong,
+.page-wrap input[type="text"] {
+    background: #fff;
+    box-shadow: 0 1px 2px #333;
+    border-radius: 4px;
+    color: #383838;
+}
+
+.page-wrap a:hover,
+.page-wrap a:active,
+.page-wrap input[type="text"]:hover,
+.page-wrap input[type="text"]:focus,
+.page-wrap strong,
+.page-wrap a.on,
+.page-wrap a.on:hover,
+.page-wrap a.on:active {
+    background: #f9ae0c;
+    border-color: #f9ae0c!important;
+    color: #FFF;
+}
+
+.fa-angle-double-left {
+    background: #FFF url(../Images/uni_icon_002.png) -678px -1px no-repeat!important;
+}
+
+.fa-angle-double-left:hover {
+    background: #f9ae0c url(../Images/uni_icon_002.png) -678px -34px no-repeat!important;
+}
+
+.fa-angle-double-right {
+    background: #FFF url(../Images/uni_icon_002.png) -709px -1px no-repeat!important;
+}
+
+.fa-angle-double-right:hover {
+    background: #f9ae0c url(../Images/uni_icon_002.png) -709px -34px no-repeat!important;
+}
+
+.report-account .account-bar {
+    border-bottom: none;
+    box-shadow: none;
+    border-radius: 0 0 6px 6px;
+    border: 1px solid #ddd;
+    border-top: none; 
+}
+
+
+/*placeholder*/
+
+input::-webkit-input-placeholder {
+    color: #fff
+}
+
+input:hover::-webkit-input-placeholder,
+input:focus::-webkit-input-placeholder {
+    color: #fff
+}
+
+
+/* Firefox < 19 */
+
+input:-moz-placeholder {
+    color: #fff
+}
+
+input:focus:-moz-placeholder {
+    color: #fff
+}
+
+
+/* Firefox > 19 */
+
+input::-moz-placeholder {
+    color: #fff
+}
+
+input:focus::-moz-placeholder {
+    color: #fff
+}
+
+
+/* Internet Explorer 10 */
+
+input:-ms-input-placeholder {
+    color: #fff
+}
+
+input:focus:-ms-input-placeholder {
+    color: #fff
+}
+.left-price span{
+    color: #ff9c00;
+}
+
+#tiptip_content{
+    color:#ff9d00;
+}
+/*------------------ REPORT END ----------------------*/
+
+
+/*add-css*/
+.quick-box .form1 .input{
+    border: 1px solid #ddd;
+    background: #fffaee;
+    color: #777;
+
+}
+.page-wrap input[type="text"]{
+    background: #ddd;
+}
