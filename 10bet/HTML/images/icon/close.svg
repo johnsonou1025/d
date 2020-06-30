@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/close</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Mobile_Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="10_bet_w_menu_r2" transform="translate(-17.000000, -21.000000)" fill="#FFFFFF">
+            <g id="Group-5">
+                <g id="icon/close" transform="translate(17.000000, 20.000000)">
+                    <rect id="Rectangle" transform="translate(7.071068, 8.000000) rotate(45.000000) translate(-7.071068, -8.000000) " x="-1.92893219" y="7" width="18" height="2" rx="1"></rect>
+                    <rect id="Rectangle" transform="translate(7.071068, 8.000000) rotate(-45.000000) translate(-7.071068, -8.000000) " x="-1.92893219" y="7" width="18" height="2" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
