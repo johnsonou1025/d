@@ -72,15 +72,14 @@ p {
 
 .math-start .heading {
     font-size: 16px;
-    margin-bottom: 20px;
 }
 
 .math-start .heading span {
-    padding: 10px;
+    padding: 0 10px;
 }
 
 .math-start .topic {
-    margin-bottom: 30px;
+    padding: 10px 0 20px;
     color: #402be6;
     font-size: 56px;
     font-weight: bold;
