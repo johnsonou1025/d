@@ -95,8 +95,8 @@ $(function() {
 // reset topic
 function getTopic(queNum) {
     $(".math-start .heading span").text(queNum);
-    q1 = getRandom(9);
-    q2 = getRandom(9);
+    q1 = getRandom(99);
+    q2 = getRandom(99);
     $("#q1").text(q1);
     $("#q2").text(q2);
     ans = q1 + q2;
@@ -104,7 +104,7 @@ function getTopic(queNum) {
     $(".answer button").eq(ansNum).text(ans);
     for (i = 0; i < 4; i++) {
         if (i != ansNum) {
-            $(".answer button").eq(i).text(getRandom(18));
+            $(".answer button").eq(i).text(getRandom(198));
         }
     }
 }
