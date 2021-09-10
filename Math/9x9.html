@@ -16,7 +16,7 @@
             <div class="intro">
                 <p class="heading-1">歐巴數學小考堂</p>
                 <p class="heading-2">99乘法練習考慮</p>
-                <p class="heading-3">題目共有 20 題，請從 A, B, C, D 中選出正確答案</p>
+                <p class="heading-3">題目共有 10 題，請從 A, B, C, D 中選出正確答案</p>
             </div>
         </div>
         <div class="room">
@@ -48,7 +48,7 @@
 $(function() {
     var score = 0;
     var queNum = 1;
-    var queTotalNum = 20;
+    var queTotalNum = 10;
     var scorePoint = 100 / queTotalNum;
     getTopic(queNum);
     $(".answer button").click(function() {
@@ -104,7 +104,11 @@ function getTopic(queNum) {
     $(".answer button").eq(ansNum).text(ans);
     for (i = 0; i < 4; i++) {
         if (i != ansNum) {
-            $(".answer button").eq(i).text(getRandom(81));
+            var otherAns = ans;
+            while (otherAns == ans) {
+                otherAns = getRandom(81)
+            }
+            $(".answer button").eq(i).text(otherAns);
         }
     }
 }

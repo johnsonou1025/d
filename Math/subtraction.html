@@ -15,14 +15,14 @@
         <div class="caption">
             <div class="intro">
                 <p class="heading-1">歐巴數學小考堂</p>
-                <p class="heading-2">十位數加法練習考慮</p>
+                <p class="heading-2">十位數減法練習考慮</p>
                 <p class="heading-3">題目共有 10 題，請從 A, B, C, D 中選出正確答案</p>
             </div>
         </div>
         <div class="room">
             <div class="math-start active">
                 <div class="heading">第<span>1</span>題</div>
-                <div class="topic"><span id="q1">-</span>+<span id="q2">-</span></div>
+                <div class="topic"><span id="q1">-</span>-<span id="q2">-</span></div>
                 <div class="answer">
                     <button><span>-</span></button>
                     <button><span>-</span></button>
@@ -38,7 +38,7 @@
             <div class="math-wrong">
                 <div class="heading">錯</div>
                 <p>正確答案是</p>
-                <p class="answer"> <span id="wq1">-</span>+<span id="wq2">-</span>=<span id="wqa">-</span></p>
+                <p class="answer"> <span id="wq1">-</span>-<span id="wq2">-</span>=<span id="wqa">-</span></p>
                 <button class="btn-primery">下一步</button>
             </div>
         </div>
@@ -95,26 +95,27 @@ $(function() {
 // reset topic
 function getTopic(queNum) {
     $(".math-start .heading span").text(queNum);
-    q1 = getRandom(99);
-    q2 = getRandom(99);
+    q1 = getRandom(1,99);
+    q2 = getRandom(1,q1);
     $("#q1").text(q1);
     $("#q2").text(q2);
-    ans = q1 + q2;
-    ansNum = getRandom(4) - 1;
+    ans = q1 - q2;
+    ansNum = getRandom(0,3);
+    console.log(ansNum);
     $(".answer button").eq(ansNum).text(ans);
     for (i = 0; i < 4; i++) {
         if (i != ansNum) {
             var otherAns = ans;
             while (otherAns == ans) {
-                otherAns = getRandom(198)
+                otherAns = getRandom(0,99);
             }
             $(".answer button").eq(i).text(otherAns);
         }
     }
 }
 
-function getRandom(x) {
-    return Math.floor(Math.random() * x) + 1;
+function getRandom(min,max) {
+    return Math.floor(Math.random()*(max-min+1))+min;
 }
 </script>
 
