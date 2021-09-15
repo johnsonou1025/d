@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+    <div class="math">
+        <div class="caption">
+            <div class="intro">
+                <p class="heading-1">歐巴數學小考堂</p>
+                <p class="heading-2">十位數加減法練習考慮</p>
+                <p class="heading-3">題目共有 10 題，請從 A, B, C, D 中選出正確答案</p>
+            </div>
+        </div>
+        <div class="room">
+            <div class="math-start active">
+                <div class="heading">第<span>1</span>題</div>
+                <div class="topic" id="topic"></div>
+                <div class="answer">
+                    <button><span>-</span></button>
+                    <button><span>-</span></button>
+                    <button><span>-</span></button>
+                    <button><span>-</span></button>
+                </div>
+            </div>
+            <div class="math-end">
+                <div class="total-score"><span>-</span>分</div>
+                <button class="btn-primery">再考一次</button>
+                <a class="btn-primery" href="index.html">回首頁</a>
+            </div>
+            <div class="math-wrong">
+                <div class="heading">錯</div>
+                <p>正確答案是</p>
+                <p class="answer"> <span id="wq"></span>=<span id="wqa">-</span></p>
+                <button class="btn-primery">下一步</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+$(function() {
+    var score = 0;
+    var queNum = 1;
+    var queTotalNum = 10;
+    var scorePoint = 100 / queTotalNum;
+    getTopic(queNum);
+    $(".answer button").click(function() {
+        if (ansNum == $(this).index()) {
+            score = score + scorePoint;
+        } else {
+            $(".math-start").removeClass("active");
+            $(".math-end").removeClass("active");
+            $(".math-wrong").addClass("active");
+            $("#wq").text(topicQuestion);
+            $("#wqa").text(ans);
+        }
+        queNum = queNum + 1;
+        if (queNum <= queTotalNum) {
+            getTopic(queNum);
+        } else if (queNum > queTotalNum && $(".math-wrong.active")[0]) {
+            $(".math-end .total-score span").text(score);
+            $(".math-start").removeClass("active");
+        } else {
+            $(".math-end .total-score span").text(score);
+            $(".math-start").removeClass("active");
+            $(".math-end").addClass("active");
+        }
+    });
+    $(".math-end button").click(function() {
+        $(".math-start").addClass("active");
+        $(".math-end").removeClass("active");
+        queNum = 1;
+        score = 0;
+        getTopic(queNum);
+    });
+    $(".math-wrong button").click(function() {
+        $(".math-wrong").removeClass("active");
+        if (queNum <= queTotalNum) {
+            $(".math-start").addClass("active");
+        } else {
+            $(".math-end").addClass("active");
+        }
+
+    });
+});
+
+// reset topic
+function getTopic(queNum) {
+    $(".math-start .heading span").text(queNum);
+    qestion1 = getRandom(1, 99);
+    qestionq2 = getRandom(1, 99);
+    qestionq3 = getRandom(1, 99);
+    formula1 = getFormula();
+    formula2 = getFormula()
+    topicQuestion = qestion1 + "" + formula1 + "" + qestionq2 + "" + formula2 + "" + qestionq3;
+    console.log(qestion1 + "" + formula1 + "" + qestionq2 + "" + formula2 + "" + qestionq3);
+    $("#topic").text(topicQuestion);
+    if (formula2 == "-") {
+        if (formula1 == "-") {
+            ans = qestion1 - qestionq2 - qestionq3;
+        } else {
+            ans = qestion1 + qestionq2 - qestionq3;
+        }
+    } else {
+        if (formula1 == "-") {
+            ans = qestion1 - qestionq2 + qestionq3;
+        } else {
+            ans = qestion1 + qestionq2 + qestionq3;
+        }
+    }
+    ansNum = getRandom(0, 3);
+    console.log(ansNum);
+    $(".answer button").eq(ansNum).text(ans);
+    for (i = 0; i < 4; i++) {
+        if (i != ansNum) {
+            var otherAns = ans;
+            while (otherAns == ans) {
+                otherAns = getRandom(-297, 297);
+            }
+            $(".answer button").eq(i).text(otherAns);
+        }
+    }
+}
+
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getFormula() {
+    var formula = new Array("＋", "-");
+    var formulaNum = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+    return formula[formulaNum];
+}
+</script>
+
+</html>
