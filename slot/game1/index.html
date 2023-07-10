@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slot game 1</title>
+    <script src="jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+    <div id="slot-machine">
+        <div class="slot"></div>
+        <div class="slot"></div>
+        <div class="slot"></div>
+        <br>
+        <button id="spin">旋转</button>
+        <div class="result"></div>
+        <script>
+        $(function() {
+            $(".slot:nth-child(1)").text(1);
+            $(".slot:nth-child(2)").text(1);
+            $(".slot:nth-child(3)").text(1);
+            $("#spin").click(function() {
+              spinSlots();
+            });
+        })
+
+        function spinSlots() {
+            var slot1 = Math.floor(Math.random() * 3) + 1;
+            var slot2 = Math.floor(Math.random() * 3) + 1;
+            var slot3 = Math.floor(Math.random() * 3) + 1;
+            $(".slot:nth-child(1)").text(slot1);
+            $(".slot:nth-child(2)").text(slot2);
+            $(".slot:nth-child(3)").text(slot3);
+
+            if (slot1 === slot2 && slot2 === slot3) {
+                $(".result").text('恭喜您，您贏了！');
+            } else {
+                $(".result").text('很不幸，您輸了。');
+            }
+        }
+        </script>
+    </div>
+</body>
+
+</html>
