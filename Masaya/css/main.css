@@ -101,6 +101,7 @@ button.button-style-4 {
 button.button-style-4>span {
     color: #fff;
 }
+
 button.button-style-5 {
     padding: 10px 20px;
     border-radius: 5px;
@@ -112,7 +113,56 @@ button.button-style-5>span {
     color: #fff;
 }
 
+button.button-style-6 {
+    padding: 20px 40px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(to right, #D9D900 0%, #FF9200 100%);
+}
+
+button.button-style-6>span {
+    font-size: 16px;
+    color: #fff;
+}
+
 /*左側選單*/
+header {
+    position: relative;
+    display: none;
+    height: 48px;
+    width: 100%;
+    /*    background-color: #fff;*/
+    text-align: center;
+}
+
+.header-toggler,
+.header-search {
+    position: absolute;
+    top: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 48px;
+}
+
+.header-toggler {
+    left: 0;
+}
+
+.header-search {
+    right: 0;
+}
+
+.header-logo {
+    padding: 10px 0;
+    height: 100%;
+}
+
+.header-logo img {
+    max-height: 100%;
+}
+
 nav {
     position: fixed;
     padding: 24px;
@@ -133,6 +183,21 @@ nav {
 
 .nav-header {
     padding: 40px 0 20px;
+}
+
+@media (max-width: 992px) {
+    header {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: auto;
+        z-index: 2;
+    }
 }
 
 /*左側選單-未登入前*/
@@ -236,14 +301,69 @@ nav {
     float: right;
 }
 
+/*左側選單-語系*/
+.language-item {
+    padding: 8px 20px;
+    border-radius: 24px;
+    background-color: #044E04;
+}
+
+.language-item i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    height: 32px;
+    width: 32px;
+    border-radius: 18px;
+    background: #40D10D;
+    vertical-align: middle;
+}
+
+.language-item i {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.language-item span {
+    z-index: 16;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.language-item-current {
+    background: url(../images/icon-arrow-down.png) no-repeat right center;
+}
+
+.language-item ul {
+    display: none;
+}
+
+.language-item li {
+    margin: 20px 0;
+}
+
+.language-item li:last-child {
+    margin-bottom: 0;
+}
+
+.language-item.active ul {
+    display: block;
+}
+
+
 /*左側選單-入口*/
 
 .nav-link-list {
     padding: 20px 0;
 }
 
+.nav-link-list h4 {
+    margin-bottom: 20px;
+}
+
 .link-item {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .link-item-name {
@@ -286,6 +406,7 @@ nav {
     width: 14px;
     height: 14px;
     background: url(../images/icon-arrow-down.png) no-repeat center 100%;
+    transform: rotate(-90deg);
 }
 
 .link-item-dropdown {
@@ -312,7 +433,7 @@ nav {
 }
 
 .link-item.active .link-item-text span>i {
-    transform: rotate(90deg);
+    transform: rotate(0deg);
 }
 
 .nav-link-list.nav-news .link-item-text span {
@@ -335,50 +456,317 @@ main {
     background: #030F03;
 }
 
+main .main-max-width {
+    padding: 0 40px;
+}
+
+@media (max-width: 992px) {
+    main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    main .main-max-width {
+        padding: 0 10px;
+    }
+}
+
+/*中間區塊-手機版-獎池跑馬燈*/
+.marquee-jackpot {
+    display: none;
+}
+
+.marquee-jackpot ul {
+    padding: 10px 0;
+    border: 1px solid #707070;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+
+.marquee-jackpot li {
+    display: inline-flex;
+    padding: 0 10px;
+}
+
+.marquee-jackpot li i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    height: 48px;
+    width: 48px;
+}
+
+.marquee-jackpot li i img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.marquee-jackpot-text {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.marquee-jackpot-text span {
+    margin: 2px 0;
+    font-size: 12px;
+}
+
+.marquee-jackpot-text span span {
+    color: #40D900;
+}
+
+@media (max-width: 992px) {
+    .marquee-jackpot {
+        display: block;
+    }
+}
+
 /*中間區塊-廣告輪播*/
 .carousel {
+    position: relative;
     height: 473px;
     width: 100%;
     background: #aaa;
+    overflow: hidden;
 }
 
-.category-list ul>li {
-    height: 143px;
-    width: 143px;
-    background: linear-gradient(to bottom, #123a12 0%, #030F03 100%);
+.carousel img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 992px) {
+    .carousel {
+        display: none;
+    }
+}
+
+/*中間區塊-遊戲類別*/
+.slick-list {
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.slick-list ul {
+    margin: 0 -5px;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+
+.slick-list ul li {
+    float: left;
+    padding: 0 5px;
+    width: 25%;
+}
+
+.slick-list ul li i {
+    display: block;
+    padding-top: 90%;
+    border-radius: 16px;
+    background: #193319;
+}
+
+.slick-list ul>li>span {
+    display: block;
+}
+
+@media (max-width: 992px) {
+    .slick-list ul li {
+        display: inline-block;
+        float: none;
+        width: 50%;
+    }
+}
+
+/*中間區塊-遊戲列表*/
+.game-quick-link {
+    padding: 20px 0;
+}
+
+.game-quick-link .h4 {
+    margin-bottom: 20px;
+}
+
+.game-filters-list {
+    margin-bottom: 40px;
+}
+
+.game-filters-list ul {
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+
+.game-filters-list li {
+    display: inline-block;
+    padding: 10px 20px;
+    min-width: 142px;
+    border-radius: 10px;
+    background-color: #334033;
     text-align: center;
 }
 
-.category-list ul>li>i {
+.game-filters-list li i {
     display: inline-block;
-    height: 48px;
-    width: 48px;
-    background: #aaa;
+    margin-right: 15px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
 }
 
-.category-list ul>li>span {
-    display: block;
+.game-filters-list li i img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.game-card-list {
+.game-filters-list li span {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.game-filters-list li.active {
     background-color: #0F3700;
 }
 
+.game-card-background {
+    /*    width: 1400px;*/
+    padding: 10px 20px;
+    background-color: #0F3700;
+}
+
+.game-card-list {
+    margin: 0 -10px;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+
 .game-card {
+    position: relative;
+    float: left;
+    margin: 20px 0;
+    padding: 0 10px;
+    /*    width: 276px;*/
     width: 20%;
+    overflow: hidden;
 }
 
 .game-card-image {
-    padding-top: 66.6%;
-    background: #aaa;
+    border-radius: 6px 6px 0 0;
+    padding-top: 78%;
+    background: url(../images/Fortune-Ox.png) no-repeat center center / cover;
+    overflow: hidden;
 }
 
 .game-card-info {
-    background-color: #707070;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    padding: 20px;
+    height: 100%;
+    background-color: rgba(0, 96, 6, .9);
+    text-align: center;
 }
 
-.game-card-info span {
+.game-card.active .game-card-info {
     display: block;
+}
+
+.game-card-info i.close {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background: url(../images/icon-close.png) no-repeat center center /cover;
+}
+
+.game-card-info p {
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.game-card-info>span {
+    display: block;
+    margin: 10px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.game-card-info button {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    padding: 10px;
+    border: 1px solid #fff;
+    background-color: transparent;
+}
+
+.game-card-info button span {
+    color: #fff;
+}
+
+.game-card-name {
+    padding: 20px 10px;
+    border-radius: 0 0 6px 6px;
+    background-color: #1E261E;
+}
+
+.game-card-name span {
+    display: block;
+}
+
+.game-card-name span:first-child {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.game-card-name span:last-child {
+    color: #7FD28A;
+    font-size: 12px;
+}
+
+.game-more {
+    margin: 30px 0;
+    text-align: center;
+}
+
+@media (max-width: 1440px) {
+    .game-card {
+        width: 25%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .game-card {
+        width: 33.33%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .game-card-background {
+        padding: 10px;
+    }
+
+    .game-card {
+        width: 50%;
+    }
+}
+
+@media (max-width: 992px) {
+    .game-card-info>span {
+        margin: 6px 0;
+    }
 }
 
 /*中間區塊-新事件*/
@@ -388,7 +776,7 @@ main {
 }
 
 .new-events .h4 {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .new-events ul {
@@ -431,7 +819,7 @@ main {
 }
 
 .providers .h4 {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .providers ul {
@@ -462,33 +850,111 @@ main {
     max-width: 100%;
     max-height: 100%;
 }
+
 /*頁腳*/
 footer {
     margin-top: 40px;
-    padding:40px 0;
-    border-top:1px solid #707070;
+    padding: 40px 0;
+    border-top: 1px solid #707070;
     background-color: #20261f;
 }
-footer .max-width{
+
+footer .footer-max-width {
     margin: auto;
     max-width: 900px;
 }
+
+@media (max-width: 992px) {
+    footer {
+        padding: 20px;
+    }
+}
+
+/*頁腳-手機版-文字連結*/
+.footer-top-mobile {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.footer-top-mobile span {
+    display: block;
+    width: 100%;
+}
+
+.footer-top-mobile span>i {
+    float: right;
+    width: 14px;
+    height: 14px;
+    background: url(../images/icon-arrow-right.png) no-repeat center 100%;
+}
+
+.footer-top-mobile-list {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.footer-top-mobile-header {
+    padding: 10px 20px;
+    height: 44px;
+    background-color: #77777f;
+    text-align: right;
+}
+
+.footer-top-mobile-list {
+    display: none;
+}
+
+.footer-top-mobile-list ul {
+    padding: 20px 10px;
+    height: 240px;
+    background-color: #565656;
+    overflow-y: auto;
+}
+
+.footer-top-mobile-list li {
+    padding: 20px 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.footer-top-mobile-list li:hover,
+.footer-top-mobile-list li.active {
+    background-color: #3A3A3A;
+}
+
+.footer-top-mobile-list.active {
+    display: block;
+}
+
 /*頁腳-文字連結*/
 .footer-top {
     display: flex;
-    border-bottom:1px solid #434343;
+    border-bottom: 1px solid #434343;
 }
 
 .footer-link-list {
     flex: 1;
     margin: 0 35px;
 }
-.footer-link-list .h4{
+
+.footer-link-list .h4 {
     position: relative;
     display: block;
     margin-bottom: 40px;
 }
-.footer-link-list .h4:after{
+
+.footer-link-list .h4:after {
     content: "";
     position: absolute;
     bottom: -10px;
@@ -497,12 +963,14 @@ footer .max-width{
     width: 24px;
     background-color: #278400;
 }
-.footer-link-list a{
+
+.footer-link-list a {
     display: block;
     margin-bottom: 30px;
-    color:#B5B5B5;
+    color: #B5B5B5;
 }
-.footer-link-list.icon-link a{
+
+.footer-link-list.icon-link a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -513,22 +981,32 @@ footer .max-width{
     background-color: #373f35;
 }
 
-.footer-link-list.icon-link a img{
-    max-width:100%;
-    max-height:100%;
+.footer-link-list.icon-link a img {
+    max-width: 100%;
+    max-height: 100%;
 }
+
+@media (max-width: 992px) {
+    .footer-top {
+        display: none;
+    }
+}
+
 /*頁腳-支付商*/
-.footer-icon{
+.footer-icon {
     padding: 28px 0 36px;
 }
-.footer-icon .h4{
+
+.footer-icon .h4 {
     margin-bottom: 20px;
 }
+
 .footer-icon ul {
     white-space: nowrap;
     overflow-y: hidden;
 }
-.footer-icon li{
+
+.footer-icon li {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -536,39 +1014,47 @@ footer .max-width{
     width: 120px;
     height: 30px;
 }
-.footer-icon li img{
+
+.footer-icon li img {
     max-width: 100%;
     max-height: 100%;
 }
+
 /*頁腳-執照*/
-.footer-lincense{
+.footer-lincense {
     padding: 28px 0 36px;
 }
-.footer-lincense .h4{
+
+.footer-lincense .h4 {
     margin-bottom: 20px;
 }
-.footer-lincense p{
+
+.footer-lincense p {
     text-align: center;
 }
-.footer-lincense p img{
-    margin:0 10px;
+
+.footer-lincense p img {
+    margin: 0 10px;
     height: 57px;
     width: auto;
 }
+
 /*頁腳-簡介*/
-.footer-intro{
+.footer-intro {
     position: relative;
     padding: 20px 40px 80px;
     border-radius: 5px;
     background-color: #353d35;
     color: #B8B8B8;
 }
-.footer-intro .footer-intro-title{
+
+.footer-intro .footer-intro-title {
     margin-bottom: 20px;
-    color:#40D900;
+    color: #40D900;
     text-align: center;
 }
-.footer-intro .footer-intro-more{
+
+.footer-intro .footer-intro-more {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -578,14 +1064,62 @@ footer .max-width{
     background: linear-gradient(to bottom, #353d35 0%, #1E261E 100%);
     text-align: center;
 }
+
 /*頁腳-版權*/
-.footer-copyright{
+.footer-copyright {
     margin-top: 40px;
     padding: 40px 0;
-    border-top:1px solid #434343;
-    color:#B5B5B5;
+    border-top: 1px solid #434343;
+    color: #B5B5B5;
     text-align: center;
 }
+
+
+/*手機版-底部*/
+.nav-bottom {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #20261f;
+}
+
+/*手機版-底部選單-登入/註冊*/
+.nav-bottom-no-login button {
+    float: left;
+    width: 50%;
+    border-radius: 0;
+}
+
+/*手機版-底部選單-選單*/
+.nav-bottom-menu li {
+    float: left;
+    padding: 10px 0;
+    width: 20%;
+    text-align: center;
+}
+
+.nav-bottom-menu i {
+    display: block;
+    margin-bottom: 5px;
+    height: 24px;
+    text-align: center;
+}
+
+.nav-bottom-menu i img {
+    display: inline-block;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+@media (max-width: 992px) {
+    .nav-bottom {
+        display: block;
+    }
+}
+
+
 
 
 
