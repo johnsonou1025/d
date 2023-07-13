@@ -872,7 +872,7 @@ footer .footer-max-width {
 
 /*頁腳-手機版-文字連結*/
 .footer-top-mobile {
-    display: flex;
+    display: none;
     align-items: start;
     justify-content: center;
     flex-direction: column;
@@ -935,6 +935,11 @@ footer .footer-max-width {
 
 .footer-top-mobile-list.active {
     display: block;
+}
+@media (max-width: 992px) {
+    .footer-top-mobile {
+        display: flex;
+    }
 }
 
 /*頁腳-文字連結*/
