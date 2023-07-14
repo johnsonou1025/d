@@ -327,6 +327,10 @@ nav.active {
     background-color: #044E04;
 }
 
+.language-item.active ul {
+    display: block;
+}
+
 .language-item i {
     display: inline-flex;
     align-items: center;
@@ -364,10 +368,6 @@ nav.active {
 
 .language-item li:last-child {
     margin-bottom: 0;
-}
-
-.language-item.active ul {
-    display: block;
 }
 
 
