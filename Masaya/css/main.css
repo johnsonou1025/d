@@ -547,7 +547,21 @@ main .main-max-width {
         display: none;
     }
 }
+/*中間區塊-廣告輪播-手機版*/
+.carousel-mobile {
+    display: none;
+    position: relative;
+    height: 284px;
+    width: 100%;
+    background: #aaa;
+    overflow: hidden;
+}
 
+@media (max-width: 992px) {
+    .carousel-mobile {
+        display: block;
+    }
+}
 /*中間區塊-遊戲類別*/
 .slick-list {
     padding: 20px 0;
@@ -601,11 +615,13 @@ main .main-max-width {
 .game-filters-list ul {
     white-space: nowrap;
     overflow-y: hidden;
+    margin: 0 -5px;
 }
 
 .game-filters-list li {
     display: inline-block;
     padding: 10px 20px;
+    margin: 0 5px;
     min-width: 142px;
     border-radius: 10px;
     background-color: #334033;
@@ -634,6 +650,18 @@ main .main-max-width {
     background-color: #0F3700;
 }
 
+@media (max-width: 992px) {
+    .game-filters-list li {
+        padding: 20px 40px;
+        min-width: 94px;
+    }
+
+    .game-filters-list li i {
+        display: none;
+    }
+}
+
+/*中間區塊-遊戲*/
 .game-card-background {
     /*    width: 1400px;*/
     padding: 10px 20px;
@@ -658,12 +686,20 @@ main .main-max-width {
 }
 
 .game-card-image {
+    position: relative;
     border-radius: 6px 6px 0 0;
     padding-top: 78%;
     background: url(../images/Fortune-Ox.png) no-repeat center center / cover;
     overflow: hidden;
 }
-
+.game-favorite{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 24px;
+    height: 24px;
+    background: url(../images/icon-favorite.png) no-repeat center center / cover;
+}
 .game-card-info {
     display: none;
     position: absolute;
@@ -717,6 +753,7 @@ main .main-max-width {
 }
 
 .game-card-name {
+    position: relative;
     padding: 20px 10px;
     border-radius: 0 0 6px 6px;
     background-color: #1E261E;
@@ -724,16 +761,28 @@ main .main-max-width {
 
 .game-card-name span {
     display: block;
+    width: calc(100% - 48px);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.game-card-name span:first-child {
-    margin-bottom: 20px;
+.game-card-name .game-name {
+    margin-bottom: 10px;
     font-size: 16px;
 }
 
-.game-card-name span:last-child {
+.game-card-name ..game-provider {
     color: #7FD28A;
     font-size: 12px;
+}
+.game-card-name .game-info{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    background: url(../images/icon-info.png) no-repeat center / cover;
 }
 
 .game-more {
@@ -936,6 +985,7 @@ footer .footer-max-width {
 .footer-top-mobile-list.active {
     display: block;
 }
+
 @media (max-width: 992px) {
     .footer-top-mobile {
         display: flex;
