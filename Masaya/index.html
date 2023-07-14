@@ -8,6 +8,8 @@
     <title>Masaya</title>
     <!-- CSS -->
     <link href="css/main.css" rel="stylesheet">
+    <!-- js -->
+    <script src="js/jquery-3.7.0.min.js"></script>
 </head>
 
 <body>
@@ -15,8 +17,19 @@
         <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
         <div class="header-search"><img src="images/icon-search.png" alt=""></div>
+        <script>
+            $(function(){
+                $(".header-toggler").click(function(){
+                    $("nav").addClass("active");
+                })
+                $(".nav-close").click(function(){
+                    $("nav").removeClass("active");
+                })
+            })
+        </script>
     </header>
     <nav>
+        <div class="nav-close"></div>
         <!-- 左側選單-未登入 -->
         <div class="nav-header">
             <div class="nav-no-login">
@@ -148,7 +161,7 @@
                 </div>
             </div>
             <div class="link-item">
-                <div class="language-item active">
+                <div class="language-item">
                     <div class="language-item-current">
                         <i><img src="images/icon-en.png" alt=""></i>
                         <span>English</span>
@@ -173,6 +186,13 @@
                     </ul>
                 </div>
             </div>
+            <script>
+            $(function() {
+                $(".language-item").click(function() {
+                    $(this).toggleClass("active");
+                })
+            })
+            </script>
         </div>
         <!-- 左側選單-新聞 -->
         <div class="nav-link-list nav-news">
@@ -238,7 +258,6 @@
         <div class="carousel"><img src="images/kv.jpg" alt=""></div>
         <!-- 中間區塊-廣告輪播-手機版 -->
         <div class="carousel-mobile"></div>
-
         <div class="main-max-width">
             <!-- 中間區塊-遊戲類別 -->
             <div class="slick-list">
@@ -278,174 +297,184 @@
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                         <div class="game-card">
                             <div class="game-card-image">
                                 <i class="game-favorite"></i>
-                                <div class="game-card-info">
-                                    <i class="close"></i>
-                                    <p><span>平均回報率：</span><span>97%</span></p>
-                                    <p><span>玩家回報率：</span><span>96.02%</span></p>
-                                    <p><span>賭注範圍：</span><span>$100 - $10,000</span></p>
-                                    <button><span>開始玩遊戲</span></button>
-                                </div>
                             </div>
                             <div class="game-card-name">
-                                <i class="game-info"></i>
+                                <i class="game-info-icon"></i>
                                 <span class="game-name">Shaolin Soccer</span>
                                 <span class="game-provider">PGSoft</span>
+                            </div>
+                            <div class="game-card-info">
+                                <i class="close"></i>
+                                <span>平均回報率：</span><span>97%</span>
+                                <span>玩家回報率：</span><span>96.02%</span>
+                                <span>賭注範圍：</span><span>$100 - $10,000</span>
+                                <button><span>開始玩遊戲</span></button>
                             </div>
                         </div>
                     </div>
+                    <script>
+                    $(function() {
+                        $(".game-card-info .close").click(function() {
+                            $(this).parents(".game-card").removeClass("active");
+                        })
+                        $(".game-info-icon").click(function() {
+                            $(this).parents(".game-card").addClass("active");
+                        })
+                    })
+                    </script>
                     <div class="game-more">
                         <button class="button-style-6"><span>Load∂ more games</span></button>
                     </div>
@@ -522,6 +551,16 @@
                         <li>Cookie Policy</li>
                     </ul>
                 </div>
+                <script>
+                $(function() {
+                    $(".footer-top-mobile").click(function() {
+                        $(".footer-top-mobile-list").addClass("active");
+                    })
+                    $(".footer-top-mobile-header").click(function(){
+                        $(this).parent(".footer-top-mobile-list").removeClass("active");
+                    })
+                })
+                </script>
                 <!-- 頁腳-文字連結 -->
                 <div class="footer-top">
                     <div class="footer-link-list">
@@ -558,8 +597,6 @@
                         <a href=""><img src="images/icon-twitter.png" alt=""></a>
                     </div>
                 </div>
-                <!-- 頁腳-文字連結-手機 -->
-                <div class="footer-top-dropdown"></div>
                 <!-- 頁腳-支付商 -->
                 <div class="footer-icon">
                     <div class="h4">Safe payment</div>

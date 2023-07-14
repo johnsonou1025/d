@@ -127,8 +127,8 @@ button.button-style-6>span {
 
 /*左側選單*/
 header {
-    position: relative;
     display: none;
+    position: relative;
     height: 48px;
     width: 100%;
     /*    background-color: #fff;*/
@@ -170,6 +170,21 @@ nav {
     height: 100vh;
     background: linear-gradient(to right, #123a12 0%, #030F03 100%);
     overflow-y: auto;
+    transition: .3sg;
+}
+
+nav.active {
+    left: 0;
+}
+
+.nav-close {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 24px;
+    height: 24px;
+    background: url(../images/icon-close.png) no-repeat center center /cover;
 }
 
 .nav-header,
@@ -197,6 +212,10 @@ nav {
         width: 100%;
         height: auto;
         z-index: 2;
+    }
+
+    .nav-close {
+        display: block;
     }
 }
 
@@ -547,6 +566,7 @@ main .main-max-width {
         display: none;
     }
 }
+
 /*中間區塊-廣告輪播-手機版*/
 .carousel-mobile {
     display: none;
@@ -562,6 +582,7 @@ main .main-max-width {
         display: block;
     }
 }
+
 /*中間區塊-遊戲類別*/
 .slick-list {
     padding: 20px 0;
@@ -692,7 +713,8 @@ main .main-max-width {
     background: url(../images/Fortune-Ox.png) no-repeat center center / cover;
     overflow: hidden;
 }
-.game-favorite{
+
+.game-favorite {
     position: absolute;
     right: 10px;
     bottom: 10px;
@@ -700,8 +722,45 @@ main .main-max-width {
     height: 24px;
     background: url(../images/icon-favorite.png) no-repeat center center / cover;
 }
+
+
+
+.game-card-name {
+    position: relative;
+    padding: 20px 10px;
+    border-radius: 0 0 6px 6px;
+    background-color: #1E261E;
+}
+
+.game-card-name span {
+    display: block;
+    width: calc(100% - 48px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-card-name .game-name {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.game-card-name ..game-provider {
+    color: #7FD28A;
+    font-size: 12px;
+}
+
+.game-card-name .game-info-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    background: url(../images/icon-info.png) no-repeat center / cover;
+}
+
 .game-card-info {
-    display: none;
+    visibility: hidden;
     position: absolute;
     top: 0;
     left: 10px;
@@ -710,17 +769,20 @@ main .main-max-width {
     height: 100%;
     background-color: rgba(0, 96, 6, .9);
     text-align: center;
+    opacity: 0;
+    transition: .3s;
 }
 
 .game-card.active .game-card-info {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .game-card-info i.close {
     display: block;
     position: absolute;
     top: 10px;
-    right: 20px;
+    right: 10px;
     width: 12px;
     height: 12px;
     background: url(../images/icon-close.png) no-repeat center center /cover;
@@ -750,39 +812,6 @@ main .main-max-width {
 
 .game-card-info button span {
     color: #fff;
-}
-
-.game-card-name {
-    position: relative;
-    padding: 20px 10px;
-    border-radius: 0 0 6px 6px;
-    background-color: #1E261E;
-}
-
-.game-card-name span {
-    display: block;
-    width: calc(100% - 48px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.game-card-name .game-name {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.game-card-name ..game-provider {
-    color: #7FD28A;
-    font-size: 12px;
-}
-.game-card-name .game-info{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-    width: 32px;
-    height: 32px;
-    background: url(../images/icon-info.png) no-repeat center / cover;
 }
 
 .game-more {
@@ -946,22 +975,26 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile-list {
+    visibility: hidden;
     position: fixed;
-    bottom: 0;
+    bottom: -100%;
     left: 0;
     width: 100%;
     z-index: 10;
+    transition: .3s;
 }
+
+.footer-top-mobile-list.active {
+    visibility: visible;
+    bottom:0;
+}
+
 
 .footer-top-mobile-header {
     padding: 10px 20px;
     height: 44px;
     background-color: #77777f;
     text-align: right;
-}
-
-.footer-top-mobile-list {
-    display: none;
 }
 
 .footer-top-mobile-list ul {
@@ -980,10 +1013,6 @@ footer .footer-max-width {
 .footer-top-mobile-list li:hover,
 .footer-top-mobile-list li.active {
     background-color: #3A3A3A;
-}
-
-.footer-top-mobile-list.active {
-    display: block;
 }
 
 @media (max-width: 992px) {
