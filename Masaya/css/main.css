@@ -80,7 +80,7 @@ button.button-style-2>span {
 button.button-style-3 {
     width: 100%;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 5px;
     background: #40D900;
     box-shadow: 0px 2px 0px #237800;
 
@@ -431,7 +431,7 @@ nav.active {
 .link-item-dropdown {
     display: none;
     margin-left: 40px;
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 5px;
     background-color: #044E04;
 }
