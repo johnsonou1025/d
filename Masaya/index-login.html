@@ -13,19 +13,34 @@
 </head>
 
 <body>
+    <!-- 彈窗廣告 -->
+    <div class="popup-wrap active">
+        <div class="popup-box">
+            <img src="images/popup-ad-1.png" alt="">
+            <!-- <img src="images/popup-ad-2.png" alt=""> -->
+            <a class="popup-close" href="#"></a>
+        </div>
+    </div>
+    <script>
+    $(function() {
+        $(".popup-close").click(function() {
+            $(".popup-wrap").removeClass("active");
+        })
+    })
+    </script>
     <header>
         <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
         <div class="header-search"><img src="images/icon-search.png" alt=""></div>
         <script>
-            $(function(){
-                $(".header-toggler").click(function(){
-                    $("nav").addClass("active");
-                })
-                $(".nav-close").click(function(){
-                    $("nav").removeClass("active");
-                })
+        $(function() {
+            $(".header-toggler").click(function() {
+                $("nav").addClass("active");
             })
+            $(".nav-close").click(function() {
+                $("nav").removeClass("active");
+            })
+        })
         </script>
     </header>
     <nav>
@@ -294,14 +309,14 @@
             </div>
         </div>
         <script>
-            $(function(){
-                $(".link-item").click(function(){
-                    $(this).toggleClass("active");
-                })
-                $(".language-item").click(function() {
-                    $(this).toggleClass("active");
-                })
+        $(function() {
+            $(".link-item").click(function() {
+                $(this).toggleClass("active");
             })
+            $(".language-item").click(function() {
+                $(this).toggleClass("active");
+            })
+        })
         </script>
         <!-- 左側選單-新聞 -->
         <div class="nav-link-list nav-news">
@@ -665,7 +680,7 @@
                     $(".footer-top-mobile").click(function() {
                         $(".footer-top-mobile-list").addClass("active");
                     })
-                    $(".footer-top-mobile-header").click(function(){
+                    $(".footer-top-mobile-header").click(function() {
                         $(this).parent(".footer-top-mobile-list").removeClass("active");
                     })
                 })
