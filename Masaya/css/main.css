@@ -210,11 +210,11 @@ nav {
     }
 
     nav {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: -100%;
         width: 100%;
-        height: auto;
+        height: 100%;
         z-index: 2;
     }
 
@@ -624,6 +624,7 @@ main .main-max-width {
     float: left;
     padding: 0 5px;
     width: 25%;
+    cursor:pointer;
 }
 
 .slick-list ul li i {
@@ -658,10 +659,16 @@ main .main-max-width {
     margin-bottom: 40px;
 }
 
+.game-filters-list ul::-webkit-scrollbar {
+    display: none;
+}
+
 .game-filters-list ul {
     white-space: nowrap;
     overflow-y: hidden;
     margin: 0 -5px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .game-filters-list li {
@@ -780,8 +787,8 @@ main .main-max-width {
     top: 50%;
     transform: translateY(-50%);
     right: 10px;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: url(../images/icon-info.png) no-repeat center / cover;
     cursor: pointer;
 }
@@ -813,6 +820,7 @@ main .main-max-width {
     width: 12px;
     height: 12px;
     background: url(../images/icon-close.png) no-repeat center center /cover;
+    cursor: pointer;
 }
 
 .game-card-info p {
@@ -884,9 +892,15 @@ main .main-max-width {
     margin-bottom: 20px;
 }
 
+.new-events ul::-webkit-scrollbar {
+    display: none;
+}
+
 .new-events ul {
     white-space: nowrap;
     overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .new-events li {
@@ -927,9 +941,15 @@ main .main-max-width {
     margin-bottom: 20px;
 }
 
+.providers ul::-webkit-scrollbar {
+    display: none;
+}
+
 .providers ul {
     white-space: nowrap;
     overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .providers li {
@@ -1112,9 +1132,15 @@ footer .footer-max-width {
     margin-bottom: 20px;
 }
 
+.footer-icon ul::-webkit-scrollbar {
+    display: none;
+}
+
 .footer-icon ul {
     white-space: nowrap;
     overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .footer-icon li {
@@ -1201,6 +1227,7 @@ footer .footer-max-width {
     float: left;
     width: 50%;
     border-radius: 0;
+    font-weight: bold;
 }
 
 /*手機版-底部選單-選單*/
@@ -1254,12 +1281,13 @@ footer .footer-max-width {
     position: absolute;
     top: 50%;
     left: 50%;
-/*    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);*/
+    /*    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);*/
     border-radius: 3px;
     /*  background: #fff;*/
     text-align: center;
 }
-.popup-box img{
+
+.popup-box img {
     max-width: 100%;
     max-height: 100%;
 }
@@ -1282,7 +1310,8 @@ footer .footer-max-width {
     .popup-box {
         width: 80%;
     }
-    .popup-close{
+
+    .popup-close {
         top: -42px;
         right: 0;
     }
