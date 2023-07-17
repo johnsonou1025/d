@@ -163,6 +163,10 @@ header {
     max-height: 100%;
 }
 
+nav::-webkit-scrollbar {
+    display: none;
+}
+
 nav {
     position: fixed;
     padding: 24px;
@@ -170,7 +174,9 @@ nav {
     height: 100vh;
     background: linear-gradient(to right, #123a12 0%, #030F03 100%);
     overflow-y: auto;
-    transition: .3sg;
+    transition: .3s;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .nav-close {
