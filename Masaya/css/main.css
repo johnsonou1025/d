@@ -83,7 +83,7 @@ button.button-style-3 {
     border-radius: 5px;
     background: #40D900;
     box-shadow: 0px 2px 0px #237800;
-
+    cursor: pointer;
 }
 
 button.button-style-3>span {
@@ -173,10 +173,6 @@ nav {
     transition: .3sg;
 }
 
-nav.active {
-    left: 0;
-}
-
 .nav-close {
     display: none;
     position: absolute;
@@ -212,6 +208,10 @@ nav.active {
         width: 100%;
         height: auto;
         z-index: 2;
+    }
+
+    nav.active {
+        left: 0;
     }
 
     .nav-close {
@@ -276,6 +276,22 @@ nav.active {
     width: 40px;
     border-radius: 20px;
     background: #fff;
+}
+
+.user-info-personal {
+    display: flex;
+    flex: 2;
+    align-items: center;
+    justify-content: end;
+}
+
+.user-info-personal img {
+    padding: 5px;
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    background-color: #278400;
+    cursor: pointer;
 }
 
 .user-info-level {
@@ -383,6 +399,7 @@ nav.active {
 
 .link-item {
     margin: 15px 0;
+    cursor: pointer;
 }
 
 .link-item-name {
@@ -647,6 +664,7 @@ main .main-max-width {
     border-radius: 10px;
     background-color: #334033;
     text-align: center;
+    cursor: pointer;
 }
 
 .game-filters-list li i {
@@ -757,6 +775,7 @@ main .main-max-width {
     width: 32px;
     height: 32px;
     background: url(../images/icon-info.png) no-repeat center / cover;
+    cursor: pointer;
 }
 
 .game-card-info {
@@ -986,7 +1005,7 @@ footer .footer-max-width {
 
 .footer-top-mobile-list.active {
     visibility: visible;
-    bottom:0;
+    bottom: 0;
 }
 
 
