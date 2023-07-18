@@ -1317,6 +1317,33 @@ footer .footer-max-width {
     }
 }
 
+/*表格樣式*/
+.form-input{
+    padding: 10px 20px;
+    background-color: #484848;
+}
+.form-input i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.form-input i img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /*css end*/
