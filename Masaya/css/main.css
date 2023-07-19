@@ -301,7 +301,7 @@ nav {
     display: flex;
     flex: 2;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .user-info-personal img {
@@ -551,7 +551,7 @@ main .main-max-width {
 
 .nav-jackpot{
     padding: 0;
-    margin:15px 0;
+    margin-bottom:15px;
 }
 
 .marquee-jackpot li i,
@@ -778,6 +778,18 @@ main .main-max-width {
     overflow: hidden;
 }
 
+.game-card-image picture{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.game-card-image picture img{
+    max-width: 100%;
+    max-width: 100%;
+}
 .game-favorite {
     position: absolute;
     right: 10px;
@@ -1554,6 +1566,53 @@ footer .footer-max-width {
 .form-text a {
     color: #40D900;
 }
+
+/*個人頁*/
+.personal-wrap{
+    padding: 100px;
+    overflow: hidden;
+}
+.nav-tabs{
+    display: flex;
+    background-color: #20261f;
+}
+.nav-tabs li{
+    float: left;
+    flex:1;
+    padding: 20px;
+    border:1px solid #707070;
+}
+.nav-tabs li.active{
+    background-color: #323731;
+    border-bottom: none;
+}
+.layout-balance-left{
+    padding: 20px;
+    font-size: 20px;
+}
+.day-choice{
+    background-color: #565656;
+}
+.day-choice{
+    display: flex;
+    background-color: #565656;
+}
+
+.day-choice li{
+    float: left;
+    flex:1;
+    padding: 20px;
+    border:1px solid #979797;
+    color: #fff;
+    text-align: center;
+}
+
+.day-choice li.active{
+    background-color: #676D7A;
+}
+
+
+
 
 /*樣式表*/
 .template-wrap button {

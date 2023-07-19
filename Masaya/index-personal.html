@@ -13,21 +13,6 @@
 </head>
 
 <body>
-    <!-- 彈窗廣告 -->
-    <div class="popup-wrap active">
-        <div class="popup-box">
-            <img src="images/popup-ad-1.png" alt="">
-            <!-- <img src="images/popup-ad-2.png" alt=""> -->
-            <a class="popup-close" href="#"></a>
-        </div>
-    </div>
-    <script>
-    $(function() {
-        $(".popup-close").click(function() {
-            $(".popup-wrap").removeClass("active");
-        })
-    })
-    </script>
     <header>
         <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
@@ -352,299 +337,47 @@
     </nav>
     <!-- 中間區塊 -->
     <main>
-        <!-- 中間區塊-手機版-獎池跑馬燈 -->
-        <div class="marquee-jackpot">
-            <ul>
-                <li>
-                    <i><img src="images/Fortune-Ox.png" alt=""></i>
-                    <div class="marquee-jackpot-text">
-                        <span>Orh**won<span>57,786 TRY</span></span>
-                        <span>in Wanted dead or a wild</span>
-                    </div>
+        <!-- 個人頁 -->
+        <div class="personal-wrap">
+            <ul class="nav-tabs">
+                <li class="active">
+                    <span>My account</span>
                 </li>
                 <li>
-                    <i><img src="images/Fortune-Ox.png" alt=""></i>
-                    <div class="marquee-jackpot-text">
-                        <span>Orh**won<span>57,786 TRY</span></span>
-                        <span>in Wanted dead or a wild</span>
-                    </div>
+                    <span>Profile</span>
                 </li>
                 <li>
-                    <i><img src="images/Fortune-Ox.png" alt=""></i>
-                    <div class="marquee-jackpot-text">
-                        <span>Orh**won<span>57,786 TRY</span></span>
-                        <span>in Wanted dead or a wild</span>
-                    </div>
+                    <span>My bet</span>
+                </li>
+                <li>
+                    <span>Wallet history</span>
                 </li>
             </ul>
-        </div>
-        <!-- 中間區塊-廣告輪播 -->
-        <div class="carousel"><img src="images/kv.jpg" alt=""></div>
-        <!-- 中間區塊-廣告輪播-手機版 -->
-        <div class="carousel-mobile"></div>
-        <div class="main-max-width">
-            <!-- 中間區塊-遊戲類別 -->
-            <div class="slick-list">
-                <ul>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="game-quick-link">
-                <div class="h4">Quick Links</div>
-                <div class="game-filters-list">
-                    <ul>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>All</span></li>
-                        <li class="active"><i><img src="images/icon-fire.png" alt=""></i><span>Hot</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>New</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>1P Bet</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Lottery</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Poker</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Sports</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Fishing</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Sabong</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Bingo</span></li>
-                    </ul>
-                </div>
-                <div class="game-card-background">
-                    <div class="game-card-list">
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <i class="game-favorite"></i>
-                            </div>
-                            <div class="game-card-name">
-                                <i class="game-info-icon"></i>
-                                <span class="game-name">Shaolin Soccer</span>
-                                <span class="game-provider">PGSoft</span>
-                            </div>
-                            <div class="game-card-info">
-                                <i class="close"></i>
-                                <span>平均回報率：</span><span>97%</span>
-                                <span>玩家回報率：</span><span>96.02%</span>
-                                <span>賭注範圍：</span><span>$100 - $10,000</span>
-                                <button><span>開始玩遊戲</span></button>
-                            </div>
+            <div class="layout">
+                <div class="h4">個人數據總覽</div>
+                <div class="layout-balance">
+                    <div class="layout-balance-left">
+                        <p><span>帳戶金額</span><span>¥1888.68 </span></p>
+                        <p><span>可提金額</span><span>¥1888.68 </span></p>
+                        <p>離可提款還差 1200000 的流水</p>
+                        <div class="layout-button">
+                            <button><span>存款</span></button>
+                            <button><span>提款</span></button>
                         </div>
                     </div>
-                    <script>
-                    $(function() {
-                        $(".game-card-info .close").click(function() {
-                            $(this).parents(".game-card").removeClass("active");
-                        })
-                        $(".game-info-icon").click(function() {
-                            $(this).parents(".game-card").addClass("active");
-                        })
-                    })
-                    </script>
-                    <div class="game-more">
-                        <button class="button-style-6"><span>Load∂ more games</span></button>
+                    <div class="layout-balance-right">
+                        <ul class="day-choice">
+                            <li class="active">今日</li>
+                            <li>昨日</li>
+                            <li>最近7日</li>
+                            <li>當月</li>
+                            <li>上月</li>
+                        </ul>
+                        <ul>
+                            <li><span>存款</span><span>$ 0.00</span></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-            <!-- 中間區塊-新事件 -->
-            <div class="new-events">
-                <div class="h4">New Events</div>
-                <ul>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                </ul>
-            </div>
-            <!-- 中間區塊-供應商 -->
-            <div class="providers">
-                <div class="h4">Providers</div>
-                <ul>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                </ul>
             </div>
         </div>
         <!-- 頁腳 -->
