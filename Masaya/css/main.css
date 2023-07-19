@@ -787,8 +787,8 @@ main .main-max-width {
 }
 
 .game-card-image picture img{
-    max-width: 100%;
-    max-width: 100%;
+    width: 100%;
+    width: 100%;
 }
 .game-favorite {
     position: absolute;
