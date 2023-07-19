@@ -125,6 +125,17 @@ button.button-style-6>span {
     color: #fff;
 }
 
+button.button-style-7 {
+    padding: 16px 40px;
+    border-radius: 5px;
+    background: #278400;
+}
+
+button.button-style-7>span {
+    font-size: 16px;
+    color: #fff;
+}
+
 /*左側選單*/
 header {
     display: none;
@@ -261,7 +272,7 @@ nav {
 
 .user-info-text {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
 }
@@ -388,6 +399,11 @@ nav {
 
 .language-item li {
     margin: 20px 0;
+    transition: .3s;
+}
+
+.language-item li:hover {
+    color: #40D900;
 }
 
 .language-item li:last-child {
@@ -432,7 +448,7 @@ nav {
 
 .link-item-text {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
     width: 100%;
@@ -515,7 +531,7 @@ main .main-max-width {
     }
 }
 
-/*中間區塊-手機版-獎池跑馬燈*/
+/*獎池跑馬燈*/
 .marquee-jackpot {
     display: none;
 }
@@ -527,28 +543,37 @@ main .main-max-width {
     overflow-y: hidden;
 }
 
-.marquee-jackpot li {
+.marquee-jackpot li,
+.nav-jackpot {
     display: inline-flex;
     padding: 0 10px;
 }
 
-.marquee-jackpot li i {
+.nav-jackpot{
+    padding: 0;
+    margin:15px 0;
+}
+
+.marquee-jackpot li i,
+.nav-jackpot i {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
-    height: 48px;
-    width: 48px;
+    max-height: 48px;
+    max-width: 48px;
 }
 
-.marquee-jackpot li i img {
+.marquee-jackpot li i img,
+.nav-jackpot i img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.marquee-jackpot-text {
+.marquee-jackpot-text,
+.nav-jackpot-text {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
     width: 100%;
@@ -556,18 +581,24 @@ main .main-max-width {
     font-weight: bold;
 }
 
-.marquee-jackpot-text span {
+.marquee-jackpot-text span,
+.nav-jackpot-text span {
     margin: 2px 0;
     font-size: 12px;
 }
 
-.marquee-jackpot-text span span {
+.marquee-jackpot-text span span,
+.nav-jackpot-text span span {
+    margin-left: 5px;
     color: #40D900;
 }
 
 @media (max-width: 992px) {
     .marquee-jackpot {
         display: block;
+    }
+    .nav-jackpot{
+        display: none;
     }
 }
 
@@ -624,7 +655,7 @@ main .main-max-width {
     float: left;
     padding: 0 5px;
     width: 25%;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .slick-list ul li i {
@@ -998,7 +1029,7 @@ footer .footer-max-width {
 /*頁腳-手機版-文字連結*/
 .footer-top-mobile {
     display: none;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
     padding: 20px;
@@ -1238,12 +1269,18 @@ footer .footer-max-width {
     text-align: center;
 }
 
+.nav-bottom-menu li.active {
+    color: #40D900;
+}
+
 .nav-bottom-menu i {
     display: block;
     margin-bottom: 5px;
     height: 24px;
     text-align: center;
+    background: no-repeat center center / auto 100%;
 }
+
 
 .nav-bottom-menu i img {
     display: inline-block;
@@ -1256,6 +1293,47 @@ footer .footer-max-width {
         display: block;
     }
 }
+
+.nav-bottom-menu li i.home {
+    background-image: url(../images/nav-bottom-home.png);
+}
+
+.nav-bottom-menu li i.recommend {
+    background-image: url(../images/nav-bottom-recommend.png);
+}
+
+.nav-bottom-menu li i.offers {
+    background-image: url(../images/nav-bottom-offers.png);
+}
+
+.nav-bottom-menu li i.deposit {
+    background-image: url(../images/nav-bottom-deposit.png);
+}
+
+.nav-bottom-menu li i.my {
+    background-image: url(../images/nav-bottom-my.png);
+}
+
+.nav-bottom-menu li.active i.home {
+    background-image: url(../images/nav-bottom-home-active.png);
+}
+
+.nav-bottom-menu li.active i.recommend {
+    background-image: url(../images/nav-bottom-recommend-active.png);
+}
+
+.nav-bottom-menu li.active i.offers {
+    background-image: url(../images/nav-bottom-offers-active.png);
+}
+
+.nav-bottom-menu li.active i.deposit {
+    background-image: url(../images/nav-bottom-deposit-active.png);
+}
+
+.nav-bottom-menu li.active i.my {
+    background-image: url(../images/nav-bottom-my-active.png);
+}
+
 
 /*彈窗廣告*/
 .popup-wrap {
@@ -1318,16 +1396,34 @@ footer .footer-max-width {
 }
 
 /*表格樣式*/
-.form-input{
-    padding: 10px 20px;
-    background-color: #484848;
+.form-input {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px 20px 10px 50px;
+    border-radius: 5px;
+    border: 1px solid #484848;
+    background-color: #193319;
 }
+
 .form-input i {
-    display: inline-flex;
+    float: left;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 20px;
     height: 20px;
+}
+
+.form-input input {
+    width: 100%;
+    display: block;
+    border: none;
+    background-color: transparent;
+    color: #FFF;
+    line-height: 20px;
 }
 
 .form-input i img {
@@ -1335,15 +1431,133 @@ footer .footer-max-width {
     max-height: 100%;
 }
 
+.form-get-code input {
+    width: calc(100% - 120px);
+    ;
+}
 
+.form-get-code a {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 100%;
+    border-left: 1px solid #484848;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #40D900;
+}
 
+.form-county-code {
+    padding-left: 150px;
+}
 
+.form-select {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+    bottom: 0px;
+    padding: 10px;
+    width: 90px;
+    border-right: 1px solid #484848;
+    background: url(../images/icon-arrow-down-2.png) no-repeat right 20px center / 15%;
+    cursor: pointer;
+}
 
+.form-select-value {
+    position: relative;
+    height: 100%;
+}
 
+.form-select-value img {
+    height: 100%;
+}
 
+.form-select-value ul {
+    display: none;
+    position: absolute;
+    top: calc(100% + 11px);
+    left: 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #044E04;
+}
 
+.form-select-value li {
+    padding: 10px 0;
+}
 
+.form-select-value li img {
+    height: 24px;
+}
 
+.from-checkbox {
+    display: inline-block;
+    vertical-align: middle;
+}
 
+.from-checkbox label {
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 26px;
+    margin: 0;
+    line-height: 16px;
+    color: #989A98;
+}
 
-/*css end*/
+.from-checkbox label input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    width: 16px;
+    height: 16px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.checkbox-indicator {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background: #fff;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.from-checkbox label input:checked~.checkbox-indicator:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url(../images/icon-checked.png) no-repeat center center / 80%;
+}
+
+.form-button button {
+    width: 100%;
+    text-align: center;
+}
+
+.form-text {
+    color: #989A98;
+}
+
+.form-text a {
+    color: #40D900;
+}
+
+/*樣式表*/
+.template-wrap button {
+    margin: 10px 0;
+}
+
+/*css end

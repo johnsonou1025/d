@@ -18,14 +18,14 @@
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
         <div class="header-search"><img src="images/icon-search.png" alt=""></div>
         <script>
-            $(function(){
-                $(".header-toggler").click(function(){
-                    $("nav").addClass("active");
-                })
-                $(".nav-close").click(function(){
-                    $("nav").removeClass("active");
-                })
+        $(function() {
+            $(".header-toggler").click(function() {
+                $("nav").addClass("active");
             })
+            $(".nav-close").click(function() {
+                $("nav").removeClass("active");
+            })
+        })
         </script>
     </header>
     <nav>
@@ -222,6 +222,31 @@
                         <span>New game is out!</span>
                         <span>Sweet candy cash Megawa</span>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="nav-link-list">
+            <h4>Latest big wins</h4>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
+                </div>
+            </div>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
+                </div>
+            </div>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
                 </div>
             </div>
         </div>
@@ -556,7 +581,7 @@
                     $(".footer-top-mobile").click(function() {
                         $(".footer-top-mobile-list").addClass("active");
                     })
-                    $(".footer-top-mobile-header").click(function(){
+                    $(".footer-top-mobile-header").click(function() {
                         $(this).parent(".footer-top-mobile-list").removeClass("active");
                     })
                 })
@@ -649,29 +674,36 @@
             <!-- 手機版-底部-選單 -->
             <div class="nav-bottom-menu">
                 <ul>
-                    <li>
-                        <i><img src="images/icon-home.png" alt=""></i>
+                    <li class="active">
+                        <i class="home"></i>
                         <span>Home</span>
                     </li>
                     <li>
-                        <i><img src="images/icon-home.png" alt=""></i>
+                        <i class="recommend"></i>
                         <span>Recommend</span>
                     </li>
                     <li>
-                        <i><img src="images/icon-home.png" alt=""></i>
+                        <i class="offers"></i>
                         <span>Offers</span>
                     </li>
                     <li>
-                        <i><img src="images/icon-home.png" alt=""></i>
+                        <i class="deposit"></i>
                         <span>Deposit</span>
                     </li>
                     <li>
-                        <i><img src="images/icon-home.png" alt=""></i>
+                        <i class="my"></i>
                         <span>My</span>
                     </li>
                 </ul>
             </div>
         </div>
+        <script>
+        $(function() {
+            $(".nav-bottom-menu li").click(function() {
+                $(this).addClass("active").siblings().removeClass("active");
+            })
+        })
+        </script>
     </main>
 </body>
 
