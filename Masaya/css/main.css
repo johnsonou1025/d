@@ -48,6 +48,9 @@ h6,
 
 /*按鈕*/
 button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: 0;
     cursor: pointer;
 }
@@ -114,7 +117,7 @@ button.button-style-5>span {
 }
 
 button.button-style-6 {
-    padding: 20px 40px;
+    padding: 0 40px;
     height: 52px;
     border-radius: 16px;
     background: linear-gradient(to right, #D9D900 0%, #FF9200 100%);
@@ -134,6 +137,61 @@ button.button-style-7 {
 button.button-style-7>span {
     font-size: 16px;
     color: #fff;
+}
+
+button.button-style-8 {
+    padding: 16px 40px;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #D9D900 0%, #FF9200 100%);
+}
+
+button.button-style-8>span {
+    font-size: 16px;
+    color: #fff;
+}
+
+button.button-style-9 {
+    padding: 16px 40px;
+    border-radius: 5px;
+    background: #949494;
+}
+
+button.button-style-9>span {
+    font-size: 16px;
+    color: #fff;
+}
+
+button.button-style-10 {
+    padding: 16px 40px;
+    border-radius: 5px;
+    background: #278400;
+}
+
+button.button-style-10>span {
+    font-size: 16px;
+    color: #fff;
+}
+
+button:disabled,
+button[disabled] {
+    background-color: #B9B9B9;
+}
+
+button:disabled span,
+button[disabled] span {
+    color: #949494;
+}
+
+/*共用class*/
+i img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.body-lock {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /*左側選單*/
@@ -226,7 +284,7 @@ nav {
         left: -100%;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        z-index: 99;
     }
 
     nav.active {
@@ -549,9 +607,9 @@ main .main-max-width {
     padding: 0 10px;
 }
 
-.nav-jackpot{
+.nav-jackpot {
     padding: 0;
-    margin-bottom:15px;
+    margin-bottom: 15px;
 }
 
 .marquee-jackpot li i,
@@ -562,12 +620,6 @@ main .main-max-width {
     margin-right: 10px;
     max-height: 48px;
     max-width: 48px;
-}
-
-.marquee-jackpot li i img,
-.nav-jackpot i img {
-    max-width: 100%;
-    max-height: 100%;
 }
 
 .marquee-jackpot-text,
@@ -597,7 +649,8 @@ main .main-max-width {
     .marquee-jackpot {
         display: block;
     }
-    .nav-jackpot{
+
+    .nav-jackpot {
         display: none;
     }
 }
@@ -721,11 +774,6 @@ main .main-max-width {
     vertical-align: middle;
 }
 
-.game-filters-list li i img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
 .game-filters-list li span {
     font-size: 16px;
     vertical-align: middle;
@@ -774,11 +822,11 @@ main .main-max-width {
     position: relative;
     border-radius: 6px 6px 0 0;
     padding-top: 78%;
-    background: url(../images/Fortune-Ox.png) no-repeat center center / cover;
+    background: #000;
     overflow: hidden;
 }
 
-.game-card-image picture{
+.game-card-image picture {
     position: absolute;
     top: 0;
     left: 0;
@@ -786,10 +834,11 @@ main .main-max-width {
     width: 100%;
 }
 
-.game-card-image picture img{
+.game-card-image picture img {
     width: 100%;
     width: 100%;
 }
+
 .game-favorite {
     position: absolute;
     right: 10px;
@@ -1014,11 +1063,6 @@ main .main-max-width {
     margin-right: 0;
 }
 
-.providers li img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
 /*頁腳*/
 footer {
     margin-top: 40px;
@@ -1193,11 +1237,6 @@ footer .footer-max-width {
     margin: 0 10px;
     width: 120px;
     height: 30px;
-}
-
-.footer-icon li img {
-    max-width: 100%;
-    max-height: 100%;
 }
 
 /*頁腳-執照*/
@@ -1408,6 +1447,66 @@ footer .footer-max-width {
 }
 
 /*表格樣式*/
+.login-tabs {
+    margin: 40px 0;
+}
+
+.login-tabs ul {
+    display: flex;
+    overflow: hidden;
+}
+
+.login-tabs li {
+    flex: 1;
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border:1px solid #484848;
+    background-color: #193319;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-tabs li.active {
+    border-color: #40D900;
+    color: #40D900;
+}
+
+.login-tabs li+li{
+    margin-left: 10px;
+}
+
+.login-tabs li i {
+    margin-right: 10px;
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.login-tabs li i.icon-account {
+    background-image: url(../images/icon-member.png);
+}
+
+.login-tabs li.active i.icon-account {
+    background-image: url(../images/icon-member-active.png);
+
+}
+
+.login-tabs li i.phone {
+    background-image: url(../images/icon-phone.png);
+}
+
+.login-tabs li.active i.phone {
+    background-image: url(../images/icon-phone-active.png);
+
+}
+
 .form-input {
     position: relative;
     margin-bottom: 15px;
@@ -1415,6 +1514,10 @@ footer .footer-max-width {
     border-radius: 5px;
     border: 1px solid #484848;
     background-color: #193319;
+}
+
+.form-input-error {
+    border: 2px solid #FF0000;
 }
 
 .form-input i {
@@ -1438,29 +1541,44 @@ footer .footer-max-width {
     line-height: 20px;
 }
 
-.form-input i img {
-    max-width: 100%;
-    max-height: 100%;
+.form-get-code {
+    overflow: hidden;
 }
 
-.form-get-code input {
+.form-get-code .form-input {
     width: calc(100% - 120px);
-    ;
+    float: left;
 }
 
 .form-get-code a {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 120px;
-    height: 100%;
-    border-left: 1px solid #484848;
+    float: right;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #484848;
+    width: 110px;
+    height: 44px;
+    background-color: #278400;
     line-height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #40D900;
+    color: #fff;
+}
+
+.form-get-code button {
+    float: right;
+    padding: 0;
+    width: 110px;
+    height: 44px;
+}
+
+.form-get-code button span {
+    font-size: 14px;
+}
+
+.form-dorp-down {
+    background: url(../images/icon-arrow-dropdown.png) #193319 no-repeat right 10px center / 15px 15px;
 }
 
 .form-county-code {
@@ -1482,6 +1600,7 @@ footer .footer-max-width {
 .form-select-value {
     position: relative;
     height: 100%;
+    text-align: left;
 }
 
 .form-select-value img {
@@ -1492,26 +1611,40 @@ footer .footer-max-width {
     display: none;
     position: absolute;
     top: calc(100% + 11px);
-    left: 0;
-    padding: 10px 20px;
-    border-radius: 5px;
-    background-color: #044E04;
+    top: 31px;
+    left: -50px;
+    padding: 10px 0;
+    width: 130px;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #484848;
+    background-color: #193319;
+    z-index: 99;
+}
+
+.form-select.active ul {
+    display: block;
 }
 
 .form-select-value li {
-    padding: 10px 0;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.form-select-value li:hover {
+    background-color: #278400;
 }
 
 .form-select-value li img {
     height: 24px;
 }
 
-.from-checkbox {
+.form-checkbox {
     display: inline-block;
+    margin-bottom: 15px;
     vertical-align: middle;
 }
 
-.from-checkbox label {
+.form-checkbox label {
     vertical-align: middle;
     position: relative;
     cursor: pointer;
@@ -1522,7 +1655,7 @@ footer .footer-max-width {
     color: #989A98;
 }
 
-.from-checkbox label input {
+.form-checkbox label input {
     position: absolute;
     z-index: -1;
     opacity: 0;
@@ -1567,56 +1700,254 @@ footer .footer-max-width {
     color: #40D900;
 }
 
+.form-text-login {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.form-text-login a {
+    flex: 1;
+    color: #989A98;
+    text-align: left;
+}
+
+.form-text-login a:last-child {
+    text-align: right;
+}
+
+.form-message {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    color: #FF0000;
+}
+
+.form-message i {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+
+.form-popup {
+    border-radius: 5px;
+    border: 1px solid #707070;
+    background-color: #030F03;
+    color: #979797;
+    overflow: hidden;
+}
+
+.form-popup .inner {
+    padding: 40px 20px 40px;
+}
+
+.form-popup .inner p {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.form-popup .inner input {
+    border: 1px solid #707070;
+    border-radius: 5px;
+    background-color: #193319;
+    text-align: center;
+    line-height: 50px;
+    color:#fff;
+}
+
+.form-popup .verify-button {
+    margin-top: 20px;
+}
+
+.form-popup .verify-button button+button {
+    margin-left: 20px;
+}
+
+.form-popup span {
+    color: #707070;
+}
+.form-wrap>span.h5{
+    display: block;
+    margin: 30px 0 20px;
+    color: #989A98;
+    text-align: left;
+}
+/*註冊登入頁*/
+.popup-login .popup-box {
+    width: 900px;
+    height: 775px;
+    background-color: #030F03;
+}
+
+.popup-login .content-left {
+    float: left;
+    width: 400px;
+    height: 100%;
+}
+
+.popup-login .content {
+    position: relative;
+    float: right;
+    width: 500px;
+    height: 100%;
+    padding: 40px 50px 0;
+    overflow-y: auto;
+}
+
+.mobile-login {
+    display: none;
+    position: fixed;
+    top: 49px;
+    right: 0;
+    bottom: 0px;
+    left: 0;
+    background-color: #030F03;
+    z-index: 90;
+    overflow-y: auto;
+}
+
+.desktop-form-popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 99;
+}
+
+.desktop-form-popup.active {
+    display: block;
+}
+
+.desktop-form-popup .form-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 430px;
+}
+
+.content {
+    padding: 40px 20px 0;
+}
+
+.content .login-logo {
+    display: none;
+    text-align: center;
+}
+
+.content h3 {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.form-agree {
+    padding: 0 40px;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.form-button {
+    margin-bottom: 40px;
+}
+
+.content footer {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 40px -20px 0;
+    padding: 40px 60px;
+    text-align: center;
+    color: #B5B5B5;
+}
+
+@media (max-width: 992px) {
+    .popup-login {
+        display: none;
+    }
+
+    .mobile-login {
+        display: block;
+    }
+
+    .content {
+        position: relative;
+        padding: 40px 20px;
+        min-height: calc(100vh - 49px);
+    }
+
+    .content .login-logo {
+        display: inline-block;
+    }
+
+    .content h3 {
+        margin: 40px 0 20px;
+    }
+
+
+    .content footer {
+        display: block;
+    }
+
+}
+
 /*個人頁*/
-.personal-wrap{
+.personal-wrap {
     padding: 100px;
     overflow: hidden;
 }
-.nav-tabs{
+
+.nav-tabs {
     display: flex;
     background-color: #20261f;
 }
-.nav-tabs li{
+
+.nav-tabs li {
     float: left;
-    flex:1;
+    flex: 1;
     padding: 20px;
-    border:1px solid #707070;
+    border: 1px solid #707070;
 }
-.nav-tabs li.active{
+
+.nav-tabs li.active {
     background-color: #323731;
     border-bottom: none;
 }
-.layout-balance-left{
+
+.layout-balance-left {
     padding: 20px;
     font-size: 20px;
 }
-.day-choice{
+
+.day-choice {
     background-color: #565656;
 }
-.day-choice{
+
+.day-choice {
     display: flex;
     background-color: #565656;
 }
 
-.day-choice li{
+.day-choice li {
     float: left;
-    flex:1;
+    flex: 1;
     padding: 20px;
-    border:1px solid #979797;
+    border: 1px solid #979797;
     color: #fff;
     text-align: center;
 }
 
-.day-choice li.active{
+.day-choice li.active {
     background-color: #676D7A;
 }
 
-
-
-
 /*樣式表*/
 .template-wrap button {
-    margin: 10px 0;
+    /*    margin: 10px 0;*/
 }
 
 /*css end

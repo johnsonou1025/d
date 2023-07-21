@@ -12,7 +12,86 @@
     <script src="js/jquery-3.7.0.min.js"></script>
 </head>
 
-<body>
+<body class="body-lock">
+    <!-- 登入/註冊-桌機彈窗 -->
+    <div class="popup-wrap popup-login active">
+        <div class="popup-box">
+            <a class="popup-close" href="#"></a>
+            <i class="content-left"><img src="images/login-left.png" alt=""></i>
+            <div class="content">
+                <div class="form-wrap">
+                    <h3>Log in to your account to play the games!</h3>
+                    <div class="login-tabs">
+                        <ul>
+                            <li class="active"><i class="icon-account"></i>Acconut</li>
+                            <li><i class="phone"></i>Phone</li>
+                        </ul>
+                    </div>
+                    <div class="form-input">
+                        <i><img src="images/icon-member.png" alt=""></i>
+                        <input type="text" placeholder="Number">
+                    </div>
+                    <div class="form-input">
+                        <i><img src="images/icon-member.png" alt=""></i>
+                        <input type="text" placeholder="Password">
+                    </div>
+                    <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
+                    <div class="form-text-login">
+                        <a href="">Create Account?</a><a href="">Forget Password?</a>
+                    </div>
+                    <div class="form-agree">
+                        <div class="form-button">
+                            <button class="button-style-7"><span>LOGIN</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+        $(".popup-close").click(function() {
+            $(".popup-wrap").removeClass("active");
+        })
+    })
+    </script>
+    <!-- 登入/註冊-手機版 -->
+    <div class="mobile-login">
+        <div class="content">
+            <i class="login-logo">
+                <img src="images/register-logo.png" alt="">
+            </i>
+            <div class="form-wrap">
+                <h3>LOGIN</h3>
+                <div class="login-tabs">
+                    <ul>
+                        <li><i class="icon-account"></i>Acconut</li>
+                        <li class="active"><i class="phone"></i>Phone</li>
+                    </ul>
+                </div>
+                <div class="form-input">
+                    <i><img src="images/icon-member.png" alt=""></i>
+                    <input type="text" placeholder="Number">
+                </div>
+                <div class="form-input">
+                    <i><img src="images/icon-member.png" alt=""></i>
+                    <input type="text" placeholder="Password">
+                </div>
+                <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
+                <div class="form-text-login">
+                    <a href="">Create Account?</a><a href="">Forget Password?</a>
+                </div>
+                <div class="form-agree">
+                    <div class="form-button">
+                        <button class="button-style-7"><span>LOGIN</span></button>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Copyright © 2022 BONUS365. All Rights Reserved.</span>
+            </footer>
+        </div>
+    </div>
     <header>
         <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
@@ -694,46 +773,6 @@
                 </div>
             </div>
         </footer>
-        <!-- 手機版-底部 -->
-        <div class="nav-bottom">
-            <!-- 手機版-底部-登入/註冊 -->
-            <div class="nav-bottom-no-login">
-                <button class="button-style-1"><span>SIGN-UP</span></button>
-                <button class="button-style-2"><span>SIGN IN</span></button>
-            </div>
-            <!-- 手機版-底部-選單 -->
-            <div class="nav-bottom-menu">
-                <ul>
-                    <li class="active">
-                        <i class="home"></i>
-                        <span>Home</span>
-                    </li>
-                    <li>
-                        <i class="recommend"></i>
-                        <span>Recommend</span>
-                    </li>
-                    <li>
-                        <i class="offers"></i>
-                        <span>Offers</span>
-                    </li>
-                    <li>
-                        <i class="deposit"></i>
-                        <span>Deposit</span>
-                    </li>
-                    <li>
-                        <i class="my"></i>
-                        <span>My</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <script>
-        $(function() {
-            $(".nav-bottom-menu li").click(function() {
-                $(this).addClass("active").siblings().removeClass("active");
-            })
-        })
-        </script>
     </main>
 </body>
 
