@@ -1539,6 +1539,7 @@ footer .footer-max-width {
     background-color: transparent;
     color: #FFF;
     line-height: 20px;
+    outline: none;
 }
 
 .form-get-code {
