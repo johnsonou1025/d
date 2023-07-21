@@ -484,6 +484,11 @@ nav {
     cursor: pointer;
 }
 
+.link-item.active,
+.link-item:hover{
+    color: #40D900;
+}
+
 .link-item-name {
     display: flex;
 }
