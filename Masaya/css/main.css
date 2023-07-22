@@ -663,7 +663,6 @@ main .main-max-width {
 /*中間區塊-廣告輪播*/
 .carousel {
     position: relative;
-    height: 453px;
     width: 100%;
     background: #aaa;
     overflow: hidden;
@@ -717,10 +716,22 @@ main .main-max-width {
 }
 
 .slick-list ul li i {
-    display: block;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding-top: 90%;
     border-radius: 16px;
     background: #193319;
+    overflow:hidden;
+}
+.slick-list ul li i img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .slick-list ul>li>span {
@@ -826,7 +837,7 @@ main .main-max-width {
 .game-card-image {
     position: relative;
     border-radius: 6px 6px 0 0;
-    padding-top: 78%;
+    padding-top: 74%;
     background: #000;
     overflow: hidden;
 }
