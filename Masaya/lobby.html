@@ -12,240 +12,7 @@
     <script src="js/jquery-3.7.0.min.js"></script>
 </head>
 
-<body class="body-lock">
-    <!-- 登入/註冊-桌機彈窗 -->
-    <div class="popup-wrap popup-login active">
-        <div class="popup-box">
-            <a class="popup-close" href="#"></a>
-            <i class="content-left"></i>
-            <div class="content">
-                <div class="form-wrap">
-                    <h3>Come on and create an account.</h3>
-                    <div class="form-input">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Member">
-                    </div>
-                    <div class="form-input">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Password">
-                    </div>
-                    <div class="form-input">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Confirm Password">
-                    </div>
-                    <div class="form-get-code">
-                        <div class="form-input">
-                            <i><img src="images/icon-member.png" alt=""></i>
-                            <input type="text" placeholder="E-mail">
-                        </div>
-                        <button class="button-style-7 desktop-form-popup-button"><span>Get Code</span></button>
-                        <!-- 
-                        按鈕樣式套用
-                        verity - boutton-style-8 
-                        resend(30) - button-style-9 
-                        -->
-                    </div>
-                    <!-- 驗證碼彈窗 -->
-                    <div class="desktop-form-popup">
-                        <div class="form-popup">
-                            <div class="inner">
-                                <p>Please enter the code.</p>
-                                <input type="text">
-                                <div class="verify-button">
-                                    <button class="button-style-10"><span>Verify</span></button>
-                                    <button class="button-style-9"><span>Cancel</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <script>
-                        $(function() {
-                            $(".desktop-form-popup-button").click(function(){
-                                $(".desktop-form-popup").addClass("active");
-                            })
-                            $(".desktop-form-popup button:last-child").click(function() {
-                                $(".desktop-form-popup").removeClass("active");
-                            })
-                        })
-                    </script>
-                    <div class="form-input form-dorp-down">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Date of birth">
-                    </div>
-                    <div class="form-input form-county-code">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <div class="form-select">
-                            <div class="form-select-value">
-                                <img src="images/icon-conuty-code.png" alt="">
-                                <ul>
-                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
-                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
-                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <input type="text" placeholder="Mobile">
-                    </div>
-                    <script>
-                        $(function(){
-                            $(".form-select").click(function(){
-                                $(this).toggleClass("active");
-                            })
-                        })
-                    </script>
-                    <div class="form-get-code">
-                        <div class="form-input">
-                            <i><img src="images/icon-member.png" alt=""></i>
-                            <input type="text" placeholder="Verification Code">
-                        </div>
-                        <button class="button-style-7"><span>Get Code</span></button>
-                    </div>
-                    <div class="form-input form-input-error">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Agent invitation code">
-                    </div>
-                    <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
-                    <div class="form-agree">
-                        <div class="form-checkbox">
-                            <label class="control">
-                                <input type="checkbox">
-                                <div class="checkbox-indicator"></div>
-                                I’ve read & agree《Member terms》
-                            </label>
-                        </div>
-                        <div class="form-button">
-                            <button class="button-style-7"><span>Create Account</span></button>
-                        </div>
-                        <div class="form-text">
-                            Already have an account? <a href="">Log in</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(function() {
-        $(".popup-close").click(function() {
-            $(".popup-wrap").removeClass("active");
-        })
-    })
-    </script>
-    <!-- 登入/註冊-手機版 -->
-    <div class="mobile-login">
-        <div class="content">
-            <i class="login-logo">
-                <img src="images/register-logo.png" alt="">
-            </i>
-            <div class="form-wrap">
-                <h3>REGISTER</h3>
-                <div class="form-input">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <input type="text" placeholder="Member">
-                </div>
-                <div class="form-input">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <input type="text" placeholder="Password">
-                </div>
-                <div class="form-input">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <input type="text" placeholder="Confirm Password">
-                </div>
-                <div class="form-get-code">
-                    <div class="form-input">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="E-mail">
-                    </div>
-                    <button class="button-style-7 mobile-form-popup-button"><span>Get Code</span></button>
-                    <!-- 
-                    按鈕樣式套用
-                    verity - boutton-style-8 
-                    resend(30) - button-style-9 
-                    -->
-                </div>
-                <!-- 彈窗 -->
-                <div class="popup-wrap mobile-form-popup">
-                    <div class="popup-box">
-                        <div class="form-popup">
-                            <div class="inner">
-                                <p>Please enter the code.</p>
-                                <input type="text">
-                                <div class="verify-button">
-                                    <button class="button-style-10"><span>Verify</span></button>
-                                    <button class="button-style-9"><span>Cancel</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    $(function() {
-                        $(".mobile-form-popup-button").click(function(){
-                            $(".mobile-form-popup").addClass("active");
-                        })
-                        $(".mobile-form-popup button:last-child").click(function() {
-                            $(".mobile-form-popup").removeClass("active");
-                        })
-                    })
-                </script>
-                <div class="form-input form-dorp-down">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <input type="text" placeholder="Date of birth">
-                </div>
-                <div class="form-input form-county-code">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <div class="form-select">
-                        <div class="form-select-value">
-                            <img src="images/icon-conuty-code.png" alt="">
-                            <ul>
-                                <li><img src="images/icon-conuty-code.png" alt=""></li>
-                                <li><img src="images/icon-conuty-code.png" alt=""></li>
-                                <li><img src="images/icon-conuty-code.png" alt=""></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <input type="text" placeholder="Mobile">
-                </div>
-                <script>
-                    $(function(){
-                        $(".form-select-value").click(function(){
-                            $(this).toggleClass("active");
-                        })
-                    })
-                </script>
-                <div class="form-get-code">
-                    <div class="form-input">
-                        <i><img src="images/icon-member.png" alt=""></i>
-                        <input type="text" placeholder="Verification Code">
-                    </div>
-                    <button class="button-style-7"><span>Get Code</span></button>
-                </div>
-                <div class="form-input form-input-error">
-                    <i><img src="images/icon-member.png" alt=""></i>
-                    <input type="text" placeholder="Agent invitation code">
-                </div>
-                <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
-                <div class="form-agree">
-                    <div class="form-checkbox">
-                        <label class="control">
-                            <input type="checkbox">
-                            <div class="checkbox-indicator"></div>
-                            I’ve read & agree《Member terms》
-                        </label>
-                    </div>
-                    <div class="form-button">
-                        <button class="button-style-7"><span>Create Account</span></button>
-                    </div>
-                    <div class="form-text">
-                        Already have an account? <a href="">Log in</a>
-                    </div>
-                </div>
-            </div>
-            <footer>
-                <span>Copyright © 2022 BONUS365. All Rights Reserved.</span>
-            </footer>
-        </div>
-    </div>
+<body>
     <header>
         <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
@@ -277,7 +44,7 @@
         </div>
         <!-- 左側選單-入口 -->
         <div class="nav-link-list">
-            <div class="link-item">
+            <div class="link-item active">
                 <div class="link-item-name">
                     <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                     <div class="link-item-text">
@@ -517,37 +284,29 @@
         <!-- 中間區塊-廣告輪播-手機版 -->
         <div class="carousel-mobile"></div>
         <div class="main-max-width">
-            <!-- 中間區塊-遊戲類別 -->
-            <div class="slick-list">
-                <ul>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                    <li>
-                        <i></i>
-                    </li>
-                </ul>
-            </div>
             <div class="game-quick-link">
-                <div class="h4">Quick Links</div>
-                <div class="game-filters-list">
+                <div class="game-filters-list lobby-filters-list">
                     <ul>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>All</span></li>
-                        <li class="active"><i><img src="images/icon-fire.png" alt=""></i><span>Hot</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>New</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>1P Bet</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Lottery</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Poker</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Sports</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Fishing</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Sabong</span></li>
-                        <li><i><img src="images/icon-coins.png" alt=""></i><span>Bingo</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>All</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Slot</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Live</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Sports</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>E-sports</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Lottery</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Poker</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Fishing</span></li>
+                        <li><i><img src="images/icon-slot.png" alt=""></i><span>Sabong</span></li>
+                    </ul>
+                </div>
+                <!-- 遊戲搜尋 -->
+                <div class="lobby-search-bar">
+                    <ul>
+                        <li>
+                            <i><img src="images/icon-filter.png" alt=""></i><span>Name of Provider...</span>
+                        </li>
+                        <li>
+                            <span>Search games...</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="game-card-background">
@@ -768,48 +527,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 中間區塊-新事件 -->
-            <div class="new-events">
-                <div class="h4">New Events</div>
-                <ul>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                    <li>
-                        <img src="images/ad_01.png" alt="">
-                        <span>One line more</span>
-                    </li>
-                </ul>
-            </div>
-            <!-- 中間區塊-供應商 -->
-            <div class="providers">
-                <div class="h4">Providers</div>
-                <ul>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                    <li><img src="images/CQ9.png" alt=""></li>
-                </ul>
-            </div>
         </div>
         <!-- 頁腳 -->
         <footer>
@@ -927,6 +644,46 @@
                 </div>
             </div>
         </footer>
+        <!-- 手機版-底部 -->
+        <div class="nav-bottom">
+            <!-- 手機版-底部-登入/註冊 -->
+            <div class="nav-bottom-no-login">
+                <button class="button-style-1"><span>SIGN-UP</span></button>
+                <button class="button-style-2"><span>SIGN IN</span></button>
+            </div>
+            <!-- 手機版-底部-選單 -->
+            <div class="nav-bottom-menu">
+                <ul>
+                    <li class="active">
+                        <i class="home"></i>
+                        <span>Home</span>
+                    </li>
+                    <li>
+                        <i class="recommend"></i>
+                        <span>Recommend</span>
+                    </li>
+                    <li>
+                        <i class="offers"></i>
+                        <span>Offers</span>
+                    </li>
+                    <li>
+                        <i class="deposit"></i>
+                        <span>Deposit</span>
+                    </li>
+                    <li>
+                        <i class="my"></i>
+                        <span>My</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+        $(function() {
+            $(".nav-bottom-menu li").click(function() {
+                $(this).addClass("active").siblings().removeClass("active");
+            })
+        })
+        </script>
     </main>
 </body>
 

@@ -19,6 +19,7 @@ body {
     background-color: #111;
 }
 
+
 /*字型*/
 
 h2,
@@ -169,6 +170,17 @@ button.button-style-10 {
 
 button.button-style-10>span {
     font-size: 16px;
+    color: #fff;
+}
+
+button.button-style-11 {
+    padding: 10px 24px;
+    border-radius: 40px;
+    background: #555A55;
+}
+
+button.button-style-11>span {
+    font-size: 14px;
     color: #fff;
 }
 
@@ -485,7 +497,7 @@ nav {
 }
 
 .link-item.active .link-item-text,
-.link-item:hover .link-item-text{
+.link-item:hover .link-item-text {
     color: #40D900;
 }
 
@@ -722,13 +734,14 @@ main .main-max-width {
     padding-top: 90%;
     border-radius: 16px;
     background: #193319;
-    overflow:hidden;
+    overflow: hidden;
 }
-.slick-list ul li i img{
+
+.slick-list ul li i img {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
 }
@@ -1425,6 +1438,7 @@ footer .footer-max-width {
     position: absolute;
     top: 50%;
     left: 50%;
+    height: 80%;
     /*    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);*/
     border-radius: 3px;
     /*  background: #fff;*/
@@ -1476,7 +1490,7 @@ footer .footer-max-width {
     height: 50px;
     padding: 10px 20px;
     border-radius: 5px;
-    border:1px solid #484848;
+    border: 1px solid #484848;
     background-color: #193319;
     text-align: center;
     vertical-align: middle;
@@ -1491,7 +1505,7 @@ footer .footer-max-width {
     color: #40D900;
 }
 
-.login-tabs li+li{
+.login-tabs li+li {
     margin-left: 10px;
 }
 
@@ -1769,7 +1783,7 @@ footer .footer-max-width {
     background-color: #193319;
     text-align: center;
     line-height: 50px;
-    color:#fff;
+    color: #fff;
 }
 
 .form-popup .verify-button {
@@ -1783,12 +1797,14 @@ footer .footer-max-width {
 .form-popup span {
     color: #707070;
 }
-.form-wrap>span.h5{
+
+.form-wrap>span.h5 {
     display: block;
     margin: 30px 0 20px;
     color: #989A98;
     text-align: left;
 }
+
 /*註冊登入頁*/
 .popup-login .popup-box {
     width: 900px;
@@ -1810,18 +1826,6 @@ footer .footer-max-width {
     width: 500px;
     height: 100%;
     padding: 40px 50px 0;
-    overflow-y: auto;
-}
-
-.mobile-login {
-    display: none;
-    position: fixed;
-    top: 49px;
-    right: 0;
-    bottom: 0px;
-    left: 0;
-    background-color: #030F03;
-    z-index: 90;
     overflow-y: auto;
 }
 
@@ -1848,11 +1852,7 @@ footer .footer-max-width {
     width: 430px;
 }
 
-.content {
-    padding: 40px 20px 0;
-}
-
-.content .login-logo {
+.mobile-login .content .login-logo {
     display: none;
     text-align: center;
 }
@@ -1872,7 +1872,19 @@ footer .footer-max-width {
     margin-bottom: 40px;
 }
 
-.content footer {
+.mobile-login {
+    display: none;
+    position: fixed;
+    top: 49px;
+    right: 0;
+    bottom: 0px;
+    left: 0;
+    background-color: #030F03;
+    z-index: 90;
+    overflow-y: auto;
+}
+
+.mobile-login .content footer {
     display: none;
     position: absolute;
     bottom: 0;
@@ -1892,22 +1904,247 @@ footer .footer-max-width {
         display: block;
     }
 
-    .content {
+    .mobile-login .content {
         position: relative;
         padding: 40px 20px;
         min-height: calc(100vh - 49px);
     }
 
-    .content .login-logo {
+    .mobile-login .content .login-logo {
         display: inline-block;
     }
 
-    .content h3 {
+    .mobile-login .content h3 {
         margin: 40px 0 20px;
     }
 
 
-    .content footer {
+    .mobile-login .content footer {
+        display: block;
+    }
+
+}
+
+/*大廳*/
+.lobby-filters-list li {
+    padding: 30px 0;
+}
+
+.lobby-filters-list li i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0px;
+    width: 48px;
+    height: 48px;
+}
+
+.lobby-filters-list li span {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.lobby-search-bar {
+    position: relative;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.lobby-search-bar li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    float: left;
+    padding: 20px;
+    height: 60px;
+    border-radius: 6px;
+    background-color: #555A55;
+    color: #ABABAB;
+}
+
+.lobby-search-bar li i {
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.lobby-search-bar li:first-child {
+    width: 268px;
+}
+
+.lobby-search-bar li:last-child {
+    margin-left: 20px;
+    width: calc(100% - 288px);
+    background: #555A55 url(../images/icon-game-search.png) no-repeat right 20px center / auto 40%;
+}
+
+.search-input {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #555A55;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);
+}
+
+.search-input input {
+    width: 100%;
+    display: block;
+    border: none;
+    background-color: transparent;
+    color: #FFF;
+    line-height: 20px;
+    outline: none;
+}
+
+.popup-lobby .popup-box {
+    width: 80%;
+    height: 80%;
+    max-width: 990px;
+    background: linear-gradient(to bottom, #123A12 0%, #030F03 100%);
+    text-align: left;
+}
+
+.popup-lobby .content {
+    padding: 40px 40px 80px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.popup-lobby p {
+    margin: 20px 0;
+}
+
+.trending-tags button+button {
+    margin-left: 20px;
+}
+
+.search-game-info {
+    padding: 0;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+}
+
+.search-game-info:hover {
+    border-color: #40D900;
+}
+
+.search-game-info i {
+    display: inline-block;
+    position: relative;
+    /*    margin-right: 10px;*/
+    height: 56px;
+    width: 56px;
+    border-radius: 6px;
+    vertical-align: middle;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);
+    overflow: hidden;
+}
+
+.search-game-info i picture {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+}
+
+.search-game-info i picture img {
+    max-width: none;
+}
+
+.search-game-text {
+    float: right;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 15px;
+    height: 56px;
+    border-radius: 6px;
+    background-color: #1E261E;
+    font-size: 16px;
+    vertical-align: middle;
+    width: calc(100% - 66px);
+}
+
+.search-game-text span {
+    margin: 2px 0;
+}
+
+.search-game-text span.h6 {
+    color: #7FD28A;
+}
+
+.search-result-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 0;
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(74,74,74,0) 0%, rgba(16,52,10,1) 100%);
+}
+
+.search-result-button button+button {
+    margin-left: 20px;
+}
+
+.mobile-lobby {
+    display: none;
+    position: fixed;
+    top: 49px;
+    right: 0;
+    bottom: 0px;
+    left: 0;
+    background: linear-gradient(to bottom, #123A12 0%, #030F03 100%);
+    z-index: 90;
+    overflow-y: auto;
+}
+.mobile-lobby .content{
+    margin: 30px 20px;
+    padding-bottom: 60px;
+}
+.mobile-lobby p{
+    margin: 20px 0;
+}
+.mobile-lobby .search-result-button{
+    position: fixed;
+}
+
+@media (max-width: 992px) {
+    .popup-lobby {
+        display: none;
+    }
+
+    .lobby-filters-list {
+        display: none;
+    }
+
+    .lobby-search-bar li {
+        padding: 20px 10px;
+        height: 40px;
+    }
+
+    .lobby-search-bar li:first-child {
+        float: right;
+        width: 40px;
+        height: 40px;
+    }
+
+    .lobby-search-bar li:first-child span {
+        display: none;
+    }
+
+    .lobby-search-bar li:last-child {
+        float: left;
+        margin-left: 0px;
+        width: calc(100% - 60px);
+
+    }
+    .mobile-lobby{
         display: block;
     }
 
