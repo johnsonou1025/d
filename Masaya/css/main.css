@@ -484,8 +484,8 @@ nav {
     cursor: pointer;
 }
 
-.link-item.active,
-.link-item:hover{
+.link-item.active .link-item-text,
+.link-item:hover .link-item-text{
     color: #40D900;
 }
 
@@ -1792,7 +1792,8 @@ footer .footer-max-width {
 /*註冊登入頁*/
 .popup-login .popup-box {
     width: 900px;
-    height: 775px;
+    height: 80%;
+    max-height: 775px;
     background-color: #030F03;
 }
 
@@ -1800,6 +1801,7 @@ footer .footer-max-width {
     float: left;
     width: 400px;
     height: 100%;
+    background: url(../images/login-left.png) no-repeat center top / cover;
 }
 
 .popup-login .content {
