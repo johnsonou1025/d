@@ -1920,8 +1920,13 @@ footer .footer-max-width {
 }
 
 /*大廳*/
+.lobby-filters-list {
+    margin-top: 40px;
+}
+
 .lobby-filters-list li {
     padding: 30px 0;
+    background: linear-gradient(to bottom, #123A12 0%, #030F03 100%);
 }
 
 .lobby-filters-list li i {
