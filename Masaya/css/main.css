@@ -1955,6 +1955,7 @@ footer .footer-max-width {
     border-radius: 6px;
     background-color: #555A55;
     color: #ABABAB;
+    cursor: pointer;
 }
 
 .lobby-search-bar li i {
@@ -2010,8 +2011,13 @@ footer .footer-max-width {
     margin: 20px 0;
 }
 
-.trending-tags button+button {
-    margin-left: 20px;
+.trending-tags {
+    margin: -5px -10px;
+}
+
+.trending-tags button {
+    display: inline-block;
+    margin: 5px 10px;
 }
 
 .search-game-info {
@@ -2033,7 +2039,7 @@ footer .footer-max-width {
     width: 56px;
     border-radius: 6px;
     vertil-align: middle;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);
+    /*    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);*/
     overflow: hidden;
 }
 
@@ -2079,7 +2085,7 @@ footer .footer-max-width {
     padding: 20px 0;
     width: 100%;
     text-align: center;
-    background: linear-gradient(to bottom, rgba(74,74,74,0) 0%, rgba(16,52,10,1) 100%);
+    background: linear-gradient(to bottom, rgba(74, 74, 74, 0) 0%, rgba(16, 52, 10, 1) 100%);
 }
 
 .search-result-button button+button {
@@ -2097,14 +2103,17 @@ footer .footer-max-width {
     z-index: 90;
     overflow-y: auto;
 }
-.mobile-lobby .content{
+
+.mobile-lobby .content {
     margin: 30px 20px;
     padding-bottom: 60px;
 }
-.mobile-lobby p{
+
+.mobile-lobby p {
     margin: 20px 0;
 }
-.mobile-lobby .search-result-button{
+
+.mobile-lobby .search-result-button {
     position: fixed;
 }
 
@@ -2117,6 +2126,10 @@ footer .footer-max-width {
         display: none;
     }
 
+    .lobby-search-bar {
+        margin-bottom: 20px;
+    }
+
     .lobby-search-bar li {
         padding: 20px 10px;
         height: 40px;
@@ -2124,6 +2137,7 @@ footer .footer-max-width {
 
     .lobby-search-bar li:first-child {
         float: right;
+        padding: 5px;
         width: 40px;
         height: 40px;
     }
@@ -2134,12 +2148,30 @@ footer .footer-max-width {
 
     .lobby-search-bar li:last-child {
         float: left;
+        padding: 10px;
         margin-left: 0px;
         width: calc(100% - 60px);
-
     }
-    .mobile-lobby{
+
+    .lobby-search-bar li i {
+        margin-right: 0;
+        height: 100%;
+    }
+
+    .mobile-lobby {
         display: block;
+    }
+
+    .mobile-lobby .trending-tags {
+        margin: -5px;
+    }
+
+    .mobile-lobby .trending-tags button {
+        margin: 5px;
+        max-width: 29.5%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
 }
