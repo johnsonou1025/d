@@ -680,12 +680,6 @@ main .main-max-width {
     overflow: hidden;
 }
 
-.carousel img {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 @media (max-width: 992px) {
     .carousel {
         display: none;
@@ -2038,7 +2032,7 @@ footer .footer-max-width {
     height: 56px;
     width: 56px;
     border-radius: 6px;
-    vertical-align: middle;
+    vertil-align: middle;
     box-shadow: 0 3px 3px rgba(0, 0, 0, .3);
     overflow: hidden;
 }
