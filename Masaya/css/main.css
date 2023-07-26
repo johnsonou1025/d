@@ -47,6 +47,10 @@ h6,
     font-size: 12px;
 }
 
+.highlight {
+    color: #40D10D;
+}
+
 /*按鈕*/
 button {
     display: inline-flex;
@@ -1889,6 +1893,34 @@ footer .footer-max-width {
     color: #B5B5B5;
 }
 
+.popup-success{
+    padding: 100px 40px;
+    width: 395px;
+    border:1px solid #707070;
+    border-radius: 6px;
+    background: linear-gradient(to bottom, #003D00 0%, #030F03 100%);
+    color: #40D900;
+}
+
+.popup-success i{
+    display: inline-block;
+    width: 68px;
+    height: 68px;
+}
+.popup-success h3,
+.popup-success h5{
+    margin: 40px 0;
+}
+
+.popup-success button{
+    min-width: 120px;
+    margin-top: 40px;
+}
+
+.popup-success button span{
+    font-size: 16px;
+}
+
 @media (max-width: 992px) {
     .popup-login {
         display: none;
@@ -1915,6 +1947,10 @@ footer .footer-max-width {
 
     .mobile-login .content footer {
         display: block;
+    }
+
+    .popup-success{
+        width: auto;
     }
 
 }
@@ -2182,7 +2218,7 @@ footer .footer-max-width {
 }
 
 /*個人頁*/
-.personal-wrap {
+.my-wrap {
     padding: 100px;
     overflow: hidden;
 }
@@ -2204,13 +2240,168 @@ footer .footer-max-width {
     border-bottom: none;
 }
 
-.layout-balance-left {
-    padding: 20px;
+.my-item-name {
+    display: flex;
+}
+
+.my-item-image i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+}
+
+.my-item-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.my-item-text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
     font-size: 20px;
 }
 
-.day-choice {
+.my-item-text span {
+    display: block;
+    width: 100%;
+}
+
+.my-item-text span:last-child {
+    margin-top: 5px;
+    font-size: 24px;
+    color: #40D900;
+    font-weight: bold;
+}
+
+.my-button {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.my-button li {
+    width: 25%;
+    padding: 10px;
+}
+
+.my-button button {
+    position: relative;
+    width: 100%;
+}
+
+.my-button button+button {
+    margin-left: 20px;
+}
+
+.my-button button i {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.my-lv{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-lv li span {
+    font-size: 20px;
+}
+
+.my-lv li:first-child{
+    width: 110px;
+}
+
+.my-lv li:first-child i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+}
+
+.my-lv li:first-child span {
+    display: block;
+    text-align: center;
+}
+.my-lv li:last-child{
+width: calc(100% - 110px);
+}
+.my-lv li:last-child p{
+    font-size: 20px;
+    color: #979797;
+}
+.my-lv .my-turnover {
+    display: flex;
+    margin: 20px 0;
+}
+
+.my-lv .my-turnover>div {
+    flex: 1;
+}
+
+.my-lv .my-turnover .percent {
+    flex: 3;
+}
+.my-lv .my-turnover>div:last-child{
+    color: #979797;
+    text-align: right;
+}
+.percent {
+    display: inline-block;
+    height: 20px;
+    width: 100%;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.percent .percent-current {
+    height: 100%;
+    width: 50%;
+    border-radius: 10px;
+    background: linear-gradient(to right, #7FD28A 0%, #40961D 100%);
+}
+
+.overview-money-left {
+    padding: 40px 20px;
+    border-radius: 6px;
     background-color: #565656;
+    font-size: 18px;
+}
+
+.overview-money-left p {
+    margin-bottom: 20px;
+}
+
+.overview-money-left p span:last-child {
+    float: right;
+    color: #40D10D;
+}
+
+.overview-money-left .layout-button {
+    text-align: center;
+}
+
+.overview-money-left button {
+    padding: 10px;
+    min-width: 120px;
+}
+
+.overview-money-left button+button {
+    margin-left: 20px;
 }
 
 .day-choice {
@@ -2219,7 +2410,6 @@ footer .footer-max-width {
 }
 
 .day-choice li {
-    float: left;
     flex: 1;
     padding: 20px;
     border: 1px solid #979797;
@@ -2230,6 +2420,37 @@ footer .footer-max-width {
 .day-choice li.active {
     background-color: #676D7A;
 }
+
+.day-money {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: -20px;
+}
+
+.day-money li {
+    width: 33.33%;
+    padding: 10px;
+}
+
+.day-money li>div {
+    padding: 20px;
+    border-radius: 6px;
+    background-color: #565656;
+}
+
+.day-money li>div>span {
+    display: block;
+}
+
+.day-money li>div>span+span {
+    margin-top: 20px;
+}
+
+.day-money li>div>span:last-child {
+    text-align: right;
+}
+
 
 /*樣式表*/
 .template-wrap button {
