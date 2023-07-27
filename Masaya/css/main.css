@@ -188,6 +188,17 @@ button.button-style-11>span {
     color: #fff;
 }
 
+button.button-style-12 {
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: #777777;
+}
+
+button.button-style-12>span {
+    font-size: 16px;
+    color: #fff;
+}
+
 button:disabled,
 button[disabled] {
     background-color: #B9B9B9;
@@ -948,7 +959,7 @@ main .main-max-width {
 
 .game-card-info>span {
     display: block;
-    margin: 10px 0;
+    margin: 7px 0;
     font-size: 14px;
     text-align: center;
 }
@@ -1263,6 +1274,11 @@ footer .footer-max-width {
     margin: 0 10px;
     width: 120px;
     height: 30px;
+}
+
+.footer-icon li img{
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /*頁腳-執照*/
@@ -1893,31 +1909,32 @@ footer .footer-max-width {
     color: #B5B5B5;
 }
 
-.popup-success{
+.popup-success {
     padding: 100px 40px;
     width: 395px;
-    border:1px solid #707070;
+    border: 1px solid #707070;
     border-radius: 6px;
     background: linear-gradient(to bottom, #003D00 0%, #030F03 100%);
     color: #40D900;
 }
 
-.popup-success i{
+.popup-success i {
     display: inline-block;
     width: 68px;
     height: 68px;
 }
+
 .popup-success h3,
-.popup-success h5{
+.popup-success h5 {
     margin: 40px 0;
 }
 
-.popup-success button{
+.popup-success button {
     min-width: 120px;
     margin-top: 40px;
 }
 
-.popup-success button span{
+.popup-success button span {
     font-size: 16px;
 }
 
@@ -1949,7 +1966,7 @@ footer .footer-max-width {
         display: block;
     }
 
-    .popup-success{
+    .popup-success {
         width: auto;
     }
 
@@ -2219,8 +2236,15 @@ footer .footer-max-width {
 
 /*個人頁*/
 .my-wrap {
-    padding: 100px;
+    padding: 80px 40px;
     overflow: hidden;
+}
+
+.my-wrap .content{
+    background-color: #313731;
+    border:1px solid #707070;
+    border-top:none;
+    padding: 40px;
 }
 
 .nav-tabs {
@@ -2311,7 +2335,8 @@ footer .footer-max-width {
     align-items: center;
     justify-content: center;
 }
-.my-lv{
+
+.my-lv {
     display: flex;
     flex-wrap: wrap;
 }
@@ -2320,7 +2345,7 @@ footer .footer-max-width {
     font-size: 20px;
 }
 
-.my-lv li:first-child{
+.my-lv li:first-child {
     width: 110px;
 }
 
@@ -2336,13 +2361,16 @@ footer .footer-max-width {
     display: block;
     text-align: center;
 }
-.my-lv li:last-child{
-width: calc(100% - 110px);
+
+.my-lv li:last-child {
+    width: calc(100% - 110px);
 }
-.my-lv li:last-child p{
+
+.my-lv li:last-child p {
     font-size: 20px;
     color: #979797;
 }
+
 .my-lv .my-turnover {
     display: flex;
     margin: 20px 0;
@@ -2355,10 +2383,12 @@ width: calc(100% - 110px);
 .my-lv .my-turnover .percent {
     flex: 3;
 }
-.my-lv .my-turnover>div:last-child{
+
+.my-lv .my-turnover>div:last-child {
     color: #979797;
     text-align: right;
 }
+
 .percent {
     display: inline-block;
     height: 20px;
@@ -2451,10 +2481,75 @@ width: calc(100% - 110px);
     text-align: right;
 }
 
+.analysis-item {
+    padding: 40px 20px;
+    border-radius: 6px;
+    background-color: #565656;
+    font-size: 16px;
+}
+
+.analysis-item .h4 {
+    margin-bottom: 10px;
+}
+
+.analysis-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.analysis-item .pie {
+    width: 184px;
+    height: 184px;
+    background-color: #aaa;
+}
+
+.analysis-content>ul {
+    width: calc(100% - 184px);
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.analysis-content>ul li {
+    padding: 10px;
+    width: 50%;
+}
+
+.analysis-item li p {
+    margin: 10px 0px 10px 20px;
+}
+
+.analysis-item li p:first-child {
+    margin-left: 0;
+}
+
+.analysis-content ul.w-100 li{
+    width: 100%;
+}
 
 /*樣式表*/
 .template-wrap button {
     /*    margin: 10px 0;*/
 }
 
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
+/*css end
 /*css end
