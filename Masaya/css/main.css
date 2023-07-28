@@ -1686,6 +1686,8 @@ footer .footer-max-width {
     display: inline-block;
     margin-bottom: 15px;
     vertical-align: middle;
+    /* display: table; */
+    width: 100%;
 }
 
 .form-checkbox label {
@@ -1696,6 +1698,7 @@ footer .footer-max-width {
     padding-left: 26px;
     margin: 0;
     line-height: 16px;
+    min-height: 16px;
     color: #989A98;
 }
 
@@ -1717,18 +1720,15 @@ footer .footer-max-width {
     left: 0;
     height: 16px;
     width: 16px;
-    background: #fff;
+    border:2px solid #C7C7C7;
+    background: transparent;
     text-align: center;
     font-size: 16px;
     border-radius: 3px;
 }
 
-.from-checkbox label input:checked~.checkbox-indicator:after {
-    content: "";
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    background: url(../images/icon-checked.png) no-repeat center center / 80%;
+.form-checkbox label input:checked~.checkbox-indicator {
+    background: url(../images/icon-check.png) no-repeat center center / 80%;
 }
 
 .form-button button {
