@@ -17,6 +17,7 @@ body {
     color: #fff;
     font-size: 14px;
     background-color: #111;
+    line-height: 1.5em;
 }
 
 
@@ -2451,17 +2452,13 @@ footer .footer-max-width {
 
     .my-info-name {
         justify-content: center;
-        width: 100%;
+        width: 70%;
         margin-bottom: 20px;
     }
 
-    .my-info-text {
+    .my-info-text,
+    .my-lv li:last-child p {
         width: auto;
-        font-size: 14px;
-    }
-
-    .my-info-text span:last-child {
-        font-size: 18px;
     }
 
     .my-button {
@@ -2475,8 +2472,9 @@ footer .footer-max-width {
         flex-direction: column;
     }
 
-    .my-lv li span {
-        font-size: 14px;
+    .my-lv .my-turnover>div:last-child {
+        width: 100%;
+        text-align: left;
     }
 
     .my-lv .my-turnover>div:first-child,
@@ -2519,8 +2517,6 @@ footer .footer-max-width {
 
 .my-money-left .my-money-button {
     margin-top: 40px;
-    margin-right: -20px;
-    margin-left: -20px;
     text-align: center;
 }
 
@@ -2596,6 +2592,18 @@ footer .footer-max-width {
     text-align: right;
 }
 
+@media (max-width: 1200px) and (min-width: 992px){
+    .my-money-left .my-money-button{
+        margin-top: 20px;
+    }
+    .my-money-button button {
+        width: 100%;
+    }
+    .my-money-button button+button{
+        margin: 10px 0;
+    }
+}
+
 @media (max-width: 992px) {
 
     .my-money-left {
@@ -2651,15 +2659,20 @@ footer .footer-max-width {
 }
 
 .analysis-item .pie {
-    margin: 20px;
-    width: 144px;
-    height: 144px;
-    border-radius: 72px;
-    background-color: #aaa;
+    padding: 10px;
+    width: 25%;
+}
+
+.analysis-item .pie i {
+    display: block;
+    padding-top: 100%;
+    width: 100%;
+    border-radius: 100%;
+    background-color: #D6D6D6;
 }
 
 .analysis-content>ul {
-    width: calc(100% - 184px);
+    width: 75%;
     display: flex;
     flex-wrap: wrap;
     margin: -10px;
@@ -2674,12 +2687,35 @@ footer .footer-max-width {
     margin: 10px 0px 10px 20px;
 }
 
+.analysis-item .modify li {
+    width: 100%;
+}
+
+.analysis-item .modify li p {
+    margin: 10px 0;
+}
+
 .analysis-item li p:first-child {
     margin-left: 0;
 }
 
 .analysis-content ul.w-100 li {
     width: 100%;
+}
+
+@media (max-width: 1330px) {
+    .analysis-item {
+        width: 100%;
+    }
+
+    .analysis-item:last-child {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .analysis-content>ul li {
+        width: 33.33%;
+    }
 }
 
 @media (max-width: 992px) {
@@ -2698,8 +2734,11 @@ footer .footer-max-width {
     }
 
     .analysis-item .pie {
-        width: 100px;
-        height: 100px;
+        width: 50%;
+    }
+
+    .analysis-content>ul {
+        width: 50%;
     }
 }
 
