@@ -683,7 +683,7 @@ main .main-max-width {
         display: block;
     }
 
-    .nav-jackpot {
+    .nav-jackopt-list, .nav-jackpot {
         display: none;
     }
 }
