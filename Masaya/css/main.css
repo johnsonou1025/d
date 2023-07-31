@@ -168,9 +168,11 @@ button.button-style-9>span {
 }
 
 button.button-style-10 {
-    padding: 16px 40px;
-    border-radius: 5px;
+    padding: 0px 20px;
+    border-radius: 20px;
     background: #278400;
+    line-height: 40px;
+    width: 100%;
 }
 
 button.button-style-10>span {
@@ -578,13 +580,16 @@ nav {
     width: 24px;
     border-radius: 0;
 }
-.link-item .link-item-dropdown .link-item-text{
+
+.link-item .link-item-dropdown .link-item-text {
     color: #fff;
 }
+
 .link-item .link-item-dropdown li.active .link-item-text,
 .link-item .link-item-dropdown li:hover .link-item-text {
     color: #40D900;
 }
+
 .link-item.active .link-item-dropdown {
     display: block;
 }
@@ -1840,6 +1845,10 @@ footer .footer-max-width {
     background: url(../images/login-left.png) no-repeat center top / cover;
 }
 
+.popup-login .content::-webkit-scrollbar {
+    display: none;
+}
+
 .popup-login .content {
     position: relative;
     float: right;
@@ -1847,7 +1856,10 @@ footer .footer-max-width {
     height: 100%;
     padding: 40px 50px 0;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
+
 
 .desktop-form-popup {
     display: none;
@@ -2755,16 +2767,23 @@ footer .footer-max-width {
 }
 
 .bank-choice {
-    width: 430px;
+    margin: -10px 0;
+    width: 320px;
 }
 
 .bank-choice-item {
     display: inline-flex;
+    margin: 10px 0;
     padding: 10px 20px;
     border: 1px solid #707070;
     border-radius: 6px;
     width: 100%;
     background-color: #2A4D2A;
+}
+
+.bank-choice-item.active,
+.bank-choice-item:hover {
+    border: 2px solid #40D900;
 }
 
 .bank-choice-item i {
@@ -2789,16 +2808,28 @@ footer .footer-max-width {
 }
 
 .bank-info {
-    width: calc(100% - 430px);
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 340px);
+    margin-left: 20px;
 }
 
-.bank-promo {}
+.bank-promo {
+    width: 100%;
+}
+
+.bank-promo ul::-webkit-scrollbar {
+    display: none;
+}
 
 .bank-promo ul {
-    padding: 20px 0;
+    padding: 20px 0 10px;
+    border-radius: 6px;
     background-color: rgba(255, 255, 255, .2);
     overflow-y: hidden;
     white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .bank-promo li {
@@ -2834,17 +2865,145 @@ footer .footer-max-width {
     background: #fff url(../images/icon-check-black.png) no-repeat center center / 80%;
 }
 
-@media (max-width: 992px) {
-    .bank-info{
+.bank-account-detail {
+    padding: 10px;
+    width: 60%;
+}
+
+.quick-deposit {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: calc(100% - 140px);
+}
+
+.quick-deposit {
+    margin: -5px;
+}
+
+.quick-deposit li {
+    padding: 5px;
+    width: 50%;
+}
+
+.quick-deposit li.active button,
+.quick-deposit li:hover button {
+    background-color: #40D10D;
+}
+
+.my-form-input {
+    padding-top: 40px;
+    border-bottom: 1px solid #707070;
+}
+
+.my-form-input .form-input {
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+}
+
+.my-form-input .form-input label {
+    display: inline-block;
+    width: 140px;
+}
+
+.my-form-input .form-input input {
+    display: inline-block;
+    width: calc(100% - 150px);
+    border: 1px solid #707070;
+    border-radius: 6px;
+    background-color: #fff;
+    line-height: 40px;
+    color: #000;
+}
+
+.deposit-detail {
+    padding: 20px;
+    width: 40%;
+    color: #ababab;
+}
+
+.deposit-detail p {
+    margin-bottom: 20px;
+}
+
+.deposit-detail ul {
+    padding: 10px 0;
+}
+
+.deposit-detail li {
+    padding: 10px 0;
+}
+
+.deposit-detail li span {
+    float: right;
+}
+
+.deposit-detail button {
+    margin: 20px 0;
+    width: 100%;
+}
+
+@media (max-width:1400px) {
+    .bank-account-detail,
+    .deposit-detail {
         width: 100%;
     }
 }
+
+@media (max-width: 1200px) {
+    .bank-choice{
+        margin: -5px;
+    }
+    .bank-choice-item{
+        width: calc(50% - 15px);
+        margin: 5px;
+    }
+    .bank-choice,
+    .bank-info,
+    .bank-account-detail,
+    .deposit-detail {
+        width: 100%;
+    }
+
+    .bank-info {
+        margin-top: 40px;
+        margin-left: 0;
+    }
+
+    .bank-info {
+        width: 100%;
+    }
+
+    .my-form-mobile .form-input label.h4 {
+        font-size: 24px;
+    }
+
+    .my-form-mobile .form-input label {
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .my-form-mobile .form-input input {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 992px) {
+    .bank-choice{
+        margin: 0px;
+    }
+    .bank-choice-item{
+        width: 100%;
+        margin: 5px 0;
+    }
 
 
 /*樣式表*/
 
 
-@media (max-width: 992px) {}
+@media (max-width: 1200px) and (min-width: 992px) {}
 
 @media (max-width: 992px) {}
 
