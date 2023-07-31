@@ -578,7 +578,13 @@ nav {
     width: 24px;
     border-radius: 0;
 }
-
+.link-item .link-item-dropdown .link-item-text{
+    color: #fff;
+}
+.link-item .link-item-dropdown li.active .link-item-text,
+.link-item .link-item-dropdown li:hover .link-item-text {
+    color: #40D900;
+}
 .link-item.active .link-item-dropdown {
     display: block;
 }
@@ -683,7 +689,8 @@ main .main-max-width {
         display: block;
     }
 
-    .nav-jackopt-list, .nav-jackpot {
+    .nav-jackopt-list,
+    .nav-jackpot {
         display: none;
     }
 }
@@ -887,7 +894,6 @@ main .main-max-width {
 }
 
 
-
 .game-card-name {
     position: relative;
     padding: 20px 10px;
@@ -907,7 +913,7 @@ main .main-max-width {
     font-size: 16px;
 }
 
-.game-card-name ..game-provider {
+.game-card-name .game-provider {
     color: #7FD28A;
     font-size: 12px;
 }
@@ -1720,7 +1726,7 @@ footer .footer-max-width {
     left: 0;
     height: 16px;
     width: 16px;
-    border:2px solid #C7C7C7;
+    border: 2px solid #C7C7C7;
     background: transparent;
     text-align: center;
     font-size: 16px;
@@ -2100,8 +2106,7 @@ footer .footer-max-width {
     height: 56px;
     width: 56px;
     border-radius: 6px;
-    vertil-align: middle;
-    /*    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);*/
+    vertical-align: middle;
     overflow: hidden;
 }
 
@@ -2591,14 +2596,16 @@ footer .footer-max-width {
     text-align: right;
 }
 
-@media (max-width: 1200px) and (min-width: 992px){
-    .my-money-left .my-money-button{
+@media (max-width: 1200px) and (min-width: 992px) {
+    .my-money-left .my-money-button {
         margin-top: 20px;
     }
+
     .my-money-button button {
         width: 100%;
     }
-    .my-money-button button+button{
+
+    .my-money-button button+button {
         margin: 10px 0;
     }
 }
@@ -2741,15 +2748,106 @@ footer .footer-max-width {
     }
 }
 
-/*樣式表*/
-.template-wrap button {
-    /*    margin: 10px 0;*/
+/*個人頁-存款*/
+.my-deposit {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-@media (max-width: 992px) {}
+.bank-choice {
+    width: 430px;
+}
+
+.bank-choice-item {
+    display: inline-flex;
+    padding: 10px 20px;
+    border: 1px solid #707070;
+    border-radius: 6px;
+    width: 100%;
+    background-color: #2A4D2A;
+}
+
+.bank-choice-item i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    width: 48px;
+}
+
+.bank-choice-item .bank-choice-text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    color: #ABABAB;
+}
+
+.bank-choice-item .bank-choice-text span>span {
+    margin-right: 20px;
+    color: #fff;
+}
+
+.bank-info {
+    width: calc(100% - 430px);
+}
+
+.bank-promo {}
+
+.bank-promo ul {
+    padding: 20px 0;
+    background-color: rgba(255, 255, 255, .2);
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.bank-promo li {
+    margin: 0 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+.bank-promo li i {
+    display: inline-block;
+    width: 241px;
+    height: 115px;
+}
+
+.bank-promo-checkobx {
+    display: block;
+}
+
+.bank-promo-checkobx label {
+    color: #aaa;
+}
+
+.bank-promo-checkobx label input:checked~span {
+    color: #fff;
+}
+
+.bank-promo-checkobx .checkbox-indicator {
+    border: none;
+    background-color: #fff;
+}
+
+.bank-promo-checkobx label input:checked~.checkbox-indicator {
+    background: #fff url(../images/icon-check-black.png) no-repeat center center / 80%;
+}
+
+@media (max-width: 992px) {
+    .bank-info{
+        width: 100%;
+    }
+}
+
+
+/*樣式表*/
+
 
 @media (max-width: 992px) {}
 
 @media (max-width: 992px) {}
 
-/*css end
+@media (max-width: 992px) {}
+
+/*css end*/

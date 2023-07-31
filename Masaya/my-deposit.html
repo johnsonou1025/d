@@ -18,7 +18,7 @@
         <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
         <div class="header-search"><img src="images/icon-search.png" alt=""></div>
         <script>
-        $(function() {
+            $(function() {
             $(".header-toggler").click(function() {
                 $("nav").addClass("active");
             })
@@ -158,7 +158,7 @@
             </div>
         </div>
         <div class="nav-link-list">
-            <div class="link-item active">
+            <div class="link-item">
                 <div class="link-item-name">
                     <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                     <div class="link-item-text">
@@ -166,37 +166,44 @@
                     </div>
                 </div>
                 <ul class="link-item-dropdown">
-                    <li class="active">
+                    <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Profile</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Bank card</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>My Bet</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Trans history</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Message</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Bonus Info</span>
                         </div>
                     </li>
                     <li>
+                        <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
                         <div class="link-item-text">
                             <span>Promotor</span>
                         </div>
@@ -287,7 +294,7 @@
             </div>
         </div>
         <script>
-        $(function() {
+            $(function() {
             $(".link-item").click(function() {
                 $(this).toggleClass("active");
             })
@@ -375,133 +382,78 @@
                 <li><span>Promotor</span></li>
             </ul>
             <div class="content">
-                <div class="my-info">
-                    <div class="my-info-name">
-                        <div class="my-info-image"><i><img src="images/icon-my.png" alt=""></i></div>
-                        <div class="my-info-text">
-                            <span>Welcome, Dear yongkang123</span>
-                            <span>VIP 6</span>
+                <div class="my-deposit">
+                    <div class="bank-choice">
+                        <div class="bank-choice-item">
+                            <i><img src="images/TigerPay.png" alt=""></i>
+                            <div class="bank-choice-text">
+                                <span><span>Tiger payn</span>手續費:1.2%</span>
+                                <span>最小-最大:$1,000-$1,000,000</span>
+                            </div>
                         </div>
                     </div>
-                    <ul class="my-button">
-                        <li>
-                            <button class="button-style-9">
-                                <i><img src="images/icon-real-name.png" alt=""></i>
-                                <span>實名</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="button-style-9">
-                                <i><img src="images/icon-notice.png" alt=""></i>
-                                <span>通知</span>
-                            </button>
-                        </li>
-                    </ul>
-                    <ul class="my-lv">
-                        <li><i><img src="images/icon-lv.png" alt=""></i>
-                            <span>VIP6</span></li>
-                        <li>
-                            <div class="my-turnover">
-                                <div><span>累積流水</span></div>
-                                <div class="percent">
-                                    <div class="percent-current"></div>
-                                </div>
-                                <div><span>10000/1200000</span></div>
-                            </div>
-                            <div class="my-turnover">
-                                <div><span>累積流水</span></div>
-                                <div class="percent">
-                                    <div class="percent-current"></div>
-                                </div>
-                                <div><span>10000/1200000</span></div>
-                            </div>
-                            <p>(30天未达到自动降级)</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="h3">個人數據總覽</div>
-                <div class="my-money">
-                    <div class="my-money-left">
-                        <p><span>帳戶金額</span><span>¥1888.68 </span></p>
-                        <p><i><img src="images/icon-detail.png" alt=""></i><span>可提金額</span><span>¥1888.68 </span></p>
-                        <p class="highlight">離可提款還差 1200000 的流水</p>
-                        <div class="my-money-button">
-                            <button class="button-style-9"><span>存款</span></button>
-                            <button class="button-style-10"><span>提款</span></button>
-                        </div>
-                    </div>
-                    <div class="my-money-right">
-                        <ul class="day-choice flex-split">
-                            <li class="active">今日</li>
-                            <li>昨日</li>
-                            <li>最近7日</li>
-                            <li>當月</li>
-                            <li>上月</li>
-                        </ul>
-                        <ul class="day-money">
-                            <li>
-                                <div><span>存款</span><span>$ 0.00</span></div>
-                            </li>
-                            <li>
-                                <div><span>出金</span><span>$ 0.00</span></div>
-                            </li>
-                            <li>
-                                <div><span>有效投注</span><span>$ 0.00</span></div>
-                            </li>
-                            <li>
-                                <div><span>紅利</span><span>$ 0.00</span></div>
-                            </li>
-                            <li>
-                                <div><span>返水</span><span>$ 0.00</span></div>
-                            </li>
-                            <li>
-                                <div><span>傭金</span><span>$ 0.00</span></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="h3">数据分析</div>
-                <div class="my-analysis">
-                    <div class="analysis-item">
-                        <p class="h4">個人數據分析</p>
-                        <div class="analysis-content">
-                            <div class="pie"><i></i></div>
+                    <div class="bank-info">
+                        <div class="bank-promo">
                             <ul>
                                 <li>
-                                    <p>您參與競猜：</p>
-                                    <p>體育賽事 0 場</p>
-                                    <p>電競賽事 0 場</p>
+                                    <i><img src="images/bank-promo.png" alt=""></i>
+                                    <div class="form-checkbox bank-promo-checkobx">
+                                        <label class="control">
+                                            <input type="checkbox">
+                                            <div class="checkbox-indicator"></div>
+                                            <span>參加</span>
+                                        </label>
+                                    </div>
                                 </li>
                                 <li>
-                                    <p>其中競猜勝出：</p>
-                                    <p>體育賽事 0 場</p>
-                                    <p>電競賽事 0 場</p>
+                                    <i><img src="images/bank-promo.png" alt=""></i>
+                                    <div class="form-checkbox bank-promo-checkobx">
+                                        <label class="control">
+                                            <input type="checkbox">
+                                            <div class="checkbox-indicator"></div>
+                                            <span>參加</span>
+                                        </label>
+                                    </div>
                                 </li>
                                 <li>
-                                    <p>勝率：</p>
-                                    <p>體育 0 場</p>
-                                    <p>電競 0 場</p>
+                                    <i><img src="images/bank-promo.png" alt=""></i>
+                                    <div class="form-checkbox bank-promo-checkobx">
+                                        <label class="control">
+                                            <input type="checkbox">
+                                            <div class="checkbox-indicator"></div>
+                                            <span>參加</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i><img src="images/bank-promo.png" alt=""></i>
+                                    <div class="form-checkbox bank-promo-checkobx">
+                                        <label class="control">
+                                            <input type="checkbox">
+                                            <div class="checkbox-indicator"></div>
+                                            <span>參加</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i><img src="images/bank-promo.png" alt=""></i>
+                                    <div class="form-checkbox bank-promo-checkobx">
+                                        <label class="control">
+                                            <input type="checkbox">
+                                            <div class="checkbox-indicator"></div>
+                                            <span>參加</span>
+                                        </label>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="analysis-item">
-                        <p class="h4">推廣數據分析</p>
-                        <div class="analysis-content">
-                            <div class="pie"><i></i></div>
-                            <ul class="modify">
-                                <li>
-                                    <p></p>
-                                    <p>您的推廣連結累計註冊用戶 0 人</p>
-                                    <p>其中 0 人存款</p>
-                                    <p>充值轉化率 0.0%</p>
-                                    <p>因推廣累計收益： 0元</p>
-                                </li>
-                            </ul>
-                            <button class="button-style-12">
-                                <span>查看您的專屬推廣連結</span>
-                            </button>
+                        <div class="bank-acount-detail">
+                            <div class="form-input my-form-input">
+                                <label>輸入額度</label>
+                                <input type="text" placeholder="Confirm Password">
+                            </div>
                         </div>
+                        <div class="bank-all-detail"></div>
                     </div>
                 </div>
             </div>
