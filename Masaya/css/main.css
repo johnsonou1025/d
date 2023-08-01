@@ -291,11 +291,12 @@ nav {
     background: url(../images/icon-close.png) no-repeat center center /cover;
 }
 
-.nav-home{
+.nav-home {
     right: 20px;
-    left:auto;
+    left: auto;
     background: url(../images/icon-nav-home.png) no-repeat center center /cover;
 }
+
 .nav-header,
 .nav-link-list {
     border-bottom: 1px solid #707070;
@@ -2951,6 +2952,7 @@ footer .footer-max-width {
 }
 
 @media (max-width:1400px) {
+
     .bank-account-detail,
     .deposit-detail {
         width: 100%;
@@ -2958,13 +2960,15 @@ footer .footer-max-width {
 }
 
 @media (max-width: 1200px) {
-    .bank-choice{
+    .bank-choice {
         margin: -5px;
     }
-    .bank-choice-item{
+
+    .bank-choice-item {
         width: calc(50% - 15px);
         margin: 5px;
     }
+
     .bank-choice,
     .bank-info,
     .bank-account-detail,
@@ -2998,15 +3002,212 @@ footer .footer-max-width {
 }
 
 @media (max-width: 992px) {
-    .bank-choice{
+    .bank-choice {
         margin: 0px;
     }
-    .bank-choice-item{
+
+    .bank-choice-item {
         width: 100%;
         margin: 5px 0;
     }
-
 }
+
+/*個人頁-提款*/
+.my-withdraw {
+    padding: 40px 0;
+}
+
+.my-withdraw>ul {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    border: 2px solid #565656;
+    background-color: #1E261E;
+}
+
+.my-withdraw>ul>li {
+    padding: 40px;
+}
+
+.my-withdraw>ul>li+li {
+    border-top: 2px solid #565656;
+}
+
+.my-withdraw .step-title {
+    color: #ABABAB;
+}
+.my-withdraw .step-title.active {
+    background: url(../images/icon-arrow-right.png) no-repeat right center / 12px;
+    color: #FFF;
+}
+
+.my-withdraw .step-title span {
+    color: #40D900;
+}
+
+.my-withdraw .step-title span:last-child {
+    margin-left: 20px;
+}
+
+.my-withdraw .bank-choice {
+    margin: 20px auto;
+}
+
+.my-withdraw .button-wrap {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.my-withdraw .button-wrap button {
+    min-width: 192px;
+}
+
+.my-withdraw .main-account {
+    padding: 20px;
+    border-radius: 6px;
+    border: 2px solid #40D900;
+    width: 100%;
+    background-color: #2A4D2A;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.my-withdraw .my-form-input {
+    border: none;
+}
+
+.my-withdraw .my-form-input .form-input label {
+    width: calc(100% - 220px);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.my-withdraw .my-form-input .form-input label span {
+    float: right;
+    font-size: 14px;
+    color: #ababab;
+}
+
+.my-withdraw .my-form-input .form-input label span.highlight {
+    color: #FF9200;
+}
+
+.my-withdraw .my-form-input .form-input input {
+    width: calc(100% - 220px);
+}
+
+.my-withdraw .my-form-input .form-input button {
+    float: right;
+    padding: 13px 20px;
+    width: 200px;
+}
+
+.my-withdraw .withdraw-detail {
+    border-top: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+    padding: 20px 0 20px 40px;
+    margin-top: 40px;
+}
+
+.my-withdraw .withdraw-detail li {
+    padding: 10px;
+    width: calc(100% - 220px);
+    color: #ababab;
+}
+
+.my-withdraw .withdraw-detail li span {
+    float: right;
+}
+
+.my-withdraw .withdraw-bonus {
+    padding: 20px 10px 20px 50px;
+    width: calc(100% - 220px);
+    color: #ababab;
+}
+
+.my-withdraw .withdraw-bonus span {
+    float: right;
+}
+
+.my-withdraw .withdraw-notice {
+    padding-left: 120px;
+    color: #ABABAB;
+}
+
+.my-withdraw .withdraw-notice p {
+    margin-bottom: 20px;
+}
+
+.my-withdraw .withdraw-notice a {
+    color: #40D900;
+}
+
+.my-withdraw .bank-promo-checkobx label input:checked~span {
+    color: #ABABAB;
+}
+
+.step-toggle {
+    /*    display: none;*/
+}
+
+.my-withdraw li.active .step-toggle {
+    display: block;
+}
+
+@media (max-width: 1200px) {
+    .my-withdraw .bank-choice {
+        width: 320px;
+    }
+
+    .my-withdraw .bank-choice-item {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .my-withdraw>ul>li {
+        padding: 20px;
+    }
+
+    .my-withdraw .bank-choice {
+        width: 100%;
+    }
+
+    .my-withdraw .my-form-input {
+        padding-top: 20px;
+    }
+
+    .my-withdraw .my-form-input .form-input label {
+        width: 100%;
+    }
+
+    .my-withdraw .my-form-input .form-input input {
+        width: 100%;
+    }
+
+    .my-withdraw .my-form-input .form-input button {
+        margin: 20px 0;
+        width: 100%;
+    }
+
+    .my-withdraw .withdraw-detail{
+        padding: 20px;
+    }
+
+    .my-withdraw .withdraw-detail li {
+        width: 100%;
+    }
+    .my-withdraw .withdraw-bonus{
+        padding: 20px 30px;
+        width: 100%;
+    }
+
+    .my-withdraw .withdraw-notice{
+        padding: 20px;
+    }
+}
+
 /*樣式表*/
 
 
