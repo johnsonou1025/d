@@ -280,7 +280,8 @@ nav {
     /* Firefox */
 }
 
-.nav-close {
+.nav-close,
+.nav-home {
     display: none;
     position: absolute;
     top: 20px;
@@ -290,6 +291,11 @@ nav {
     background: url(../images/icon-close.png) no-repeat center center /cover;
 }
 
+.nav-home{
+    right: 20px;
+    left:auto;
+    background: url(../images/icon-nav-home.png) no-repeat center center /cover;
+}
 .nav-header,
 .nav-link-list {
     border-bottom: 1px solid #707070;
@@ -321,7 +327,8 @@ nav {
         left: 0;
     }
 
-    .nav-close {
+    .nav-close,
+    .nav-home {
         display: block;
     }
 }
@@ -2999,7 +3006,7 @@ footer .footer-max-width {
         margin: 5px 0;
     }
 
-
+}
 /*樣式表*/
 
 
