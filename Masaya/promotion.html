@@ -1,0 +1,1222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Masaya</title>
+    <!-- CSS -->
+    <link href="css/main.css" rel="stylesheet">
+    <!-- js -->
+    <script src="js/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <!-- 彈窗廣告 -->
+    <div class="popup-wrap promo-popup">
+        <div class="popup-box">
+            <div class="promo-popup-inner">
+                <picture>
+                    <img src="images/promo-image.jpg" alt="">
+                </picture>
+                <ul class="promo-popup-title">
+                    <li>
+                        <h4>活動：好友邀請享紅利</h4>
+                        <span>活動期間： 2023/06/11~2023/07/11</span>
+                    </li>
+                    <li>
+                        <span>完成進度：</span>
+                        <div class="percent">
+                            <div class="percent-current"></div>
+                            <span>50%</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="promo-detail">
+                    <table class="table-style">
+                        <tr>
+                            <th>新用戶首存</th>
+                            <th>介紹彩金</th>
+                            <th>倍數限定</th>
+                            <th>彩金倍數</th>
+                            <th>盤口限定</th>
+                        </tr>
+                        <tr>
+                            <td>≥500</td>
+                            <td>88</td>
+                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                            <td Rowspan="4" align="center" valign="middle">1</td>
+                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                        </tr>
+                        <tr>
+                            <td>≥2000</td>
+                            <td>188</td>
+                        </tr>
+                        <tr>
+                            <td>≥5000</td>
+                            <td>288</td>
+                        </tr>
+                        <tr>
+                            <td>≥20000</td>
+                            <td>588</td>
+                        </tr>
+                    </table>
+                    <p>申請方式：</p>
+                    <ol>
+                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                            <ol>
+                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+                <button>JOINED</button>
+            </div>
+            <a class="popup-close" href="#"></a>
+        </div>
+    </div>
+    <script>
+    $(function() {
+        $(".popup-close").click(function() {
+            $(".popup-wrap").removeClass("active");
+        })
+    })
+    </script>
+    <header>
+        <div class="header-toggler"><img src="images/icon-header-toggler.png" alt=""></div>
+        <div class="header-logo"><img src="images/stake-logo.png" alt=""></div>
+        <div class="header-search"><img src="images/icon-search.png" alt=""></div>
+        <script>
+        $(function() {
+            $(".header-toggler").click(function() {
+                $("nav").addClass("active");
+            })
+            $(".nav-close").click(function() {
+                $("nav").removeClass("active");
+            })
+        })
+        </script>
+    </header>
+    <nav>
+        <div class="nav-close"></div>
+        <div class="nav-home"></div>
+        <!-- 左側選單-未登入 -->
+        <div class="nav-header">
+            <div class="nav-no-login">
+                <div class="nav-no-login-logo"><img src="images/lights.png" alt=""></div>
+                <span class="h2">Masaya Welcome Pack</span>
+                <span>Get started now and when your first deposit double!</span>
+                <div class="nav-no-login-button">
+                    <button class="button-style-1"><span>SIGN-UP</span></button>
+                    <button class="button-style-2"><span>SIGN-IN</span></button>
+                </div>
+            </div>
+        </div>
+        <!-- 左側選單-入口 -->
+        <div class="nav-link-list">
+            <div class="link-item active">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Slot</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Live</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Sport</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>E-sport</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Lottery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-link-list">
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>New Game</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>1P Bet</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Hot Game</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>JILI</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>EVO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-link-list">
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Event</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>VIP Club</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Get APP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-material-live-tv.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>Help Center</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="language-item">
+                    <div class="language-item-current">
+                        <i><img src="images/icon-en.png" alt=""></i>
+                        <span>English</span>
+                    </div>
+                    <ul>
+                        <li>
+                            <i><img src="images/icon-en.png" alt=""></i>
+                            <span>中文</span>
+                        </li>
+                        <li>
+                            <i><img src="images/icon-en.png" alt=""></i>
+                            <span>English</span>
+                        </li>
+                        <li>
+                            <i><img src="images/icon-en.png" alt=""></i>
+                            <span>Salita</span>
+                        </li>
+                        <li>
+                            <i><img src="images/icon-en.png" alt=""></i>
+                            <span>ランゲージ</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script>
+            $(function() {
+                $(".language-item").click(function() {
+                    $(this).toggleClass("active");
+                })
+            })
+            </script>
+        </div>
+        <!-- 左側選單-新聞 -->
+        <div class="nav-link-list nav-news">
+            <h4>News</h4>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-speaker.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>New game is out!</span>
+                        <span>Sweet candy cash Megawa</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-speaker.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>New game is out!</span>
+                        <span>Sweet candy cash Megawa</span>
+                    </div>
+                </div>
+            </div>
+            <div class="link-item">
+                <div class="link-item-name">
+                    <div class="link-item-image"><img src="images/icon-speaker.png" alt=""></div>
+                    <div class="link-item-text">
+                        <span>New game is out!</span>
+                        <span>Sweet candy cash Megawa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 排行榜 -->
+        <div class="nav-link-list nav-jackopt-list">
+            <h4>Latest big wins</h4>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
+                </div>
+            </div>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
+                </div>
+            </div>
+            <div class="nav-jackpot">
+                <i><img src="images/Fortune-Ox.png" alt=""></i>
+                <div class="nav-jackpot-text">
+                    <span>Orh**won<span>57,786 TRY</span></span>
+                    <span>in Wanted dead or a wild</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- 中間區塊 -->
+    <main>
+        <!-- 中間區塊-廣告輪播 -->
+        <div class="carousel"><img src="images/kv.jpg" alt=""></div>
+        <!-- 中間區塊-廣告輪播-手機版 -->
+        <div class="carousel-mobile"></div>
+        <div class="main-max-width">
+            <!-- 最新優惠 -->
+            <div class="promo-wrap">
+                <!-- 最近優惠-選單 -->
+                <ul class="promo-tabs">
+                    <li class="active">所有优惠</li>
+                    <li>体育竞技</li>
+                    <li>电子竞技</li>
+                    <li>真人视讯</li>
+                    <li>电子娱乐</li>
+                    <li>彩票投注</li>
+                    <li>棋牌游戏</li>
+                    <li>捕鱼游戏</li>
+                </ul>
+                <!-- 最新優惠-選單-手機 -->
+                <div class="promo-tabs-mobile">
+                    <span>所有优惠<i></i></span>
+                </div>
+                <div class="promo-tabs-mobile-list">
+                    <div class="promo-tabs-mobile-header"><span>Done</span></div>
+                    <ul>
+                        <li>体育竞技</li>
+                        <li>电子竞技</li>
+                        <li>真人视讯</li>
+                        <li>电子娱乐</li>
+                        <li>彩票投注</li>
+                        <li>棋牌游戏</li>
+                        <li>捕鱼游戏</li>
+                    </ul>
+                </div>
+                <script>
+                $(function() {
+                    $(".promo-tabs-mobile").click(function() {
+                        $(".promo-tabs-mobile-list").addClass("active");
+                    })
+                    $(".promo-tabs-mobile-header").click(function() {
+                        $(this).parent(".promo-tabs-mobile-list").removeClass("active");
+                    })
+                })
+                </script>
+                <!-- 最新優惠-列表 -->
+                <div class="promo-list">
+                    <div class="promo-card joined">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current"></div>
+                                <p><span>50</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail active">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <script>
+                                $(function() {
+                                    $(".promo-detail-toggle").click(function() {
+                                        $(this).parent().children(".promo-detail").toggleClass("active");
+                                    })
+                                })
+                                </script>
+                            </li>
+                            <li><button>JOINED</button></li>
+                        </ul>
+                    </div>
+                    <script>
+                    $(function() {
+                        $(".promo-card-image").click(function() {
+                            $(".popup-wrap").addClass("active");
+                        })
+                    })
+                    </script>
+                    <div class="promo-card joined">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current"></div>
+                                <p><span>50</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button>JOINED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card joined">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current"></div>
+                                <p><span>50</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button>JOINED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card joined">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current"></div>
+                                <p><span>50</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button>JOINED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width: 0;"></div>
+                                <p><span>0</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="coming-soon">COMING SOON</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width: 0;"></div>
+                                <p><span>0</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="coming-soon">COMING SOON</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width: 0;"></div>
+                                <p><span>0</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="coming-soon">COMING SOON</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width: 0;"></div>
+                                <p><span>0</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="coming-soon">COMING SOON</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width:100%;"></div>
+                                <p><span>100</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="redeemed">REDEEMED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width:100%;"></div>
+                                <p><span>100</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="redeemed">REDEEMED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width:100%;"></div>
+                                <p><span>100</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="redeemed">REDEEMED</button></li>
+                        </ul>
+                    </div>
+                    <div class="promo-card">
+                        <div class="promo-card-image">
+                            <picture>
+                                <img src="images/promo-image.jpg" alt="">
+                            </picture>
+                            <div class="percent">
+                                <div class="percent-current" style="width:100%;"></div>
+                                <p><span>100</span>%</p>
+                            </div>
+                        </div>
+                        <ul class="promo-info">
+                            <li>活動：好友邀請享紅利</li>
+                            <li>活動期間： 2023/06/11~2023/07/11</li>
+                            <li>
+                                <div class="promo-detail-toggle"></div>
+                                <div class="promo-detail">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>新用戶首存</th>
+                                            <th>介紹彩金</th>
+                                            <th>倍數限定</th>
+                                            <th>彩金倍數</th>
+                                            <th>盤口限定</th>
+                                        </tr>
+                                        <tr>
+                                            <td>≥500</td>
+                                            <td>88</td>
+                                            <td Rowspan="4" align="center" valign="middle">介紹用戶需完成本金流水5倍後，介紹人可獲取彩金</td>
+                                            <td Rowspan="4" align="center" valign="middle">1</td>
+                                            <td Rowspan="4" align="center" valign="middle">不限制</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥2000</td>
+                                            <td>188</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥5000</td>
+                                            <td>288</td>
+                                        </tr>
+                                        <tr>
+                                            <td>≥20000</td>
+                                            <td>588</td>
+                                        </tr>
+                                    </table>
+                                    <p>申請方式：</p>
+                                    <ol>
+                                        <li>符合條件的會員請聯繫在線客服進行申請</li>
+                                        <li>在審核過後系統將及時發放獎勵<br>活動規則：
+                                            <ol>
+                                                <li>此活動不能與其他活動共享。若想參與其他活動按照其他活動要求進行參加。</li>
+                                                <li>參與該活動需所得彩金僅可在指定遊戲類型盤口使用。</li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li><button class="redeemed">REDEEMED</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="promo-more">
+                    <button class="button-style-6"><span>Load more</span></button>
+                </div>
+            </div>
+        </div>
+        <!-- 頁腳 -->
+        <footer>
+            <div class="footer-max-width">
+                <!-- 頁腳-手機版-文字連結 -->
+                <div class="footer-top-mobile">
+                    <span>Links<i></i></span>
+                </div>
+                <div class="footer-top-mobile-list">
+                    <div class="footer-top-mobile-header"><span>Done</span></div>
+                    <ul>
+                        <li>About Us</li>
+                        <li>Affiliate</li>
+                        <li>Become an agent</li>
+                        <li>Game Rule</li>
+                        <li>Live</li>
+                        <li>Sport</li>
+                        <li>E-sport</li>
+                        <li>Sabong</li>
+                        <li>Slot</li>
+                        <li>Lottery</li>
+                        <li>Poker</li>
+                        <li>Fishing</li>
+                        <li>Useful Link</li>
+                        <li>Terms & Conditions</li>
+                        <li>Privacy Policy</li>
+                        <li>Cookie Policy</li>
+                    </ul>
+                </div>
+                <script>
+                $(function() {
+                    $(".footer-top-mobile").click(function() {
+                        $(".footer-top-mobile-list").addClass("active");
+                    })
+                    $(".footer-top-mobile-header").click(function() {
+                        $(this).parent(".footer-top-mobile-list").removeClass("active");
+                    })
+                })
+                </script>
+                <!-- 頁腳-文字連結 -->
+                <div class="footer-top">
+                    <div class="footer-link-list">
+                        <span class="h4">Katusuwin</span>
+                        <a href="">About Us</a>
+                        <a href="">Affiliate</a>
+                        <a href="">Become an agent</a>
+                        <a href="">Game Rule</a>
+                    </div>
+                    <div class="footer-link-list">
+                        <span class="h4">Betting</span>
+                        <a href="">Live</a>
+                        <a href="">Sport</a>
+                        <a href="">E-sport</a>
+                        <a href="">Sabong</a>
+                    </div>
+                    <div class="footer-link-list">
+                        <span class="h4">Gaming</span>
+                        <a href="">Slot</a>
+                        <a href="">Lottery</a>
+                        <a href="">Poker</a>
+                        <a href="">Fishing</a>
+                    </div>
+                    <div class="footer-link-list">
+                        <span class="h4">Useful Link</span>
+                        <a href="">Terms & Conditions</a>
+                        <a href="">Privacy Policy</a>
+                        <a href="">Cookie Policy</a>
+                    </div>
+                    <div class="footer-link-list icon-link">
+                        <span class="h4">Follow us</span>
+                        <a href=""><img src="images/icon-twitter.png" alt=""></a>
+                        <a href=""><img src="images/icon-twitter.png" alt=""></a>
+                        <a href=""><img src="images/icon-twitter.png" alt=""></a>
+                    </div>
+                </div>
+                <!-- 頁腳-支付商 -->
+                <div class="footer-icon">
+                    <div class="h4">Safe payment</div>
+                    <ul>
+                        <li><img src="images/icon-bitcoin.png" alt=""></li>
+                        <li><img src="images/icon-bitcoin.png" alt=""></li>
+                        <li><img src="images/icon-bitcoin.png" alt=""></li>
+                        <li><img src="images/icon-bitcoin.png" alt=""></li>
+                        <li><img src="images/icon-bitcoin.png" alt=""></li>
+                    </ul>
+                </div>
+                <div class="footer-icon">
+                    <div class="h4">Game provider</div>
+                    <ul>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                        <li><img src="images/icon-playtech.png" alt=""></li>
+                    </ul>
+                </div>
+                <!-- 頁腳-執照 -->
+                <div class="footer-lincense">
+                    <div class="h4">Licenses</div>
+                    <p>
+                        <img src="images/lic.png" alt="">
+                        <img src="images/lic.png" alt="">
+                    </p>
+                </div>
+                <!-- 頁腳-簡介 -->
+                <div class="footer-intro">
+                    <div class="footer-intro-title">Platform Introduction</div>
+                    <span class="h6">Bonus365 is a pioneer in online gaming, offering a wide range of live casino games and thousands of global sporting events. Bonus365 When affiliated with an international licensing body, this product is licensed to operate and regulated by </span>
+                    <div class="footer-intro-more"><button class="button-style-5"><span>More</span></button></div>
+                </div>
+                <!-- 頁腳-版權 -->
+                <div class="footer-copyright">
+                    <span>Copyright © 2022 BONUS365. All Rights Reserved.</span>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+
+</html>

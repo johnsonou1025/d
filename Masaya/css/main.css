@@ -212,6 +212,44 @@ button[disabled] span {
     color: #949494;
 }
 
+/*表格樣式*/
+table.table-style {
+    margin: 20px 0;
+    width: 100%;
+    border-collapse: separate;
+    border: 3px solid #d4a441;
+    border-radius: 10px;
+    background-color: #000;
+    text-align: center;
+}
+
+table.table-style td {
+    padding: 10px;
+    border-top: 1px solid #d4a441;
+    border-left: 1px solid #d4a441;
+    vertical-align: middle;
+}
+
+table.table-style th {
+    padding: 10px;
+    background-color: #efd380;
+    color: #000;
+    vertical-align: middle;
+}
+
+table.table-style th:first-child,
+td:first-child {
+    border-left: none;
+}
+
+table.table-style th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+table.table-style th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
 /*共用class*/
 i img {
     display: block;
@@ -225,11 +263,23 @@ i img {
     overflow: hidden;
 }
 
+.of-y{
+    overflow-y: auto;
+}
+
+.only-desktop {
+    display: block;
+}
+
 .only-mobile {
     display: none;
 }
 
 @media (max-width: 992px) {
+    .only-desktop {
+        display: none;
+    }
+
     .only-mobile {
         display: block;
     }
@@ -497,7 +547,7 @@ nav {
 }
 
 .language-item-current {
-    background: url(../images/icon-arrow-down.png) no-repeat right center;
+    background: url(../images/icon-arrow-down.png) no-repeat right center / 14px;
 }
 
 .language-item ul {
@@ -577,8 +627,9 @@ nav {
     float: right;
     width: 14px;
     height: 14px;
-    background: url(../images/icon-arrow-down.png) no-repeat center 100%;
+    background: url(../images/icon-arrow-down.png) no-repeat center center / 14px;
     transform: rotate(-90deg);
+    transition: .3s;
 }
 
 .link-item-dropdown {
@@ -961,6 +1012,7 @@ main .main-max-width {
     right: 10px;
     padding: 20px;
     height: 100%;
+    border-radius: 6px;
     background-color: rgba(0, 96, 6, .9);
     text-align: center;
     opacity: 0;
@@ -1037,7 +1089,7 @@ main .main-max-width {
 
 @media (max-width: 992px) {
     .game-card-info>span {
-        margin: 6px 0;
+        margin: 0;
     }
 }
 
@@ -1150,7 +1202,8 @@ footer .footer-max-width {
 }
 
 /*頁腳-手機版-文字連結*/
-.footer-top-mobile {
+.footer-top-mobile,
+.promo-tabs-mobile {
     display: none;
     align-items: flex-start;
     justify-content: center;
@@ -1163,61 +1216,72 @@ footer .footer-max-width {
     font-weight: bold;
 }
 
-.footer-top-mobile span {
+.footer-top-mobile span,
+.promo-tabs-mobile span {
     display: block;
     width: 100%;
 }
 
-.footer-top-mobile span>i {
+.footer-top-mobile span>i,
+.promo-tabs-mobile span>i {
     float: right;
     width: 14px;
     height: 14px;
     background: url(../images/icon-arrow-right.png) no-repeat center 100%;
 }
 
-.footer-top-mobile-list {
+.footer-top-mobile-list,
+.promo-tabs-mobile-list {
     visibility: hidden;
     position: fixed;
     bottom: -100%;
     left: 0;
     width: 100%;
-    z-index: 10;
+    z-index: 20;
     transition: .3s;
 }
 
-.footer-top-mobile-list.active {
+.footer-top-mobile-list.active,
+.promo-tabs-mobile-list.active {
     visibility: visible;
     bottom: 0;
 }
 
 
-.footer-top-mobile-header {
+.footer-top-mobile-header,
+.promo-tabs-mobile-header {
     padding: 10px 20px;
     height: 44px;
     background-color: #77777f;
     text-align: right;
 }
 
-.footer-top-mobile-list ul {
+.footer-top-mobile-list ul,
+.promo-tabs-mobile-list ul {
     padding: 20px 10px;
     height: 240px;
     background-color: #565656;
     overflow-y: auto;
 }
 
-.footer-top-mobile-list li {
+.footer-top-mobile-list li,
+.promo-tabs-mobile-list li {
     padding: 20px 0;
     font-size: 18px;
     text-align: center;
 }
 
 .footer-top-mobile-list li:hover,
-.footer-top-mobile-list li.active {
+.footer-top-mobile-list li.active,
+.promo-tabs-mobile-list li:hover,
+.promo-tabs-mobile-list li.active {
     background-color: #3A3A3A;
 }
 
 @media (max-width: 992px) {
-    .footer-top-mobile {
+
+    .footer-top-mobile,
+    .promo-tabs-mobile {
         display: flex;
     }
 }
@@ -1374,6 +1438,7 @@ footer .footer-max-width {
     left: 0;
     width: 100%;
     background-color: #20261f;
+    z-index: 10;
 }
 
 /*手機版-底部選單-登入/註冊*/
@@ -2454,7 +2519,7 @@ footer .footer-max-width {
     text-align: right;
 }
 
-.percent {
+.my-turnover .percent {
     display: inline-block;
     height: 20px;
     width: 100%;
@@ -2463,7 +2528,7 @@ footer .footer-max-width {
     background-color: #fff;
 }
 
-.percent .percent-current {
+.my-turnover .percent .percent-current {
     height: 100%;
     width: 50%;
     border-radius: 10px;
@@ -3224,15 +3289,17 @@ footer .footer-max-width {
 }
 
 /*個人頁-邀請*/
-.my-invite h4{
+.my-invite h4 {
     width: 100%;
     margin: 10px 0;
     text-align: left;
 }
-.my-invite h5{
+
+.my-invite h5 {
     margin: 10px 0;
 }
-.my-invite h5 i{
+
+.my-invite h5 i {
     display: inline-block;
     margin-right: 5px;
     width: 24px;
@@ -3466,9 +3533,9 @@ footer .footer-max-width {
 
 @media (max-width: 992px) {
 
-    .my-invite .my-info{
+    .my-invite .my-info {
         padding-bottom: 0;
-        border-bottom:none;
+        border-bottom: none;
     }
 
     .vip-info-name,
@@ -3496,6 +3563,317 @@ footer .footer-max-width {
 
 
 }
+
+/*優惠頁*/
+.promo-wrap {
+    margin-top: 40px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: #0F3700;
+}
+
+.promo-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.promo-tabs {
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin: 20px -5px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.promo-tabs li {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    min-width: 142px;
+    border-radius: 10px;
+    background-color: #334033;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.promo-tabs li:hover,
+.promo-tabs li.active {
+    border: 2px solid #40D10D;
+    background-color: #278400;
+}
+
+.promo-list {
+    overflow: hidden;
+}
+
+.promo-card {
+    position: relative;
+    float: left;
+    margin: 20px 0;
+    padding: 0 10px;
+    width: 25%;
+    overflow: hidden;
+}
+
+.promo-card-image {
+    position: relative;
+    border-radius: 6px 6px 0 0;
+    padding-top: 41%;
+    background: #000;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.promo-card-image img {
+    height: 100%;
+    min-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.promo-card-image picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.promo-info {
+    position: relative;
+    padding: 20px 20px;
+    border-radius: 0 0 6px 6px;
+    background-color: #565656;
+}
+
+.promo-info>li {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.promo-info>li+li {
+    margin-top: 5px;
+}
+
+.promo-info>li:nth-child(3) {
+    display: none;
+}
+
+.promo-info>li:last-child {
+    text-align: center;
+}
+
+.promo-info>li button,
+.promo-popup button {
+    padding: 10px 5px;
+    margin-top: 10px;
+    min-width: 120px;
+    border-radius: 6px;
+    border: 1px solid #40D10D;
+    background-color: #278400;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.promo-info>li button.coming-soon {
+    padding: 7px 5px;
+    border: 4px solid #40D10D;
+    color: #40D10D;
+    background-color: transparent;
+}
+
+.promo-info>li button.redeemed {
+    padding: 7px 5px;
+    border: 4px solid #A0A0A0;
+    color: #A0A0A0;
+    background-color: transparent;
+}
+
+.promo-card-image .percent,
+.promo-popup-title .percent {
+    display: inline-block;
+    position: absolute;
+    right: 60px;
+    bottom: 10px;
+    left: 20px;
+    height: 6px;
+    background-color: rgba(100, 100, 100, .8);
+}
+
+.promo-card-image .percent-current,
+.promo-popup-title .percent .percent-current {
+    height: 100%;
+    width: 50%;
+    background: #40D10D;
+}
+
+.promo-card-image .percent p {
+    position: absolute;
+    top: 50%;
+    right: -45px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff;
+}
+
+.promo-card-image .percent p span {
+    font-size: 16px;
+}
+
+.promo-more {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.promo-detail-toggle {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    background: url(../images/icon-arrow-down.png) no-repeat center center / 16px;
+}
+
+.promo-detail {
+    display: none;
+    white-space: normal;
+    text-align: left;
+}
+
+.promo-detail.active {
+    display: block;
+}
+
+.promo-detail ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+}
+
+.promo-detail ol li {
+    margin-left: 20px;
+}
+
+.promo-popup .popup-box {
+    width: 80%;
+    max-width: 1000px;
+    background-color: #1E1D22;
+}
+.promo-popup .promo-popup-inner{
+    padding: 0px 40px 40px;
+    height: 100%;
+    border-radius: 6px;
+    overflow-y: auto;
+}
+.promo-popup picture{
+    display: block;
+    position: relative;
+    top: 0;
+    right: -40px;
+    left: -40px;
+    height: 386px;
+    width: 109%;
+}
+
+.promo-popup picture img{
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    max-width: none;
+    transform: translateX(-50%);
+}
+
+.promo-popup button {
+    margin-top: 40px;
+}
+
+.promo-popup .promo-popup-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid #707070;
+}
+
+.promo-popup .promo-popup-title li {
+    text-align: left;
+    width: 50%;
+}
+
+.promo-popup .promo-popup-title li:last-child {
+    position: relative;
+}
+
+.promo-popup .promo-popup-title h4 {
+    margin-bottom: 10px;
+}
+
+.promo-popup .promo-popup-title .percent {
+    top: 50%;
+    left: 80px;
+    transform: translateY(-50%);
+    height: 10px;
+}
+
+.promo-popup .promo-popup-title .percent span {
+    position: absolute;
+    top: 50%;
+    right: -60px;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.promo-popup .promo-detail {
+    display: block;
+    padding: 20px;
+}
+
+@media (max-width: 1230px) {
+    .promo-card {
+        width: 33.33%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .promo-card {
+        width: 50%;
+    }
+}
+
+@media (max-width: 992px) {
+    .promo-wrap {
+        padding: 0px;
+        background-color: transparent;
+    }
+
+    .promo-tabs {
+        display: none;
+    }
+
+    .promo-card {
+        width: 100%;
+    }
+
+    .promo-info>li:nth-child(3) {
+        display: block;
+    }
+
+    .promo-popup {
+        display: none;
+    }
+}
+
+
+
+
 
 
 /*樣式表*/
