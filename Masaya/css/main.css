@@ -979,6 +979,9 @@ main .main-max-width {
     background: url(../images/icon-favorite.png) no-repeat center center / cover;
 }
 
+.game-favorite.active{
+    background-image: url(../images/icon-favorite-active.png);
+}
 
 .game-card-name {
     position: relative;
