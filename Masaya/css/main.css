@@ -1932,6 +1932,33 @@ footer .footer-max-width {
     text-align: left;
 }
 
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs {
+    margin: 0px -10px 40px;
+    white-space: nowrap;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.tabs li {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    min-width: 120px;
+    border-radius: 6px;
+    background-color: #565656;
+    text-align: center;
+    font-size: 16px;
+}
+
+.tabs li.active {
+    background-color: #044E04;
+}
+
 /*註冊登入頁*/
 .popup-login .popup-box {
     width: 900px;
@@ -3785,6 +3812,7 @@ footer .footer-max-width {
 
 .promo-popup .popup-box {
     width: 80%;
+    height: 100%;
     max-width: 1000px;
     background-color: #1E1D22;
 }
@@ -3999,33 +4027,6 @@ footer .footer-max-width {
 
 /*my-bet*/
 
-.bet-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.bet-tabs {
-    margin: 0px -10px 40px;
-    white-space: nowrap;
-    overflow-y: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.bet-tabs li {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 0 10px;
-    min-width: 120px;
-    border-radius: 6px;
-    background-color: #565656;
-    text-align: center;
-    font-size: 16px;
-}
-
-.bet-tabs li.active {
-    background-color: #044E04;
-}
-
 .bet-table {
     padding: 20px 40px;
     margin: 20px 0;
@@ -4064,7 +4065,7 @@ footer .footer-max-width {
 }
 
 @media (max-width: 992px) {
-    .bet-tabs{
+    .my-bet .tabs{
         display: none;
     }
     .bet-list {
@@ -4074,6 +4075,10 @@ footer .footer-max-width {
         display: block;
     }
 }
+
+/*my wallet history*/
+
+
 
 /*樣式表*/
 
