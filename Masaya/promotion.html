@@ -345,11 +345,11 @@
                     <li>捕鱼游戏</li>
                 </ul>
                 <!-- 最新優惠-選單-手機 -->
-                <div class="promo-tabs-mobile">
+                <div class="tabs-mobile">
                     <span>所有优惠<i></i></span>
                 </div>
-                <div class="promo-tabs-mobile-list">
-                    <div class="promo-tabs-mobile-header"><span>Done</span></div>
+                <div class="tabs-mobile-list">
+                    <div class="tabs-mobile-header"><span>Done</span></div>
                     <ul>
                         <li>体育竞技</li>
                         <li>电子竞技</li>
@@ -362,11 +362,11 @@
                 </div>
                 <script>
                 $(function() {
-                    $(".promo-tabs-mobile").click(function() {
-                        $(".promo-tabs-mobile-list").addClass("active");
+                    $(".tabs-mobile").click(function() {
+                        $(".tabs-mobile-list").addClass("active");
                     })
-                    $(".promo-tabs-mobile-header").click(function() {
-                        $(this).parent(".promo-tabs-mobile-list").removeClass("active");
+                    $(".tabs-mobile-header").click(function() {
+                        $(this).parent(".tabs-mobile-list").removeClass("active");
                     })
                 })
                 </script>

@@ -979,7 +979,7 @@ main .main-max-width {
     background: url(../images/icon-favorite.png) no-repeat center center / cover;
 }
 
-.game-favorite.active{
+.game-favorite.active {
     background-image: url(../images/icon-favorite-active.png);
 }
 
@@ -1217,7 +1217,7 @@ footer .footer-max-width {
 
 /*頁腳-手機版-文字連結*/
 .footer-top-mobile,
-.promo-tabs-mobile {
+.tabs-mobile {
     display: none;
     align-items: flex-start;
     justify-content: center;
@@ -1231,13 +1231,13 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile span,
-.promo-tabs-mobile span {
+.tabs-mobile span {
     display: block;
     width: 100%;
 }
 
 .footer-top-mobile span>i,
-.promo-tabs-mobile span>i {
+.tabs-mobile span>i {
     float: right;
     width: 14px;
     height: 14px;
@@ -1245,7 +1245,7 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile-list,
-.promo-tabs-mobile-list {
+.tabs-mobile-list {
     visibility: hidden;
     position: fixed;
     bottom: -100%;
@@ -1256,14 +1256,14 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile-list.active,
-.promo-tabs-mobile-list.active {
+.tabs-mobile-list.active {
     visibility: visible;
     bottom: 0;
 }
 
 
 .footer-top-mobile-header,
-.promo-tabs-mobile-header {
+.tabs-mobile-header {
     padding: 10px 20px;
     height: 44px;
     background-color: #77777f;
@@ -1271,7 +1271,7 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile-list ul,
-.promo-tabs-mobile-list ul {
+.tabs-mobile-list ul {
     padding: 20px 10px;
     height: 240px;
     background-color: #565656;
@@ -1279,7 +1279,7 @@ footer .footer-max-width {
 }
 
 .footer-top-mobile-list li,
-.promo-tabs-mobile-list li {
+.tabs-mobile-list li {
     padding: 20px 0;
     font-size: 18px;
     text-align: center;
@@ -1287,15 +1287,15 @@ footer .footer-max-width {
 
 .footer-top-mobile-list li:hover,
 .footer-top-mobile-list li.active,
-.promo-tabs-mobile-list li:hover,
-.promo-tabs-mobile-list li.active {
+.tabs-mobile-list li:hover,
+.tabs-mobile-list li.active {
     background-color: #3A3A3A;
 }
 
 @media (max-width: 992px) {
 
     .footer-top-mobile,
-    .promo-tabs-mobile {
+    .tabs-mobile {
         display: flex;
     }
 }
@@ -1912,9 +1912,11 @@ footer .footer-max-width {
 .form-popup .verify-button {
     margin-top: 20px;
 }
-.form-popup .verify-button button{
+
+.form-popup .verify-button button {
     padding: 16px 20px;
 }
+
 .form-popup .verify-button button+button {
     margin-left: 20px;
 }
@@ -3951,20 +3953,23 @@ footer .footer-max-width {
     min-width: 150px;
     margin: 0 10px;
 }
-.my-verify .form-popup{
+
+.my-verify .form-popup {
     background: linear-gradient(to bottom, #003D00 0%, #030F03 100%);
 }
-.my-verify .popup-box{
-    border:none;
+
+.my-verify .popup-box {
+    border: none;
 }
-.my-verify .form-popup .inner input{
+
+.my-verify .form-popup .inner input {
     width: 260px;
     border-radius: 0;
     background-color: #fff;
     color: #000;
 }
 
-.my-verify .form-popup .inner p{
+.my-verify .form-popup .inner p {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
@@ -3987,8 +3992,86 @@ footer .footer-max-width {
 }
 
 @media (max-width: 992px) {
-    .verify-form{
+    .verify-form {
         padding: 20px 0;
+    }
+}
+
+/*my-bet*/
+
+.bet-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.bet-tabs {
+    margin: 0px -10px 40px;
+    white-space: nowrap;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.bet-tabs li {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    min-width: 120px;
+    border-radius: 6px;
+    background-color: #565656;
+    text-align: center;
+    font-size: 16px;
+}
+
+.bet-tabs li.active {
+    background-color: #044E04;
+}
+
+.bet-table {
+    padding: 20px 40px;
+    margin: 20px 0;
+    border-radius: 6px;
+    background-color: #565656;
+}
+
+.bet-list table {
+    padding: 20px;
+    width: 100%;
+    border-bottom: 1px solid #707070;
+    text-align: center;
+}
+
+.bet-list table th {
+    padding: 10px 5px;
+}
+
+.bet-list table td {
+    padding: 10px 5px;
+    border-top: 1px solid #707070;
+    vertical-align: middle;
+    /*max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;*/
+}
+
+.bet-list-mobile {
+    display: none;
+}
+
+.bet-list-mobile table{
+    width: 100%;
+    text-align: left;
+}
+
+@media (max-width: 992px) {
+    .bet-tabs{
+        display: none;
+    }
+    .bet-list {
+        display: none;
+    }
+    .bet-list-mobile {
+        display: block;
     }
 }
 
