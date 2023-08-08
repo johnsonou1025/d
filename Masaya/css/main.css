@@ -1333,6 +1333,28 @@ footer .footer-max-width {
     color: #B5B5B5;
 }
 
+.footer-link-list p.tc-download {
+    display: block;
+    margin-bottom: 30px;
+    white-space: nowrap;
+}
+
+.footer-link-list p.tc-download a {
+    display: inline-block;
+    margin-bottom: 0px;
+    vertical-align: middle;
+}
+
+.footer-link-list p.tc-download a:last-child{
+    margin-left: 10px;
+}
+
+.footer-link-list p.tc-download a:last-child i{
+    display: block;
+    height: 14px;
+    width: 14px;
+}
+
 .footer-link-list.icon-link a {
     display: inline-flex;
     align-items: center;
@@ -4059,18 +4081,20 @@ footer .footer-max-width {
     display: none;
 }
 
-.bet-list-mobile table{
+.bet-list-mobile table {
     width: 100%;
     text-align: left;
 }
 
 @media (max-width: 992px) {
-    .my-bet .tabs{
+    .my-bet .tabs {
         display: none;
     }
+
     .bet-list {
         display: none;
     }
+
     .bet-list-mobile {
         display: block;
     }
