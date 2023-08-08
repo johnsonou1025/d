@@ -1345,11 +1345,11 @@ footer .footer-max-width {
     vertical-align: middle;
 }
 
-.footer-link-list p.tc-download a:last-child{
+.footer-link-list p.tc-download a:last-child {
     margin-left: 10px;
 }
 
-.footer-link-list p.tc-download a:last-child i{
+.footer-link-list p.tc-download a:last-child i {
     display: block;
     height: 14px;
     width: 14px;
@@ -1975,9 +1975,12 @@ footer .footer-max-width {
     background-color: #565656;
     text-align: center;
     font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
 }
 
-.tabs li.active {
+.tabs li.active,
+.tabs li:hover {
     background-color: #044E04;
 }
 
@@ -2426,6 +2429,7 @@ footer .footer-max-width {
 .nav-tabs {
     display: flex;
     background-color: #20261f;
+    overflow-y: auto;
 }
 
 .nav-tabs li {
@@ -4101,6 +4105,186 @@ footer .footer-max-width {
 }
 
 /*my wallet history*/
+
+.wallet-history .title {
+    margin: 20px 0;
+    font-size: 24px;
+}
+
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    border-radius: 6px;
+    background-color: #565656;
+}
+
+.history-list-menu {
+    padding: 0 10px;
+    width: 200px;
+}
+
+.history-list-menu li {
+    padding: 15px 0;
+    margin: 5px 0;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.history-list-menu li.active,
+.history-list-menu li:hover {
+    border-color: #707070;
+    background-color: #414141;
+}
+
+.history-list-content {
+    width: calc(100% - 200px);
+    overflow-x: auto;
+}
+
+.history-date {
+    padding: 20px 0;
+    margin-bottom: 10px;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+.history-date p {
+    float: right;
+}
+
+.history-date p label {
+    padding: 10px 36px 10px 10px;
+    border: 1px solid #707070;
+    border-radius: 6px;
+    background: url(../images/icon-date.png) no-repeat right 10px center / 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.history-list-content table {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.history-list-content table th {
+    padding: 10px;
+    background-color: #707070;
+    vertical-align: middle;
+}
+
+.history-list-content table td {
+    padding: 10px;
+    border-top: 1px solid #707070;
+    vertical-align: middle;
+}
+
+.history-list-mobile {
+    display: none;
+}
+
+.history-list-mobile table {
+    width: 100%;
+    border-radius: 6px;
+    background-color: #565656;
+}
+
+.history-list-mobile table th {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+/*    font-weight: bold;*/
+}
+
+/*.history-list-mobile table tr th:first-child{
+    padding-left: 20px;
+}*/
+
+.history-list-mobile table td {
+    padding: 10px;
+    text-align: right;
+    vertical-align: middle;
+    font-size: 12px;
+}
+/*.history-list-mobile table tr td:last-child{
+    padding-right: 20px;
+}*/
+
+.history-list-mobile table td button{
+    width: 100%;
+    padding: 10px 20px;
+
+}
+
+.history-list-mobile .button-wrap{
+    margin-top: 40px;
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
+    .history-date p {
+        float: none;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .wallet-history .title {
+        display: none;
+    }
+
+    .history-list {
+        display: none;
+    }
+
+    .wallet-history .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .wallet-history .tabs li {
+        position: relative;
+        margin: 0;
+        min-width: auto;
+        border-radius: 0;
+        border-bottom: 1px solid #E2E2E2;
+        background-color: transparent;
+    }
+
+    .wallet-history .tabs li.active:after,
+    .wallet-history .tabs li:hover:after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #40D10D;
+        z-index: 1;
+    }
+
+    .wallet-history .tabs-mobile {
+        padding: 15px 20px;
+        border: 2px solid #fff;
+    }
+
+    .history-date p label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .history-list-mobile {
+        display: block;
+    }
+}
+
 
 
 
