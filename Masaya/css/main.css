@@ -4122,6 +4122,7 @@ footer .footer-max-width {
 .history-list-menu {
     padding: 0 10px;
     width: 200px;
+    border-right: 1px solid #707070;
 }
 
 .history-list-menu li {
@@ -4142,8 +4143,14 @@ footer .footer-max-width {
 }
 
 .history-list-content {
+    position: relative;
+    padding: 0 20px;
     width: calc(100% - 200px);
     overflow-x: auto;
+}
+
+.history-list-content.no-data {
+    background: url(../images/no-data.png) no-repeat center center / 200px;
 }
 
 .history-date {
@@ -4198,7 +4205,7 @@ footer .footer-max-width {
     padding: 10px;
     text-align: left;
     vertical-align: middle;
-/*    font-weight: bold;*/
+    /*    font-weight: bold;*/
 }
 
 /*.history-list-mobile table tr th:first-child{
@@ -4211,25 +4218,72 @@ footer .footer-max-width {
     vertical-align: middle;
     font-size: 12px;
 }
+
 /*.history-list-mobile table tr td:last-child{
     padding-right: 20px;
 }*/
 
-.history-list-mobile table td button{
+.history-list-mobile table td button {
     width: 100%;
     padding: 10px 20px;
 
 }
 
-.history-list-mobile .button-wrap{
+.history-list-mobile .button-wrap {
     margin-top: 40px;
     text-align: center;
+}
+
+.no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.no-data p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.no-data span {
+    font-size: 12px;
+}
+
+.no-data i {
+    display: inline-block;
+    width: 257px;
+}
+
+.history-text-1 {
+    margin-bottom: 40px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.history-text-2 {
+    padding-left: 40px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.history-text-2 span {
+    margin-left: 40px;
+    color: #40D10D;
 }
 
 @media (max-width: 1200px) {
     .history-date p {
         float: none;
         margin-top: 20px;
+    }
+
+    .history-text-2 span {
+        display: block;
+        margin-top: 20px;
+        margin-left: 0;
     }
 }
 
@@ -4282,6 +4336,15 @@ footer .footer-max-width {
 
     .history-list-mobile {
         display: block;
+    }
+
+    .no-data {
+        position: static;
+        transform: none;
+        margin: 80px 0;
+    }
+    .history-text-1{
+        margin-top: 40px;
     }
 }
 
