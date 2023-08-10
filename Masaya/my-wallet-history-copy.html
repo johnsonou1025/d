@@ -385,20 +385,23 @@
             <div class="content">
                 <div class="wallet-history">
                     <ul class="tabs">
-                        <li>Main</li>
+                        <li class="active">Main</li>
                         <li>Bonus</li>
                         <li>Commission</li>
-                        <li class="active">Deposit</li>
+                        <li>Deposit</li>
                         <li>Withdrawal</li>
                     </ul>
                     <div class="tabs-mobile">
-                        <span>Deposit<i></i></span>
+                        <span>Main<i></i></span>
                     </div>
                     <div class="tabs-mobile-list">
                         <div class="tabs-mobile-header"><span>Done</span></div>
                         <ul>
+                            <li>Main</li>
+                            <li>Bonus</li>
+                            <li>Commission</li>
                             <li>Deposit</li>
-                            <li>Transaction DTL</li>
+                            <li>Withdrawal</li>
                         </ul>
                     </div>
                     <script>
@@ -414,25 +417,85 @@
                     <p class="title">Main</p>
                     <div class="history-list">
                         <ul class="history-list-menu">
-                            <li class="active">Deposit</li>
-                            <li>Transaction DTL</li>
+                            <li class="active">All</li>
+                            <li>Deposit</li>
+                            <li>Cancel deposit</li>
+                            <li>Withdraw</li>
+                            <li>Cancel withdrawal</li>
+                            <li>Rebate</li>
+                            <li>Event</li>
+                            <li>Manual deposit</li>
+                            <li>Manual cost</li>
                         </ul>
                         <div class="history-list-content">
-                            <p class="history-text-1">Account balance</p>
-                            <p class="history-text-2">
-                                Trading balance <span>$ 1,011,552.77</span>
-                            </p>
+                            <div class="history-date">Transaction DTL
+                                <p>Date: <label>2023/07/03-2023/07/11</label></p>
+                            </div>
+                            <table>
+                                <tr>
+                                    <th>B.Time</th>
+                                    <th>Transfer type</th>
+                                    <th>Amount</th>
+                                    <th>Total balance</th>
+                                    <th>Other</th>
+                                    <th>Order ID</th>
+                                </tr>
+                                <tr>
+                                    <td>2023-07-10<br>11:45:32</td>
+                                    <td>Cancel withdrawal</td>
+                                    <td>100</td>
+                                    <td>303.39</td>
+                                    <td>Cancel Withdrawal</td>
+                                    <td>T3851aae8-1ed4-11ee-a05a-02d29afd4767</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-07-10<br>11:45:32</td>
+                                    <td>Cancel withdrawal</td>
+                                    <td>100</td>
+                                    <td>303.39</td>
+                                    <td>Cancel Withdrawal</td>
+                                    <td>T3851aae8-1ed4-11ee-a05a-02d29afd4767</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div class="history-list-mobile">
-                        <div class="history-date">
+                        <div class="history-date">Transaction DTL
                             <p>Date: <label>2023/07/03-2023/07/11</label></p>
                         </div>
-                        <div class="balance-box">
-                            <p class="history-text-1">Account balance</p>
-                            <p class="history-text-2">
-                                Trading balance <span>$ 1,011,552.77</span>
-                            </p>
+                        <table>
+                            <tr>
+                                <th>订单号</th>
+                                <td>T20210524123837034303</td>
+                                <th>输赢金额</th>
+                                <td>-886.00</td>
+                            </tr>
+                            <tr>
+                                <th>投注时间</th>
+                                <td>2021-05-24 12:50:50</td>
+                                <th>状态</th>
+                                <td>结算</td>
+                            </tr>
+                            <tr>
+                                <th>结算时间</th>
+                                <td>2021-05-24 12:50:50</td>
+                                <th>盈亏</th>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>平台</th>
+                                <td>沙巴</td>
+                                <td colspan="2" rowspan="2">
+                                    <button class="button-style-7"><span>订单详情</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>下注金额</th>
+                                <td>886.00</td>
+                            </tr>
+                        </table>
+                        <div class="button-wrap">
+                            <button class="button-style-9"><span>加载更多</span></button>
                         </div>
                     </div>
                 </div>

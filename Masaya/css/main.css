@@ -4160,11 +4160,16 @@ footer .footer-max-width {
     font-size: 16px;
 }
 
+.history-date span {
+    line-height: 43px;
+}
+
 .history-date p {
     float: right;
 }
 
 .history-date p label {
+    display: inline-block;
     padding: 10px 36px 10px 10px;
     border: 1px solid #707070;
     border-radius: 6px;
@@ -4193,9 +4198,14 @@ footer .footer-max-width {
 
 .history-list-mobile {
     display: none;
+    margin-top: 20px;
+    padding: 0;
+    min-height: 180px;
+    border-radius: 6px;
 }
 
 .history-list-mobile table {
+    margin: 20px 0;
     width: 100%;
     border-radius: 6px;
     background-color: #565656;
@@ -4205,18 +4215,12 @@ footer .footer-max-width {
     padding: 10px;
     text-align: left;
     vertical-align: middle;
-    /*    font-weight: bold;*/
 }
-
-/*.history-list-mobile table tr th:first-child{
-    padding-left: 20px;
-}*/
 
 .history-list-mobile table td {
     padding: 10px;
     text-align: right;
     vertical-align: middle;
-    font-size: 12px;
 }
 
 /*.history-list-mobile table tr td:last-child{
@@ -4232,6 +4236,10 @@ footer .footer-max-width {
 .history-list-mobile .button-wrap {
     margin-top: 40px;
     text-align: center;
+}
+
+.history-list-mobile .button-wrap button {
+    background-color: #565656;
 }
 
 .no-data {
@@ -4257,7 +4265,7 @@ footer .footer-max-width {
 }
 
 .history-text-1 {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-align: left;
     font-size: 16px;
     font-weight: bold;
@@ -4274,9 +4282,28 @@ footer .footer-max-width {
     color: #40D10D;
 }
 
+.balance-box{
+    padding: 10px 20px;
+    margin: 20px 0;
+    min-height: 180px;
+    border-radius: 6px;
+    background-color: #565656;
+}
+
 @media (max-width: 1200px) {
+    .history-date {
+        padding: 0;
+    }
+
+    .history-date span {
+        line-height: normal;
+    }
+
     .history-date p {
         float: none;
+    }
+
+    .history-date span+p {
         margin-top: 20px;
     }
 
@@ -4284,6 +4311,10 @@ footer .footer-max-width {
         display: block;
         margin-top: 20px;
         margin-left: 0;
+    }
+    .history-date p label{
+        display: block;
+        margin-top: 10px;
     }
 }
 
@@ -4326,12 +4357,7 @@ footer .footer-max-width {
 
     .wallet-history .tabs-mobile {
         padding: 15px 20px;
-        border: 2px solid #fff;
-    }
-
-    .history-date p label {
-        display: block;
-        margin-top: 10px;
+        border: 2px solid #565656;
     }
 
     .history-list-mobile {
@@ -4341,10 +4367,12 @@ footer .footer-max-width {
     .no-data {
         position: static;
         transform: none;
-        margin: 80px 0;
+        margin: 120px 0;
     }
-    .history-text-1{
-        margin-top: 40px;
+
+    .history-text-2 span {
+        float: right;
+        margin: 0;
     }
 }
 
