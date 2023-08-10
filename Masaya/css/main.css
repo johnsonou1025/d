@@ -3309,6 +3309,28 @@ footer .footer-max-width {
     display: block;
 }
 
+.my-withdraw .my-form-input .credit-card {
+    overflow: hidden;
+}
+.my-withdraw .my-form-input .credit-card>input{
+    background:#fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
+}
+.my-withdraw .my-form-input .credit-card>div {
+    float: right;
+    color: #ababab;
+    font-size: 18px;
+}
+
+.my-withdraw .my-form-input .credit-card>div>input {
+    width: 120px;
+    margin-left: 10px;
+}
+
+.my-withdraw .my-form-input .credit-card button {
+    float: left;
+    margin-top: 20px;
+}
+
 @media (max-width: 1200px) {
     .my-withdraw .bank-choice {
         width: 320px;
@@ -3336,6 +3358,11 @@ footer .footer-max-width {
         width: 100%;
     }
 
+    .my-withdraw .my-form-input .form-input label span.highlight{
+        display: block;
+        float: none;
+    }
+
     .my-withdraw .my-form-input .form-input input {
         width: 100%;
     }
@@ -3360,6 +3387,10 @@ footer .footer-max-width {
 
     .my-withdraw .withdraw-notice {
         padding: 20px;
+    }
+    .my-withdraw .my-form-input .credit-card>div{
+        float:none;
+        margin-top: 20px;
     }
 }
 
@@ -4280,7 +4311,7 @@ footer .footer-max-width {
     color: #40D10D;
 }
 
-.balance-box{
+.balance-box {
     padding: 10px 20px;
     margin: 20px 0;
     min-height: 180px;
@@ -4310,7 +4341,8 @@ footer .footer-max-width {
         margin-top: 20px;
         margin-left: 0;
     }
-    .history-date p label{
+
+    .history-date p label {
         display: block;
         margin-top: 10px;
     }
