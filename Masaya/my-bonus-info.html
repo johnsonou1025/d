@@ -384,19 +384,43 @@
             </ul>
             <div class="content my-bonus-info">
                 <h3>Bonus Info</h3>
-                <ul class="bonus-count">
-                    <li>Total bonus amount</li>
-                    <li>18,600</li>
-                    <li>(100%)</li>
-                </ul>
-                <ul class="bonus-count">
-                    <li>Total bonus amount</li>
-                    <li><span>18,600</span></li>
-                    <li><span>(100%)</span></li>
-                </ul>
-                <div class="percent">
-                    <i></i>
+                <div class="bonus-count">
+                    <ul>
+                        <li>Total bonus amount</li>
+                        <li>18,600</li>
+                        <li>(100%)</li>
+                    </ul>
+                    <ul>
+                        <li>Recieved</li>
+                        <li class="highlight">2,100</li>
+                        <li class="highlight">(0.11%)</li>
+                    </ul>
+                    <div class="percent">
+                        <i style="width: 20%;"></i>
+                    </div>
                 </div>
+                <div class="tabs-mobile">
+                    <span>Accumulator<i></i></span>
+                </div>
+                <div class="tabs-mobile-list">
+                    <div class="tabs-mobile-header"><span>Done</span></div>
+                    <ul>
+                        <li>Accumulator</li>
+                        <li>Cumulative</li>
+                        <li>Invite get bonus</li>
+                        <li>Daily first</li>
+                    </ul>
+                </div>
+                <script>
+                $(function() {
+                    $(".tabs-mobile").click(function() {
+                        $(".tabs-mobile-list").addClass("active");
+                    })
+                    $(".tabs-mobile-header").click(function() {
+                        $(this).parent(".tabs-mobile-list").removeClass("active");
+                    })
+                })
+                </script>
                 <div class="bonus-list">
                     <ul class="bonus-list-menu">
                         <li class="active">Accumulator</li>
@@ -410,8 +434,70 @@
                                 <span>A. Bets500~4999Deliver100(500/500)</span>
                                 <span> Reg. time: 2022/11/18</span>
                             </p>
-                            <button><span>Received</span></button>
+                            <button class="bonus-item-button-1"><span>Received</span></button>
                         </div>
+                        <div class="bonus-item">
+                            <p>
+                                <span>A. Bets500~4999Deliver100(500/500)</span>
+                                <span> Reg. time: 2022/11/18</span>
+                            </p>
+                            <button class="bonus-item-button-2">Unfinished</button>
+                        </div>
+                        <div class="bonus-item">
+                            <p>
+                                <span>A. Bets500~4999Deliver100(500/500)</span>
+                                <span> Reg. time: 2022/11/18</span>
+                            </p>
+                            <button class="bonus-item-button-3">Unreceived</button>
+                        </div>
+                        <div class="bonus-item">
+                            <p>
+                                <span>A. Bets500~4999Deliver100(500/500)</span>
+                                <span> Reg. time: 2022/11/18</span>
+                            </p>
+                            <button class="bonus-item-button-4">Revoke</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-list-mobile">
+                    <div class="bonus-item">
+                        <p>
+                            <span>A. Bets500~4999Deliver100(500/500)</span>
+                            <span> Reg. time: 2022/11/18</span>
+                        </p>
+                        <div class="button-wrap">
+                            <button class="bonus-item-button-1"><span>Received</span></button>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <p>
+                            <span>A. Bets500~4999Deliver100(500/500)</span>
+                            <span> Reg. time: 2022/11/18</span>
+                        </p>
+                        <div class="button-wrap">
+                            <button class="bonus-item-button-2">Unfinished</button>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <p>
+                            <span>A. Bets500~4999Deliver100(500/500)</span>
+                            <span> Reg. time: 2022/11/18</span>
+                        </p>
+                        <div class="button-wrap">
+                            <button class="bonus-item-button-3">Unreceived</button>
+                        </div>
+                    </div>
+                    <div class="bonus-item">
+                        <p>
+                            <span>A. Bets500~4999Deliver100(500/500)</span>
+                            <span> Reg. time: 2022/11/18</span>
+                        </p>
+                        <div class="button-wrap">
+                            <button class="bonus-item-button-4">Revoke</button>
+                        </div>
+                    </div>
+                    <div class="bonus-button-wrap">
+                        <button class="button-style-9"><span>加载更多</span></button>
                     </div>
                 </div>
             </div>

@@ -3076,7 +3076,7 @@ footer .footer-max-width {
     color: #000;
 }
 
-.my-form-input .form-input p{
+.my-form-input .form-input p {
     margin-top: 20px;
 }
 
@@ -3261,7 +3261,7 @@ footer .footer-max-width {
     width: 200px;
 }
 
-.my-withdraw .my-form-input .form-input p{
+.my-withdraw .my-form-input .form-input p {
     margin-top: 20px;
 }
 
@@ -3318,11 +3318,13 @@ footer .footer-max-width {
 }
 
 .my-withdraw .my-form-input .credit-card {
-/*    overflow: hidden;*/
+    /*    overflow: hidden;*/
 }
-.my-withdraw .my-form-input .credit-card input{
-    background:#fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
+
+.my-withdraw .my-form-input .credit-card input {
+    background: #fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
 }
+
 .my-withdraw .my-form-input .credit-card .credit-card-code {
     float: right;
     color: #ababab;
@@ -3340,9 +3342,9 @@ footer .footer-max-width {
     margin-top: 20px;
 }
 
-.my-withdraw .my-form-input .select-input{
+.my-withdraw .my-form-input .select-input {
     position: relative;
-/*    width: calc(100% - 220px);*/
+    /*    width: calc(100% - 220px);*/
 }
 
 .my-withdraw .my-form-input .select-box {
@@ -3356,17 +3358,19 @@ footer .footer-max-width {
     color: #000;
     z-index: 10;
 }
-.my-withdraw .my-form-input .select-box.active{
+
+.my-withdraw .my-form-input .select-box.active {
     display: block;
 }
-.my-withdraw .my-form-input .select-box li{
-    padding:20px;
+
+.my-withdraw .my-form-input .select-box li {
+    padding: 20px;
     cursor: pointer;
 }
 
 .my-withdraw .my-form-input .select-box li.active,
-.my-withdraw .my-form-input .select-box li:hover{
-    color:#278400;
+.my-withdraw .my-form-input .select-box li:hover {
+    color: #278400;
 }
 
 @media (max-width: 1200px) {
@@ -3396,9 +3400,9 @@ footer .footer-max-width {
         width: 100%;
     }
 
-    .my-withdraw .my-form-input .form-input label span{
+    .my-withdraw .my-form-input .form-input label span {
         display: block;
-        float:none;
+        float: none;
     }
 
     .my-withdraw .my-form-input .form-input input {
@@ -3426,12 +3430,13 @@ footer .footer-max-width {
     .my-withdraw .withdraw-notice {
         padding: 20px;
     }
-    .my-withdraw .my-form-input .credit-card .credit-card-code{
-        float:none;
+
+    .my-withdraw .my-form-input .credit-card .credit-card-code {
+        float: none;
         margin-top: 20px;
     }
 
-    .my-withdraw .my-form-input .select-box{
+    .my-withdraw .my-form-input .select-box {
         width: 100%;
     }
 }
@@ -4454,7 +4459,264 @@ footer .footer-max-width {
     }
 }
 
+/*my bonus info*/
+.my-bonus-info .bonus-count {
+    padding: 0 40px;
+}
 
+.my-bonus-info .bonus-count ul {
+    width: 60%;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.my-bonus-info .bonus-count li {
+    float: left;
+    width: 20%;
+    text-align: right;
+}
+
+.my-bonus-info .bonus-count li:first-child {
+    width: 60%;
+    text-align-last: left;
+}
+
+.my-bonus-info .percent {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 36px;
+    background-color: #656565;
+}
+
+.my-bonus-info .percent i {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #40D10D;
+}
+
+.my-bonus-info .bonus-item {
+    padding: 40px 20px;
+    overflow: hidden;
+}
+
+.my-bonus-info .bonus-item+.bonus-item {
+    border-top: 1px solid #707070;
+}
+
+.my-bonus-info .bonus-item p {
+    display: inline-block;
+}
+
+.my-bonus-info .bonus-item p span {
+    display: block;
+    font-size: 16px;
+}
+
+.my-bonus-info .bonus-item p span+span {
+    margin-top: 10px;
+}
+
+.my-bonus-info .bonus-item button {
+    float: right;
+    min-width: 150px;
+    padding: 16px 0;
+    border-radius: 6px;
+    border: 1px solid;
+    font-size: 16px;
+}
+
+.bonus-item-button-1 {
+    border-color: #fff;
+    background-color: transparent;
+    color: #fff;
+}
+
+.bonus-item-button-2 {
+    border-color: #A5A5A5;
+    background-color: #7A7A7A;
+    color: #A5A5A5;
+}
+
+.bonus-item-button-3 {
+    border-color: #40D10D;
+    background-color: transparent;
+    color: #40D10D;
+}
+
+.bonus-item-button-4 {
+    border-color: #707070;
+    background-color: transparent;
+    color: #707070;
+}
+
+.bonus-list-mobile {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .my-bonus-info .bonus-item button {
+        float: none;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .my-bonus-info .bonus-count {
+        padding: 0;
+        margin-bottom: 40px;
+    }
+
+    .my-bonus-info .bonus-count ul {
+        width: 100%;
+        padding-left: 20px;
+    }
+
+    .my-bonus-info .percent {
+        height: 16px;
+    }
+
+    .bonus-list {
+        display: none;
+    }
+
+    .bonus-list-mobile {
+        display: block;
+    }
+
+    .my-bonus-info .bonus-item {
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 6px;
+        background-color: #565656;
+    }
+
+    .my-bonus-info .bonus-item+.bonus-item {
+        border-top: none;
+    }
+
+    .my-bonus-info .bonus-item button {
+        padding: 10px 0;
+    }
+
+    .button-wrap {
+        text-align: center;
+    }
+
+    .bonus-button-wrap {
+        text-align: center;
+    }
+
+    .bonus-button-wrap button {
+        padding: 10px;
+        margin-top: 20px;
+        min-width: 200px;
+        background-color: #565656;
+    }
+}
+
+/*static-content*/
+
+.terms {
+    position: relative;
+    padding-top: 400px;
+}
+
+.terms-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.terms-bg img {
+    width: 100%;
+}
+
+.static-content {
+    position: relative;
+    padding: 40px;
+    background-color: #0F3700;
+}
+
+.static-content h3 {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.static-content h4 {
+    margin: 20px 0;
+}
+
+.static-content p+h4 {
+    margin: 40px 0 20px;
+}
+
+.static-content p {
+    margin: 10px 0;
+}
+
+.static-button {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.static-button button {
+    min-width: 240px;
+    padding: 20px;
+}
+
+.static-button button span {
+    font-size: 18px;
+}
+
+.static-content .hidden-box {
+    height: 396px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.static-content .hidden-box.active {
+    height: auto;
+    margin-bottom: 0px;
+}
+
+.static-content .open-button {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.static-content .hidden-box.active .open-button {
+    display: none;
+}
+
+.static-content .open-button i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .terms {
+        padding-top: 260px;
+    }
+
+    .static-content {
+        padding: 20px;
+    }
+}
 
 
 /*樣式表*/
