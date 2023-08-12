@@ -3076,6 +3076,10 @@ footer .footer-max-width {
     color: #000;
 }
 
+.my-form-input .form-input p{
+    margin-top: 20px;
+}
+
 .deposit-detail {
     padding: 20px;
     width: 40%;
@@ -3257,6 +3261,10 @@ footer .footer-max-width {
     width: 200px;
 }
 
+.my-withdraw .my-form-input .form-input p{
+    margin-top: 20px;
+}
+
 .my-withdraw .withdraw-detail {
     border-top: 1px solid #707070;
     border-bottom: 1px solid #707070;
@@ -3358,9 +3366,9 @@ footer .footer-max-width {
         width: 100%;
     }
 
-    .my-withdraw .my-form-input .form-input label span.highlight{
+    .my-withdraw .my-form-input .form-input label span{
         display: block;
-        float: none;
+        float:none;
     }
 
     .my-withdraw .my-form-input .form-input input {
@@ -4142,7 +4150,8 @@ footer .footer-max-width {
     font-size: 24px;
 }
 
-.history-list {
+.history-list,
+.bonus-list {
     display: flex;
     flex-wrap: wrap;
     padding: 40px 20px;
@@ -4150,13 +4159,15 @@ footer .footer-max-width {
     background-color: #565656;
 }
 
-.history-list-menu {
+.history-list-menu,
+.bonus-list-menu {
     padding: 0 10px;
     width: 200px;
     border-right: 1px solid #707070;
 }
 
-.history-list-menu li {
+.history-list-menu li,
+.bonus-list-menu li {
     padding: 15px 0;
     margin: 5px 0;
     border: 1px solid transparent;
@@ -4168,12 +4179,15 @@ footer .footer-max-width {
 }
 
 .history-list-menu li.active,
-.history-list-menu li:hover {
+.history-list-menu li:hover,
+.bonus-list-menu li.active,
+.bonus-list-menu li:hover {
     border-color: #707070;
     background-color: #414141;
 }
 
-.history-list-content {
+.history-list-content,
+.bonus-list-content {
     position: relative;
     padding: 0 20px;
     width: calc(100% - 200px);
