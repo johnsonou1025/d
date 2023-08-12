@@ -428,8 +428,26 @@
                             </div>
                             <div class="form-input credit-card">
                                 <label>2. Select bank card or e-wallet <span class="highlight">* Confirm withdrawal of GCash account.</span></label>
-                                <input readonly type="text" placeholder="(選取信用卡)">
-                                <div>CVV: <input type="text"></div> 
+                                <div class="select-input">
+                                    <input class="select" readonly type="text" placeholder="(選取信用卡)">
+                                    <ul class="select-box">
+                                        <li class="active">OO銀行XXXX信用卡(末4碼:XXX）</li>
+                                        <li>OO銀行XXXX信用卡(末4碼:XXX）</li>
+                                        <li>OO銀行XXXX信用卡(末4碼:XXX）</li>
+                                    </ul>
+                                    <div class="credit-card-code">CVV: <input type="text"></div>
+                                </div>
+                                <script>
+                                    $(function(){
+                                        $(".select-input .select").click(function(){
+                                            $(".select-box").addClass("active");
+                                            console.log("1")
+                                        })
+                                        $(".select-box li").click(function(){
+                                            $(".select-box").removeClass("active");
+                                        })
+                                    })
+                                </script>
                                 <button class="button-style-7"><span>新增信用卡</span></button>
                             </div>
                             <div class="form-input">

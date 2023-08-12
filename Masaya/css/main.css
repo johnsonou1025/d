@@ -3318,25 +3318,55 @@ footer .footer-max-width {
 }
 
 .my-withdraw .my-form-input .credit-card {
-    overflow: hidden;
+/*    overflow: hidden;*/
 }
-.my-withdraw .my-form-input .credit-card>input{
+.my-withdraw .my-form-input .credit-card input{
     background:#fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
 }
-.my-withdraw .my-form-input .credit-card>div {
+.my-withdraw .my-form-input .credit-card .credit-card-code {
     float: right;
     color: #ababab;
     font-size: 18px;
 }
 
-.my-withdraw .my-form-input .credit-card>div>input {
+.my-withdraw .my-form-input .credit-card .credit-card-code input {
     width: 120px;
     margin-left: 10px;
+    background: #fff;
 }
 
 .my-withdraw .my-form-input .credit-card button {
-    float: left;
+    float: none;
     margin-top: 20px;
+}
+
+.my-withdraw .my-form-input .select-input{
+    position: relative;
+/*    width: calc(100% - 220px);*/
+}
+
+.my-withdraw .my-form-input .select-box {
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: calc(100% - 220px);
+    border-radius: 6px;
+    background-color: #fff;
+    color: #000;
+    z-index: 10;
+}
+.my-withdraw .my-form-input .select-box.active{
+    display: block;
+}
+.my-withdraw .my-form-input .select-box li{
+    padding:20px;
+    cursor: pointer;
+}
+
+.my-withdraw .my-form-input .select-box li.active,
+.my-withdraw .my-form-input .select-box li:hover{
+    color:#278400;
 }
 
 @media (max-width: 1200px) {
@@ -3396,9 +3426,13 @@ footer .footer-max-width {
     .my-withdraw .withdraw-notice {
         padding: 20px;
     }
-    .my-withdraw .my-form-input .credit-card>div{
+    .my-withdraw .my-form-input .credit-card .credit-card-code{
         float:none;
         margin-top: 20px;
+    }
+
+    .my-withdraw .my-form-input .select-box{
+        width: 100%;
     }
 }
 
