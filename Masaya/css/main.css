@@ -10,7 +10,6 @@
     --bs-blue: #0d6efd;
 }
 
-
 body {
     margin: 0;
     padding: 0;
@@ -277,6 +276,10 @@ i img {
     display: block;
     max-width: 100%;
     max-height: 100%;
+}
+
+input{
+    box-sizing:border-box;
 }
 
 .body-lock {
@@ -3087,6 +3090,43 @@ footer .footer-max-width {
     color: #000;
 }
 
+.my-form-input .form-select-2 {
+    display: inline-block;
+    position: relative;
+    width: calc(100% - 150px);
+}
+
+.my-form-input .form-select-2 input {
+    width: 100%;
+    background: #fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
+}
+
+.my-form-input .select-box {
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #000;
+    z-index: 10;
+}
+
+.my-form-input .select-box.active {
+    display: block;
+}
+
+.my-form-input .select-box li {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.my-form-input .select-box li.active,
+.my-form-input .select-box li:hover {
+    color: #278400;
+}
+
 .my-form-input .form-input p {
     margin-top: 20px;
 }
@@ -3359,30 +3399,9 @@ footer .footer-max-width {
 }
 
 .my-withdraw .my-form-input .select-box {
-    display: none;
-    position: absolute;
-    top: 44px;
-    left: 0;
     width: calc(100% - 220px);
-    border-radius: 6px;
-    background-color: #fff;
-    color: #000;
-    z-index: 10;
 }
 
-.my-withdraw .my-form-input .select-box.active {
-    display: block;
-}
-
-.my-withdraw .my-form-input .select-box li {
-    padding: 20px;
-    cursor: pointer;
-}
-
-.my-withdraw .my-form-input .select-box li.active,
-.my-withdraw .my-form-input .select-box li:hover {
-    color: #278400;
-}
 
 @media (max-width: 1200px) {
     .my-withdraw .bank-choice {
@@ -4780,27 +4799,65 @@ footer .footer-max-width {
 .bank-card-item p+p {
     margin-top: 10px;
 }
+.my-bank-card .my-form-input{
+    border-bottom: none;
+}
+.my-bank-card .button-wrap{
+    text-align: center;
+}
+.my-bank-card .button-wrap button{
+    min-width: 150px;
+    padding: 16px 10px;
+    margin: 0 10px;
+}
 
 @media (max-width: 992px) {
 
-    .my-bank-card{
+    .my-bank-card {
         padding: 20px 10px;
         border-radius: 6px;
-        border:1px solid #565656;
+        border: 1px solid #565656;
         background-color: #1E261E;
     }
+
     .my-bank-card .add-card {
         margin-top: 20px;
         text-align: center;
     }
-    .my-bank-card .add-card>span{
+
+    .my-bank-card .add-card>span {
         display: block;
         margin-top: 20px;
         height: auto;
     }
+
     .my-bank-card .add-card button {
         float: none;
     }
+
+    .my-bank-card .my-form-input{
+        padding-top: 0;
+    }
+    .my-bank-card .my-form-input .form-input label,
+    .my-bank-card .my-form-input .form-input input,
+    .my-bank-card .my-form-input .form-select-2{
+        width: 100%;
+    }
+    .my-bank-card .my-form-input .form-input label{
+        margin-bottom: 10px;
+    }
+    .my-bank-card .button-wrap{
+        padding: 0 20px;
+        margin: 40px 0;
+    }
+    .my-bank-card .button-wrap button{
+        margin: 10px 0;
+        width: 100%;
+    }
+    .my-bank-card{}
+
+
+
 }
 
 
