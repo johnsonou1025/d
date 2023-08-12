@@ -213,6 +213,17 @@ button.button-style-13>span {
     color: #fff;
 }
 
+button.button-style-14 {
+    padding: 14px 20px;
+    border-radius: 5px;
+    background: #044E04;
+}
+
+button.button-style-14>span {
+    font-size: 16px;
+    color: #fff;
+}
+
 button:disabled,
 button[disabled] {
     background-color: #B9B9B9;
@@ -4717,6 +4728,83 @@ footer .footer-max-width {
         padding: 20px;
     }
 }
+
+/*bank card*/
+.my-bank-card .add-card {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.my-bank-card .add-card>span {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    color: #707070;
+    font-size: 16px;
+}
+
+.my-bank-card .add-card button {
+    float: right;
+    min-width: 200px;
+}
+
+.my-bank-card h5 {
+    margin: 20px 0;
+}
+
+.bank-card-list::-webkit-scrollbar {
+    display: none;
+}
+
+.bank-card-list {
+    white-space: nowrap;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-bottom: 40px;
+}
+
+.bank-card-item {
+    display: inline-block;
+    padding: 20px;
+    width: 260px;
+    border-radius: 6px;
+    border: 1px solid #707070;
+    background-color: #044E04;
+}
+
+.bank-card-item+.bank-card-item {
+    margin-left: 20px;
+}
+
+.bank-card-item p+p {
+    margin-top: 10px;
+}
+
+@media (max-width: 992px) {
+
+    .my-bank-card{
+        padding: 20px 10px;
+        border-radius: 6px;
+        border:1px solid #565656;
+        background-color: #1E261E;
+    }
+    .my-bank-card .add-card {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .my-bank-card .add-card>span{
+        display: block;
+        margin-top: 20px;
+        height: auto;
+    }
+    .my-bank-card .add-card button {
+        float: none;
+    }
+}
+
+
+
 
 
 /*樣式表*/
