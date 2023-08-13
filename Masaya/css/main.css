@@ -4884,6 +4884,7 @@ footer .footer-max-width {
     border-radius: 6px;
     background: #565656;
     box-shadow: 0 3px 3px rgba(0,0,0,.2);
+    cursor: pointer;
 }
 
 .message-item .message-info:after{
