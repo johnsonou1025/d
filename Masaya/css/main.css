@@ -4555,32 +4555,29 @@ footer .footer-max-width {
     min-width: 150px;
     padding: 16px 0;
     border-radius: 6px;
-    border: 1px solid;
     font-size: 16px;
 }
 
 .bonus-item-button-1 {
-    border-color: #fff;
-    background-color: transparent;
+    background-color: #A5A5A5;
     color: #fff;
 }
 
 .bonus-item-button-2 {
-    border-color: #A5A5A5;
     background-color: #7A7A7A;
     color: #A5A5A5;
 }
 
 .bonus-item-button-3 {
-    border-color: #40D10D;
-    background-color: transparent;
-    color: #40D10D;
+    background-color: #278400;
+    color: #fff;
 }
 
 .bonus-item-button-4 {
     border-color: #707070;
     background-color: transparent;
     color: #707070;
+    border: 1px solid;
 }
 
 .bonus-list-mobile {
