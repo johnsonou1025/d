@@ -278,8 +278,8 @@ i img {
     max-height: 100%;
 }
 
-input{
-    box-sizing:border-box;
+input {
+    box-sizing: border-box;
 }
 
 .body-lock {
@@ -4649,22 +4649,37 @@ footer .footer-max-width {
 
 .terms {
     position: relative;
-    padding-top: 400px;
 }
 
 .terms-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    height: 500px;
     width: 100%;
+    overflow: hidden;
+}
+
+.terms-bg:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background-image: linear-gradient(to bottom, transparent 0%, #030F03);
 }
 
 .terms-bg img {
-    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    min-width: 100%;
 }
 
 .static-content {
     position: relative;
+    margin-top: -200px;
     padding: 40px;
     background-color: #0F3700;
 }
@@ -4737,11 +4752,12 @@ footer .footer-max-width {
 
 @media (max-width: 992px) {
     .terms {
-        padding-top: 260px;
+        /*        padding-top: 260px;*/
     }
 
     .static-content {
         padding: 20px;
+        margin-top: -40px;
     }
 }
 
@@ -4796,19 +4812,26 @@ footer .footer-max-width {
 .bank-card-item p+p {
     margin-top: 10px;
 }
-.my-bank-card .my-form-input{
+
+.my-bank-card .my-form-input {
     border-bottom: none;
 }
-.my-bank-card .button-wrap{
+
+.my-bank-card .button-wrap {
     text-align: center;
 }
-.my-bank-card .button-wrap button{
+
+.my-bank-card .button-wrap button {
     min-width: 150px;
     padding: 16px 10px;
     margin: 0 10px;
 }
 
 @media (max-width: 992px) {
+
+    .terms-bg {
+        height: 300px;
+    }
 
     .my-bank-card {
         padding: 20px 10px;
@@ -4832,22 +4855,26 @@ footer .footer-max-width {
         float: none;
     }
 
-    .my-bank-card .my-form-input{
+    .my-bank-card .my-form-input {
         padding-top: 0;
     }
+
     .my-bank-card .my-form-input .form-input label,
     .my-bank-card .my-form-input .form-input input,
-    .my-bank-card .my-form-input .form-select-2{
+    .my-bank-card .my-form-input .form-select-2 {
         width: 100%;
     }
-    .my-bank-card .my-form-input .form-input label{
+
+    .my-bank-card .my-form-input .form-input label {
         margin-bottom: 10px;
     }
-    .my-bank-card .button-wrap{
+
+    .my-bank-card .button-wrap {
         padding: 0 20px;
         margin: 40px 0;
     }
-    .my-bank-card .button-wrap button{
+
+    .my-bank-card .button-wrap button {
         margin: 10px 0;
         width: 100%;
     }
@@ -4855,36 +4882,36 @@ footer .footer-max-width {
 
 /*my message*/
 
-.my-message .title{
+.my-message .title {
     overflow: hidden;
 }
 
-.my-message .title button{
+.my-message .title button {
     float: right;
     margin-top: 40px;
     padding: 10px;
     border-radius: 6px;
-    border:1px solid #40D10D;
+    border: 1px solid #40D10D;
     background-color: #1D1D1D;
     color: #40D10D;
 }
 
-.message-list{
+.message-list {
     padding-top: 10px;
     padding-left: 40px;
 }
 
-.message-item .message-info{
+.message-item .message-info {
     position: relative;
     margin: 10px 0;
     padding: 20px 10px 20px 40px;
     border-radius: 6px;
     background: #565656;
-    box-shadow: 0 3px 3px rgba(0,0,0,.2);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
     cursor: pointer;
 }
 
-.message-item .message-info:after{
+.message-item .message-info:after {
     content: "";
     display: inline-block;
     position: absolute;
@@ -4897,50 +4924,54 @@ footer .footer-max-width {
     transition: .1s;
 }
 
-.message-item.active .message-info:after{
+.message-item.active .message-info:after {
     transform: translateY(-50%) rotate(0deg);
 }
 
-.message-item .message-info i{
+.message-item .message-info i {
     display: inline-block;
     position: absolute;
     top: 25px;
     left: 15px;
     height: 10px;
     width: 10px;
-    border-radius:100%;
+    border-radius: 100%;
     background-color: #40D900;
 }
-.message-item .message-info span{
+
+.message-item .message-info span {
     display: block;
 }
-.message-item .message-info span:first-child{
+
+.message-item .message-info span:first-child {
     font-size: 16px;
 }
 
-.message-item .message-info span:last-child{
+.message-item .message-info span:last-child {
     opacity: .4;
 }
 
-.message-item .message-box{
+.message-item .message-box {
     display: none;
-    padding: 20px 20px 20px 40px ;
+    padding: 20px 20px 20px 40px;
     background-color: #393939;
-    box-shadow: 0 3px 3px rgba(0,0,0,.2);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
 }
 
-.message-item.active .message-box{
+.message-item.active .message-box {
     display: block;
 }
 
 @media (max-width: 992px) {
-    .my-message .title{
+    .my-message .title {
         line-height: 40px;
     }
-    .my-message .title button{
+
+    .my-message .title button {
         margin-top: 0;
     }
-    .message-list{
+
+    .message-list {
         padding-left: 0;
     }
 
