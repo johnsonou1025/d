@@ -4977,6 +4977,265 @@ footer .footer-max-width {
 
 }
 
+/*VIP*/
+
+.vip-lv {
+    padding: 80px 0 200px;
+    text-align: center;
+    background: url(../images/vip-bg.jpg) no-repeat center center / cover;
+}
+
+.vip-lv-list {
+    display: inline-block;
+    position: relative;
+    width: 800px;
+    text-align: center;
+}
+
+.vip-lv-list>i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.vip-lv-list>i:first-child {
+    left: 0;
+}
+
+.vip-lv-list>i:last-child {
+    right: 0;
+}
+
+.vip-lv-list ul li {
+    position: relative;
+}
+
+.vip-lv-list ul li>img {
+    display: inline-block;
+    height: 280px;
+}
+
+.vip-lv-list ul li>i {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 330px;
+}
+
+.vip-count {
+    position: relative;
+    margin-top: -50px;
+    text-align: center;
+    z-index: 1;
+}
+
+.vip-count ul {
+    /*    display: inline-block;*/
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    border: 1px solid #70FF00;
+    background-color: rgba(9, 32, 0, .5);
+    backdrop-filter:blur(2px);
+    color: #70FF00;
+}
+
+.vip-count li {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+}
+
+.vip-count li+li {
+    border-left: 1px solid #fff;
+}
+
+.vip-green-line {
+    text-align: center;
+}
+
+.vip-green-line i {
+    display: inline-block;
+    margin: 20px 0;
+    height: 20px;
+}
+
+.vip-gift {
+    display: inline-block;
+    color: #70FF00;
+}
+
+.vip-gift li {
+    display: inline-block;
+    margin: 0 20px;
+    text-align: center;
+}
+
+.vip-gift li i {
+    display: inline-block;
+    padding: 15px;
+    width: 96px;
+    height: 96px;
+    border-radius: 100%;
+    background-color: #C8C8C8;
+}
+
+.vip-content {
+    margin: -180px auto 0;
+    max-width: 1400px;
+    text-align: center;
+}
+
+.vip-table {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.vip-table-lv {
+    position: relative;
+}
+
+.vip-table-lv:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -5px;
+    width: 128px;
+    height: 100%;
+    border: 5px solid #FFDD00;
+}
+
+.vip-table-lv.lv0:after {
+    left: 123px;
+}
+
+.vip-table-lv.lv1:after {
+    left: 251px;
+}
+
+.vip-table-lv.lv2:after {
+    left: 379px;
+}
+
+.vip-table-lv.lv3:after {
+    left: 507px;
+}
+
+.vip-table-lv.lv4:after {
+    left: 635px;
+}
+
+.vip-table-lv.lv5:after {
+    left: 763px;
+}
+
+.vip-table-lv.lv6:after {
+    left: 891px;
+}
+
+.vip-table-lv.lv7:after {
+    left: 1019px;
+}
+
+.vip-table-lv.lv8:after {
+    left: 1147px;
+}
+
+.vip-table-lv.lv9:after {
+    left: 1275px;
+}
+
+.vip-table-lv table {
+    width: 1408px;
+}
+
+.vip-table-lv table tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.vip-table-lv table tr:nth-child(odd) {
+    background-color: #E4F8D5;
+}
+
+.vip-table-lv table th {
+    padding: 10px 5px;
+    width: 128px;
+    background-color: #113811;
+    text-align: center;
+}
+
+.vip-table-lv table td {
+    padding: 10px 5px;
+    color: #444;
+    text-align: center;
+}
+
+.vip-lv-detail {
+    position: relative;
+    padding: 20px;
+    height: 390px;
+    background-color: #fff;
+    color: #444;
+    text-align: left;
+    overflow: hidden;
+}
+
+.vip-lv-detail.active {
+    height: auto;
+}
+
+.vip-button-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 0;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+}
+
+.vip-lv-detail.active .vip-button-wrap {
+    position: static;
+}
+
+.vip-button-wrap button {
+    min-width: 120px;
+}
+
+@media (max-width: 992px) {
+
+    .vip-lv {
+        padding: 40px 10px 200px;
+    }
+
+    .vip-lv-list {
+        width: 100%;
+    }
+
+    .vip-count ul{
+        width: 100%;
+    }
+
+    .vip-count li{
+        width: 33.33%;
+    }
+
+    .vip-gift li {
+        margin: 0 5px;
+    }
+
+    .vip-gift li i {
+        width: 80px;
+        height: 80px;
+    }
+}
+
 
 /*樣式表*/
 
