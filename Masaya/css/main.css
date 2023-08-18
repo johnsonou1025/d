@@ -2132,9 +2132,11 @@ footer .footer-max-width {
 .popup-success button span {
     font-size: 16px;
 }
-.page-popup .popup-box{
+
+.page-popup .popup-box {
     height: 100%;
 }
+
 .page-popup .popup-box .popup-page {
     padding: 40px 20px;
     max-width: 700px;
@@ -2147,7 +2149,7 @@ footer .footer-max-width {
     overflow-y: auto;
 }
 
-.popup-page li{
+.popup-page li {
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -5060,7 +5062,7 @@ footer .footer-max-width {
     padding: 20px;
     border: 1px solid #70FF00;
     background-color: rgba(9, 32, 0, .5);
-    backdrop-filter:blur(2px);
+    backdrop-filter: blur(2px);
     color: #70FF00;
 }
 
@@ -5237,11 +5239,11 @@ footer .footer-max-width {
         width: 100%;
     }
 
-    .vip-count ul{
+    .vip-count ul {
         width: 100%;
     }
 
-    .vip-count li{
+    .vip-count li {
         width: 33.33%;
     }
 
@@ -5257,12 +5259,40 @@ footer .footer-max-width {
 
 
 /*樣式表*/
-.template{
+.template {
     padding: 20px;
 }
 
-.template .popup-style button{
-margin: 10px 0;
+.template>div {
+    margin: 40px 0;
+    padding: 20px;
+    border: 1px solid #707070;
+    border-radius: 6px;
+    background: linear-gradient(to bottom, #003D00 0%, #030F03 100%);
+}
+
+.template .title {
+    font-size: 24px;
+    margin: 20px 0 20px;
+    font-weight: bold;
+}
+
+.template .font-sytle p {
+    margin-top: 10px;
+}
+
+.template .button-style {
+    overflow: hidden;
+}
+
+.template .button-style button {
+    float: left;
+    width: 20%;
+    margin: 10px;
+}
+
+.template .popup-style button {
+    margin: 10px 0;
 }
 
 @media (max-width: 1200px) and (min-width: 992px) {}
