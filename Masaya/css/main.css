@@ -493,6 +493,7 @@ nav {
     flex: 2;
     align-items: center;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 .user-info-personal img {
