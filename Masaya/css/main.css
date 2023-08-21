@@ -4357,6 +4357,7 @@ footer .footer-max-width {
 .bonus-list-menu {
     padding: 0 10px;
     width: 200px;
+    min-height: 500px;
     border-right: 1px solid #707070;
 }
 
