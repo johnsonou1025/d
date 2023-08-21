@@ -348,7 +348,11 @@ header {
 .header-search {
     right: 0;
 }
-
+.header-search img{
+    width: 20px;
+    max-width: 100%;
+    max-height: 100%;
+}
 .header-logo {
     padding: 10px 0;
     height: 100%;
@@ -716,7 +720,7 @@ nav {
     margin: 20px 0;
 }
 
-.nav-logout-button{
+.nav-logout-button {
     margin: 40px 0;
 }
 
@@ -883,18 +887,21 @@ main .main-max-width {
 }
 
 @media (max-width: 992px) {
-    .slick-list{
+    .slick-list {
         margin: 0 -10px;
     }
+
     .slick-list ul li {
         display: inline-block;
         float: none;
         width: 50%;
     }
-    .slick-list ul li:first-child{
+
+    .slick-list ul li:first-child {
         margin-left: 10px;
     }
-    .slick-list ul li:last-child{
+
+    .slick-list ul li:last-child {
         margin-right: 10px;
     }
 }
@@ -953,12 +960,14 @@ main .main-max-width {
 }
 
 @media (max-width: 992px) {
-    .game-quick-link{
+    .game-quick-link {
         padding: 0 0 20px;
     }
-    .game-filters-list{
+
+    .game-filters-list {
         margin-bottom: 20px;
     }
+
     .game-filters-list li {
         padding: 10px 40px;
         min-width: 94px;
@@ -1147,9 +1156,7 @@ main .main-max-width {
 }
 
 @media (max-width: 992px) {
-    .game-card-info>span {
-
-    }
+    .game-card-info>span {}
 }
 
 /*中間區塊-新事件*/
@@ -1457,6 +1464,14 @@ footer .footer-max-width {
     max-height: 100%;
 }
 
+@media (max-width: 992px) {
+    .footer-icon {
+        padding: 10px 0 20px;
+    }
+}
+
+
+
 /*頁腳-執照*/
 .footer-lincense {
     padding: 28px 0 36px;
@@ -1475,6 +1490,53 @@ footer .footer-max-width {
     height: 57px;
     width: auto;
 }
+
+
+@media (max-width: 992px) {
+    .footer-lincense p {
+        text-align: left;
+    }
+
+    .footer-lincense {
+        padding: 10px 0 20px;
+    }
+}
+
+/*頁腳-社群-手機版*/
+.footer-mobile-social {
+    display: none;
+    padding: 28px 0 36px;
+    text-align: center;
+}
+
+.footer-mobile-social .h4 {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.footer-mobile-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 18px;
+    background-color: #373f35;
+}
+
+.footer-mobile-social a img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media (max-width: 992px) {
+    .footer-mobile-social {
+        display: block;
+        padding: 10px 0 20px;
+    }
+}
+
 
 /*頁腳-簡介*/
 .footer-intro {
@@ -5283,9 +5345,53 @@ footer .footer-max-width {
     .vip-gift li i {
         width: 80px;
         height: 80px;
+        border-radius: 100%;
     }
 }
 
+/*桌機版-搜尋*/
+.desktop-search{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+}
+.desktop-search i{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    padding: 13px;
+    border-radius: 100%;
+    background: linear-gradient(to bottom, #F1F167 0%, #E1A500 100%);
+    cursor: pointer;
+}
+@media (max-width: 992px) {
+    .desktop-search{
+        display: none;
+    }
+}
+
+/*桌機版-客服*/
+.chatbox{
+    display: inline-block;
+    position: fixed;
+    right: 20px;
+    bottom: 140px;
+    z-index: 200;
+}
+.chatbox i{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    padding: 13px;
+    border-radius: 100%;
+    background: #40D900;
+    cursor: pointer;
+}
 
 /*樣式表*/
 .template {
