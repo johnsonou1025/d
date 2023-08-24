@@ -371,7 +371,7 @@ nav::-webkit-scrollbar {
 nav {
     position: fixed;
     padding: 24px;
-    width: 320px;
+    width: 290px;
     height: 100vh;
     background: linear-gradient(to right, #123a12 0%, #030F03 100%);
     overflow-y: auto;
@@ -728,9 +728,9 @@ nav {
 
 /*中間區塊*/
 main {
-    margin-left: 320px;
+    margin-left: 290px;
     /*    height: 100vh;*/
-    width: calc(100% - 320px);
+    width: calc(100% - 290px);
     background: #030F03;
 }
 
