@@ -861,6 +861,8 @@ main .main-max-width {
     float: left;
     padding: 0 5px;
     width: 25%;
+    border-radius: 16px;
+    background: no-repeat center top / cover;
     cursor: pointer;
 }
 
@@ -893,14 +895,16 @@ main .main-max-width {
         margin: 0 -10px;
     }
 
+    .slick-list ul {
+        padding-left: 22px;
+    }
+
     .slick-list ul li {
         display: inline-block;
         float: none;
-        width: 50%;
-    }
-
-    .slick-list ul li:first-child {
-        margin-left: 10px;
+        height: 220px;
+        width: 198px;
+        margin-right: 12px;
     }
 
     .slick-list ul li:last-child {
@@ -3832,7 +3836,7 @@ footer .footer-max-width {
     border: 2px solid #40D10D;
 }
 
-.invite-bonus-nodata{
+.invite-bonus-nodata {
     position: relative;
     min-height: 500px;
 }
@@ -5414,6 +5418,42 @@ footer .footer-max-width {
     background: #40D900;
     cursor: pointer;
 }
+
+/*KYC*/
+.my-kyc {
+    padding: 40px;
+    border: 1px solid #707070;
+    background-color: #313731;
+}
+
+.kyc-box {
+    border: 1px solid #565656;
+    background-color: #1E261E;
+}
+
+.kyc-item {
+    padding: 40px 60px;
+    border-bottom: 1px solid #565656;
+}
+
+.kyc-item p,
+.kyc-item h4 {
+    padding: 10px 0px;
+}
+
+.kyc-item p {
+    line-height: 2em;
+}
+
+.kyc-content>div {
+    margin: 40px 0;
+    padding: 30px 40px;
+    border-radius: 5px;
+    background-color: #565656;
+}
+
+
+
 
 /*樣式表*/
 .template {
