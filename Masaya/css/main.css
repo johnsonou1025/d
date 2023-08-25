@@ -755,7 +755,7 @@ main .main-max-width {
 }
 
 .marquee-jackpot ul {
-    padding: 10px 0;
+    padding: 5px 0;
     border: 1px solid #707070;
     white-space: nowrap;
     overflow-y: hidden;
@@ -777,9 +777,9 @@ main .main-max-width {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
-    max-height: 48px;
-    max-width: 48px;
+    margin-right: 16px;
+    max-height: 40px;
+    max-width: 40px;
 }
 
 .marquee-jackpot-text,
@@ -795,7 +795,7 @@ main .main-max-width {
 
 .marquee-jackpot-text span,
 .nav-jackpot-text span {
-    margin: 2px 0;
+    margin: -2px 0;
     font-size: 12px;
 }
 
