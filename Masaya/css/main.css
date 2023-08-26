@@ -583,7 +583,7 @@ nav {
 }
 
 .language-item span {
-/*    z-index: 16;*/
+    /*    z-index: 16;*/
     font-weight: bold;
     vertical-align: middle;
 }
@@ -623,6 +623,7 @@ nav {
 .link-item {
     margin: 15px 0;
     cursor: pointer;
+    transition: .3s;
 }
 
 .link-item.active .link-item-text,
@@ -695,6 +696,7 @@ nav {
 
 .link-item .link-item-dropdown .link-item-text {
     color: #fff;
+    transition: .3s;
 }
 
 .link-item .link-item-dropdown li.active .link-item-text,
@@ -1361,6 +1363,7 @@ footer .footer-max-width {
     padding: 20px 0;
     font-size: 18px;
     text-align: center;
+    transition: .3s;
 }
 
 .footer-top-mobile-list li:hover,
@@ -1936,6 +1939,7 @@ footer .footer-max-width {
 .form-select-value li {
     text-align: center;
     padding: 10px 20px;
+    transition: .3s;
 }
 
 .form-select-value li:hover {
@@ -2409,6 +2413,7 @@ footer .footer-max-width {
     margin-bottom: 15px;
     border-radius: 6px;
     border: 2px solid transparent;
+    transition: .3s;
 }
 
 .search-game-info:hover {
@@ -3094,6 +3099,7 @@ footer .footer-max-width {
     width: 100%;
     background-color: #2A4D2A;
     cursor: pointer;
+    transition: .3s;
 }
 
 .bank-choice-item.active,
@@ -3198,6 +3204,7 @@ footer .footer-max-width {
 .quick-deposit li {
     padding: 5px;
     width: 50%;
+    transition: .3s;
 }
 
 .quick-deposit li.active button,
@@ -3261,6 +3268,7 @@ footer .footer-max-width {
 .my-form-input .select-box li {
     padding: 20px;
     cursor: pointer;
+    transition: .3s;
 }
 
 .my-form-input .select-box li.active,
@@ -3923,6 +3931,7 @@ footer .footer-max-width {
     font-size: 16px;
     text-align: center;
     cursor: pointer;
+    transition: .3s;
 }
 
 .promo-tabs li:hover,
@@ -4598,6 +4607,7 @@ footer .footer-max-width {
         border-radius: 0;
         border-bottom: 1px solid #E2E2E2;
         background-color: transparent;
+        transition: .3s;
     }
 
     .wallet-history .tabs li.active:after,
@@ -5435,6 +5445,12 @@ footer .footer-max-width {
     background-color: #313731;
 }
 
+.my-kyc .notice {
+    margin: 20px 0;
+    color: #FF9200;
+    text-align: center;
+}
+
 .kyc-box {
     border: 1px solid #565656;
     background-color: #1E261E;
@@ -5445,23 +5461,146 @@ footer .footer-max-width {
     border-bottom: 1px solid #565656;
 }
 
-.kyc-item p,
 .kyc-item h4 {
     padding: 10px 0px;
 }
 
+.kyc-item>h4 {
+    position: relative;
+    background: no-repeat right center / 24px;
+}
+
+.kyc-item.unverified>h4:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #40D900;
+}
+
+.kyc-item.close>h4 {
+    background-image: url(../images/icon-kyc-close.png);
+}
+
+.kyc-item.open>h4 {
+    background-image: url(../images/icon-kyc-open.png);
+}
+
 .kyc-item p {
+    padding: 10px 0px;
     line-height: 2em;
 }
 
-.kyc-content>div {
+.kyc-content ol.disc {
+    list-style-type: disc;
+}
+
+.kyc-content {
+    display: none;
+    padding: 0 40px;
+}
+
+.kyc-item.open .kyc-content {
+    display: block;
+}
+
+.kyc-id {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+    padding: 0 40px;
+    height: 80px;
+    border-radius: 5px;
+    background: #565656 url(../images/icon-add.png) no-repeat right 40px center / 18px;
+    cursor: pointer;
+}
+
+.kyc-id img {
+    display: inline-block;
+    margin-right: 20px;
+    max-width: 85px;
+    max-height: 53px;
+}
+
+.kyc-content .kyc-list {
     margin: 40px 0;
     padding: 30px 40px;
     border-radius: 5px;
     background-color: #565656;
 }
 
+.kyc-list ul {
+    overflow: hidden;
+}
 
+.kyc-list li {
+    float: left;
+    padding: 0 10px;
+    margin: 15px 0;
+    width: 33.33%;
+    text-align: center;
+}
+
+.kyc-list li button {
+    display: inline-flex;
+    justify-content: flex-start;
+    padding: 20px;
+    width: 100%;
+    max-width: 200px;
+    border-radius: 5px;
+    background: #044E04 url(../images/icon-add.png) no-repeat right 20px center / 20px;
+    color: #fff;
+    box-shadow: 2px 2px 0px #002000;
+    transition: .3s;
+}
+
+.kyc-list li button:hover{
+    background-color: #40D900;
+}
+
+.kyc-list .upload-again {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #707070;
+    text-align: center;
+}
+
+.kyc-list .upload-again button {
+    margin-left: 20px;
+    width: 100%;
+    max-width: 200px;
+    box-shadow: 2px 2px 0px #002000;
+}
+
+.kyc-list .upload-again img {
+    display: inline-block;
+    max-width: 88px;
+    max-height: 56px;
+    vertical-align: middle;
+}
+.kyc-button{
+    margin: 40px 0;
+    text-align: center;
+}
+
+.kyc-button button{
+    margin: 0 10px;
+    padding: 16px 10px;
+    width: 100%;
+    max-width: 150px;
+    text-align: center;
+}
+
+
+@media (max-width: 992px) {
+    .kyc-list li {
+        width: 100%;
+    }
+}
 
 
 /*樣式表*/
