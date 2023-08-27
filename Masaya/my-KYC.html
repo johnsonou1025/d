@@ -364,10 +364,21 @@
             <div class="kyc-box">
                 <div class="kyc-item">
                     <h4>實名認證說明</h4>
+                    <p>您的帳戶已<span class="highlight">通過審核</span>。</p>
+                </div>
+                <div class="kyc-item">
+                    <h4>實名認證說明</h4>
                     <p>您的帳戶尚未經過驗證。要完成帳戶驗證過程，您需要上傳以下所有文件。<br>帳戶驗證是保護您帳戶安全的一個非常重要的程序，但需要滿足某些條件。有關如何驗證您的帳戶的更多說明，請訪問此<span class="highlight">頁面</span>。</p>
                 </div>
-                <div class="kyc-item unverified open">
+                <div class="kyc-item unverified toggle active">
                     <h4>身份證</h4>
+                    <script>
+                        $(function(){
+                            $(".kyc-item.toggle h4").click(function(){
+                                $(this).parent().toggleClass("active");
+                            })
+                        })
+                    </script>
                     <div class="kyc-content">
                         <div class="kyc-id"><img src="images/image-upload.png">上傳身份證</div>
                         <p>請上傳以下<span class="highlight">其中一項</span>文件。</p>
@@ -389,7 +400,45 @@
                             <li>請按原樣向我們發送圖像，不要將其保存在編輯程序或應用程序中。如果已經處理，我們無法接受。</li>
                             <li>請發送包含姓名、出生日期、有效期、面部照片等所有信息的清晰照片。</li>
                         </ol>
+                        <p>將拍攝的高分辨率彩色照片與您的帶照片身份證件一起發送給我們。請拍攝您的身份證靠近臉部的照片</p>
+                        <ol>
+                            <li> 請直視相機進行拍攝。</li>
+                            <li>請向我們發送一張清晰顯示您的臉部和身份證件內容的圖像。</li>
+                            <li>請向我們發送一張可以確認您的身份證信息的圖片。</li>
+                        </ol>
                         <p>請提交可作為身份證明的文件。詳情請查看<a href="" class="highlight">賬戶驗證頁面</a></p>
+                    </div>
+                </div>
+                <div class="kyc-item unverified toggle">
+                    <h4>地址驗證文件</h4>
+                    <div class="kyc-content">
+                        <p>請上傳以下<span class="highlight">其中一項</span>文件。</p>
+                        <div class="kyc-list">
+                            <ul>
+                                <li><button>居留證</button></li>
+                                <li><button>水電費帳單</button></li>
+                                <li><button>信用卡帳單</button></li>
+                            </ul>
+                            <div class="upload-again"><img src="images/image-upload.png"><button class="button-style-14"><span>重新上傳</span></button></div>
+                        </div>
+                        <p>為了快速順利地完成認證過程,請您在準備提交的文件時注意以下幾點:</p>
+                        <ol class="disc">
+                            <li>不接受未傳輸整個文檔的圖像。請務必發送顯示文件四個角的文件。</li>
+                            <li>請向我們發送一張清晰顯示文件內容的圖片。</li>
+                            <li>請確保提交的文件是最近3個月內簽發的</li>
+                            <li>請將姓名、地址等所有信息的清晰圖片發過來。</li>
+                            <li>所有文件必須以您的名義簽發,我們不接受本人以外姓名的物品。</li>
+                            <li>所有信息,包括建築物名稱和房間號,必須與您帳戶中的地址相符，您可以在此處的帳戶設置中查看註冊到您帳戶的信息。</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="kyc-item toggle">
+                    <h4>提交額外文件</h4>
+                    <div class="kyc-content">
+                        <p>如果您被要求提交其他文件，請在下方上傳。</p>
+                        <div class="kyc-list">
+                            <div class="upload-again"><img src="images/image-upload.png"><button class="button-style-14"><span>選擇檔案/照片</span></button><i><img src="images/icon-kyc-add.png" alt=""></i></div>
+                        </div>
                     </div>
                 </div>
             </div>

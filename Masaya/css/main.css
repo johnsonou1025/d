@@ -5452,6 +5452,7 @@ footer .footer-max-width {
 }
 
 .kyc-box {
+    margin: 40px 40px 0;
     border: 1px solid #565656;
     background-color: #1E261E;
 }
@@ -5468,6 +5469,7 @@ footer .footer-max-width {
 .kyc-item>h4 {
     position: relative;
     background: no-repeat right center / 24px;
+    cursor: pointer;
 }
 
 .kyc-item.unverified>h4:before {
@@ -5482,16 +5484,16 @@ footer .footer-max-width {
     background: #40D900;
 }
 
-.kyc-item.close>h4 {
+.kyc-item.toggle>h4 {
     background-image: url(../images/icon-kyc-close.png);
 }
 
-.kyc-item.open>h4 {
+.kyc-item.toggle.active>h4 {
     background-image: url(../images/icon-kyc-open.png);
 }
 
 .kyc-item p {
-    padding: 10px 0px;
+    margin: 40px 0px;
     line-height: 2em;
 }
 
@@ -5504,7 +5506,7 @@ footer .footer-max-width {
     padding: 0 40px;
 }
 
-.kyc-item.open .kyc-content {
+.kyc-item.toggle.active .kyc-content {
     display: block;
 }
 
@@ -5558,14 +5560,17 @@ footer .footer-max-width {
     transition: .3s;
 }
 
-.kyc-list li button:hover{
+.kyc-list li button:hover {
     background-color: #40D900;
 }
 
-.kyc-list .upload-again {
+.kyc-list ul+.upload-again {
     margin-top: 40px;
     padding-top: 40px;
     border-top: 1px solid #707070;
+}
+
+.kyc-list .upload-again {
     text-align: center;
 }
 
@@ -5582,12 +5587,27 @@ footer .footer-max-width {
     max-height: 56px;
     vertical-align: middle;
 }
-.kyc-button{
+
+.kyc-list .upload-again i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.kyc-list .upload-again i img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.kyc-button {
     margin: 40px 0;
     text-align: center;
 }
 
-.kyc-button button{
+.kyc-button button {
     margin: 0 10px;
     padding: 16px 10px;
     width: 100%;
@@ -5597,8 +5617,74 @@ footer .footer-max-width {
 
 
 @media (max-width: 992px) {
+    .my-kyc {
+        padding: 40px 20px 0;
+        border: none;
+        background-color: transparent;
+    }
+
+    .kyc-box {
+        margin: 40px 0px 20px;
+    }
+
+    .kyc-item {
+        padding: 30px;
+    }
+
+    .kyc-item>h4 {
+        margin-bottom: 30px;
+    }
+
+    .kyc-item.unverified>h4:before {
+        left: -20px;
+    }
+
+    .kyc-item p {
+        margin: 20px 0;
+    }
+
+    .kyc-content {
+        padding: 0;
+    }
+
+    .kyc-id {
+        margin: 30px 0;
+        height: 60px;
+    }
+
+    .kyc-content .kyc-list {
+        padding: 20px;
+    }
+
     .kyc-list li {
+        padding: 0 2px;
         width: 100%;
+    }
+
+    .kyc-list li button {
+        max-width: none;
+    }
+
+    .kyc-list ul+.upload-again{
+        margin-top: 30px;
+        padding-top: 30px;
+    }
+
+    .kyc-list .upload-again img {
+        max-width: 79px;
+        max-height: 50px;
+    }
+
+    .kyc-list .upload-again button {
+        padding: 14px 10px;
+        margin-left: 0px;
+        width: 100%;
+        max-width: none;
+    }
+
+    .kyc-list .upload-again img+button {
+        margin-left: 20px;
+        width: calc(100% - 140px);
     }
 }
 
