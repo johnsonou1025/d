@@ -2364,6 +2364,7 @@ footer .footer-max-width {
 
 .search-input {
     position: relative;
+    margin-top: 15px;
     margin-bottom: 15px;
     padding: 10px 20px;
     border-radius: 5px;
