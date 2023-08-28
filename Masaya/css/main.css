@@ -5631,10 +5631,6 @@ footer .footer-max-width {
         padding: 30px;
     }
 
-    .kyc-item>h4 {
-        margin-bottom: 30px;
-    }
-
     .kyc-item.unverified>h4:before {
         left: -20px;
     }
