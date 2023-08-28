@@ -5659,6 +5659,7 @@ footer .footer-max-width {
 
     .kyc-list li button {
         max-width: none;
+        font-size: 18px;
     }
 
     .kyc-list ul+.upload-again{
