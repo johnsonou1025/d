@@ -874,9 +874,22 @@ main .main-max-width {
     margin-right: 12px;
     background: no-repeat center top / cover;
     cursor: pointer;
+    overflow: hidden;
 }
 
-.slick-list ul li i {
+.slick-list ul li picture{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.slick-list ul li picture img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+/*.slick-list ul li i {
     position: relative;
     display: flex;
     align-items: center;
@@ -898,7 +911,7 @@ main .main-max-width {
 
 .slick-list ul>li>span {
     display: block;
-}
+}*/
 
 @media (max-width: 992px) {
     .slick-list {
