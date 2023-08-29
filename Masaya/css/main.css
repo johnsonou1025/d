@@ -4033,14 +4033,16 @@ footer .footer-max-width {
     color: #fff;
 }
 
-.promo-info>li button.coming-soon {
+.promo-info>li button.coming-soon,
+.promo-popup button.coming-soon {
     padding: 7px 5px;
     border: 4px solid #40D10D;
     color: #40D10D;
     background-color: transparent;
 }
 
-.promo-info>li button.redeemed {
+.promo-info>li button.redeemed,
+.promo-popup button.redeemed {
     padding: 7px 5px;
     border: 4px solid #A0A0A0;
     color: #A0A0A0;
