@@ -641,7 +641,7 @@ nav {
     justify-content: center;
     margin-right: 14px;
     height: 36px;
-    width: 36px;
+    min-width: 36px;
     border-radius: 18px;
     background: #044E04;
 }
@@ -877,13 +877,13 @@ main .main-max-width {
     overflow: hidden;
 }
 
-.slick-list ul li picture{
+.slick-list ul li picture {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-.slick-list ul li picture img{
+.slick-list ul li picture img {
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -1894,7 +1894,7 @@ footer .footer-max-width {
     float: right;
     padding: 0;
     width: 110px;
-    height: 44px;
+    height: 45px;
 }
 
 .form-get-code button span {
@@ -2281,6 +2281,100 @@ footer .footer-max-width {
     margin-bottom: 10px;
 }
 
+/*optimization login form*/
+
+.form-input-1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.form-input-1.form-input-error-1 input {
+    border: 1px solid #FF0000;
+}
+
+.form-input-1 label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 120px;
+    width: 120px;
+    color: #989A98;
+    text-align: left;
+}
+
+.form-input-1 label i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.form-input-1 input {
+    padding: 0 10px;
+    width: calc(100% - 120px);
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    background-color: #193319;
+    color: #FFF;
+    line-height: 20px;
+    outline: none;
+}
+
+.form-get-code .form-input-1 {
+    width: calc(100% - 120px);
+    float: left;
+}
+
+.form-dorp-down-1 input {
+    background: url(../images/icon-arrow-dropdown.png) #193319 no-repeat right 10px center / 15px 15px;
+}
+
+.form-select-1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 90px;
+    height: 45px;
+    border-radius: 5px 0 0 5px;
+    border-right: 1px solid #484848;
+    background: #193319 url(../images/icon-arrow-down-2.png) no-repeat right 10px center / 15%;
+    cursor: pointer;
+}
+
+.form-select-1 img {
+    display: inline-block;
+    height: 20px;
+}
+
+.form-select-1 .form-select-value {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.form-county-code-1 input {
+    padding: 0 10px;
+    width: calc(100% - 210px);
+    border-radius: 0 5px 5px 0;
+}
+
+.form-select-1 .form-select-value.active ul {
+    display: block;
+    top: 45px;
+    left: 0px;
+    width: 100%;
+}
+
 @media (max-width: 992px) {
     .popup-login {
         display: none;
@@ -2311,6 +2405,18 @@ footer .footer-max-width {
 
     .popup-success {
         width: auto;
+    }
+
+    .form-input-1 label {
+        width: 100%;
+        height: 32px;
+    }
+
+    .form-input-1 input {
+        width: 100%;
+    }
+    .form-get-code button{
+        margin-top: 32px;
     }
 
 }
@@ -5678,7 +5784,7 @@ footer .footer-max-width {
         font-size: 18px;
     }
 
-    .kyc-list ul+.upload-again{
+    .kyc-list ul+.upload-again {
         margin-top: 30px;
         padding-top: 30px;
     }
