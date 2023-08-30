@@ -2418,6 +2418,9 @@ footer .footer-max-width {
     .form-get-code button{
         margin-top: 32px;
     }
+    .form-county-code-1 input{
+        width: calc(100% - 90px);
+    }
 
 }
 
