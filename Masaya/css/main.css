@@ -640,6 +640,7 @@ nav {
     align-items: center;
     justify-content: center;
     margin-right: 14px;
+    padding: 8px;
     height: 36px;
     min-width: 36px;
     border-radius: 18px;
@@ -788,6 +789,11 @@ main .main-max-width {
     margin-right: 16px;
     max-height: 40px;
     max-width: 40px;
+}
+
+.marquee-jackpot li i img,
+.nav-jackpot i img {
+    border-radius: 10px;
 }
 
 .marquee-jackpot-text,
@@ -2384,7 +2390,7 @@ footer .footer-max-width {
         display: block;
     }
 
-    .mobile-login .form-wrap{
+    .mobile-login .form-wrap {
         margin-bottom: 123px;
     }
 
@@ -2394,8 +2400,8 @@ footer .footer-max-width {
         min-height: calc(100vh - 49px);
     }
 
-    .mobile-login .content .login-logo {`
-        display: inline-block;
+    .mobile-login .content .login-logo {
+        ` display: inline-block;
     }
 
     .mobile-login .content h3 {
@@ -2419,10 +2425,12 @@ footer .footer-max-width {
     .form-input-1 input {
         width: 100%;
     }
-    .form-get-code button{
+
+    .form-get-code button {
         margin-top: 32px;
     }
-    .form-county-code-1 input{
+
+    .form-county-code-1 input {
         width: calc(100% - 90px);
     }
 
@@ -5550,8 +5558,8 @@ footer .footer-max-width {
 .chatbox {
     display: inline-block;
     position: fixed;
-    right: 20px;
-    bottom: 140px;
+    right: 8px;
+    bottom: 8px;
     z-index: 5;
 }
 
@@ -5566,6 +5574,13 @@ footer .footer-max-width {
     background: #40D900;
     cursor: pointer;
 }
+
+@media (max-width: 992px) {
+    .chatbox {
+        bottom: 113px;
+    }
+}
+
 
 /*KYC*/
 .my-kyc {
