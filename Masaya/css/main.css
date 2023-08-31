@@ -1015,7 +1015,7 @@ main .main-max-width {
 }
 
 .game-card-list {
-    margin: 0 -10px;
+    margin: 0 -5px;
     overflow: hidden;
     white-space: nowrap;
     overflow-y: hidden;
@@ -1025,7 +1025,7 @@ main .main-max-width {
     position: relative;
     float: left;
     margin: 20px 0;
-    padding: 0 10px;
+    padding: 0 5px;
     /*    width: 276px;*/
     width: 20%;
     overflow: hidden;
@@ -1640,6 +1640,7 @@ footer .footer-max-width {
     padding: 10px 0;
     width: 20%;
     text-align: center;
+    font-size: 12px;
 }
 
 .nav-bottom-menu li.active {
@@ -1648,7 +1649,6 @@ footer .footer-max-width {
 
 .nav-bottom-menu i {
     display: block;
-    margin-bottom: 5px;
     height: 24px;
     text-align: center;
     background: no-repeat center center / auto 100%;
@@ -2394,7 +2394,7 @@ footer .footer-max-width {
         min-height: calc(100vh - 49px);
     }
 
-    .mobile-login .content .login-logo {
+    .mobile-login .content .login-logo {`
         display: inline-block;
     }
 
