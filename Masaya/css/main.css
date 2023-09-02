@@ -4221,15 +4221,18 @@ footer .footer-max-width {
     width: 18px;
     height: 18px;
     background: url(../images/icon-arrow-down.png) no-repeat center center / 16px;
+    transition: .3s;
 }
-
+.promo-info li.active .promo-detail-toggle{
+    transform: rotate(-180deg);
+}
 .promo-detail {
     display: none;
     white-space: normal;
     text-align: left;
 }
 
-.promo-detail.active {
+.promo-info li.active .promo-detail {
     display: block;
 }
 
