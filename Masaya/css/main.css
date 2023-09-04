@@ -1764,7 +1764,7 @@ footer .footer-max-width {
     color: #171717;
 }
 
-.popup-button{
+.popup-button {
     margin: 40px 0;
     text-align: center;
 }
@@ -3379,6 +3379,10 @@ footer .footer-max-width {
     color: #000;
 }
 
+.my-form-input .form-input input:disabled {
+    background-color: #8F8F8F;
+}
+
 .my-form-input .form-select-2 {
     display: inline-block;
     position: relative;
@@ -3387,7 +3391,7 @@ footer .footer-max-width {
 
 .my-form-input .form-select-2 input {
     width: 100%;
-    background: #fff url(../images/icon-arrow-down-3.png) no-repeat right 20px center / 14px;
+    background: #fff url(../images/icon-arrow-down-4.png) no-repeat right 20px center / 14px;
 }
 
 .my-form-input .select-box {
@@ -4223,9 +4227,11 @@ footer .footer-max-width {
     background: url(../images/icon-arrow-down.png) no-repeat center center / 16px;
     transition: .3s;
 }
-.promo-info li.active .promo-detail-toggle{
+
+.promo-info li.active .promo-detail-toggle {
     transform: rotate(-180deg);
 }
+
 .promo-detail {
     display: none;
     white-space: normal;
@@ -5107,6 +5113,13 @@ footer .footer-max-width {
 
 .bank-card-item+.bank-card-item {
     margin-left: 20px;
+}
+
+.bank-card-item p i {
+    float: right;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .bank-card-item p+p {
