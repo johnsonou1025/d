@@ -3380,7 +3380,7 @@ footer .footer-max-width {
 }
 
 .my-form-input .form-input input:disabled {
-    background-color: #8F8F8F;
+    background-color: #b7b7b7;
 }
 
 .my-form-input .form-select-2 {
@@ -3392,6 +3392,10 @@ footer .footer-max-width {
 .my-form-input .form-select-2 input {
     width: 100%;
     background: #fff url(../images/icon-arrow-down-4.png) no-repeat right 20px center / 14px;
+}
+
+.my-form-input .form-select-2 input:disabled{
+    background-image: url(../images/icon-arrow-down-4-disabled.png);
 }
 
 .my-form-input .select-box {
