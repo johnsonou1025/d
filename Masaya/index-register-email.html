@@ -122,7 +122,7 @@
             </i>
             <div class="form-wrap">
                 <h3>REGISTER</h3>
-                <div class="form-input-1">
+                <div class="form-input-1 form-input-error-1">
                     <label>
                         <i><img src="images/icon-account.png" alt=""></i>
                         Member
@@ -139,54 +139,21 @@
                 <div class="form-input-1">
                     <label>
                         <i><img src="images/icon-password.png" alt=""></i>
-                        Confirm Password
+                        Confirm
+                    </label>
+                    <input type="text" placeholder="Confirm Password">
+                </div>
+                <div class="form-input-1">
+                    <label>
+                        <i><img src="images/icon-email.png" alt=""></i>
+                        Email
                     </label>
                     <input type="text" placeholder="">
                 </div>
-                <div class="form-get-code">
-                    <div class="form-input-1">
-                        <label>
-                            <i><img src="images/icon-email.png" alt=""></i>
-                            E-mail
-                        </label>
-                        <input type="text" placeholder="">
-                    </div>
-                    <button class="button-style-7 mobile-form-popup-button"><span>Get Code</span></button>
-                    <!-- 
-                        按鈕樣式套用
-                        verity - boutton-style-8 
-                        resend(30) - button-style-9 
-                        -->
-                </div>
-                <!-- 彈窗 -->
-                <div class="popup-wrap mobile-form-popup">
-                    <div class="popup-box">
-                        <div class="form-popup">
-                            <div class="inner">
-                                <p>Please enter the code.</p>
-                                <input type="text">
-                                <div class="verify-button">
-                                    <button class="button-style-7"><span>Verify</span></button>
-                                    <button class="button-style-9"><span>Cancel</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    $(function() {
-                        $(".mobile-form-popup-button").click(function(){
-                            $(".mobile-form-popup").addClass("active");
-                        })
-                        $(".mobile-form-popup button:last-child").click(function() {
-                            $(".mobile-form-popup").removeClass("active");
-                        })
-                    })
-                </script>
                 <div class="form-input-1 form-dorp-down-1">
                     <label>
                         <i><img src="images/icon-birthday.png" alt=""></i>
-                        Date of birth
+                        Birthday
                     </label>
                     <input type="text" placeholder="">
                 </div>
@@ -207,27 +174,12 @@
                     </div>
                     <input type="text" placeholder="">
                 </div>
-                <div class="form-get-code">
-                    <div class="form-input-1">
-                        <label>
-                            <i><img src="images/icon-mobile.png" alt=""></i>
-                            SMS confirm
-                        </label>
-                        <input type="text" placeholder="">
-                    </div>
-                    <button class="button-style-7 mobile-form-popup-button"><span>Get Code</span></button>
-                    <!-- 
-                        按鈕樣式套用
-                        verity - boutton-style-8 
-                        resend(30) - button-style-9 
-                        -->
-                </div>
-                <div class="form-input-1 form-input-error-1">
+                <div class="form-input-1">
                     <label>
                         <i><img src="images/icon-invite.png" alt=""></i>
-                        Agent invitation code
+                        Invitation code
                     </label>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="If no, please leave blank">
                 </div>
                 <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
                 <div class="form-agree">
@@ -249,6 +201,31 @@
             <footer>
                 <span>Copyright © 2022 BONUS365. All Rights Reserved.</span>
             </footer>
+        </div>
+    </div>
+    <!-- email 驗證彈窗 -->
+    <div class="popup-wrap popup-register-email active">
+        <div class="popup-box">
+            <a class="popup-close" href="#"></a>
+            <div class="form-popup">
+                <div class="inner">
+                    <p class="h4">Verify your email!</p>
+                    <p class="h5">Please enter the 4-digit code that has been sent to your email address.</p>
+                    <div class="verify-input">
+                        <input type="text">
+                        <p class="error">The code is invalid.</p>
+                        <button class="button-style-7 "><span>Verify</span></button>
+                    </div>
+                    <p class="email-notice"><i><img src="images/icon-detail.png" alt=""></i>Your verification code hase been sent to <span class="highlight">新用戶輸入的email</span></p>
+                    <p>if you do not receive your code, use the button to resend the code.
+                        <br>
+                        Please check your junk folder before requesting a new code. if your still have not receive your code. please try another email address. Please note that email addresses issued by phone providers may not receive this email. if you suspect this may be happening to you, please use an email address issued by a domain that is not a mobile phone provider.</p>
+                    <div class="verify-button">
+                        <button class="button-style-12"><span>Resend code(30)</span></button>
+                        <button class="button-style-12 "><span>Change email address</span></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <header>

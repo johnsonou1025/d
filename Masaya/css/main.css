@@ -48,7 +48,7 @@ h6,
 }
 
 .highlight {
-    color: #40D10D;
+    color: #40D10D !important;
 }
 
 /*按鈕*/
@@ -2397,6 +2397,7 @@ footer .footer-max-width {
 
     .mobile-login .form-wrap {
         margin-bottom: 123px;
+        padding-left: 10px;
     }
 
     .mobile-login .content {
@@ -2411,6 +2412,7 @@ footer .footer-max-width {
 
     .mobile-login .content h3 {
         margin: 40px 0 20px;
+        margin-left: -10px;
     }
 
 
@@ -3394,7 +3396,7 @@ footer .footer-max-width {
     background: #fff url(../images/icon-arrow-down-4.png) no-repeat right 20px center / 14px;
 }
 
-.my-form-input .form-select-2 input:disabled{
+.my-form-input .form-select-2 input:disabled {
     background-image: url(../images/icon-arrow-down-4-disabled.png);
 }
 
@@ -5855,6 +5857,82 @@ footer .footer-max-width {
     }
 }
 
+/*register email*/
+.popup-register-email {
+    overflow-y: auto;
+}
+
+.popup-register-email .popup-box {
+    text-align: left;
+}
+
+.popup-register-email .popup-box .form-popup .inner {
+    padding: 40px;
+    margin-bottom: 40px;
+}
+
+.popup-register-email .verify-input {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.popup-register-email .verify-input input {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.popup-register-email .verify-input button {
+    width: 100%;
+    max-width: 300px;
+}
+
+.popup-register-email .verify-input .error {
+    color: #FF0000;
+    font-size: 16px;
+}
+
+.popup-register-email .email-notice {
+    margin-top: 40px;
+    font-size: 16px;
+}
+
+.popup-register-email .email-notice i {
+    display: inline-block;
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.popup-register-email .verify-button {
+    margin-top: 30px;
+}
+
+.popup-register-email .verify-button button:last-child {
+    float: right;
+}
+
+@media (max-width: 992px) {
+    .popup-register-email .popup-box {
+        position: relative;
+        transform: none;
+        top: 0;
+        left: 0;
+        margin: 80px 40px 40px;
+        max-height: none;
+    }
+
+    .popup-register-email .verify-button {
+        margin-bottom: 40px;
+    }
+
+    .popup-register-email .verify-button button {
+        float: none;
+        width: 100%;
+        margin: 10px 0;
+    }
+}
 
 /*樣式表*/
 .template {

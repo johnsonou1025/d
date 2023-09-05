@@ -21,7 +21,7 @@
             <div class="content">
                 <div class="form-wrap login-form">
                     <h4>Come on and create an <span class="highlight">account.</span></h4>
-                    <div class="form-input-1 form-input-error-1">
+                    <div class="form-input-1">
                         <label>
                             <i><img src="images/icon-account.png" alt=""></i>
                             Member
@@ -42,17 +42,48 @@
                         </label>
                         <input type="text" placeholder="Confirm Password">
                     </div>
-                    <div class="form-input-1">
-                        <label>
-                            <i><img src="images/icon-email.png" alt=""></i>
-                            Email
-                        </label>
-                        <input type="text" placeholder="">
+                    <div class="form-get-code">
+                        <div class="form-input-1">
+                            <label>
+                                <i><img src="images/icon-email.png" alt=""></i>
+                                E-mail
+                            </label>
+                            <input type="text" placeholder="">
+                        </div>
+                        <button class="button-style-7 desktop-form-popup-button"><span>Get Code</span></button>
+                        <!-- 
+                        按鈕樣式套用
+                        verity - boutton-style-8 
+                        resend(30) - button-style-9 
+                        -->
                     </div>
+                    <!-- 驗證碼彈窗 -->
+                    <div class="desktop-form-popup">
+                        <div class="form-popup">
+                            <div class="inner">
+                                <p>Please enter the code.</p>
+                                <input type="text">
+                                <div class="verify-button">
+                                    <button class="button-style-7"><span>Verify</span></button>
+                                    <button class="button-style-9"><span>Cancel</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(function() {
+                            $(".desktop-form-popup-button").click(function(){
+                                $(".desktop-form-popup").addClass("active");
+                            })
+                            $(".desktop-form-popup button:last-child").click(function() {
+                                $(".desktop-form-popup").removeClass("active");
+                            })
+                        })
+                    </script>
                     <div class="form-input-1 form-dorp-down-1">
                         <label>
                             <i><img src="images/icon-birthday.png" alt=""></i>
-                            Birthday
+                            Date of birth
                         </label>
                         <input type="text" placeholder="">
                     </div>
@@ -80,10 +111,25 @@
                             })
                         })
                     </script>
-                    <div class="form-input-1">
+                    <div class="form-get-code">
+                        <div class="form-input-1">
+                            <label>
+                                <i><img src="images/icon-mobile.png" alt=""></i>
+                                SMS confirm
+                            </label>
+                            <input type="text" placeholder="">
+                        </div>
+                        <button class="button-style-7 desktop-form-popup-button"><span>Get Code</span></button>
+                        <!-- 
+                        按鈕樣式套用
+                        verity - boutton-style-8 
+                        resend(30) - button-style-9 
+                        -->
+                    </div>
+                    <div class="form-input-1 form-input-error-1">
                         <label>
                             <i><img src="images/icon-invite.png" alt=""></i>
-                            Invitation code
+                            Agent invitation code
                         </label>
                         <input type="text" placeholder="">
                     </div>
