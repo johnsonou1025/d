@@ -223,6 +223,17 @@ button.button-style-14>span {
     color: #fff;
 }
 
+button.button-style-15 {
+    padding: 14px 20px;
+    border-radius: 5px;
+    background: #0F260F;
+}
+
+button.button-style-15>span {
+    font-size: 16px;
+    color: #fff;
+}
+
 button:disabled,
 button[disabled] {
     background-color: #B9B9B9;
@@ -5912,6 +5923,10 @@ footer .footer-max-width {
     text-align: center;
 }
 
+.popup-register-email .form-popup p span{
+    color: #278400;
+}
+
 @media (max-width: 992px) {
     .popup-register-email .popup-box {
         position: relative;
@@ -5929,7 +5944,7 @@ footer .footer-max-width {
     .popup-register-email .verify-button button {
         float: none;
         width: 100%;
-        margin: 10px 0;
+        margin: 10px 0 !important;
     }
 }
 
