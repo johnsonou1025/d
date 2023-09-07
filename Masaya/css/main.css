@@ -3661,7 +3661,7 @@ footer .footer-max-width {
 }
 
 .step-toggle {
-    /*    display: none;*/
+    display: none;
 }
 
 .my-withdraw li.active .step-toggle {
@@ -5863,6 +5863,8 @@ footer .footer-max-width {
 }
 
 .popup-register-email .popup-box {
+    width: 80%;
+    max-width: 900px;
     text-align: left;
 }
 
@@ -5878,7 +5880,7 @@ footer .footer-max-width {
 
 .popup-register-email .verify-input input {
     width: 100%;
-    max-width: 300px;
+    max-width: 560px;
     margin-bottom: 20px;
 }
 
@@ -5907,10 +5909,7 @@ footer .footer-max-width {
 
 .popup-register-email .verify-button {
     margin-top: 30px;
-}
-
-.popup-register-email .verify-button button:last-child {
-    float: right;
+    text-align: center;
 }
 
 @media (max-width: 992px) {

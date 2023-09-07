@@ -364,7 +364,6 @@
     <!-- 中間區塊 -->
     <main>
         <!-- 個人頁 -->
-        <!-- 個人頁 -->
         <div class="my-wrap">
             <ul class="nav-tabs">
                 <li class="active">
@@ -386,7 +385,7 @@
             <div class="content">
                 <div class="my-withdraw">
                     <ul>
-                        <li>
+                        <li class="active">
                             <p class="step-title active">Step (1) <span>轉出</span>方式<span class="bank-name">Tiger Pay</span></p>
                             <div class="step-toggle">
                                 <div class="bank-choice">
@@ -459,15 +458,14 @@
                                         </div>
                                         <script>
                                             $(function(){
-                                        $(".select-input .select").click(function(){
-                                            $(".select-box").addClass("active");
-                                            console.log("1")
-                                        })
-                                        $(".select-box li").click(function(){
-                                            $(".select-box").removeClass("active");
-                                        })
-                                    })
-                                </script>
+                                                $(".select-input .select").click(function(){
+                                                    $(".select-box").addClass("active");
+                                                })
+                                                $(".select-box li").click(function(){
+                                                    $(".select-box").removeClass("active");
+                                                })
+                                            })
+                                        </script>
                                         <button class="button-style-7"><span>新增信用卡</span></button>
                                     </div>
                                     <div class="form-input">
@@ -516,6 +514,13 @@
                             </div>
                         </li>
                     </ul>
+                    <script>
+                        $(function(){
+                            $(".my-withdraw li").click(function(){
+                                $(this).toggleClass("active").siblings().removeClass("active");
+                            })
+                        })
+                    </script>
                 </div>
             </div>
         </div>
