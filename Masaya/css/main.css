@@ -2738,6 +2738,7 @@ footer .footer-max-width {
 
 .my-wrap .content>.h3 {
     margin: 40px 0 20px;
+    font-size: 20px;
 }
 
 .nav-tabs {
@@ -2999,6 +3000,10 @@ footer .footer-max-width {
     margin-right: 30px;
 }
 
+.my-money-left p:first-child{
+    font-size: 14px;
+}
+
 .my-money-left p span:last-child {
     float: right;
     color: #40D10D;
@@ -3059,7 +3064,7 @@ footer .footer-max-width {
 }
 
 .day-money li {
-    width: 33.33%;
+    width: 50%;
     padding: 10px;
 }
 
@@ -3419,6 +3424,7 @@ footer .footer-max-width {
     width: 100%;
     border-radius: 6px;
     background-color: #fff;
+    font-size: 18px;
     color: #000;
     z-index: 20;
 }

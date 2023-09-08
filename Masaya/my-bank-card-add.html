@@ -399,6 +399,7 @@
                             <script>
                                 $(function(){
                                     $(".form-select-2 .select").click(function(){
+                                        $(".my-form-input").find(".select-box").removeClass("active");
                                         $(this).parent().find(".select-box").addClass("active");
                                     })
                                     $(".select-box li").click(function(){
