@@ -50,6 +50,9 @@ h6,
 .highlight {
     color: #40D10D !important;
 }
+.highlight-1 {
+    color: #FF9200 !important;
+}
 
 /*按鈕*/
 button {
@@ -550,6 +553,17 @@ nav {
 }
 
 .user-info-balance>span:last-child {
+    float: right;
+}
+
+.user-info-point{
+    overflow: hidden;
+    margin: 10px 0;
+}
+.user-info-point span{
+    color: #ABABAB;
+}
+.user-info-point>span:last-child {
     float: right;
 }
 
@@ -1121,8 +1135,8 @@ main .main-max-width {
     visibility: hidden;
     position: absolute;
     top: 0;
-    left: 10px;
-    right: 10px;
+    left: 5px;
+    right: 5px;
     padding: 20px;
     height: 100%;
     border-radius: 6px;
@@ -2874,6 +2888,7 @@ footer .footer-max-width {
 
 .my-lv li:first-child span {
     display: block;
+    width: 80px;
     text-align: center;
 }
 
@@ -3589,6 +3604,7 @@ footer .footer-max-width {
 }
 
 .my-withdraw .main-account {
+    float: left;
     padding: 20px;
     border-radius: 6px;
     border: 2px solid #40D900;
@@ -3597,6 +3613,15 @@ footer .footer-max-width {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+}
+.my-withdraw .more-channel{
+    overflow: hidden;
+}
+.my-withdraw .more-channel .main-account{
+    width: calc(50% - 10px);
+}
+.my-withdraw .more-channel .main-account+.main-account{
+    margin-left: 20px;
 }
 
 .my-withdraw .my-form-input {
@@ -3630,7 +3655,7 @@ footer .footer-max-width {
 }
 
 .my-withdraw .my-form-input .form-input p {
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .my-withdraw .withdraw-detail {
@@ -4399,9 +4424,15 @@ footer .footer-max-width {
     border-radius: 6px;
     background-color: #565656;
 }
-
+.verify-form i{
+    display: inline-block;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
 .verify-form .form-input {
-    padding: 10px 20px;
+    padding: 10px 0px;
     border: none;
     background-color: transparent;
 }
@@ -4482,7 +4513,7 @@ footer .footer-max-width {
 
 @media (max-width: 992px) {
     .verify-form {
-        padding: 20px 0;
+        padding: 20px;
     }
 }
 
