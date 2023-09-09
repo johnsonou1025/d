@@ -50,6 +50,7 @@ h6,
 .highlight {
     color: #40D10D !important;
 }
+
 .highlight-1 {
     color: #FF9200 !important;
 }
@@ -556,13 +557,15 @@ nav {
     float: right;
 }
 
-.user-info-point{
+.user-info-point {
     overflow: hidden;
     margin: 10px 0;
 }
-.user-info-point span{
+
+.user-info-point span {
     color: #ABABAB;
 }
+
 .user-info-point>span:last-child {
     float: right;
 }
@@ -2369,7 +2372,7 @@ footer .footer-max-width {
 }
 
 .form-dorp-down-1 input {
-/*    background: url(../images/icon-arrow-dropdown.png) #193319 no-repeat right 10px center / 15px 15px;*/
+    /*    background: url(../images/icon-arrow-dropdown.png) #193319 no-repeat right 10px center / 15px 15px;*/
 }
 
 .form-select-1 {
@@ -3015,7 +3018,7 @@ footer .footer-max-width {
     margin-right: 30px;
 }
 
-.my-money-left p:first-child{
+.my-money-left p:first-child {
     font-size: 14px;
 }
 
@@ -3614,13 +3617,16 @@ footer .footer-max-width {
     font-size: 16px;
     font-weight: bold;
 }
-.my-withdraw .more-channel{
+
+.my-withdraw .more-channel {
     overflow: hidden;
 }
-.my-withdraw .more-channel .main-account{
+
+.my-withdraw .more-channel .main-account {
     width: calc(50% - 10px);
 }
-.my-withdraw .more-channel .main-account+.main-account{
+
+.my-withdraw .more-channel .main-account+.main-account {
     margin-left: 20px;
 }
 
@@ -4420,17 +4426,31 @@ footer .footer-max-width {
 }
 
 .verify-form {
-    padding: 40px;
+    padding: 40px 60px;
     border-radius: 6px;
     background-color: #565656;
 }
-.verify-form i{
+
+.verify-form .verify-form-title {
+    font-size: 18px;
+    padding-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: -20px;
+    border-bottom: 2px solid #fff;
+}
+.verify-form .verify-form-title:first-child{
+    margin-top: 10px;
+}
+
+.verify-form i {
     display: inline-block;
     margin-right: 10px;
     width: 20px;
     height: 20px;
     vertical-align: middle;
 }
+
 .verify-form .form-input {
     padding: 10px 0px;
     border: none;
@@ -4441,16 +4461,27 @@ footer .footer-max-width {
     display: inline-block;
     width: 240px;
     font-size: 18px;
+    vertical-align: top;
 }
 
 .verify-form .form-input input {
     display: inline-block;
+    padding: 0 10px;
     width: calc(100% - 250px);
     border: 1px solid #707070;
     border-radius: 6px;
     background-color: #fff;
     line-height: 40px;
     color: #000;
+}
+
+.verify-form .form-input input[type="text"]:disabled {
+    background-color: #cecece;
+    color: #898989;
+}
+
+.verify-form .form-input input::placeholder {
+    color: #B9B9B9;
 }
 
 .verify-form .form-input.form-verify button {
@@ -4513,7 +4544,10 @@ footer .footer-max-width {
 
 @media (max-width: 992px) {
     .verify-form {
-        padding: 20px;
+        padding: 20px 30px;
+    }
+    .verify-form .verify-form-title{
+        margin-left: -10px;
     }
 }
 
@@ -5960,7 +5994,7 @@ footer .footer-max-width {
     text-align: center;
 }
 
-.popup-register-email .form-popup p span{
+.popup-register-email .form-popup p span {
     color: #278400;
 }
 
