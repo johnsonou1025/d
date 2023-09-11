@@ -2946,6 +2946,7 @@ footer .footer-max-width {
 @media (max-width: 992px) {
     .my-wrap {
         padding: 0;
+        min-height: 100vh;
     }
 
     .nav-tabs {
@@ -4400,6 +4401,7 @@ footer .footer-max-width {
 @media (max-width: 992px) {
     .promo-wrap {
         padding: 0px;
+        min-height: 100vh;
         background-color: transparent;
     }
 
