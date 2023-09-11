@@ -6024,6 +6024,31 @@ footer .footer-max-width {
     }
 }
 
+/*only register*/
+.only-register{
+    background: url(../images/register-bg.jpg) no-repeat center top / cover;
+}
+.only-register .logo{
+    position: absolute;
+    top: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+}
+.only-register .popup-box{
+    height: calc(80% - 130px);
+}
+.only-register .logo img{
+    display: inline-block;
+    height: 100%;
+}
+
+@media (max-width: 992px) {
+    .only-register-mobile{
+        top: 0;
+    }
+}
+
 /*樣式表*/
 .template {
     padding: 20px;
