@@ -718,6 +718,7 @@ nav {
 }
 
 .link-item-dropdown li>.link-item-image {
+    padding: 0;
     height: 24px;
     width: 24px;
     border-radius: 0;
@@ -3578,6 +3579,7 @@ footer .footer-max-width {
 
 .my-withdraw .step-title {
     color: #ABABAB;
+    font-size: 16px;
 }
 
 .my-withdraw .step-title.active {
@@ -3636,7 +3638,7 @@ footer .footer-max-width {
 
 .my-withdraw .my-form-input .form-input label {
     width: calc(100% - 220px);
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
@@ -3651,7 +3653,9 @@ footer .footer-max-width {
 }
 
 .my-withdraw .my-form-input .form-input input {
+    padding: 0 10px;
     width: calc(100% - 220px);
+    font-size: 16px;
 }
 
 .my-withdraw .my-form-input .form-input button {
@@ -3669,6 +3673,7 @@ footer .footer-max-width {
     border-bottom: 1px solid #707070;
     padding: 20px 0 20px 40px;
     margin-top: 40px;
+    font-size: 16px;
 }
 
 .my-withdraw .withdraw-detail li {

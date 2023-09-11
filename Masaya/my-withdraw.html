@@ -463,10 +463,10 @@
                                         <script>
                                             $(function(){
                                                 $(".select-input .select").click(function(){
-                                                    $(".select-box").addClass("active");
+                                                    $(this).parent().find(".select-box").addClass("active");
                                                 })
                                                 $(".select-box li").click(function(){
-                                                    $(".select-box").removeClass("active");
+                                                    $(this).parent().removeClass("active");
                                                 })
                                             })
                                         </script>
@@ -520,8 +520,8 @@
                     </ul>
                     <script>
                         $(function(){
-                            $(".my-withdraw li").click(function(){
-                                $(this).toggleClass("active").siblings().removeClass("active");
+                            $(".my-withdraw>ul>li>p").click(function(){
+                                $(this).parent().toggleClass("active").siblings().removeClass("active");
                             })
                         })
                     </script>
