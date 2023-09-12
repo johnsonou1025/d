@@ -295,7 +295,6 @@ i img {
 
 input {
     box-sizing: border-box;
-    font-size: 18px;
 }
 
 ol {
@@ -1348,7 +1347,7 @@ footer .footer-max-width {
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    margin: 50px 0;
+    margin: 20px 0;
     padding: 20px;
     width: 100%;
     border: 1px solid #707070;
@@ -1895,13 +1894,15 @@ footer .footer-max-width {
 }
 
 .form-input input {
-    width: 100%;
     display: block;
+    padding: 0 10px;
+    width: 100%;
     border: none;
     background-color: transparent;
     color: #FFF;
     line-height: 20px;
     outline: none;
+    font-size: 14px;
 }
 
 .form-get-code {
@@ -2136,7 +2137,7 @@ footer .footer-max-width {
     color: #707070;
 }
 
-.form-wrap>span.h5 {
+.form-wrap>span {
     display: block;
     margin: 30px 0 20px;
     color: #989A98;
@@ -2232,7 +2233,7 @@ footer .footer-max-width {
     text-align: center;
 }
 
-.content h4 {
+.content h5 {
     margin: 20px 0;
     text-align: left;
 }
@@ -2329,6 +2330,7 @@ footer .footer-max-width {
     justify-content: flex-start;
     flex-wrap: wrap;
     margin-bottom: 15px;
+    font-size: 14px;
 }
 
 .form-input-1.form-input-error-1 input {
@@ -2455,11 +2457,14 @@ footer .footer-max-width {
     .form-input-1 label {
         width: 100%;
         height: 32px;
-        font-size: 18px;
     }
 
     .form-input-1 input {
         width: 100%;
+    }
+
+    .mobile-login .form-get-code button {
+        margin-top: 0px;
     }
 
     .form-get-code button {
@@ -2753,9 +2758,9 @@ footer .footer-max-width {
     padding: 40px;
 }
 
-.my-wrap .content>.h3 {
+.my-wrap .content>.h3,
+.my-wrap .content>.h5 {
     margin: 40px 0 20px;
-    font-size: 20px;
 }
 
 .nav-tabs {
@@ -2814,7 +2819,7 @@ footer .footer-max-width {
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .my-info-text span {
@@ -2824,7 +2829,6 @@ footer .footer-max-width {
 
 .my-info-text span:last-child {
     margin-top: 5px;
-    font-size: 24px;
     color: #40D900;
     font-weight: bold;
 }
@@ -2855,10 +2859,11 @@ footer .footer-max-width {
 }
 
 .my-button button i {
-    position: absolute;
+    /*position: absolute;
     top: 50%;
     left: 20px;
-    transform: translateY(-50%);
+    transform: translateY(-50%);*/
+    margin-right: 10px;
     width: 32px;
     height: 32px;
     display: inline-flex;
@@ -2874,7 +2879,7 @@ footer .footer-max-width {
 }
 
 .my-lv li span {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .my-lv li:first-child {
@@ -2971,6 +2976,7 @@ footer .footer-max-width {
     }
 
     .my-button {
+        margin: -10px;
         width: 100%;
     }
 
@@ -3003,7 +3009,6 @@ footer .footer-max-width {
     flex-wrap: wrap;
     padding-bottom: 40px;
     border-bottom: 1px solid #707070;
-    font-size: 16px;
 }
 
 .my-money-left {
@@ -3011,17 +3016,12 @@ footer .footer-max-width {
     border-radius: 6px;
     width: 40%;
     background-color: #565656;
-    font-size: 18px;
 }
 
 .my-money-left p {
     position: relative;
     margin-bottom: 20px;
     margin-right: 30px;
-}
-
-.my-money-left p:first-child {
-/*    font-size: 14px;*/
 }
 
 .my-money-left p span:last-child {
@@ -3156,14 +3156,14 @@ footer .footer-max-width {
     border-radius: 6px;
     background-color: #565656;
     width: calc(50% - 10px);
-    font-size: 16px;
 }
 
 .analysis-item:last-child {
     margin-left: 20px;
 }
 
-.analysis-item .h4 {
+.analysis-item .h4,
+.analysis-item .h5 {
     margin-bottom: 10px;
 }
 
@@ -3444,7 +3444,6 @@ footer .footer-max-width {
     width: 100%;
     border-radius: 6px;
     background-color: #fff;
-    font-size: 18px;
     color: #000;
     z-index: 20;
 }
@@ -3536,7 +3535,6 @@ footer .footer-max-width {
     .my-form-mobile .form-input label {
         width: 100%;
         margin-bottom: 10px;
-        font-size: 18px;
     }
 
     .my-form-mobile .form-input input {
@@ -3674,7 +3672,6 @@ footer .footer-max-width {
     border-bottom: 1px solid #707070;
     padding: 20px 0 20px 40px;
     margin-top: 40px;
-    font-size: 16px;
 }
 
 .my-withdraw .withdraw-detail li {
@@ -3873,7 +3870,7 @@ footer .footer-max-width {
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .vip-info-text span {
@@ -3889,13 +3886,13 @@ footer .footer-max-width {
 
 .vip-info .my-agent {
     padding-left: 110px;
+    font-size: 16px;
 }
 
 .vip-info .my-agent p {
     position: relative;
     margin: 10px 0;
     width: calc(100% - 60px);
-    font-size: 18px;
 }
 
 .vip-info .my-agent p span {
@@ -3983,6 +3980,7 @@ footer .footer-max-width {
 .invite-bonus {
     width: calc(50% - 20px);
     margin: 0 10px;
+    min-height: 500px;
 }
 
 .invite-bonus>p {
@@ -4069,6 +4067,10 @@ footer .footer-max-width {
     .my-share,
     .invite-bonus {
         width: 100%;
+    }
+
+    .vip-info .my-agent p {
+        width: calc(100% - 20px);
     }
 
 }
@@ -4401,6 +4403,7 @@ footer .footer-max-width {
 @media (max-width: 992px) {
     .promo-wrap {
         padding: 0px;
+        margin-top: 0;
         min-height: 100vh;
         background-color: transparent;
     }
@@ -4409,7 +4412,12 @@ footer .footer-max-width {
         display: none;
     }
 
+    .promo-list {
+        margin: -10px;
+    }
+
     .promo-card {
+        margin: 10px 0;
         width: 100%;
     }
 
@@ -4439,14 +4447,15 @@ footer .footer-max-width {
 }
 
 .verify-form .verify-form-title {
-    font-size: 18px;
+    font-size: 16px;
     padding-bottom: 20px;
     margin-top: 30px;
     margin-bottom: 20px;
     margin-left: -20px;
     border-bottom: 2px solid #fff;
 }
-.verify-form .verify-form-title:first-child{
+
+.verify-form .verify-form-title:first-child {
     margin-top: 10px;
 }
 
@@ -4467,7 +4476,6 @@ footer .footer-max-width {
 .verify-form .form-input label {
     display: inline-block;
     width: 240px;
-    font-size: 18px;
     vertical-align: top;
 }
 
@@ -4502,14 +4510,14 @@ footer .footer-max-width {
 }
 
 .my-verify .button-wrap {
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: center;
 }
 
 .my-verify .button-wrap button {
-    padding: 16px 40px;
+    padding: 16px 20px;
+    margin: 10px;
     min-width: 150px;
-    margin: 0 10px;
 }
 
 .my-verify .form-popup {
@@ -4537,7 +4545,6 @@ footer .footer-max-width {
     .verify-form .form-input label {
         width: 100%;
         margin-bottom: 10px;
-        font-size: 18px;
     }
 
     .verify-form .form-input input {
@@ -4553,7 +4560,8 @@ footer .footer-max-width {
     .verify-form {
         padding: 20px 30px;
     }
-    .verify-form .verify-form-title{
+
+    .verify-form .verify-form-title {
         margin-left: -10px;
     }
 }
@@ -4642,7 +4650,7 @@ footer .footer-max-width {
     border: 1px solid transparent;
     border-radius: 6px;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: .3s;
 }
@@ -4671,7 +4679,6 @@ footer .footer-max-width {
     padding: 20px 0;
     margin-bottom: 10px;
     overflow: hidden;
-    font-size: 16px;
 }
 
 .history-date span {
@@ -4688,14 +4695,12 @@ footer .footer-max-width {
     border: 1px solid #707070;
     border-radius: 6px;
     background: url(../images/icon-date.png) no-repeat right 10px center / 16px;
-    font-size: 16px;
     cursor: pointer;
 }
 
 .history-list-content table {
     width: 100%;
     text-align: center;
-    font-size: 16px;
 }
 
 .history-list-content table th {
@@ -4765,7 +4770,7 @@ footer .footer-max-width {
 }
 
 .no-data p {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -4944,7 +4949,6 @@ footer .footer-max-width {
 
 .my-bonus-info .bonus-item p span {
     display: block;
-    font-size: 16px;
 }
 
 .my-bonus-info .bonus-item p span+span {
@@ -5093,7 +5097,9 @@ footer .footer-max-width {
     text-align: center;
 }
 
-.static-content h4 {
+.static-content h3,
+.static-content h4,
+.static-content h5 {
     margin: 20px 0;
 }
 
@@ -5116,7 +5122,7 @@ footer .footer-max-width {
 }
 
 .static-button button span {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .static-content .hidden-box {
@@ -5291,6 +5297,7 @@ footer .footer-max-width {
 /*my message*/
 
 .my-message .title {
+    font-size: 16px;
     overflow: hidden;
 }
 
@@ -5723,17 +5730,20 @@ footer .footer-max-width {
     border-bottom: 1px solid #565656;
 }
 
-.kyc-item h4 {
+.kyc-item h4,
+.kyc-item h5 {
     padding: 10px 0px;
 }
 
-.kyc-item>h4 {
+.kyc-item>h4,
+.kyc-item>h5 {
     position: relative;
     background: no-repeat right center / 24px;
     cursor: pointer;
 }
 
-.kyc-item.unverified>h4:before {
+.kyc-item.unverified>h4:before,
+.kyc-item.unverified>h5:before {
     content: "";
     position: absolute;
     top: 50%;
@@ -5745,11 +5755,13 @@ footer .footer-max-width {
     background: #40D900;
 }
 
-.kyc-item.toggle>h4 {
+.kyc-item.toggle>h4,
+.kyc-item.toggle>h5 {
     background-image: url(../images/icon-kyc-close.png);
 }
 
-.kyc-item.toggle.active>h4 {
+.kyc-item.toggle.active>h4,
+.kyc-item.toggle.active>h5 {
     background-image: url(../images/icon-kyc-open.png);
 }
 
@@ -5811,7 +5823,7 @@ footer .footer-max-width {
 .kyc-list li button {
     display: inline-flex;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 20px 40px 20px 20px;
     width: 100%;
     max-width: 200px;
     border-radius: 5px;
@@ -5819,6 +5831,7 @@ footer .footer-max-width {
     color: #fff;
     box-shadow: 2px 2px 0px #002000;
     transition: .3s;
+    font-size: 16px;
 }
 
 .kyc-list li button:hover {
@@ -5892,7 +5905,8 @@ footer .footer-max-width {
         padding: 30px;
     }
 
-    .kyc-item.unverified>h4:before {
+    .kyc-item.unverified>h4:before,
+    .kyc-item.unverified>h5:before {
         left: -20px;
     }
 
@@ -5920,7 +5934,7 @@ footer .footer-max-width {
 
     .kyc-list li button {
         max-width: none;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .kyc-list ul+.upload-again {
@@ -5980,19 +5994,17 @@ footer .footer-max-width {
 
 .popup-register-email .verify-input .error {
     color: #FF0000;
-    font-size: 16px;
 }
 
 .popup-register-email .email-notice {
     margin-top: 40px;
-    font-size: 16px;
 }
 
 .popup-register-email .email-notice i {
     display: inline-block;
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
     vertical-align: middle;
 }
 
@@ -6027,26 +6039,29 @@ footer .footer-max-width {
 }
 
 /*only register*/
-.only-register{
+.only-register {
     background: url(../images/register-bg.jpg) no-repeat center top / cover;
 }
-.only-register .logo{
+
+.only-register .logo {
     position: absolute;
     top: -90px;
     left: 50%;
     transform: translateX(-50%);
     height: 50px;
 }
-.only-register .popup-box{
+
+.only-register .popup-box {
     height: calc(80% - 130px);
 }
-.only-register .logo img{
+
+.only-register .logo img {
     display: inline-block;
     height: 100%;
 }
 
 @media (max-width: 992px) {
-    .only-register-mobile{
+    .only-register-mobile {
         top: 0;
     }
 }
