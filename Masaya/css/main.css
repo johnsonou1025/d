@@ -6074,6 +6074,18 @@ footer .footer-max-width {
     }
 }
 
+/*ad-popup*/
+.ad-popup .popup-box{
+    top: 40%;
+}
+.ad-popup .popup-close{
+    top: auto;
+    right: auto;
+    bottom: -42px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 /*樣式表*/
 .template {
     padding: 20px;
