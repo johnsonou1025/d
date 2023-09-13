@@ -3415,7 +3415,7 @@ footer .footer-max-width {
 
 .my-form-input .form-input input {
     display: inline-block;
-    width: calc(100% - 150px);
+    width: 100%;
     border: 1px solid #707070;
     border-radius: 6px;
     background-color: #fff;
