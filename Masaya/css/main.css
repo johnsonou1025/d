@@ -4153,6 +4153,7 @@ footer .footer-max-width {
 }
 
 .promo-list {
+    margin-top: -10px;
     overflow: hidden;
 }
 
