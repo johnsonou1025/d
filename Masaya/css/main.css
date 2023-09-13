@@ -75,6 +75,7 @@ button.button-style-1 {
 
 button.button-style-1>span {
     color: #000;
+    font-size: 16px;
 }
 
 button.button-style-2 {
@@ -88,6 +89,7 @@ button.button-style-2 {
 
 button.button-style-2>span {
     color: #000;
+    font-size: 16px;
 }
 
 button.button-style-3 {
@@ -190,7 +192,7 @@ button.button-style-11 {
 }
 
 button.button-style-11>span {
-    font-size: 14px;
+    font-size: 16px;
     color: #fff;
 }
 
@@ -1269,7 +1271,7 @@ main .main-max-width {
 }
 
 .new-events li img {
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     width: 288px;
     height: 116px;
     border-radius: 6px;
@@ -1347,9 +1349,8 @@ footer .footer-max-width {
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    margin: 20px 0;
+    margin: 20px 10px;
     padding: 20px;
-    width: 100%;
     border: 1px solid #707070;
     border-radius: 5px;
     font-size: 16px;
@@ -1506,7 +1507,7 @@ footer .footer-max-width {
 
 /*頁腳-支付商*/
 .footer-icon {
-    padding: 28px 0 36px;
+    padding: 28px 0 36px 35px;
 }
 
 .footer-icon .h4 {
@@ -1548,7 +1549,7 @@ footer .footer-max-width {
 
 /*頁腳-執照*/
 .footer-lincense {
-    padding: 28px 0 36px;
+    padding: 28px 0 36px 35px;
 }
 
 .footer-lincense .h4 {
@@ -2552,6 +2553,7 @@ footer .footer-max-width {
     display: block;
     border: none;
     background-color: transparent;
+    font-size: 16px;
     color: #FFF;
     line-height: 20px;
     outline: none;
@@ -3373,11 +3375,8 @@ footer .footer-max-width {
 .quick-deposit {
     display: inline-flex;
     flex-wrap: wrap;
-    width: calc(100% - 140px);
-}
-
-.quick-deposit {
     margin: -5px;
+    width: 100%;
 }
 
 .quick-deposit li {
@@ -3386,9 +3385,15 @@ footer .footer-max-width {
     transition: .3s;
 }
 
+.quick-deposit li button {
+    border:1px solid #707070;
+    background-color: #2A4D2A;
+}
+
 .quick-deposit li.active button,
 .quick-deposit li:hover button {
-    background-color: #40D10D;
+    border-color:#40D10D;
+    background-color: #278400;
 }
 
 .my-form-input {
@@ -3403,8 +3408,9 @@ footer .footer-max-width {
 }
 
 .my-form-input .form-input label {
-    display: inline-block;
-    width: 140px;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .my-form-input .form-input input {
@@ -3530,11 +3536,6 @@ footer .footer-max-width {
 
     .my-form-mobile .form-input label.h4 {
         font-size: 24px;
-    }
-
-    .my-form-mobile .form-input label {
-        width: 100%;
-        margin-bottom: 10px;
     }
 
     .my-form-mobile .form-input input {
@@ -3761,6 +3762,10 @@ footer .footer-max-width {
 
     .my-withdraw .bank-choice-item {
         width: 100%;
+    }
+
+    .my-withdraw .button-wrap button {
+        width: calc(100% - 40px);
     }
 }
 
@@ -4410,10 +4415,6 @@ footer .footer-max-width {
 
     .promo-tabs {
         display: none;
-    }
-
-    .promo-list {
-        margin: -10px;
     }
 
     .promo-card {
