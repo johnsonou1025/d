@@ -6075,6 +6075,9 @@ footer .footer-max-width {
 }
 
 @media (max-width: 992px) {
+    .only-register .popup-box{
+        top:40px;
+    }
     .only-register-mobile {
         top: 0;
     }
