@@ -3260,7 +3260,12 @@ footer .footer-max-width {
     }
 
     .analysis-content>ul {
-        width: 50%;
+        width: 100%;
+        text-align: center;
+    }
+    .analysis-item li p{
+        margin: 2px 0;
+        padding: 0 20px;
     }
 }
 
@@ -3997,6 +4002,7 @@ footer .footer-max-width {
 .invite-bonus>p {
     position: relative;
     margin: 20px 0;
+    padding-right: 90px;
     padding-left: 20px;
     font-size: 16px;
     color: #fff;
@@ -4011,17 +4017,17 @@ footer .footer-max-width {
 }
 
 .invite-bonus>p span {
-    padding: 0 20px;
+    display: block;
+    margin-left: 35px;
+    padding: 0;
     color: #D5D5D5;
     font-size: 14px;
-    vertical-align: middle;
 }
 
 .invite-bonus>p a {
     position: absolute;
-    top: 50%;
+    top: 0;
     right: 0;
-    transform: translateY(-50%);
 }
 
 .invite-bonus>p a span {
