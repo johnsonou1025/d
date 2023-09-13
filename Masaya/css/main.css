@@ -3430,7 +3430,7 @@ footer .footer-max-width {
 .my-form-input .form-select-2 {
     display: inline-block;
     position: relative;
-    width: calc(100% - 150px);
+    width: 100%;
 }
 
 .my-form-input .form-select-2 input {
@@ -3448,10 +3448,12 @@ footer .footer-max-width {
     top: 44px;
     left: 0;
     width: 100%;
+    max-height: 300px;
     border-radius: 6px;
     background-color: #fff;
     color: #000;
     z-index: 20;
+    overflow-y: auto;
 }
 
 .my-form-input .select-box.active {
