@@ -1814,7 +1814,7 @@ footer .footer-max-width {
 
 /*表格樣式*/
 .login-tabs {
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
 .login-tabs ul {
@@ -2437,7 +2437,7 @@ footer .footer-max-width {
 
     .mobile-login .content {
         position: relative;
-        padding: 40px 20px;
+        padding: 20px 20px 40px 20px;
         min-height: calc(100vh - 49px);
     }
 
