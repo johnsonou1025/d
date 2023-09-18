@@ -1814,7 +1814,7 @@ footer .footer-max-width {
 
 /*表格樣式*/
 .login-tabs {
-    margin: 20px 0;
+    margin: 20px 0 10px;
 }
 
 .login-tabs ul {
@@ -2239,13 +2239,13 @@ footer .footer-max-width {
 }
 
 .content h5 {
-    margin: 20px 0;
+    margin: 10px 0 20px;
     text-align: left;
 }
 
 .form-agree {
     padding: 0 40px;
-    margin: 40px 0;
+    margin: 20px 0 40px;
     text-align: center;
 }
 
