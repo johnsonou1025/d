@@ -533,7 +533,7 @@ nav {
 
 .user-info-level {
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .user-info-level>span:first-child {
@@ -563,7 +563,7 @@ nav {
 
 .user-info-point {
     overflow: hidden;
-    margin: 10px 0;
+    margin: 10px 0 20px;
 }
 
 .user-info-point span {
