@@ -543,7 +543,7 @@ nav {
 
 .user-info-level>span:last-child {
     float: right;
-    padding: 8px 16px;
+    padding: 5px 16px;
     border-radius: 5px;
     background: #707070;
 }
