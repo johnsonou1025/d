@@ -2900,14 +2900,12 @@ footer .footer-max-width {
     height: 80px;
 }
 
-.my-lv li:first-child span {
-    display: block;
-    width: 80px;
-    text-align: center;
+.my-lv li .my-turnover>div:last span {
+    text-align: right;
 }
 
 .my-lv li:last-child {
-    width: calc(100% - 110px);
+    width: 100%;
 }
 
 .my-lv li:last-child p {
@@ -2922,15 +2920,15 @@ footer .footer-max-width {
 }
 
 .my-lv .my-turnover>div:first-child {
-    width: 20%;
+    width: 110px;
 }
 
 .my-lv .my-turnover>div:last-child {
-    width: 30%;
+    width: calc(40% - 110px);
 }
 
 .my-lv .my-turnover .percent {
-    width: 50%;
+    width: 60%;
 }
 
 .my-lv .my-turnover>div:last-child {
