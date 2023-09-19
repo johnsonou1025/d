@@ -504,7 +504,8 @@ nav {
 }
 
 .user-info-image {
-    display: flex;
+    display: none;
+/*    display: flex;*/
     align-items: center;
     justify-content: center;
     margin-right: 20px;
