@@ -436,7 +436,7 @@
                                 <div class="my-form-input">
                                     <div class="form-input more-channel">
                                         <label>1. Withdrawal</label>
-                                        <div class="main-account">
+                                        <div class="main-account active">
                                             <p>Main</p>
                                             <p>303,401</p>
                                         </div>
@@ -445,6 +445,13 @@
                                             <p>303,401</p>
                                         </div>
                                     </div>
+                                    <script>
+                                        $(function(){
+                                            $(".main-account").click(function(){
+                                                $(this).addClass("active").siblings().removeClass("active");
+                                            })
+                                        })
+                                    </script>
                                     <div class="form-input">
                                         <label>2. Select bank card or e-wallet <span class="highlight">* Confirm withdrawal of GCash account.</span></label>
                                         <input type="text" placeholder="XXXX國際銀行(戶頭末5碼:XXXXX) 手續費1.0%">

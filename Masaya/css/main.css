@@ -3622,12 +3622,18 @@ footer .footer-max-width {
     float: left;
     padding: 20px;
     border-radius: 6px;
-    border: 2px solid #40D900;
+    border: 2px solid transparent;
     width: 100%;
     background-color: #2A4D2A;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+    transition: .3s;
+}
+
+.my-withdraw .main-account.active,
+.my-withdraw .main-account:hover{
+    border-color: #40D900;
 }
 
 .my-withdraw .more-channel {
