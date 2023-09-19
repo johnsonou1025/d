@@ -5922,6 +5922,9 @@ footer .footer-max-width {
     max-width: 150px;
     text-align: center;
 }
+.my-kyc .button-wrap{
+    text-align: center;
+}
 
 
 @media (max-width: 992px) {
