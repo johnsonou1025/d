@@ -3628,6 +3628,7 @@ footer .footer-max-width {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
     transition: .3s;
 }
 
