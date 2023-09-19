@@ -3588,13 +3588,27 @@ footer .footer-max-width {
 }
 
 .my-withdraw .step-title {
+    position: relative;
     color: #ABABAB;
     font-size: 16px;
 }
 
+.my-withdraw .step-title:after{
+    content: "";
+    display: inline-block;
+    float:right;
+    width: 18px;
+    height: 18px;
+    background: url(../images/icon-arrow-right.png) no-repeat center center / auto 100%;
+    transition: .1s;
+}
+
 .my-withdraw .step-title.active {
-    background: url(../images/icon-arrow-right.png) no-repeat right center / 12px;
     color: #FFF;
+}
+
+.my-withdraw li.active .step-title.active:after{
+    transform: rotate(90deg);
 }
 
 .my-withdraw .step-title span {
