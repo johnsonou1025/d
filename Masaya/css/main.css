@@ -6121,6 +6121,50 @@ footer .footer-max-width {
     transform: translateX(-50%);
 }
 
+/*critical*/
+.critical-box{
+    padding: 40px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 640px;
+    text-align: center;
+}
+.critical-box .logo{
+    display: inline-block;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    height: 170px;
+}
+.critical-box .logo img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.critical-box .title{
+    margin: 40px 0;
+    font-size: 24px;
+}
+.critical-box .content{
+    text-align: left;
+}
+.critical-box .content p{
+    margin: 20px 0;
+    font-size: 16px;
+}
+.critical-box .content p.return{
+    margin-top: 40px;
+    text-align: center;
+}
+.critical-box .content a{
+    color: #437EBF;
+    font-size: 20px;
+}
+
+@media (max-width: 992px) {
+    .critical-box{
+        padding: 20px;
+    }
+}
+
 /*樣式表*/
 .template {
     padding: 20px;
