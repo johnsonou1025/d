@@ -289,7 +289,7 @@ table.table-style th:last-child {
 }
 
 /*共用class*/
-a{
+a {
     cursor: pointer;
 }
 
@@ -505,7 +505,7 @@ nav {
 
 .user-info-image {
     display: none;
-/*    display: flex;*/
+    /*    display: flex;*/
     align-items: center;
     justify-content: center;
     margin-right: 20px;
@@ -3262,7 +3262,8 @@ footer .footer-max-width {
         width: 100%;
         text-align: center;
     }
-    .analysis-item li p{
+
+    .analysis-item li p {
         margin: 2px 0;
         padding: 0 20px;
     }
@@ -3394,13 +3395,13 @@ footer .footer-max-width {
 }
 
 .quick-deposit li button {
-    border:1px solid #707070;
+    border: 1px solid #707070;
     background-color: #2A4D2A;
 }
 
 .quick-deposit li.active button,
 .quick-deposit li:hover button {
-    border-color:#40D10D;
+    border-color: #40D10D;
     background-color: #278400;
 }
 
@@ -3593,10 +3594,10 @@ footer .footer-max-width {
     font-size: 16px;
 }
 
-.my-withdraw .step-title:after{
+.my-withdraw .step-title:after {
     content: "";
     display: inline-block;
-    float:right;
+    float: right;
     width: 18px;
     height: 18px;
     background: url(../images/icon-arrow-right.png) no-repeat center center / auto 100%;
@@ -3607,7 +3608,7 @@ footer .footer-max-width {
     color: #FFF;
 }
 
-.my-withdraw li.active .step-title.active:after{
+.my-withdraw li.active .step-title.active:after {
     transform: rotate(90deg);
 }
 
@@ -3647,7 +3648,7 @@ footer .footer-max-width {
 }
 
 .my-withdraw .main-account.active,
-.my-withdraw .main-account:hover{
+.my-withdraw .main-account:hover {
     border-color: #40D900;
 }
 
@@ -5922,7 +5923,8 @@ footer .footer-max-width {
     max-width: 150px;
     text-align: center;
 }
-.my-kyc .button-wrap{
+
+.my-kyc .button-wrap {
     text-align: center;
 }
 
@@ -6079,7 +6081,8 @@ footer .footer-max-width {
 .only-register {
     background: url(../images/register-bg.jpg) no-repeat center top / cover;
 }
-.only-register .content{
+
+.only-register .content {
     padding-top: 20px;
 }
 
@@ -6101,19 +6104,21 @@ footer .footer-max-width {
 }*/
 
 @media (max-width: 992px) {
-    .only-register .popup-box{
-        top:40px;
+    .only-register .popup-box {
+        top: 40px;
     }
+
     .only-register-mobile {
         top: 0;
     }
 }
 
 /*ad-popup*/
-.ad-popup .popup-box{
+.ad-popup .popup-box {
     top: 40%;
 }
-.ad-popup .popup-close{
+
+.ad-popup .popup-close {
     top: auto;
     right: auto;
     bottom: -42px;
@@ -6122,45 +6127,48 @@ footer .footer-max-width {
 }
 
 /*critical*/
-.critical-box{
+.critical-box {
     padding: 40px;
     margin: 0 auto;
     width: 100%;
     max-width: 640px;
     text-align: center;
 }
-.critical-box .logo{
+
+.critical-box .logo {
     display: inline-block;
     margin-top: 80px;
     margin-bottom: 40px;
     height: 170px;
 }
-.critical-box .logo img{
+
+.critical-box .logo img {
     max-width: 100%;
     max-height: 100%;
 }
-.critical-box .title{
+
+.critical-box .title {
     margin: 40px 0;
     font-size: 24px;
 }
-.critical-box .content{
-    text-align: left;
-}
-.critical-box .content p{
+
+.critical-box .content p {
     margin: 20px 0;
     font-size: 16px;
 }
-.critical-box .content p.return{
+
+.critical-box .content p.return {
     margin-top: 40px;
     text-align: center;
 }
-.critical-box .content a{
+
+.critical-box .content a {
     color: #437EBF;
     font-size: 20px;
 }
 
 @media (max-width: 992px) {
-    .critical-box{
+    .critical-box {
         padding: 20px;
     }
 }
