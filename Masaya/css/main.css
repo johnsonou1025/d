@@ -6355,6 +6355,7 @@ footer .footer-max-width {
     .prod-box {
         padding: 30px;
         margin: 10px;
+        max-height: none;
     }
 
     .prod {
