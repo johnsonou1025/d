@@ -6293,15 +6293,29 @@ footer .footer-max-width {
     text-align: center;
 }
 
-.header-fixed{
+.header-fixed {
     position: fixed;
     top: 0;
     z-index: 1;
 }
 
+.pro-mobile {
+    display: none;
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {
+    .prod {
+        width: calc(33.33% - 40px);
+    }
+}
+
 @media (max-width: 992px) {
     .pro-desktop {
         display: none;
+    }
+
+    .pro-mobile {
+        display: block;
     }
 
     .pro-mobile .tabs {
@@ -6334,7 +6348,7 @@ footer .footer-max-width {
         z-index: 1;
     }
 
-    .all-money{
+    .all-money {
         text-align: center;
     }
 
