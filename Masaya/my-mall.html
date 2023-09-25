@@ -383,14 +383,27 @@
                 <li><span>兌換卷</span></li>
             </ul>
             <div class="content">
-                <ul class="tabs pro-desktop">
-                    <li class="active">現金福袋</li>
-                    <li>免費次數</li>
-                    <li>實體禮卷</li>
-                </ul>
+                <div class="pro-desktop">
+                    <ul class="tabs">
+                        <li class="active">現金福袋</li>
+                        <li>免費次數</li>
+                        <li>實體禮卷</li>
+                    </ul>
+                    <div class="all-money">
+                        <div>
+                            <i><img src="images/icon-diamond.png" alt=""></i><span>1,234,567,890</span>
+                        </div>
+                    </div>
+                </div>
                 <!-- 手機版 -->
                 <div class="pro-mobile">
-                    <h5>積分商城</h5>
+                    <h5>積分商城
+                        <div class="all-money">
+                            <div>
+                                <i><img src="images/icon-diamond.png" alt=""></i><span>1,234,567,890</span>
+                            </div>
+                        </div>
+                    </h5>
                     <ul class="tabs">
                         <li class="active">會員福利</li>
                         <li>VIP獎勵</li>
@@ -401,9 +414,9 @@
                     $(function() {
                         $(window).scroll(function() {
                             var scrollPos = $(document).scrollTop();
-                            if(scrollPos >=200){
+                            if (scrollPos >= 200) {
                                 $(".pro-mobile .tabs").addClass("header-fixed");
-                            }else{
+                            } else {
                                 $(".pro-mobile .tabs").removeClass("header-fixed");
                             }
                         });
@@ -429,11 +442,6 @@
                             })
                         })
                         </script>
-                    </div>
-                </div>
-                <div class="all-money">
-                    <div>
-                        <i><img src="images/icon-diamond.png" alt=""></i><span>1,234,567,890</span>
                     </div>
                 </div>
                 <div class="prod-box">

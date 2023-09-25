@@ -6290,6 +6290,7 @@ footer .footer-max-width {
 }
 
 .prod-box .button-wrap {
+    margin-top: 40px;
     text-align: center;
 }
 
@@ -6349,17 +6350,32 @@ footer .footer-max-width {
     }
 
     .all-money {
-        text-align: center;
+        float: right;
+        vertical-align: top;
+        margin: 0;
+        font-size: 14px;
+    }
+    .all-money>div{
+        padding: 0 10px;
+    }
+    .all-money i{
+        height: 16px;
     }
 
     .prod-box {
-        padding: 30px;
+        padding: 20px 10px;
         margin: 10px;
         max-height: none;
     }
 
     .prod {
-        width: calc(100% - 40px);
+        padding: 0;
+        margin: 10px;
+        width: calc(50% - 20px);
+    }
+
+    .prod .needs {
+        margin: 0 10px;
     }
 }
 
