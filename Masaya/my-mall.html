@@ -43,11 +43,11 @@
                             <span>My Acconut</span>
                         </div>
                         <div class="user-info-personal"><img src="images/icon-refresh.png" alt=""></div>
-                    </div>   
+                    </div>
                     <div class="user-info-level">
                         <span class="h5">Your Level:</span>
                         <span class="h5">VIP 0</span>
-                    </div>                 
+                    </div>
                     <div class="user-info-point">
                         <span class="h5">Katsu point</span>
                         <span>500</span>
@@ -383,11 +383,166 @@
                 <li><span>兌換卷</span></li>
             </ul>
             <div class="content">
-                <ul class="tabs">
-                        <li class="active">現金福袋</li>
-                        <li>免費次數</li>
-                        <li>實體禮卷</li>
+                <ul class="tabs pro-desktop">
+                    <li class="active">現金福袋</li>
+                    <li>免費次數</li>
+                    <li>實體禮卷</li>
+                </ul>
+                <!-- 手機版 -->
+                <div class="pro-mobile">
+                    <h5>積分商城</h5>
+                    <ul class="tabs">
+                        <li class="active">會員福利</li>
+                        <li>VIP獎勵</li>
+                        <li>好友裂變</li>
+                        <li>兌換卷</li>
                     </ul>
+                    <script>
+                    $(function() {
+                        $(window).scroll(function() {
+                            var scrollPos = $(document).scrollTop();
+                            if(scrollPos >=200){
+                                $(".pro-mobile .tabs").addClass("header-fixed");
+                            }else{
+                                $(".pro-mobile .tabs").removeClass("header-fixed");
+                            }
+                        });
+                    });
+                    </script>
+                    <div class="tabs-mobile">
+                        <span>現金福袋<i></i></span>
+                        <div class="tabs-mobile-list">
+                            <div class="tabs-mobile-header"><span>Done</span></div>
+                            <ul>
+                                <li>現金福袋</li>
+                                <li>免費次數</li>
+                                <li>實體禮卷</li>
+                            </ul>
+                        </div>
+                        <script>
+                        $(function() {
+                            $(".tabs-mobile>span").click(function() {
+                                $(".tabs-mobile-list").addClass("active");
+                            })
+                            $(".tabs-mobile-header").click(function() {
+                                $(this).parent(".tabs-mobile-list").removeClass("active");
+                            })
+                        })
+                        </script>
+                    </div>
+                </div>
+                <div class="all-money">
+                    <div>
+                        <i><img src="images/icon-diamond.png" alt=""></i><span>1,234,567,890</span>
+                    </div>
+                </div>
+                <div class="prod-box">
+                    <div class="prod-list">
+                        <div class="prod">
+                            <ul>
+                                <li class="title">超值禮卷1</li>
+                                <li><img src="images/mall-product-image.png" alt=""></li>
+                                <li>獎勵流水20倍</li>
+                            </ul>
+                            <div class="needs">
+                                <i><img src="images/icon-diamond.png" alt=""></i><span>10積分</span>
+                            </div>
+                        </div>
+                        <div class="prod">
+                            <ul>
+                                <li class="title">超值禮卷1</li>
+                                <li><img src="images/mall-product-image.png" alt=""></li>
+                                <li>獎勵流水20倍</li>
+                            </ul>
+                            <div class="needs">
+                                <i><img src="images/icon-diamond.png" alt=""></i><span>10積分</span>
+                            </div>
+                        </div>
+                        <div class="prod unable">
+                            <ul>
+                                <li class="title">超值禮卷1</li>
+                                <li><img src="images/mall-product-image.png" alt=""></li>
+                                <li>獎勵流水20倍</li>
+                            </ul>
+                            <div class="needs">
+                                <i><img src="images/icon-diamond.png" alt=""></i><span>10積分</span>
+                            </div>
+                            <div class="prod-notice">
+                                <p>限制购买条件<span class="prod-highlight">VIP2-VIPS</span></p>
+                                <p>积分不足</p>
+                            </div>
+                        </div>
+                        <div class="prod unable">
+                            <ul>
+                                <li class="title">超值禮卷1</li>
+                                <li><img src="images/mall-product-image.png" alt=""></li>
+                                <li>獎勵流水20倍</li>
+                            </ul>
+                            <div class="needs">
+                                <i><img src="images/icon-diamond.png" alt=""></i><span>10積分</span>
+                            </div>
+                            <div class="prod-notice">
+                                <p>限制购买条件<span class="prod-highlight">VIP2-VIPS</span></p>
+                                <p>积分不足</p>
+                            </div>
+                        </div>
+                        <div class="prod">
+                            <ul>
+                                <li><img src="images/mall-invite-image.png" alt=""></li>
+                                <li>
+                                    <p>時間：01/01~01/07</p>
+                                    <p>好友人數：20</p>
+                                    <p>彩金：500</p>
+                                </li>
+                            </ul>
+                            <div class="needs">
+                                <span>10積分</span>
+                            </div>
+                        </div>
+                        <div class="prod">
+                            <ul>
+                                <li><img src="images/mall-invite-image.png" alt=""></li>
+                                <li>
+                                    <p>時間：01/01~01/07</p>
+                                    <p>好友人數：20</p>
+                                    <p>彩金：500</p>
+                                </li>
+                            </ul>
+                            <div class="needs">
+                                <span>10積分</span>
+                            </div>
+                        </div>
+                        <div class="prod unable">
+                            <ul>
+                                <li><img src="images/mall-invite-image.png" alt=""></li>
+                                <li>
+                                    <p>時間：01/01~01/07</p>
+                                    <p>好友人數：20</p>
+                                    <p>彩金：500</p>
+                                </li>
+                            </ul>
+                            <div class="needs">
+                                <span>10積分</span>
+                            </div>
+                        </div>
+                        <div class="prod unable">
+                            <ul>
+                                <li><img src="images/mall-invite-image.png" alt=""></li>
+                                <li>
+                                    <p>時間：01/01~01/07</p>
+                                    <p>好友人數：20</p>
+                                    <p>彩金：500</p>
+                                </li>
+                            </ul>
+                            <div class="needs">
+                                <span>10積分</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-wrap">
+                        <button class="button-style-6"><span>Load more</span></button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- 頁腳 -->
