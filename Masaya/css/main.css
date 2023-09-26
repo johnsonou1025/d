@@ -2784,6 +2784,7 @@ footer .footer-max-width {
     padding: 20px;
     border: 1px solid #707070;
     text-align: center;
+    cursor: pointer;
 }
 
 .nav-tabs li.active {
