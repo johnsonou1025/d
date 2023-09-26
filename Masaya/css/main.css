@@ -6212,7 +6212,7 @@ footer .footer-max-width {
     float: left;
     margin: 20px;
     padding: 10px;
-    width: calc(25% - 40px);
+    width: calc(20% - 40px);
     border-radius: 20px;
     border: 1px solid #2C872C;
     background: linear-gradient(to bottom, #003D00 0%, #030F03 100%);
@@ -6304,9 +6304,27 @@ footer .footer-max-width {
     display: none;
 }
 
-@media (max-width: 1200px) and (min-width: 992px) {
+.goTop {
+    position: fixed;
+    right: 60px;
+    bottom: 120px;
+}
+
+@media (max-width: 1660px) {
+    .prod {
+        width: calc(25% - 40px);
+    }
+}
+
+@media (max-width: 1390px) {
     .prod {
         width: calc(33.33% - 40px);
+    }
+}
+
+@media (max-width: 1200px) {
+    .prod {
+        width: calc(50% - 40px);
     }
 }
 
@@ -6355,10 +6373,12 @@ footer .footer-max-width {
         margin: 0;
         font-size: 14px;
     }
-    .all-money>div{
+
+    .all-money>div {
         padding: 0 10px;
     }
-    .all-money i{
+
+    .all-money i {
         height: 16px;
     }
 
