@@ -6311,6 +6311,7 @@ footer .footer-max-width {
     position: absolute;
     right: 20px;
     bottom: 20px;
+    z-index: 1;
 }
 
 @media (max-width: 1660px) {
