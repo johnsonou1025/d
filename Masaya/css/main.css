@@ -6280,7 +6280,8 @@ footer .footer-max-width {
     z-index: 1;
 }
 
-.prod.unable:hover .prod-notice {
+.prod.unable:hover .prod-notice,
+.prod.unable.active .prod-notice {
     visibility: visible;
     opacity: 100%;
 }
