@@ -20,11 +20,58 @@
             <i class="content-left"></i>
             <div class="content">
                 <div class="form-wrap">
-                    <h5>Forget password?</h5>
-                    <span>请输入電子信箱</span>
-                    <div class="form-input" style="padding-left:10px">
-                        <input type="text" placeholder="Email">
+                    <h5>忘记密码</h5>
+                    <span>请输入手机号码</span>
+                    <div class="form-input form-county-code">
+                        <i><img src="images/icon-member.png" alt=""></i>
+                        <div class="form-select">
+                            <div class="form-select-value">
+                                <img src="images/icon-conuty-code.png" alt="">
+                                <ul>
+                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
+                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
+                                    <li><img src="images/icon-conuty-code.png" alt=""></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Mobile">
                     </div>
+                    <span>请输入手机号码</span>
+                    <div class="form-get-code">
+                        <div class="form-input">
+                            <i><img src="images/icon-member.png" alt=""></i>
+                            <input type="text" placeholder="E-mail">
+                        </div>
+                        <button class="button-style-7 desktop-form-popup-button"><span>Get Code</span></button>
+                        <!-- 
+                        按鈕樣式套用
+                        verity - boutton-style-8 
+                        resend(30) - button-style-9 
+                        -->
+                    </div>
+                    <!-- 驗證碼彈窗 -->
+                    <div class="desktop-form-popup">
+                        <div class="form-popup">
+                            <div class="inner">
+                                <p>Please enter the code.</p>
+                                <input type="text">
+                                <div class="verify-button">
+                                    <button class="button-style-7"><span>Verify</span></button>
+                                    <button class="button-style-9"><span>Cancel</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(function() {
+                            $(".desktop-form-popup-button").click(function(){
+                                $(".desktop-form-popup").addClass("active");
+                            })
+                            $(".desktop-form-popup button:last-child").click(function() {
+                                $(".desktop-form-popup").removeClass("active");
+                            })
+                        })
+                    </script>
                     <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
                     <div class="form-agree">
                         <div class="form-button">
@@ -49,11 +96,82 @@
                 <img src="images/register-logo.png" alt="">
             </i>
             <div class="form-wrap">
-                <h5>Forget password?</h5>
-                <span>请输入電子信箱</span>
-                <div class="form-input" style="padding-left:10px">
-                    <input type="text" placeholder="Email">
+                <h5>忘记密码</h5>
+                <span class="h5">请输入手机号码</span>
+                <div class="form-input form-county-code">
+                    <i><img src="images/icon-member.png" alt=""></i>
+                    <div class="form-select">
+                        <div class="form-select-value">
+                            <img src="images/icon-conuty-code.png" alt="">
+                            <ul>
+                                <li><img src="images/icon-conuty-code.png" alt=""></li>
+                                <li><img src="images/icon-conuty-code.png" alt=""></li>
+                                <li><img src="images/icon-conuty-code.png" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Mobile">
                 </div>
+                <span>请输入手机号码</span>
+                <div class="form-get-code">
+                    <div class="form-input">
+                        <i><img src="images/icon-member.png" alt=""></i>
+                        <input type="text" placeholder="E-mail">
+                    </div>
+                    <button class="button-style-7 mobile-form-popup-button"><span>Get Code</span></button>
+                    <!-- 
+                        按鈕樣式套用
+                        verity - boutton-style-8 
+                        resend(30) - button-style-9 
+                        -->
+                </div>
+                <!-- 驗證碼彈窗 -->
+                <div class="popup-wrap mobile-form-popup">
+                    <div class="popup-box">
+                        <div class="form-popup">
+                            <div class="inner">
+                                <p>Please enter the code.</p>
+                                <input type="text">
+                                <div class="verify-button">
+                                    <button class="button-style-7"><span>Verify</span></button>
+                                    <button class="button-style-9"><span>Cancel</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(function() {
+                        $(".mobile-form-popup-button").click(function(){
+                            $(".mobile-form-popup").addClass("active");
+                        })
+                        $(".mobile-form-popup button:last-child").click(function() {
+                            $(".mobile-form-popup").removeClass("active");
+                        })
+                    })
+                </script>
+                <!-- <div class="desktop-form-popup">
+                        <div class="form-popup">
+                            <div class="inner">
+                                <p>Please enter the code.</p>
+                                <input type="text">
+                                <div class="verify-button">
+                                    <button class="button-style-7"><span>Verify</span></button>
+                                    <button class="button-style-9"><span>Cancel</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(function() {
+                            $(".mobile-form-popup-button").click(function(){
+                                $(".desktop-form-popup").addClass("active");
+                            })
+                            $(".desktop-form-popup button:last-child").click(function() {
+                                $(".desktop-form-popup").removeClass("active");
+                            })
+                        })
+                    </script> -->
                 <div class="form-message"><i><img src="images/icon-alert.png" alt=""></i><span>欄位或格式輸入錯誤</span></div>
                 <div class="form-agree">
                     <div class="form-button">
