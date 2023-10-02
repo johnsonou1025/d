@@ -6500,6 +6500,7 @@ footer .footer-max-width {
         max-height: none;
     }
     .only-login-forget .form-popup .inner{
+        padding-bottom: 200px;
         width: 100%;
     }
 }
