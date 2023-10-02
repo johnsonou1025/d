@@ -6079,7 +6079,8 @@ footer .footer-max-width {
 }
 
 /*only register*/
-.only-register {
+.only-register,
+.only-login-forget {
     background: url(../images/register-bg.jpg) no-repeat center top / cover;
 }
 
@@ -6323,22 +6324,24 @@ footer .footer-max-width {
     max-width: 80%;
     font-size: 16px;
 }
-.prod-box .get-code{
+
+.prod-box .get-code {
     padding-top: 60px;
     text-align: center;
 }
+
 .prod-box .get-code input {
     width: 80%;
     margin: 20px 0;
     padding: 0 20px;
     border-radius: 6px;
-    border:0;
+    border: 0;
     background-color: #fff;
     color: #000;
     line-height: 50px;
 }
 
-.prod-box .get-code button{
+.prod-box .get-code button {
     margin-top: 40px;
     min-width: 160px;
 }
@@ -6429,6 +6432,75 @@ footer .footer-max-width {
 
     .prod .needs {
         margin: 0 10px;
+    }
+}
+
+/*login-forget*/
+.only-login-forget .popup-box {
+    width: 100%;
+    max-width: 900px;
+    height: 80vh;
+}
+
+.only-login-forget .form-popup {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.only-login-forget .form-popup .inner {
+    margin: 0 auto;
+    max-width: 420px;
+}
+
+.only-login-forget .logo{
+    margin-top: 40px;
+    width: 200px;
+}
+
+.only-login-forget h5 {
+    margin: 40px 0;
+    color: #278400;
+    text-align: center;
+}
+
+.only-login-forget p {
+    text-align: left;
+}
+
+.only-login-forget p span {
+    color: #278400;
+}
+
+.only-login-forget .verify-input {
+    margin: 10px 0;
+}
+
+.only-login-forget input {
+    width: 100%;
+}
+
+.only-login-forget label {
+    display: block;
+    margin-bottom: 10px;
+    color: #278400;
+    text-align: left;
+}
+
+.only-login-forget .verify-input .error {
+    margin-top: 20px;
+    color: #FF0000;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .only-login-forget .popup-box {
+        position: static;
+        transform: translate(0px, 0px);
+        height: 100vh;
+        max-height: none;
+    }
+    .only-login-forget .form-popup .inner{
+        width: 100%;
     }
 }
 
