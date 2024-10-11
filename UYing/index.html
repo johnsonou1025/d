@@ -64,7 +64,7 @@
     </script>
     <div class="kv">
         <div class="mx-width">
-            <div class="kv-title">
+            <div class="kv-title fadePlay fadeInUp">
                 <div class="badge">綠電買賣平台</div>
                 <h1>低碳永續的能源解決方案</h1>
                 <p>作為電力電子和能源解決方案的提供者，毓盈持續投入產品研發與技術創新，提供更高效、可靠的節能解決方案，以期能為人類守護一個永續發展的環境。</p>
@@ -74,33 +74,57 @@
     <div class="data">
         <div class="mx-width">
             <div class="data-body">
-                <h3>399</h3>
+                <h3 class="countValue" data-target="399">399</h3>
                 <p class="h5">億度</p>
                 <p>2010 至 2022 年間高效產品協助全球客戶節電總量</p>
             </div>
             <div class="data-body">
-                <h3>63</h3>
+                <h3 class="countValue" data-target="63">63</h3>
                 <p class="h5">%</p>
                 <p>2022 年毓盈全球使用再生電力比例</p>
             </div>
             <div class="data-body">
-                <h3>15,400</h3>
+                <h3 class="countValue" data-target="15400">15,400</h3>
                 <p class="h5">公噸</p>
                 <p>經認證的 17 棟廠辦及 5 棟學術捐贈綠建築 2022 年約當減碳量</p>
             </div>
             <div class="data-body">
-                <h3>13.3</h3>
+                <h3 class="countValue" data-target="13.3">13.3</h3>
                 <p class="h5">%</p>
                 <p>2022 年碳密集度 (SBT)(公噸二氧化碳當量/百萬美金產值)</p>
             </div>
         </div>
     </div>
+    <script>
+        $(function () {
+            $(".countValue").each(function () {
+                var $div = $(this);
+                var targetNumber = parseFloat($div.data('target'), 50); // 取得目標數字
+                var currentNumber = 0;  // 計數從 0 開始
+                var addNumber = parseInt(targetNumber / 30) + 1;
+                console.log(addNumber);
+                // 使用 setInterval 每隔 50 毫秒增加數字，直到到達目標值
+                var interval = setInterval(function () {
+                    // currentNumber++; // 增加數字
+                    currentNumber = currentNumber + addNumber;
+                    $div.text(currentNumber); // 更新顯示的數字
+
+                    // 當數字到達目標時，清除計時器
+                    if (currentNumber >= targetNumber) {
+                        clearInterval(interval);
+                        $div.text(targetNumber);
+                    }
+                }, 50);  // 每 50 毫秒增加一次
+            });
+
+        })
+    </script>
     <div class="section home-about" id="home-about">
         <div class="mx-width">
             <ul class="flexblock">
                 <li><img src="images/img-about.png" alt=""></li>
                 <li class="flexblock-body">
-                    <div class="headline">
+                    <div class="headline fadePlay">
                         <div class="badge">綠電買賣平台</div>
                         <h2>關於我們</h2>
                         <p class="h5">
@@ -147,7 +171,7 @@
         <ul class="flexblock">
             <li class="home-platform-img"></li>
             <li class="flexblock-body">
-                <div class="text-group">
+                <div class="text-group fadePlay">
                     <div class="headline">
                         <div class="badge">綠電買賣平台</div>
                         <h2>綠電交易平台</h2>
@@ -203,7 +227,7 @@
         <div class="mx-width">
             <ul class="flexblock">
                 <li class="flexblock-body">
-                    <div class="headline">
+                    <div class="headline fadePlay">
                         <div class="badge">綠電買賣平台</div>
                         <h2>減碳諮詢顧問</h2>
                         <p>專業的減碳顧問團隊，能協助企業或組織順利進入節能減碳領域，提供相關條款資訊與適洽的改善方案解決碳排問題，引領企業邁向淨零排放路徑。</p>
@@ -214,7 +238,7 @@
             <ul class="flexblock">
                 <li><img src="images/home-consult-2.jpg" alt=""></li>
                 <li class="flexblock-body">
-                    <div class="headline">
+                    <div class="headline fadePlay">
                         <div class="badge">綠電買賣平台</div>
                         <h2>淨零碳排執行規劃</h2>
                         <p>淨零碳排的領域非常廣泛，由初期對能源、碳排的盤查與資訊收集，中期診斷分析、尋求可行的解決方案，到後期的實質改善、檢討認證，依據企業體質進行大規模的客製規劃，以達到企業淨零碳排遠景的最終目標。
@@ -226,18 +250,12 @@
     </div>
     <script>
         $(document).ready(function () {
-            /* Every time the window is scrolled ... */
-            $("body>div").addClass("hideme");
             $(window).scroll(function () {
-                /* Check the location of each desired element */
-                $('.hideme').each(function (i) {
-                    // var bottom_of_object = $(this).offset().top + $(this).outerHeight();
+                $(".fadePlay").each(function (i) {
                     var bottom_of_object = $(this).offset().top;
-                    console.log(bottom_of_object);
-                    var bottom_of_window = $(window).scrollTop() + ($(window).height() / 2);
-                    console.log(bottom_of_window);
+                    var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.9;
                     if (bottom_of_window > bottom_of_object) {
-                        $(this).animate({ opacity: '1', top: '0' }, 500);
+                        $(this).addClass("fadeInUp");
                     }
                 });
             });
