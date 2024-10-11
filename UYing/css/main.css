@@ -565,6 +565,8 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .card-body {
@@ -735,6 +737,41 @@ footer {
 .fadeInUp {
     animation-fill-mode: both -webkit-animation-name: fadeInUp;
     animation-name: fadeInUp;
+}
+
+.fadeAnime>div {
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.fadeIn {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn
 }
 
 @media (max-width: 1200px) {}
