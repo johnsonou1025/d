@@ -123,15 +123,39 @@ a {
 }
 
 .btn-primary {
+    position: relative;
     padding: 15px 40px;
     border-radius: 10px;
-    background: var(--primary);
+    background: transparent;
     color: #fff !important;
+    overflow: hidden;
 }
 
-.btn-primary:hover {
+.btn-primary:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #51B960;
+    z-index: -1;
+}
+
+.btn-primary:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
     background: #1A8427;
-    color: #fff;
+    z-index: -1;
+    transition: .3s;
+}
+
+.btn-primary:hover:after {
+    left: 0;
 }
 
 .lock {
@@ -239,7 +263,8 @@ a {
 
 
 .section-secondary {
-    background: var(--primary);
+    /* background: var(--primary); */
+    background: #51B960 url(../images/bg-wind.png) no-repeat right 20px bottom 20px / auto 150px;
     color: #fff;
 }
 
@@ -289,7 +314,8 @@ header {
 }
 
 .nav-menu {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
 .nav-menu a {
@@ -337,6 +363,7 @@ header {
     }
 
     .nav-menu {
+        display: block;
         position: absolute;
         top: 0;
         left: 100%;
@@ -773,6 +800,9 @@ footer {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn
 }
+
+
+
 
 @media (max-width: 1200px) {}
 
