@@ -9,7 +9,8 @@ $(document).ready(function () {
         $(".nav-menu").removeClass("open");
     })
     // -----------
-    $('.nav-menu').on('click', 'a', function (event) {
+    // $('.nav-menu').on('click', 'a', function (event) {
+    $(".nav-menu a").not(':last').on('click', function (event) {
         $("body").removeClass("lock");
         $(".nav-menu").removeClass("open");
         var _headerHeight = $("header").height();
