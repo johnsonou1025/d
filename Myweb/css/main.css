@@ -184,6 +184,12 @@ a:hover {
     margin: 20px;
     background: #fff;
     overflow: hidden;
+    transition: .3s;
+}
+
+.work:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
 }
 
 .flexblock {
@@ -890,28 +896,28 @@ footer .copy {
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 0;
-        -webkit-transform: translate(5%, 0);
-        transform: translate(5%, 0)
+        -webkit-transform: translate(5%, 0) scale();
+        transform: translate(5%, 0) scale();
     }
 
     to {
         opacity: 1;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0)
+        -webkit-transform: translateZ(0) scale();
+        transform: translateZ(0) scale();
     }
 }
 
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        -webkit-transform: translate(5%, 0);
-        transform: translate(5%, 0)
+        -webkit-transform: translate(5%, 0) scale();
+        transform: translate(5%, 0) scale();
     }
 
     to {
         opacity: 1;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0)
+        -webkit-transform: translateZ(0) scale();
+        transform: translateZ(0) scale();
     }
 }
 
