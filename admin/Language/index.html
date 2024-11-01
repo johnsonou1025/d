@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-language Webpage</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <h1 data-i18n="title">Default Title</h1>
+    <p data-i18n="description">Default description text.</p>
+    <button onclick="setLanguage('en')">English</button>
+    <button onclick="setLanguage('zh')">中文</button>
+    <script>
+        const spreadsheetID = "1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c"; // 使用您的表格 ID
+
+        function setLanguage(lang) {
+            const url = `https://spreadsheets.google.com/feeds/cells/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/1/public/full?alt=json`;
+            // https://docs.google.com/spreadsheets/d/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/edit?usp=sharing
+
+            $.getJSON(url, function (data) {
+                const entries = data.feed.entry;
+                const translations = {};
+
+                // 將 Google Sheets 資料轉換成 Key-Value 對
+                let keys = [];
+                let langIndex = 0;
+
+                entries.forEach((entry, i) => {
+                    const col = parseInt(entry.gs$cell.col);
+                    const row = parseInt(entry.gs$cell.row);
+                    const value = entry.gs$cell.$t;
+
+                    if (row === 1) {
+                        if (value === lang) langIndex = col;
+                        keys[col] = value;
+                    } else if (col === 1) {
+                        translations[value] = entries.find(e => parseInt(e.gs$cell.row) === row && parseInt(e.gs$cell.col) === langIndex).gs$cell.$t;
+                    }
+                });
+
+                // 更新文字
+                $('[data-i18n]').each(function () {
+                    const key = $(this).attr('data-i18n');
+                    if (translations[key]) {
+                        $(this).text(translations[key]);
+                    }
+                });
+            });
+        }
+
+        // 預設載入英文
+        $(document).ready(function () {
+            setLanguage('en');
+        });
+
+    </script>
+</body>
+
+</html>
