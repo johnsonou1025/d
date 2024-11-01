@@ -141,8 +141,6 @@ h5,
 }
 
 a {
-    padding: 10px;
-    height: 100%;
     color: #383B53;
     cursor: pointer;
     transition: .3s;
@@ -241,6 +239,11 @@ header .logo img {
     height: 100%;
 }
 
+.nav-menu a {
+    padding: 10px;
+    height: 100%;
+}
+
 .nav-menu .btn-primary {
     margin-left: 10px;
     min-width: 168px;
@@ -276,6 +279,16 @@ header .logo img {
 
 .nav-switch {
     display: none;
+}
+
+@media (max-width: 992px) {
+    .nav-menu a {
+        padding: 8px;
+    }
+
+    .nav-menu .btn-primary {
+        min-width: 120px;
+    }
 }
 
 @media (max-width: 768px) {
