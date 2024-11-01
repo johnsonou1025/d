@@ -18,9 +18,8 @@
         const spreadsheetID = "1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c"; // 使用您的表格 ID
 
         function setLanguage(lang) {
-            // const url = `https://spreadsheets.google.com/feeds/cells/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/1/public/full?alt=json`;
-            const url = `https://docs.google.com/spreadsheets/d/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/edit?alt=json`;
-            // https://docs.google.com/spreadsheets/d/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/edit?usp=sharing
+            const url = `https://spreadsheets.google.com/feeds/cells/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/1/public/full?alt=json`;
+            // const url = `https://docs.google.com/spreadsheets/d/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/edit?usp=sharing`;
 
             $.getJSON(url, function (data) {
                 const entries = data.feed.entry;
