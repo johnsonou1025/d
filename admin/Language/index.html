@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-language Webpage</title>
-    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-3.7.0.min.js"></script>
 </head>
 
@@ -15,41 +15,22 @@
     <button onclick="setLanguage('en')">English</button>
     <button onclick="setLanguage('zh')">中文</button>
     <script>
-        const spreadsheetID = "1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c"; // 使用您的表格 ID
-        const url = `https://docs.google.com/spreadsheets/d/1IKybt-eNJ9xfTL3ZKc-t1b3Xy2VJACMXWvoPS6nvN6c/edit?usp=sharing`;
         function setLanguage(lang) {
-            $.getJSON(url, function (data) {
-                const entries = data.feed.entry;
-                const translations = {};
-                let keys = [];
-                let langIndex = 0;
-
-                // 解析資料並根據選擇的語言創建 Key-Value 對
-                entries.forEach((entry) => {
-                    const col = parseInt(entry.gs$cell.col);
-                    const row = parseInt(entry.gs$cell.row);
-                    const value = entry.gs$cell.$t;
-
-                    if (row === 1) { // 第一列是標題
-                        if (value === lang) langIndex = col;
-                        keys[col] = value;
-                    } else if (col === 1) { // 第一行是 Key 值
-                        translations[value] = entries.find(e => parseInt(e.gs$cell.row) === row && parseInt(e.gs$cell.col) === langIndex).gs$cell.$t;
-                    }
+            fetch('translations.json') // 載入 JSON 文件
+                .then(response => response.json())
+                .then(data => {
+                    const translations = data[lang];
+                    document.querySelectorAll('[data-i18n]').forEach(element => {
+                        const key = element.getAttribute('data-i18n');
+                        if (translations[key]) {
+                            element.textContent = translations[key];
+                        }
+                    });
                 });
-
-                // 更新網頁上帶有 data-i18n 的元素內容
-                $('[data-i18n]').each(function () {
-                    const key = $(this).attr('data-i18n');
-                    if (translations[key]) {
-                        $(this).text(translations[key]);
-                    }
-                });
-            });
         }
 
-        // 預設載入英文
-        $(document).ready(function () {
+        // 預設語言
+        document.addEventListener("DOMContentLoaded", function () {
             setLanguage('en');
         });
     </script>
