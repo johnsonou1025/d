@@ -500,25 +500,15 @@ p {
     left: 50%;
     transform: translateX(-50%);
     width: calc(33.3%*5);
-    height: 647px;
+    height: 610px;
 }
 
 .card-group li {
     position: absolute;
     padding: 0 20px;
     width: 20%;
+    height: 100%;
     transition: .3s;
-}
-
-.card {
-    display: flex;
-    align-items: end;
-    border-radius: 20px;
-    height: 647px;
-    width: 100%;
-    background: #fff no-repeat center center / cover;
-    color: #383B53;
-    overflow: hidden;
 }
 
 .card-group li:nth-child(1) {
@@ -541,6 +531,16 @@ p {
     left: calc(100%/5*4);
 }
 
+.card {
+    display: flex;
+    align-items: end;
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    background: #fff no-repeat center center / cover;
+    color: #383B53;
+    overflow: hidden;
+}
 
 .card .card-body {
     padding: 50% 40px 40px;
@@ -557,6 +557,14 @@ p {
 
 .business-3 {
     background-image: url(../images/business-3.jpg);
+}
+
+.business-4 {
+    background-image: url(../images/business-4.jpg);
+}
+
+.business-5 {
+    background-image: url(../images/business-5.jpg);
 }
 
 .card-slider {
@@ -583,6 +591,36 @@ p {
 
 .card-slider i:last-child {
     background-image: url(../images/slider-right.svg);
+}
+
+@media (max-width: 992px) {
+    .card-group {
+        height: 560px;
+        width: calc(50%*5);
+    }
+
+    .card-group li {
+        opacity: .5;
+    }
+
+    .card-group li:nth-child(3) {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-group {
+        width: calc(66.6%*5);
+        height: 360px;
+    }
+
+    .card-group li {
+        padding: 0 10px;
+    }
+
+    .card .card-body {
+        padding: 50% 20px 20px;
+    }
 }
 
 .process .work-group {
