@@ -281,6 +281,16 @@ header .logo img {
     display: none;
 }
 
+.lang {
+    display: inline-block;
+    padding: 5px;
+    /* border-radius: 100%;
+    border: 1px solid #000; */
+    margin-left: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
 @media (max-width: 992px) {
     .nav-menu a {
         padding: 8px;
@@ -503,7 +513,9 @@ p {
 }
 
 .card-container {
+    margin: auto;
     width: 100%;
+    max-width: 1280px;
     overflow-x: hidden;
 }
 
@@ -582,7 +594,6 @@ p {
 
 .card-slider {
     margin-top: 40px;
-    padding: 0 20px;
     text-align: right;
 }
 
