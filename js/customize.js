@@ -20,6 +20,11 @@ $(document).ready(function () {
             scrollTop: $(_href).offset().top - _headerHeight
         }, 800);
     });
+    // language
+    $(".lang.en").click(function () {
+        $(this).toggleClass("en");
+    })
+
     // slider card
     $(".card-slider i:first-child").click(function () {
         $(".card-group li:last-child").insertBefore($(".card-group li:first-child"));
@@ -56,3 +61,17 @@ $(window).scroll(function () {
         }
     });
 });
+
+function setLanguage(lang) {
+    fetch('../language.json') // 載入 JSON 文件
+        .then(response => response.json())
+        .then(data => {
+            const translations = data[lang];
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (translations[key]) {
+                    element.textContent = translations[key];
+                }
+            });
+        });
+}

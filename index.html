@@ -31,28 +31,8 @@
                         如果您正在尋找專業的設計解決方案，無論是網站設計、品牌視覺還是名片製作，我都能提供創新的想法和卓越的執行。讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。</p>
                 </div>
                 <a href="mailto:johnsonou1025@gmail.com" class="btn-primary" data-lang="nav-menu-a-5">與我聯絡</a>
-                <div class="lang"><span class="lang-en" onclick="setLanguage('en')">EN</span><span class="lang-zh"
+                <div class="lang en"><span onclick="setLanguage('en')">EN</span><span
                         onclick="setLanguage('zh')">中文</span></div>
-                <script>
-                    function setLanguage(lang) {
-                        fetch('translations.json') // 載入 JSON 文件
-                            .then(response => response.json())
-                            .then(data => {
-                                const translations = data[lang];
-                                document.querySelectorAll('[data-lang]').forEach(element => {
-                                    const key = element.getAttribute('data-lang');
-                                    if (translations[key]) {
-                                        element.textContent = translations[key];
-                                    }
-                                });
-                            });
-                    }
-
-                    // 預設語言
-                    document.addEventListener("DOMContentLoaded", function () {
-                        setLanguage('zh');
-                    });
-                </script>
             </div>
         </div>
     </header>

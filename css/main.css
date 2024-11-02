@@ -291,6 +291,22 @@ header .logo img {
     cursor: pointer;
 }
 
+.lang span:first-child {
+    display: none;
+}
+
+.lang span:last-child {
+    display: inline-block;
+}
+
+.lang.en span:first-child {
+    display: inline-block;
+}
+
+.lang.en span:last-child {
+    display: none;
+}
+
 @media (max-width: 992px) {
     .nav-menu a {
         padding: 8px;
@@ -345,6 +361,17 @@ header .logo img {
 
     .open {
         left: 0;
+    }
+
+    .lang {
+        display: block;
+        margin-top: 20px;
+        margin-left: 0;
+        border: 1px solid #D1CAA1;
+        border-radius: 10px;
+        width: 100%;
+        font-size: 20px;
+        text-align: center;
     }
 }
 
