@@ -9,6 +9,7 @@
 
 body {
     font-family: "Roboto", sans-serif;
+    font-weight: 300;
     background: #F6F7F8;
     font-size: 18px;
     line-height: 1.5;
@@ -989,6 +990,10 @@ footer .copy {
 
     footer .footer-body {
         margin-left: 0;
+    }
+
+    .footer-body p {
+        justify-content: center;
     }
 }
 
