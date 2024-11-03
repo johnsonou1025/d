@@ -21,7 +21,7 @@ $(document).ready(function () {
         }, 800);
     });
     // language
-    $(".lang.en").click(function () {
+    $(".lang").click(function () {
         $(this).toggleClass("en");
     })
 
@@ -75,3 +75,6 @@ function setLanguage(lang) {
             });
         });
 }
+document.addEventListener("DOMContentLoaded", function () {
+    setLanguage('en');
+});
