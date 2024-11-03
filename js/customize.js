@@ -33,30 +33,18 @@ $(document).ready(function () {
         $(".card-group li:first-child").insertAfter($(".card-group li:last-child"));
     });
 
-    // anime
-    // $(window).scroll(function () {
-    //     $(".fadePlay").each(function (i) {
-    //         var bottom_of_object = $(this).offset().top;
-    //         var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.9;
-    //         if (bottom_of_window > bottom_of_object) {
-    //             $(this).addClass("fadeInDown");
-    //         }
-    //     });
-    // });
-
 });
+// anime
 $(window).scroll(function () {
     $(".fadePlay").each(function (i) {
-        $div = $(".fadePlay>div");
-        // $div = $(this).children("div");
+        var $div = $(this).children("div");
         var bottom_of_object = $(this).offset().top;
         var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.9;
         if (bottom_of_window > bottom_of_object) {
             $div.each(function (index) {
-                // 使用 setTimeout 來延遲每個 div 的 class 添加
                 setTimeout(function () {
-                    $($div[index]).addClass("fadeIn"); // 添加 class
-                }, index * 300);  // 每個 div 的延遲時間增加 1 秒
+                    $($div[index]).addClass("fadeIn");
+                }, index * 300);
             });
         }
     });

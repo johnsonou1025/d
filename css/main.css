@@ -5,12 +5,14 @@
  */
 
 @import "reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 body {
+    font-family: "Roboto", sans-serif;
+    background: #F6F7F8;
     font-size: 18px;
     line-height: 1.5;
     color: #383B53;
-    background: #F6F7F8;
 }
 
 h6,
@@ -381,7 +383,7 @@ header .logo img {
     padding: 80px 0;
     height: 791px;
     background: url(../images/kv-bg.jpg) repeat-x 0 0/ auto 100%;
-    animation: moveBackground 60s linear infinite;
+    animation: moveBackground 120s linear infinite;
     /* 設定動畫 */
 }
 
@@ -409,8 +411,17 @@ p {
     padding-right: 40px;
 }
 
+.kv .headline h2 span {
+    display: inline-block;
+}
+
+.kv .headline h2 span:last-child {
+    animation-delay: .3s;
+}
+
 .kv .headline p {
     padding-left: 40px;
+    animation-delay: .6s;
 }
 
 @media (max-width: 992px) {
@@ -985,28 +996,28 @@ footer .copy {
 @-webkit-keyframes fadeIn {
     0% {
         opacity: 0;
-        -webkit-transform: translate(5%, 0) scale();
-        transform: translate(5%, 0) scale();
+        -webkit-transform: translateX(20px) scale(1);
+        transform: translateX(20px) scale(1);
     }
 
     to {
         opacity: 1;
-        -webkit-transform: translateZ(0) scale();
-        transform: translateZ(0) scale();
+        -webkit-transform: translateX(0%) scale(1);
+        transform: translateX(0%) scale(1);
     }
 }
 
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        -webkit-transform: translate(5%, 0) scale();
-        transform: translate(5%, 0) scale();
+        -webkit-transform: translateX(20px) scale(1);
+        transform: translateX(20px) scale(1);
     }
 
     to {
         opacity: 1;
-        -webkit-transform: translateZ(0) scale();
-        transform: translateZ(0) scale();
+        -webkit-transform: translateX(0) scale(1);
+        transform: translateX(0) scale(1);
     }
 }
 
@@ -1023,6 +1034,46 @@ footer .copy {
 .fadeIn {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(10%);
+        transform: translateY(10%);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+        transform: translateY(0%);
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(10%);
+        transform: translateY(10%);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+        transform: translateY(0%);
+    }
+}
+
+.fadeUp {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    opacity: 0;
+    -webkit-animation-name: fadeUp;
+    animation-name: fadeUp;
 }
 
 
