@@ -67,7 +67,11 @@
         "services-work-6-h4": "Dynamic Web Design",
         "services-work-6-p": "Used animations and interactive elements to enhance website appeal and create an immersive experience.",
         "footer-headline-h2": "Contact Me",
-        "footer-headline-p": "I'm here to provide professional design solutions, from website design to branding and business cards. Let's collaborate to achieve your visual goals and enhance your brand value! Contact me anytime to start our journey."
+        "footer-headline-p": "I'm here to provide professional design solutions, from website design to branding and business cards. Let's collaborate to achieve your visual goals and enhance your brand value! Contact me anytime to start our journey.",
+        "input-name": "Name",
+        "input-email": "Email",
+        "input-message": "Message",
+        "input-send": "Send Message"
     },
     "zh": {
         "nav-menu-a-1": "精選專案",
@@ -137,6 +141,10 @@
         "services-work-6-h4": "網頁動態設計",
         "services-work-6-p": "運用動畫與互動元素，提升網站的吸引力與用戶參與度，創造更具沉浸感的瀏覽體驗。",
         "footer-headline-h2": "與我聯絡",
-        "footer-headline-p": "如果您正在尋找專業的設計解決方案，無論是網站設計、品牌視覺還是名片製作，我都能提供創新的想法和卓越的執行。讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。"
+        "footer-headline-p": "如果您正在尋找專業的設計解決方案，無論是網站設計、品牌視覺還是名片製作，我都能提供創新的想法和卓越的執行。讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。",
+        "input-name": "姓名",
+        "input-email": "電子郵件",
+        "input-message": "訊息",
+        "input-send": "發送訊息"
     }
 }

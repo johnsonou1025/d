@@ -14,7 +14,7 @@
 <body>
     <header>
         <div class="mx-width">
-            <div class="logo"><img src="images/logo-header-b.svg" alt=""></div>
+            <div class="logo"><a href="index.html"><img src="images/logo-header-b.svg" alt=""></a></div>
             <div class="nav-switch"><img src="images/menu-line.svg" alt=""></div>
             <div class="nav-menu h4">
                 <div class="nav-menu-header">
@@ -30,7 +30,7 @@
                     <p data-lang="footer-headline-p">
                         如果您正在尋找專業的設計解決方案，無論是網站設計、品牌視覺還是名片製作，我都能提供創新的想法和卓越的執行。讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。</p>
                 </div>
-                <a href="mailto:johnsonou1025@gmail.com" class="btn-primary" data-lang="nav-menu-a-5">與我聯絡</a>
+                <a href="#contact" class="btn-primary" data-lang="nav-menu-a-5">與我聯絡</a>
                 <div class="lang"><span onclick="setLanguage('en')">EN</span><span onclick="setLanguage('zh')">中文</span>
                 </div>
             </div>
@@ -250,7 +250,7 @@
             </div>
         </div>
     </div>
-    <footer>
+    <footer id="contact">
         <div class="mx-width">
             <div class="logo"><img src="images/logo-b.svg" alt=""></div>
             <div class="footer-body">
@@ -259,7 +259,16 @@
                     <p class="h4" data-lang="footer-headline-p">
                         如果您正在尋找專業的設計解決方案，無論是網站設計、品牌視覺還是名片製作，我都能提供創新的想法和卓越的執行。讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。</p>
                 </div>
-                <p><i><img src="images/email.svg" alt=""></i>johnsonou1025@gmail.com</p>
+                <form id="contactForm">
+                    <div class="form-text"><label data-lang="input-name">姓名</label><input type="text" id="name"></div>
+                    <div class="form-text"><label data-lang="input-email">電子郵件</label><input type="email" id="email">
+                    </div>
+                    <div class="form-text"><label data-lang="input-message">訊息:</label><textarea
+                            id="message"></textarea></div>
+                    <button class="btn-primary" type="button" id="sendEmail" data-lang="input-send">發送郵件</button>
+                    <p class="form-error" id="error"></button>
+                </form>
+                <!-- <p><i><img src="images/email.svg" alt=""></i>johnsonou1025@gmail.com</p> -->
                 <!-- <p><i><img src="images/mobile.svg" alt=""></i>0952168005</p> -->
             </div>
             <div class="copy">©2024 JO Design studio</div>
