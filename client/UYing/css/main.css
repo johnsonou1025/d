@@ -16,6 +16,13 @@
 body {
     font-size: 16px;
     line-height: 1.5;
+    padding-top: 120px;
+}
+
+@media (max-width: 786px) {
+    body {
+        padding-top: 80px;
+    }
 }
 
 h6,
@@ -123,12 +130,14 @@ a {
 }
 
 .btn-primary {
+    display: inline-block;
     position: relative;
     padding: 15px 40px;
     border-radius: 10px;
     background: transparent;
     color: #fff !important;
     overflow: hidden;
+    z-index: 1;
 }
 
 .btn-primary:before {
@@ -156,6 +165,44 @@ a {
 
 .btn-primary:hover:after {
     left: 0;
+}
+
+.btn-secondary {
+    position: relative;
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid #1A8427;
+    background: transparent;
+    color: #1A8427;
+    overflow: hidden;
+}
+
+.btn-secondary:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: #1A8427;
+    z-index: -1;
+    transition: .3s;
+}
+
+.btn-secondary:hover {
+    color: #fff;
+}
+
+.btn-secondary:hover:after {
+    left: 0;
+}
+
+.btn-disabled {
+    display: inline-block;
+    padding: 15px 20px;
+    color: #B2B2B2;
+    pointer-events: none;
 }
 
 .lock {
@@ -289,6 +336,7 @@ a {
 
 header {
     position: fixed;
+    top: 0;
     width: 100%;
     background: #fff;
     z-index: 7;
@@ -334,14 +382,20 @@ header {
     align-items: center;
 }
 
+.nav-menu-mobile img {
+    display: inline-block;
+    width: 100%;
+}
+
 .nav-menu-header {
     display: none;
     justify-content: space-between;
+    padding-top: 20px;
     padding-bottom: 40px;
 }
 
 .nav-menu-logo img {
-    height: 48px;
+    height: 80px;
 }
 
 .nav-menu-mobile-close {
@@ -350,14 +404,10 @@ header {
 }
 
 .nav-menu-mobile-close img {
-    height: 24px;
+    height: 32px;
 }
 
-@media (max-width: 786px) {
-    .nav {
-        height: 80px;
-    }
-
+@media (max-width: 992px) {
     .nav-logo {
         text-align: left;
     }
@@ -381,7 +431,7 @@ header {
     .nav-menu a {
         display: block;
         padding: 10px 0;
-        font-size: 16px;
+        font-size: 24px;
     }
 
     .nav-menu a+a {
@@ -395,18 +445,44 @@ header {
 
     .nav-menu-mobile {
         display: flex;
+        width: 48px;
     }
 
     .nav-menu-header {
         display: flex;
     }
 
+}
 
+@media (max-width: 786px) {
+    .nav {
+        height: 80px;
+    }
+
+    .nav-menu {
+        padding: 20px;
+    }
+
+    .nav-menu a {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .nav-menu-mobile {
+        width: 24px;
+    }
+
+    .nav-menu-logo img {
+        height: 48px;
+    }
+
+    .nav-menu-mobile-close img {
+        height: 24px;
+    }
 }
 
 .kv {
     display: flex;
-    padding-top: 120px;
     height: 656px;
     background: url(../images/home-kv.jpg) no-repeat center center / cover;
 }
@@ -419,7 +495,7 @@ header {
     .kv {
         padding-top: 0;
         margin-top: 0px;
-        height: 100vh;
+        height: calc(100vh - 80px);
     }
 
     .kv-title {
@@ -715,13 +791,46 @@ footer {
     }
 }
 
+.report {
+    text-align: center;
+}
+
+.report-box+.report-box {
+    margin-top: 40px;
+}
+
+.report-box .h4 {
+    margin-bottom: 20px;
+}
+
+.report-body {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+    overflow: hidden;
+}
+
+.report-body a {
+    margin: 10px;
+    width: calc(25% - 20px);
+}
+
+@media (max-width: 786px) {
+    .report-body a {
+        width: calc(33.33% - 20px);
+    }
+
+    .report-body a span {
+        display: block;
+    }
+}
+
+/* animate */
 .fadein {
     position: relative;
     opacity: 0;
     top: 50px;
 }
-
-/* animate */
 
 .animated {
     -webkit-animation-duration: 1s;

@@ -8,32 +8,6 @@ $(document).ready(function () {
         $("body").removeClass("lock");
         $(".nav-menu").removeClass("open");
     })
-    // nav
-    $(".nav-menu a[href*='#']").on('click', function (event) {
-        $("body").removeClass("lock");
-        $(".nav-menu").removeClass("open");
-        var _headerHeight = $("header").height();
-        event.preventDefault();
-        var _href = $(this).attr('href');
-        $('html, body').animate({
-            scrollTop: $(_href).offset().top - _headerHeight
-        }, 800);
-    });
-    // number anime
-    $(".countValue").each(function () {
-        var $div = $(this);
-        var targetNumber = parseFloat($div.data('target'), 50);
-        var currentNumber = 0;
-        var addNumber = parseInt(targetNumber / 30) + 1;
-        var interval = setInterval(function () {
-            currentNumber = currentNumber + addNumber;
-            $div.text(currentNumber);
-            if (currentNumber >= targetNumber) {
-                clearInterval(interval);
-                $div.text(targetNumber);
-            }
-        }, 50);
-    });
 
     // anime
     $(window).scroll(function () {
@@ -46,7 +20,8 @@ $(document).ready(function () {
         });
     });
     $(window).scroll(function () {
-        $div = $(".fadeAnime>div");
+        // $div = $(".fadeAnime>div");
+        var $div = $(this).children("div");
         $(".fadeAnime").each(function (i) {
             var bottom_of_object = $(this).offset().top;
             var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.9;
