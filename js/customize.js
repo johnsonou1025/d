@@ -10,7 +10,7 @@ $(document).ready(function () {
     })
     // -----------
     // $('.nav-menu').on('click', 'a', function (event) {
-    $(".nav-menu a").on('click', function (event) {
+    $(".nav-menu a[href*='#']").on('click', function (event) {
         $("body").removeClass("lock");
         $(".nav-menu").removeClass("open");
         var _headerHeight = $("header").height();
@@ -87,7 +87,7 @@ $(document).ready(function () {
 // anime
 $(window).scroll(function () {
     $(".fadePlay").each(function (i) {
-        var $div = $(this).children("div");
+        var $div = $(this).children("");
         var bottom_of_object = $(this).offset().top;
         var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.9;
         if (bottom_of_window > bottom_of_object) {
@@ -98,6 +98,13 @@ $(window).scroll(function () {
             });
         }
     });
+    $(".case-demo-box").each(function () {
+        var bottom_of_object = $(this).offset().top;
+        var bottom_of_window = $(window).scrollTop() + $(window).height() * 0.5;
+        if (bottom_of_window > bottom_of_object) {
+            $(this).children().addClass("anime");
+        }
+    })
 });
 
 function setLanguage(lang) {

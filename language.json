@@ -5,6 +5,7 @@
         "nav-menu-a-3": "Process",
         "nav-menu-a-4": "Services",
         "nav-menu-a-5": "Contact",
+        "nav-menu-a-6": "About",
         "kv-headline-h2-1": "Hi,I'm professional",
         "kv-headline-h2-2": "web designer!",
         "kv-headline-p": "With expertise in visual design, UX/UI, and web development, I’ve partnered with global teams to design successful websites that deliver outstanding user experiences.",
@@ -71,7 +72,16 @@
         "input-name": "Name",
         "input-email": "Email",
         "input-message": "Message",
-        "input-send": "Send Message"
+        "input-send": "Send Message",
+        "work-1-kv-p": "Online Cryptocurrency Gaming Platform",
+        "work-1-spindle-1-h4": "Design Concept",
+        "work-1-spindle-1-p": "Enhanced for a streamlined user experience and interface, the platform optimizes operational fluidity. The homepage features simplified navigation and content presentation, allowing users to quickly find essential functions. Compared to the desktop version, the mobile version offers increased touch feedback with features like simplified dropdown menus and modular block layouts, adapting to smaller screen interactions. Colors and typography maintain brand consistency, ensuring a seamless experience across devices.",
+        "work-1-spindle-2-h4": "Services Offered",
+        "work-1-spindle-2-p": "Website Design, UI/UX, Development, Branding, Content Strategy",
+        "work-1-styles-h4": "Typography / Color",
+        "work-1-styles-p": "The website’s typography is designed to be clean and readable, with bright text colors on a dark background to enhance information clarity. The color scheme primarily uses contrasting shades of blue, white, and orange, creating a professional and modern atmosphere. These colors also help to distinguish different functional areas, strengthening visual guidance.",
+        "work-1-desktop-h4": "Desktop",
+        "work-1-desktop-p": "Centered on intuitive navigation, the interface combines smooth interactive animations for an engaging user experience. The UI color scheme is subdued, with readable text and a clear structure. The website design leans toward a minimalist, modern style suited to slot and gaming sites, with consistent modules that adhere to brand guidelines. This approach reinforces brand recognition and ensures strong visual coherence."
     },
     "zh": {
         "nav-menu-a-1": "精選專案",
@@ -79,6 +89,7 @@
         "nav-menu-a-3": "設計流程",
         "nav-menu-a-4": "服務項目",
         "nav-menu-a-5": "與我聯絡",
+        "nav-menu-a-6": "關於JO",
         "kv-headline-h2-1": "Hi,我是您要找的",
         "kv-headline-h2-2": "專業網站設計師!",
         "kv-headline-p": "13年視覺設計、UX/UI設計、網頁設計與建置的專業經驗，並與國外團隊合作，規劃及設計多個成功的網站專案，創造出色的用戶體驗。",
@@ -145,6 +156,15 @@
         "input-name": "姓名",
         "input-email": "電子郵件",
         "input-message": "訊息",
-        "input-send": "發送訊息"
+        "input-send": "發送訊息",
+        "work-1-kv-p": "在線加密貨幣遊戲平台",
+        "work-1-spindle-1-h4": "設計主軸",
+        "work-1-spindle-1-p": "在使用者經驗和介面上更簡潔，優化了操作流暢性。首頁精簡了導航和內容呈現，讓用戶快速找到所需功能。與桌機版相比，手機版在交互上有更多觸控回饋，例如簡化的下拉選單和模組化區塊布局，以適應小螢幕操作。色彩和字型延續品牌一致性，確保在不同裝置上都有流暢的體驗。",
+        "work-1-spindle-2-h4": "服務項目",
+        "work-1-spindle-2-p": "網站設計、UI/UX、開發、品牌、內容策略",
+        "work-1-styles-h4": "字型 / 配色",
+        "work-1-styles-p": "網站的字型設計簡潔且具有可讀性，搭配深色背景上使用明亮的文字顏色，以提高資訊辨識度。配色主要運用藍、白、橘等對比鮮明的色調，營造出專業而具現代感的氛圍，並且適當區分不同功能區域，強化視覺引導。",
+        "work-1-desktop-h4": "桌機",
+        "work-1-desktop-p": "以直觀的導航為主，結合流暢的互動動態效果。使用者介面配色沉穩，文字易讀，結構清晰。網頁設計風格偏向簡約現代，符合老虎機與遊戲類網站的特徵，並且各模組之間保持統一，符合品牌設計規範，以強化品牌識別度並提供良好的視覺一致性。"
     }
 }
