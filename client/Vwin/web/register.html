@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>vwin.com</title>
+<link href="css/reset.css" rel="stylesheet" media="screen" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.corner.js"></script>
+
+<!--密碼強度特效-->
+<script src="js/jQueryRotateCompressed.2.1.js"></script>
+<script src="js/rotate.js"></script>
+
+<!--自訂css與jquery-->
+<script src="js/custom.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+</head>
+
+<body style="background-color:transparent;">
+<!--黑底遮罩-->
+<div id="wdsa" > 
+        <!--白底透明遮罩 pop outside-->
+        <div class="ppos">
+                <div class="pptImg"></div>
+                <!--內容區塊 pop area-->
+                <div class="ppa"> <span class="popTopImg"></span> 
+                        <!--頁頭 pop head-->
+                        <div class="pphead">
+                                <div class="rgst-info"><span>已經有帳戶嗎？立刻<a href="login.html">登錄</a></span><span class="lgi" ></span></div>
+                                <span class="logImg"></span> 
+                                <!--主標題-->
+                                <h2>註冊您的帳戶</h2>
+                                <!--副標題-->
+                                <h3>亞洲最好的博彩網站</h3>
+                        </div>
+                        <hr />
+                        <!--內容 pop content-->
+                        <div class="ppct">
+                                <div class="fm"> <span class="usn" ></span>
+                                        <input type="text" value="用戶名" class="er" />
+                                        <div class="clear"></div>
+                                        <!--錯誤提示訊息欄位-->
+                                        <div class="wrongMsg">
+                                                <table>
+                                                        <tr>
+                                                                <td><span  class="icon_er1"></span></td>
+                                                                <td>8到16個字符</td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>由大小寫字母和數字組成</td>
+                                                        </tr>
+                                                </table>
+                                                <span class="rtArrow"></span></div>
+                                </div>
+                                <div class="clear"></div>
+                                <!--密碼強度效果圖-->
+                                <div class="pswStg">
+                                        <div class="pit"></div>
+                                        <div class="cover"></div>
+                                </div>
+                                <!--填寫密碼欄位-->
+                                <div class="fm"> <span class="psw"></span>
+                                        <input type="password" value="密碼" name="psw"  id="psw"/>
+                                        <div class="clear"></div>
+                                        <!--錯誤提示訊息欄位-->
+                                        <div class="wrongMsg">
+                                                <table>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>6到20個字符</td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>由大小寫字母和數字組成</td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>不能與您的電郵或會員帳號類似</td>
+                                                        </tr>
+                                                </table>
+                                                <span class="rtArrow"></span></div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="fm"> <span class="psw"></span>
+                                        <input type="password" value="確認密碼" />
+                                        <div class="clear"></div>
+                                        <!--錯誤提示訊息欄位-->
+                                        <div class="wrongMsg">
+                                                <table>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>重新輸入您的密碼</td>
+                                                        </tr>
+                                                </table>
+                                                <span class="rtArrow"></span></div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="fm"> <span class="coin"></span>
+                                        <div class="slt"><span class="slt-text">請選擇貨幣</span><span class="fslt"></span>
+                                                <div class="slt-ct">
+                                                        <ul>
+                                                                <li><span class="cn"></span><span>人民幣</span></li>
+                                                                <li><span class="indo"></span><span>印尼幣</span></li>
+                                                                <li><span class="thai"></span><span>泰銖</span></li>
+                                                                <li><span class="vn"></span><span>越南盾</span></li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                                <!--電話欄位-->
+                                <div class="fm"> <span class="tlp"></span>
+                                        <div class="slt tlp-ntl"><span class="slt-text">聯繫電話</span><span class="fslt"></span> 
+                                                <!--電話國碼檔位 select input content-->
+                                                <div class="slt-ct">
+                                                        <ul>
+                                                                <li><span class="tw"></span><span>台灣886</span></li>
+                                                                <li><span class="indo"></span><span>印尼62</span></li>
+                                                                <li><span class="cn"></span><span>中國86</span></li>
+                                                                <li><span class="thai"></span><span>泰國66</span></li>
+                                                                <li><span class="vn"></span><span>越南84</span></li>
+                                                                <li><span class="my"></span><span  style="letter-spacing:-1px;">馬來西亞60</span></li>
+                                                                <li><span class="jp"></span><span>日本81</span></li>
+                                                                <li><span class="kr"></span><span>韓國82</span></li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                        <span class="tlp-dash">-</span>
+                                        <input type="text" class="tlp-ipt" />
+                                        <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="fm"> <span class="snc" ></span>
+                                        <input type="text" value="代理代碼" />
+                                        <div class="clear"></div>
+                                        <!--錯誤提示訊息欄位-->
+                                        <div class="wrongMsg">
+                                                <table>
+                                                        <tr>
+                                                                <td><span  class=" icon_er1"></span></td>
+                                                                <td>如沒有代理請留空</td>
+                                                        </tr>
+                                                </table>
+                                                <span class="rtArrow"></span></div>
+                                </div>
+                        </div>
+                        <table class="ckb rgst-ckb">
+                                <tr>
+                                        <td><span class="check" ></span></td>
+                                        <td><span>我確認我已年滿18歲，並已閱讀和接受本網站的策略、隱私聲明，條款和條件。</span></td>
+                                </tr>
+                                <tr>
+                                        <td><span class="check" ></span></td>
+                                        <td><span>是的，我想收到Vwin的通訊</span></td>
+                                </tr>
+                                <tr>
+                                        <td colspan="2">由菲律賓法律禁止或限制對菲律賓、美國、香港臺灣及其他禁止線上遊戲服務的司法管轄區域內的居民提供服務。</td>
+                                </tr>
+                        </table>
+                        <hr />
+                        <!--頁尾 pop footer-->
+                        <div class="ppft">
+                                <div class="smt"><a href="register1.html" class="btn4"><span class="icon_enter"></span> <span>立即註冊</span>
+                                        <div class="wrongMsg2">
+                                                <table>
+                                                        <tr>
+                                                                <td><span  class="icon_er1"></span></td>
+                                                                <td>系統忙線中</td>
+                                                        </tr>
+                                                </table>
+                                                <span class="lftArrow"></span></div>
+                                        </a> </div>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+</div>
+</body>
+</html>

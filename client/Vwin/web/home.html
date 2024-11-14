@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>vwin.com</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.corner.js"></script>
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="js/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--自訂css與jquery-->
+<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+<script src="js/custom.js"></script>
+</head>
+
+<body>
+<!--頁首未登入狀態-->
+<div id="header">
+        <div class="mw">
+                <div class="header">
+                        <div class="hd-info fltlft">
+                                <div class="info-default">
+                                        <div class="lg"> <span class="tw"></span><span>台灣-繁中</span><span class="downArrow"></span>
+                                                <div class="lg-select">
+                                                        <ul>
+                                                                <li><span class="cn"></span><span>中國-簡中</span></li>
+                                                                <li><span class="en"></span><span>英國-English</span></li>
+                                                                <li><span class="vn"></span><span>越南-Tiếng Việt</span></li>
+                                                                <li><span class="thai"></span><span>泰國-ภาษาไทย</span></li>
+                                                                <li><span class="indo"></span><span>印尼-Bahasa</span></li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                        <span class="line"></span>
+                                        <div class="time">2014-03-17 15:47</div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">聯絡我們</a></div>
+                                        <span class="line"></span>
+                                        <div><a href="Contact.html">牌照展示</a></div>
+                                </div>
+                        </div>
+                        <div class="hd-info fltrt">
+                        <div class="info-default info-default-2">
+                                <div><a href="memberCenter1.html">miloID</a></div>
+                                <span class="line"></span>
+                                <div><a href="deposit1-1.html">帐目:21,956.10</a></div>
+                                <span class="line"></span>
+                                <div><a href="memberCenter1.html">会员中心</a></div>
+                                <span class="line"></span>
+                                <div><a href="index.html">退出</a></div>
+                                <span class="line"></span>
+                                <div class="lc"><span class=" icon_lc3"></span><a href="#">線上客服</a></div>
+                        </div>
+                </div>
+                        <div class="clear"></div>
+                </div>
+        </div>
+        <!--菜單欄-->
+        <div id="nav">
+                <div class="line"></div>
+                <div class="mw">
+                        <div class="hd-logo fltlft rltv"></div>
+                        <div class="nav-items">
+                                <ul>
+                                        <li class="active"><a href="index.html" class="icon-home">首頁</a></li>
+                                        <li><span class="line"></span><a href="mobile.html" class="icon-mobile">手機版</a></li>
+                                        <li><span class="line"></span><a href="#">GB體育</a></li>
+                                        <li><span class="line"></span><a href="sport.html">體育</a></li>
+                                        <li><span class="line"></span><a href="casino.html">真人娛樂場</a></li>
+                                        <li><span class="line"></span><a href="game.html">電子遊戲</a></li>
+                                        <li><span class="line"></span><a href="keno.html">快樂彩</a></li>
+                                        <li><span class="line"></span><a href="#">世界樂透</a></li>
+                                        <li><span class="line"></span><a href="promotion.html">最新優惠</a></li>
+                                        <li><span class="line"></span><a href="#">探索Vwin</a></li>
+                                </ul>
+
+                        </div>
+                </div>
+        </div>
+        <script>
+$(function(){
+	$(document).scroll(function(){
+		if($(document).scrollTop()>0){
+			$("#header").css({"background-color":"#5b5c5d"})
+			$("#nav").css({"background-color":"#8b8c8c"})
+		}else{
+			$("#header").css({"background-color":""})
+			$("#nav").css({"background-color":""})
+		}
+	})	
+})
+</script> 
+</div>
+<!--主視覺區塊--> 
+<div id="main-banner">
+        <div class="hero">
+                <div class="hero-slide">
+                        <div class="prev"></div>
+                        <div class="next"></div>
+                </div>
+                <div class="hero-kv">
+                        <ul>
+                                <li class="slide-active"> <a href="promotion.html"><img src="css/images/demo_kv1.jpg"/></a></li>
+                                <li  style="display:none;"> <a href="promotion.html"><img src="css/images/demo_kv2.jpg"/></a></li>
+                                <li style="display:none;"><a href="promotion.html"><img src="css/images/demo_kv1.jpg"/></a></li>
+                                <li style="display:none;"><a href="promotion.html"><img src="css/images/demo_kv2.jpg"/></a></li>
+                        </ul>
+                </div>
+                <!--/.hero-kv-->
+                <div id="hero_nav">
+                        <ul class="adSlider">
+                                <li class="heroNavActive"></li>
+                                <li ></li>
+                                <li></li>
+                                <li></li>
+                        </ul>
+                        <br clear="all">
+                </div>
+        </div>
+        <!--最新公告-->
+        <div id="notice">
+                <div class="mw"><span>公告欄：Vwin 春季娛樂場活動火爆來襲，業界最高返水2%，紅利直逼45萬，趕緊參加吧！</span></div>
+        </div>
+</div>
+<div style="background-color:#fff; height:18px;"> <img src="css/images/index-hero-img-1.png" /> </div>
+<!--內容-->
+<div id="content" style="padding-top: 10px;">
+        <div class="mw">
+                <div class="con1-1">
+                        <div class="casino"> <img src="css/images/index-con1-1-img-1.png" /> </div>
+                        <div class="con1-text">
+                                <h4><span></span>真人娱乐场</h4>
+                                <p>真人百家乐、21点、龙虎及骰宝等，亲临其境感受前所未有的真实体验和客户服务</p>
+                        </div>
+                        <!--娛樂場滑鼠移入顯示內容-->
+                        <div class="casino-on" style="opacity:0;"> 
+                                <!--上移後模糊背景-->
+                                <div class="casino-con"> <img src="css/images/index-con1-1-img-3.png" />
+                                        <ul>
+                                                <li>                                                				
+                                                        <div class="casino-box">                                                         		
+                                                                <h5>翡翠厅 - AG</h5>
+                                                                <span><img src="css/images/index-con1-1-img-ag.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box"> 
+                                                                <h5>海盗城 - OPUS</h5>
+                                                                <span><img src="css/images/index-con1-1-img-opus.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box"> 
+                                                                <h5>夺宝岛 - GB</h5>
+                                                                <span><img src="css/images/index-con1-1-img-gb.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box"> 
+                                                                <h5>星耀厅 - W88</h5>
+                                                                <span><img src="css/images/index-con1-1-img-w88.png" /></span> </div>
+                                                </li>
+                                                <li>                                                		
+                                                        <div class="casino-box"> 
+                                                                <h5>百乐门 - PT</h5>
+                                                                <span><img src="css/images/index-con1-1-img-pt.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                		<div class="casino-box"> 
+                                                                <h5>铂金馆 - EA</h5>
+                                                                <span><img src="css/images/index-con1-1-img-ea.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box"> 
+                                                                <h5>米兰站 - EV</h5>
+                                                                <span><img src="css/images/index-con1-1-img-ev.png" /></span> </div>
+                                                </li>
+                                                <li>
+                                                        <div class="casino-box"> 
+                                                                <h5>波音馆 - BBIN</h5>
+                                                                <span><img src="css/images/index-con1-1-img-bbin.png" /></span> </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-1-img-2.png" /></div>
+                </div>
+                <script>
+                $(function(){
+					//顯示各館					
+					$(".con1-1").mouseenter(function(){
+						$(this).children(".casino-on").animate({opacity:1},250)						
+					})
+					$(".con1-1").mouseleave(function(){
+						$(this).children(".casino-on").animate({opacity:0},250)
+					})
+					
+					//滑鼠移入各館
+					$(".casino-con li").mouseenter(function(){
+						_this=$(this);
+						_boxWidth=_this.children("div").width();
+						_boxHeight=_this.children("div").height();
+						_brandWidth=_this.children("div").children("span").width();
+						_brandHeight=_this.children("div").children("span").height();
+						_brandMoveReight=(_boxWidth-_brandWidth)/2;
+						_this.children("div").children("span").stop().animate({right:_brandMoveReight},500);
+						//新增光點標籤
+						var $lightTop=$("<span>",{class:"lightTop"});
+						var $lightRight=$("<span>",{class:"lightRight"});
+						var $lightBottom=$("<span>",{class:"lightBottom"});
+						var $lightLeft=$("<span>",{class:"lightLeft"});						
+						_this.append($lightTop).children(".lightTop").append('<img src='+'css/images/index-con1-1-light-1.png'+'>');
+						_this.append($lightRight).children(".lightRight").append('<img src='+'css/images/index-con1-1-light-2.png'+'>');
+						_this.append($lightBottom).children(".lightBottom").append('<img src='+'css/images/index-con1-1-light-1.png'+'>');
+						_this.append($lightLeft).children(".lightLeft").append('<img src='+'css/images/index-con1-1-light-2.png'+'>');
+						_this.children(".lightTop").animate({left:_boxWidth/2,opacity:1},150).animate({left:_boxWidth,opacity:0},150);
+						_this.children(".lightRight").animate({bottom:_boxHeight/2,opacity:1},150).animate({bottom:_boxHeight,opacity:0},150);
+						_this.children(".lightBottom").delay(200).animate({right:_boxWidth/2,opacity:1},150).animate({right:_boxWidth,opacity:0},150);
+						_this.children(".lightLeft").delay(200).animate({top:_boxHeight/2,opacity:1},150).animate({top:_boxHeight,opacity:0},150);
+					})
+					$(".casino-con li").mouseleave(function(){
+						_this=$(this);
+						_this.children("span").remove();
+						_this.children("div").children("span").stop().animate({right:"-4px"},500)
+					})
+				})
+                </script>
+                <a>
+                <div class="con1-2 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-2-img-1.png" /></div>
+                        <div class="con1-text">
+                                <h4><span></span>体育平台</h4>
+                                <p>更全面的投注玩法，更简捷的投注体验，覆盖世界各地赛事</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即投注</div> </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a>
+                <a>
+                <div class="con1-3 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-3-img-1.png" /> </div>
+                        <div class="con1-text">
+                                <h4><span></span>电子游戏</h4>
+                                <p>最优秀的在线游戏平台，最丰富奖金和红利，更有机会赢得高额累积奖池</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即游戏</div> </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-3-img-2.png" /></div>
+                </div>
+                </a>
+                <a>
+                <div class="clear mgbt10"></div>
+                <div class="con1-4 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-4-img-1.png" /></div>
+                        <div class="con1-text"> <img class=" mgbt10" src="css/images/index-con1-4-img-3.png" />
+                                <p>尊享八大特权，更多精彩等您选择</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">了解详情</div> </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a>
+                <a>
+                <div class="con1-5 zoom">
+                        <div class="zoom-img">
+                                <div class="zoom-bg"></div>
+                                <img src="css/images/index-con1-5-img-1.png" /></div>
+                        <div class="con1-text">
+                                <h4><span></span>快乐彩</h4>
+                                <p>投注简单，中奖率高，颠覆传统单一模式满足不同需求</p>
+                                <div class="clear mgbt10"></div>
+                                <div class="btn-1">立即游戏</div> </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-2-img-2.png" /></div>
+                </div>
+                </a>
+                <script>
+				$(function(){			
+					$(".zoom").mouseenter(function(){
+						_this=$(this);
+						_img=_this.children(".zoom-img").children("img");				
+						_btn=_this.find(".btn-1");
+						_text=_this.children(".con1-text").children("p");
+						_imgWidth=_this.children(".zoom-img").width();
+						_imgHeight=_this.children(".zoom-img").height();		
+						_imgWidthBig=(_this.children(".zoom-img").children(".zoom-bg").width())*1.2;
+						_imgHeightBig=(_this.children(".zoom-img").children(".zoom-bg").height())*1.2;
+						_btn.stop().animate({"opacity":1},100);
+						_text.css("color","#f8efd2");
+						_this.children(".zoom-img").children("div").stop().animate({opacity:1},100);
+						_img.parent(".zoom-img").css({"width":_imgWidth,"height":_imgHeight,"overflow":"hidden","position":" relative"});
+						_img.css({"max-width":"none","max-height":"none","width":_imgWidth,"height":_imgHeight}).stop().animate({width:_imgWidthBig,height:_imgHeightBig,marginTop:-(_imgWidth*0.1),marginLeft:-(_imgHeight*0.1)},100)
+					})			
+					$(".zoom").mouseleave(function(){
+						_this=$(this);
+						_img=_this.children(".zoom-img").children("img");
+						_btn=_this.find(".btn-1");
+						_text=_this.children(".con1-text").children("p");
+						_text.css("color","#ffffff");
+						_imgWidth=_this.children(".zoom-img").children(".zoom-bg").width();
+						_imgHeight=_this.children(".zoom-img").children(".zoom-bg").height();		
+						_this.children(".zoom-img").children("div").stop().animate({opacity:0},100);
+						_btn.stop().animate({"opacity":0},100)
+						_img.stop().animate({width:_imgWidth,height:_imgHeight,marginTop:"0px",marginLeft:"0px"},100,function(){
+							//_img.css({"max-width":"100%","max-height":"100%","width":"auto"}).parent(".zoom-img").css({"width":"","height":"","overflow":"visible","position":"static"});
+						})					
+					})			
+					$(window).resize(function(){
+						$(".zoom").children(".zoom-img").children("img").css({"max-width":"100%","max-height":"100%","width":"auto","height":"auto"}).parent(".zoom-img").css({"width":"","height":""});
+					})		
+				})
+        </script>
+                <div class="con1-6">
+                        <div class="sport-outer"> <img src="css/images/index-con1-6-img-1.png"/> 
+                                <!--草皮-->
+                                <div class="sport-grass"><img src="css/images/index-con1-6-img-4.png"/> </div>
+                        </div>
+                        
+                        <!--比賽內容-->
+                        <div class="sport-inner">
+                        	<!--GB體育標題-->
+                            <div class="con1-text">
+                                    <h4 class="ilblk"><span></span>GB体育 - 推荐赛事</h4><div class="fltrt"><a class="btn-2" href="#"><span class="mgrt5">换一批</span><span class="reflash"></span></a></div>
+                            </div>
+                                <div class="sport-game-1"> 
+                                        <!--隊伍透明底圖-->                                        
+                                        <div class="team-bg"><img src="css/images/team-sample-1.png" /></div>
+                                        <div class="team-bg team-bg-right"><img src="css/images/team-sample-2.png" /></div>                                        
+                                        <!--隊伍資訊-->
+                                        <ul>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-1.png"  /> </div>
+                                                </li>
+                                                <li> 
+                                                        <!--分數區-->
+                                                        <div class="score"><div class="score-btn"> <a>立即投注</a> </div><img src="css/images/index-con1-6-img-5.png" />
+                                                                <span class="score-left"><img src="css/images/icon-socre-1.png" /><img src="css/images/icon-socre-9.png" /></span>
+                                                                <span class="score-right"><img src="css/images/icon-socre-2.png" /><img src="css/images/icon-socre-5.png" /></span>
+                                                        </div>
+                                                        <!--按鈕-->
+                                                        <div class="score-btn"> <a class="btn-1">立即投注</a> </div>
+                                                </li>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-2.png" /> </div>
+                                                </li>
+                                                <div class="clear mgbt10"></div>
+                                                <li>
+                                                        <div>
+                                                                <h5>巴塞罗那</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                		<div>
+                                                                <h5 class="score-name">西班牙足球甲级联赛</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                        <div>
+                                                                <h5>皇家马德里</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <div class="clear"></div>
+                                        </ul>
+                                </div>
+                                <div class="clear "></div>
+                                <div class="sport-game-1"> 
+                                        <!--中間分隔線-->
+                                        <div class="sport-game-gap"><img src="css/images/index-con1-6-img-2.png"/> </div>
+                                        <!--隊伍透明底圖-->
+                                        <div class="team-bg"><img src="css/images/team-sample-1.png"/></div>
+                                        <div class="team-bg team-bg-right"><img src="css/images/team-sample-2.png"/></div>
+                                        <!--隊伍資訊-->
+                                        <ul>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-1.png"  /> </div>
+                                                </li>
+                                                <li> 
+                                                        <!--開賽時間-->
+                                                        <div class="score"><img src="css/images/index-con1-6-img-6.png" />
+                                                                <div class="score-time">
+                                                                        <p class="yellow">開賽時間</p>
+                                                                        <p>07/30 09:00</p>
+                                                                </div>
+                                                        </div>
+                                                        <!--按鈕-->
+                                                        <div class="score-btn"><a class="btn-1">立即投注</a> </div>
+                                                </li>
+                                                <li>
+                                                        <div> <img src="css/images/team-sample-2.png" /> </div>
+                                                </li>
+                                                <div class="clear mgbt10"></div>
+                                                <li>
+                                                        <div>
+                                                                <h5>巴塞罗那</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                        <h5  class="score-name">西班牙足球甲级联赛</h5>
+                                                        <h3>-1.5 / -2</h3>
+                                                </li>
+                                                <li>
+                                                        <div>
+                                                                <h5>皇家马德里</h5>
+                                                                <h3>0.5</h3>
+                                                        </div>
+                                                </li>
+                                                <div class="clear"></div>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div class="con1-shadow"><img src="css/images/index-con1-6-img-3.png" /></div>
+                </div>
+                <script>
+                $(function(){
+					$(".sport-game-1").hover(
+						function(){							
+							$(this).find(".score").stop().animate({opacity:0},200);
+							$(this).find(".score-btn").stop().animate({opacity:1},200);
+						},
+						function(){
+							$(this).find(".score").stop().animate({opacity:1},200);
+							$(this).find(".score-btn").stop().animate({opacity:0},200);
+						}
+					)
+				})
+                </script>
+        </div>        
+        <div class="clear horizonLine"></div>
+        <div class="mw">
+                <ul class="con3">
+                        <li class="lv1">
+                                <h5>產品下載</h5>
+                                <ul>
+                                        <li><a href="#">鉑金館</a></li>
+                                        <li><a href="#">翡翠館</a></li>
+                                        <li><a href="#">百樂門</a></li>
+                                        <li><a href="#">小遊戲大廳</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>關於</h5>
+                                <ul >
+                                        <li><a href="AboutUs.html">關於VWIN</a></li>
+                                        <li><a href="ResponsibleGaming.html">責任博彩</a></li>
+                                        <li><a href="TermsAndCondition.html">條款及條件</a></li>
+                                        <li><a href="TermsAndCondition_promotion.html">優惠活動規則與條款</a></li>
+                                        <li><a href="PrivatePolicy.html">隱私權政策</a></li>
+                                        <li><a href="Contact.html">聯係我們</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>使用幫助</h5>
+                                <ul >
+                                        <li><a href="help1-2.html">存款流程 </a></li>
+                                        <li><a href="help1-3.html">提款流程 </a></li>
+                                        <li><a href="help1-1.html">如何開戶 </a></li>
+                                        <li><a href="help1-5.html">常見問題 </a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                        <li><a href="help2-1.html">體育規則 </a></li>
+                                        <li><a href="help3-1.html">快樂彩規則 </a></li>
+                                        <li><a href="help4-1.html">世界樂透規則 </a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>社交工具</h5>
+                                <ul >
+                                        <li><a href="#"><span class="si1 ahover"></span>微信</a></li>
+                                        <li><a href="#"><span class="si2 ahover"></span>微博</a></li>
+                                        <li><a href="#"><span class="si4 ahover"></span>Facebook</a></li>
+                                        <li><a href="#"><span class="si10 ahover"></span>LINE</a></li>
+                                </ul>
+                        </li>
+                        <li class="lv1 sct">
+                                <h5>&nbsp;</h5>
+                                <ul >
+                                        <li><a href="#"><span class="si6 ahover"></span>土豆</a></li>
+                                        <li><a href="#"><span class="si3 ahover"></span>56.com</a></li>
+                                        <li><a href="#"><span class="si5 ahover"></span>YouTube</a></li>
+                                </ul>
+                        </li>
+                        <li  class="lv1 last">
+                                <h5>加盟合作</h5>
+                                <ul >
+                                        <li><a href="#">代理協定</a></li>
+                                        <li><a href="#">代理合作常見問題</a></li>
+                                        <li>24小時訪客數量
+                                                <div class="olpp">
+                                                        <ul>
+                                                                <li class="olpp1">9
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp2">7
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp3">8
+                                                                        <hr />
+                                                                </li>
+                                                                <li class="olpp4">2
+                                                                        <hr />
+                                                                </li>
+                                                        </ul>
+                                                </div>
+                                                人</li>                                        
+                                         <li><div class="call-box"><div class="icon-call"></div><div class="ilblk vamd"><h3 class="yellow2 fmb">400-839-1888</h3><p class="white">国内24小时免费电话</p></div><div></li>
+                                         <li><a class="btn3 ivt_btn"><span class="icon_enter"></span> <span>推薦朋友</span> 
+                                                <!--邀請朋友的iframe頁-->
+                                                <iframe class="ivt_iframe" src="inviteFriends.html" width="520" height="260" scrolling="no" frameborder="0"></iframe>
+                                                </a></li>
+                                </ul>
+                        </li>
+                        <div class="clear"></div>
+                </ul>
+        </div>
+</div>
+<!--頁尾-->
+<div id="footer" class="rltv"> 
+        <!--聖誔節主題<div class="absl" style="height:19px; background-image:url(css/images/max_04.png); background-repeat:repeat-x; left:0; right:0; top:-19px;"></div>-->
+        <div class="mw">
+                <div class="pt-icon"> <a href="#" class="pt1 ahover"></a> <a href="#" class="pt2 ahover"></a> <a href="#" class="pt3 ahover"></a> <a href="#" class="pt4 ahover"></a> <a href="#" class="pt5 ahover"></a> <a href="#" class="pt6 ahover"></a> <a href="#" class="pt7 ahover"></a> <a href="#" class="pt8 ahover"></a> <a href="#" class="pt9 ahover"></a> <a href="#" class="pt10 ahover"></a> <a href="#" class="pt11 ahover"></a> <a href="#" class="pt12 ahover"></a> <a href="#" class="pt13 ahover last"></a> </div>
+                <div class="fc">
+                        <h6>VWIN.COM屬於VW GROUP ASIA有限公司Morgan & Morgan Building, PO Box 958, Pasea Estate,Road Town, Tortola British Virgin Islands於2013年3月25日獲得 菲律賓第一卡格楊( FCLRC )頒發的牌照( 牌照號碼074 )並受其監督版權所有 © 2014 VWIN.COM </h6>
+                </div>
+        </div>
+</div>
+</body>
+</html>

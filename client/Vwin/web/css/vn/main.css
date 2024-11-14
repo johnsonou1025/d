@@ -1,0 +1,78 @@
+﻿.con2 li.vip div.title {
+    background-image: url(images/vip-title.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 84px;
+    margin-bottom: 10px;
+}
+
+.pswStg {
+    background-image: url(images/psw-bg.png);
+}
+.pswStg2 {	
+	background-image: url("images/psw2-bg.png");
+}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+	margin-left:-10px !important;
+}
+
+.csn_milan div.bg {
+background-image: url(images/milan_img.png);
+}
+
+.csn_birgin div.bg {
+background-image: url(images/birgin_img.png);
+}
+
+.csn_kv3 {
+background-image: url(images/emerald_bg.jpg);
+}
+
+.csn_kv4 {
+background-image: url(images/pt_bg.jpg);
+}
+
+.kv2 {
+background: url(images/game_kv.jpg) center center no-repeat;
+}
+
+/*----------------------------越南語系----------------------------*/
+
+body {
+	font-family: "Arial";
+    letter-spacing: 0px;
+}
+
+/*Index*/
+.mnpmt {
+    font-size: 14px !important;
+}
+
+.con1 li {
+    height: 348px;
+}
+
+/*表格使用*/
+.fm label, .fm div.label {
+    width: 160px;
+}
+
+.fm label.label2, .fm label.label3 {
+        width: 70.93%;
+}
+
+/*邀請朋友*/
+.ivt {
+    height: 280px;
+}
+
+/*驗證登入密碼*/
+.pswStg2 {
+    left: 480px;
+}
+
+/*提款密碼*/
+.wdpsw {
+    width: 85%;
+}

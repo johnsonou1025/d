@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="css/reset.css" class="css">
+    <link rel="stylesheet" href="css/basic.css" class="css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="conLeft">
+            <div class="kvbox"><img src="images/title.png" alt="" style=""></div>
+        </div>
+        <div class="conRight">
+            <div class="uibox">
+                <h2 class="sm_hide">性感的VwinBaby为您开启2017年鸿运</h2>
+                <h2 class="xm_hide">性感的VwinBaby <br> 为您开启2017年鸿运</h2>
+                <h3>登记地址即可将VwinBaby带回家哟！</h3>
+                <h4>填写寄送资料</h4>
+                <div class="text_textbox">
+                    <input class="username" type="text" placeholder="收件人姓名">
+                </div>
+                <div class="text_textbox">
+                    <input class="address" type="text" placeholder="收件人地址">
+                </div>
+                <div class="text_textbox">
+                    <input class="phone" type="text" placeholder="联系电话">
+                </div>
+                <div class="text_notice">
+                    <h4>注意</h4>
+                    <ol>
+                        <li>您的个人信息仅供寄送台历之用，我们将通过快递将台历寄到您的指定地址，无需您支付任何费用。</li>
+                        <li>所有台历将集中在12月中旬发放，请注意查收，谢谢。</li>
+                    </ol>
+                </div>
+                <div class="clear"></div>
+                <a href="#" class="btn-pop" id="reg-btn">提交</a>
+            </div>
+        </div>
+    </div>
+    <!-- 弹跳视窗 -->
+    <div class="popup_box">
+        <div class="md"></div>
+        <div class="pp_inner">
+            <h3>亲爱的会员</h3>
+            <div>VwinBaby已收到您的信息，将会坐火箭尽快飞到您的身边哟…<div class="pp_btn"><a>关闭</a></div></div>            
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $(".pp_btn").click(function(){
+                $(".popup_box").hide();
+            })
+        })
+    </script>
+    <!-- 弹跳视窗结束 -->
+</body>
+<script>
+$(function() {
+    var num1 = $(window).height();
+    var num2 = $(Document).height();
+    if (num1 > num2) {
+        $("body").css("height", num1);
+    } else {
+        $("body").css("height", num2);
+    }
+})
+$(window).resize(function() {
+    var num1 = $(window).height();
+    var num2 = $(Document).height();
+    if (num1 > num2) {
+        $("body").css("height", num1);
+    } else {
+        $("body").css("height", num2);
+    }
+})
+</script>
+
+</html>

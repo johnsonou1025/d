@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.js"></script>
+<!--自訂樣式-->
+<link rel="stylesheet" href="css/custim-theme.css" />
+<script src="js/custom.js"></script>
+</head>
+
+<body>
+<div data-role="page">
+        <div data-role="panel" id="panel-lft" data-position="left" data-theme="a" data-display="push"></div>
+        <div data-role="panel" id="panel-rt" data-position="right" data-theme="a" data-display="push">
+                <ul data-role="listview" data-theme="f">
+                        <li><a href="#"><span class="icon34 icon-menu-5"></span>消息盒子
+                                <div class="hr2"></div>
+                                </a></li>
+                        <li><a href="#"><span class="icon34 icon-menu-6"></span>皇家騎士俱樂部
+                                <div class="hr2"></div>
+                                </a></li>
+                        <li><a href="#"><span class="icon34 icon-menu-7"></span>安全中心<span class="tt2">3項未驗証</span>
+                                <div class="hr2"></div>
+                                </a></li>
+                        <li><a href="#"><span class="icon34 icon-menu-8"></span>邀請朋友
+                                <div class="hr2"></div>
+                                </a></li>
+                        <li><a href="#"><span class="icon34 icon-menu-9"></span>系統設置 </a></li>
+                </ul>
+        </div>
+        <div data-role="header" data-theme="b"> 
+                <!--頁頭開始--> 
+                <a data-iconpos="notext" data-role="button" data-corners="false" data-icon="flat-menu" href="#panel-lft" data-theme="a"></a>
+                <h1 class="h4">Vwin 手機版設計規範</h1>
+                <div class="header-right-user"><a href="#panel-rt">登入</a></div>
+                <!--頁頭結束--> 
+        </div>
+        <div data-role="content" role="main"> 
+                <!--內容開始--> 
+                <!--2項投注無球隊圖案時-->
+                <label class="h3">2項投注無球隊圖案時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-1.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox">
+                                                <div class="middleBox_sub">
+                                                        <p>澳洲維多利亞<br>
+                                                                超級聯賽</p>
+                                                        <p>03/24 05:00 PM</p>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-2.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--2項比賽中投注無球隊圖案時-->
+                <label class="h3">2項比賽中投注無球隊圖案時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-1.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox"  style="height:auto;">
+                                                <p class="h7">澳洲維多利亞</p>
+                                                <p class="h6">LIVE</p>
+                                                <div class="clear"></div>
+                                                <div class="middleBox_sub">
+                                                        <div class="scores-1">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">15</span></div>
+                                                        <span class="scores-0" style=" ">VS</span>
+                                                        <div class="scores-2">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">10</span></div>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-2.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--3項投注無球隊圖案時-->
+                <label class="h3">3項投注無球隊圖案時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div>
+                                        <p>澳洲維多利亞超級聯賽</p>
+                                        <p>03/24 05:00 PM</p>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="hr3"></div>
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-1.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox"><span class="icon65 icon-common-10 visible-inline-block align-middle"></span></div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-2.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.75</p>
+                                                <p class="h7">和局</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--3項比賽中投注無球隊圖案時-->
+                <label class="h3">3項比賽中投注無球隊圖案時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div>
+                                        <p>澳洲維多利亞超級聯賽</p>
+                                        <p class="h6">LIVE</p>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-1.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox">
+                                                <div class="middleBox_sub">
+                                                        <div class="scores-3">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">15</span></div>
+                                                        <span class="icon55 icon-common-10 visible-inline-block align-middle"></span>
+                                                        <div class="scores-4">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">10</span></div>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-2.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--2項投注時-->
+                <label class="h3">2項投注時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-3.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox">
+                                                <div class="middleBox_sub">
+                                                        <p>澳洲維多利亞<br>
+                                                                超級聯賽</p>
+                                                        <p>03/24 05:00 PM</p>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-4.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--2項比賽中投注時-->
+                <label class="h3">2項比賽中投注時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-3.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox"  style="height:auto;">
+                                                <p class="h7">澳洲維多利亞</p>
+                                                <p class="h6">LIVE</p>
+                                                <div class="clear"></div>
+                                                <div class="middleBox_sub">
+                                                        <div class="scores-1">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">15</span></div>
+                                                        <span class="scores-0" style=" ">VS</span>
+                                                        <div class="scores-2">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">10</span></div>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-4.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--3項投注時-->
+                <label class="h3">3項投注時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div>
+                                        <p>澳洲維多利亞超級聯賽</p>
+                                        <p>03/24 05:00 PM</p>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="hr3"></div>
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-3.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox"><span class="icon65 icon-common-10 visible-inline-block align-middle"></span></div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-4.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.75</p>
+                                                <p class="h7">和局</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <div class="hr mgbt20"></div>
+                <!--3項比賽中投注時-->
+                <label class="h3">3項比賽中投注時</label>
+                <div class="bg-style-1">
+                        <ul data-role="listview" data-theme="f" class="noStyle">
+                                <li><a href="#" data-ajax="false"><span class="icon34 icon-index-1"></span>投注焦點賽事<span class="tt2 tcolor-4">更多</span>
+                                        <div class="hr2"></div>
+                                        </a></li>
+                        </ul>
+                        <div class="clear mgbt10"></div>
+                        <div class="game-list-2 tcolor-3 relative">
+                                <div>
+                                        <p>澳洲維多利亞超級聯賽</p>
+                                        <p class="h6">LIVE</p>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="sport-focus">
+                                        <div class="col-4"> <span class="icon72"> <img src="css/images/sampleIcon-sport-3.png" class="autoSize"></span></div>
+                                        <div class="col-4 middleBox">
+                                                <div class="middleBox_sub">
+                                                        <div class="scores-3">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">15</span></div>
+                                                        <span class="icon55 icon-common-10 visible-inline-block align-middle"></span>
+                                                        <div class="scores-4">
+                                                                <div class="hr4"></div>
+                                                                <span class="h3">10</span></div>
+                                                </div>
+                                        </div>
+                                        <div class="col-4"> <span class="icon72"><img src="css/images/sampleIcon-sport-4.png" class="autoSize"></span></div>
+                                        <div class="clear mgbt10"></div>
+                                        <div class="col-4">
+                                                <p class="h4">1.95</p>
+                                                <p class="h7">休城</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">-1.5 / -2</p>
+                                                <p class="h7">讓球</p>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="h4">3.40</p>
+                                                <p class="h7">諾夫克特</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="hr mgbt20"></div>                        
+                </div>
+                <!--內容結束--> 
+        </div>
+        <div data-role="footer" data-theme="a"> 
+                <!--頁尾開始-->
+                <h1 class="h4"></h1>
+                <!--頁尾結束--> 
+        </div>
+</div>
+</body>
+</html>

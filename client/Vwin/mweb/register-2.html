@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.js"></script>
+
+<!--自訂樣式-->
+<link rel="stylesheet" href="css/custim-theme.css" />
+<script src="js/custom.js"></script>
+</head>
+<body>
+<div data-role="page">
+        <div data-role="header" data-theme="b" > <a data-rel="back" data-iconpos="notext" data-role="buton" data-icon="flat-back" data-theme="a"></a>
+                <h1 class="h3">完善信息</h1>
+        </div>
+        <div data-role="content" role="main">
+                <div class="category-icon"><span class="icon65 icon-common-5"></span></div>
+                <div data-role="fieldcontain"> <span class="icon34  icon-common2-1"></span>
+                        <input data-theme="d" type="text" name="textinput" value="請輸入暱稱"   />
+                </div>
+                <div data-role="fieldcontain"> <span class="icon34  icon-common2-2"></span>
+                        <input data-theme="d" type="text" name="textinput" value="請輸入密碼"  />
+                        <a href="#" class="eye"><span class="input_icon"></span></a> </div>
+                <div class="text-info_notice tcolor-3"><span class="message_icon"></span>
+                        <p>不支持中文、純數字及特殊符號</p>
+                        <p>必須為6-14位字母或數字</p>
+                </div>
+                <div class="clear mgbt20"></div>
+                <a href="register-success.html" data-ajax="false" data-role="button" data-theme="b">保存</a>
+                <div class="clear mgbt20"></div>
+                <div class="ui-block-b">
+                        <input type="checkbox" name="checkbox" id="checkbox_1" class="custom" value=""  data-theme="a" checked />
+                        <label for="checkbox_1" >我同意本網站政策、隱私申明、條款和條件</label>
+                </div>
+        </div>
+        <div data-role="footer" data-theme="a" class="tcolor-4" >
+                <div  class="clear mgbt10"><span class="head-logo-1"></span></div>
+                <p>© 2013-2016  Vwin.com</p>
+                <p>由VW集團亞洲有限公司(BVI)版權所有</p>
+                <div class="clear mgbt10"></div>
+        </div>
+</div>
+</body>
+</html>

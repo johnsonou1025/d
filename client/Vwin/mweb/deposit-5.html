@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+    <!--自訂樣式-->
+    <link rel="stylesheet" href="css/custim-theme.css" />
+    <script src="js/custom.js"></script>
+</head>
+
+<body>
+    <div data-role="page">
+        <div data-role="header" data-theme="b">
+            <a href="bank.html" data-ajax="false" data-iconpos="notext" data-role="buton" data-icon="flat-back" data-theme="a"></a>
+            <h1 class="h3">存款</h1>
+        </div>
+        <div data-role="content" role="main">
+            <div data-role="controlgroup" data-type="horizontal" data-theme="g">
+                <div class="col-3"><a href="deposit-1.html" data-ajax="false" data-role="button" class="ui-btn-active">點卡支付</a></div>
+                <div class="col-3"><a href="deposit-2.html" data-ajax="false" data-role="button">支付寶</a></div>
+                <div class="col-3"><a href="deposit-3.html" data-ajax="false" data-role="button">網銀轉帳</a></div>
+                <div class="col-3"><a href="deposit-4.html" data-ajax="false" data-role="button">銀行存款</a></div>
+            </div>
+            <div class="clear mgbt20"></div>
+            <div data-role="fieldcontain"> <span class="icon34 icon-common2-1"></span>
+                <input data-theme="d" type="text" name="textinput" value="請輸入支付寶戶名" />
+            </div>
+            <div data-role="fieldcontain" class="select_1"><span class="icon34 icon-common2-9"></span>
+                <select name="select-choice" id="select-choice-a" data-native-menu="true" data-corners="false" data-theme="d">
+                    <option value="">移動神州行(5%手續費)</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain" class="select_1"><span class="icon34 icon-common2-3"></span>
+                <select name="select-choice" id="select-choice-a" data-native-menu="true" data-corners="false" data-theme="d">
+                    <option value="">50</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain"> <span class="icon34 icon-common2-7"></span>
+                <input data-theme="d" class="input-a" type="text" name="textinput" value="請輸入卡號" />
+            </div>
+            <div data-role="fieldcontain"> <span class="icon34 icon-common2-2"></span>
+                <input data-theme="d" class="input-a" type="text" name="textinput" value="請輸入密碼" />
+            </div>
+            <div class="clear mgbt20"></div>
+            <p class="align-center h3">可得總值:<span class="tcolor-7 h2">550.00</span></p>
+            <div class="clear mgbt20"></div>
+            <a href="#" data-ajax="false" data-role="button" data-theme="b" class="mgbt20">立即存款</a>
+            <div class="clear mgbt20"></div>
+            <a href="deposit-info.html" data-ajax="false" class="pull-right h5" data-theme="a">存款需知</a> </div>
+        <div data-role="footer" data-theme="a" class="tcolor-4">
+            <div class="clear mgbt10"><span class="head-logo-1"></span></div>
+            <p>© 2013-2016 Vwin.com</p>
+            <p>由VW集團亞洲有限公司(BVI)版權所有</p>
+            <div class="clear mgbt10"></div>
+        </div>
+    </div>
+</body>
+
+</html>

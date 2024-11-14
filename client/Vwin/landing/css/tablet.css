@@ -1,0 +1,115 @@
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    /* 如果使用者之視窗寬度介於 768px ~ 1100px，將會再載入這裡的 CSS。   */  
+}
+
+/* Header & 選單 */
+/*==================================================================*/
+.v_menu li a{
+	font-size:14px; 
+	margin-right: 10px;
+}
+
+.v_menu li span{
+	margin: 0 10px;
+}
+
+.no_show{
+	display: none;	
+}
+
+/*section1 首页*/
+/*==============================================================================================*/
+.bg1 h1{
+	font-size: 30px;
+}
+
+.bg1 h2{
+	font-size: 15px;
+}
+
+.bg1 h3{
+	font-size: 16px;
+}
+
+.btn-1{
+	font-size: 16px;
+	padding: 15px 40px;
+}
+
+.bg1 img{
+	right: 4%;
+}
+
+/*section2 Vwin德赢四大特色*/
+/*==============================================================================================*/
+.bg2 h2, .bg2 h3{
+	font-size: 20px;	
+	margin-top: 20px;
+}
+
+.bg2 h3{
+	font-size: 14px;
+	margin-top: 5px;
+	letter-spacing: 0px;
+}
+
+.btn-2{
+	font-size: 14px;
+	padding: 10px 40px;
+}
+
+
+/*section3 欧洲杯彩金送送送*/
+/*==============================================================================================*/
+.bg3 h2, .bg3 h3{
+	font-size: 27px;
+	margin-left: 8%;
+	margin-bottom: 5px;
+}
+
+.bg3 h3{
+	font-size: 18px;
+}
+
+.bunus_table table{
+	height:50%;
+}
+
+/*section4 欧洲杯赛程*/
+/*==============================================================================================*/
+.nav4{
+	height: 60px;	
+}
+
+.nav4 ul.date_menu  li a{
+	font-size:16px;
+  	line-height: 60px;
+}
+
+/* .game_table {
+	width: 32%;
+	margin: 2% 6px 0 6px;	
+}
+
+.game_table td{
+	font-size:12px;
+} */
+
+/*section1 註冊pop overlay*/
+/*==============================================================================================*/
+.overlay_block .regedit{
+	background-position: bottom center; 	
+}
+
+.overlay_block .regedit p{
+	font-size: 36px;
+	padding-top: 13%;
+}
+
+.overlay_block .regedit span{
+	font-size: 26px;
+}
+
+.uibox{
+	top: 8%;
+}
