@@ -1071,7 +1071,7 @@ footer .copy {
 @media (max-width: 768px) {
     footer {
         padding-top: 40px;
-        margin-top: 40px;
+        margin-top: 20px;
         text-align: center;
     }
 
@@ -1145,8 +1145,15 @@ footer .copy {
 
 .case-spindle li {
     float: left;
-    width: 50%;
     padding: 0 20px;
+}
+
+.case-spindle li:first-child {
+    width: 66.66%;
+}
+
+.case-spindle li:last-child {
+    width: 33.33%;
 }
 
 .case-demo-box {
@@ -1228,7 +1235,7 @@ footer .copy {
     }
 
     .case-demo.anime {
-        transform: translate(-50%, -50%) rotate(-35deg) scale(.45) skew(20deg, 10deg);
+        transform: translate(-50%, -50%) rotate(-35deg) scale(.35) skew(20deg, 10deg);
     }
 }
 
@@ -1302,11 +1309,15 @@ footer .copy {
         display: flex;
         flex-wrap: wrap;
     }
+}
+
+@media (max-width: 930px) {
 
     .pantone-group:nth-child(3) {
         margin-top: 20px;
     }
 }
+
 
 @media (max-width: 768px) {
     .case-styles ul {
@@ -1337,7 +1348,8 @@ footer .copy {
 
 .case-demo-2 img {
     display: block;
-    /* border-radius: 20px; */
+    border-radius: 20px;
+    border-top: 1px solid #fff;
     width: 100%;
     box-shadow: var(--shadow);
 }
