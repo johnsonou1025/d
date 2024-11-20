@@ -106,10 +106,31 @@ $(window).scroll(function () {
         }
     })
 });
+// language
+// function setLanguage(lang) {
+//     fetch('../language.json') // 載入 JSON 文件
+//         .then(response => response.json())
+//         .then(data => {
+//             const translations = data[lang];
+//             document.querySelectorAll('[data-lang]').forEach(element => {
+//                 const key = element.getAttribute('data-lang');
+//                 if (translations[key]) {
+//                     element.textContent = translations[key];
+//                 }
+//             });
+//         });
+// }
 
 function setLanguage(lang) {
+    $loading = '<div class="loading"><span>Loading</span></div>'
+    $('body').append($loading);
     fetch('../language.json') // 載入 JSON 文件
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('載入失敗');
+            }
+            return response.json();
+        })
         .then(data => {
             const translations = data[lang];
             document.querySelectorAll('[data-lang]').forEach(element => {
@@ -118,8 +139,13 @@ function setLanguage(lang) {
                     element.textContent = translations[key];
                 }
             });
+        })
+        .finally(() => {
+            // 隱藏載入圖示並顯示內容
+            $(".loading").remove();
         });
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     setLanguage('en');
 });
