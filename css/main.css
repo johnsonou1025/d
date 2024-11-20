@@ -186,7 +186,8 @@ a {
     transition: .3s;
 }
 
-a:hover {
+a:hover,
+a.active {
     color: #D1CAA2;
 }
 
