@@ -294,7 +294,7 @@ a:hover {
     height: 100%;
     background: rgba(0, 0, 0, .2);
     color: #fff;
-    font-size: 84px;
+    font-size: 18px;
     font-weight: bold;
     z-index: 99;
 }
@@ -480,6 +480,14 @@ header .logo img {
         width: 100%;
         font-size: 20px;
         text-align: center;
+    }
+
+    .lang.en span:first-child {
+        display: block;
+    }
+
+    .lang span:last-child {
+        display: block;
     }
 }
 
@@ -1479,11 +1487,12 @@ footer .copy {
     animation-name: fadeUp;
 }
 
-
 @media (max-width: 1200px) and (min-width: 992px) {}
 
 @media (max-width: 992px) {}
 
 @media (max-width: 768px) {}
+
+
 
 /*css end*/

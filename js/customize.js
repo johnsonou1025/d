@@ -21,8 +21,8 @@ $(document).ready(function () {
         }, 800);
     });
     // language
-    $(".lang").click(function () {
-        $(this).toggleClass("en");
+    $(".lang>span").click(function () {
+        $(this).parent().toggleClass("en");
     })
 
     // slider card
@@ -122,7 +122,7 @@ $(window).scroll(function () {
 // }
 
 function setLanguage(lang) {
-    $loading = '<div class="loading"><span>Loading</span></div>'
+    $loading = '<div class="loading"><span>Loading pleass wait</span></div>'
     $('body').append($loading);
     fetch('../language.json') // 載入 JSON 文件
         .then(response => {
@@ -143,6 +143,11 @@ function setLanguage(lang) {
         .finally(() => {
             // 隱藏載入圖示並顯示內容
             $(".loading").remove();
+            // setTimeout(function () {
+            //     $('.loading').fadeOut(300, function () {
+            //         $(".loading").remove();
+            //     });
+            // }, 1000); // 模擬 2 秒後完成
         });
 }
 
