@@ -390,7 +390,8 @@ header .logo img {
     transition: .3s;
 }
 
-.nav-dropdown:hover>span:after {
+.nav-dropdown:hover>span:after,
+.nav-dropdown.open>span:after {
     transform: rotate(180deg);
 }
 
@@ -407,7 +408,8 @@ header .logo img {
     transition: .3s;
 }
 
-.nav-dropdown:hover .dropdown-body {
+.nav-dropdown:hover .dropdown-body,
+.nav-dropdown.open .dropdown-body {
     visibility: visible;
     opacity: 1;
 }

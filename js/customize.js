@@ -8,7 +8,14 @@ $(document).ready(function () {
         $("body").removeClass("lock");
         $(".nav-menu").removeClass("open");
     })
-    // -----------
+    // menu dropdown anime
+    $(".nav-dropdown").click(function () {
+        $(this).toggleClass("open");
+    })
+    $(".nav-dropdown a").click(function () {
+        $(".nav-dropdown").removeClass("open")
+    })
+    // menu a anime
     // $('.nav-menu').on('click', 'a', function (event) {
     $(".nav-menu a[href^='#']").on('click', function (event) {
         // $(".nav-dropdown").unbind('mouseenter mouseleave');
