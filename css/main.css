@@ -520,11 +520,17 @@ header .logo img {
         display: block;
         height: initial;
         text-align: left;
-        padding: 20px 0 8px;
+        padding: 20px 0 0 0;
+    }
+
+    .nav-dropdown:hover .dropdown-body,
+    .nav-dropdown.open .dropdown-body {
+        height: initial;
     }
 
     .nav-dropdown span {
-        padding: 0;
+        display: block;
+        padding: 8px 0;
     }
 
     .nav-dropdown .dropdown-body {
@@ -534,10 +540,6 @@ header .logo img {
         padding: 0 0 0 40px;
         /* visibility: visible;
         opacity: 1; */
-    }
-
-    .nav-dropdown:hover .dropdown-body {
-        height: initial;
     }
 
     .nav-switch {
