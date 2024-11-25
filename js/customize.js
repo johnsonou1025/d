@@ -10,7 +10,9 @@ $(document).ready(function () {
     })
     // -----------
     // $('.nav-menu').on('click', 'a', function (event) {
-    $(".nav-menu a[href*='#']").on('click', function (event) {
+    $(".nav-menu a[href^='#']").on('click', function (event) {
+        // $(".nav-dropdown").unbind('mouseenter mouseleave');
+        $(".nav-dropdown").unbind();
         $("body").removeClass("lock");
         $(".nav-menu").removeClass("open");
         var _headerHeight = $("header").height();
