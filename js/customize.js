@@ -9,8 +9,8 @@ $(document).ready(function () {
         $(".nav-menu").removeClass("open");
     })
     // menu dropdown anime
-    $(".nav-dropdown").click(function () {
-        $(this).toggleClass("open");
+    $(".nav-dropdown>span").click(function () {
+        $(".nav-dropdown").toggleClass("open");
     })
     $(".nav-dropdown a").click(function () {
         $(".nav-dropdown").removeClass("open")
