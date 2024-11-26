@@ -91,7 +91,6 @@ $(document).ready(function () {
         }
 
     });
-
 });
 // anime
 $(window).scroll(function () {
