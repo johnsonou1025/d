@@ -561,13 +561,13 @@ header .logo img {
         text-align: center;
     }
 
-    .lang.en span:first-child {
+    /* .lang.en span:first-child {
         display: block;
     }
 
     .lang span:last-child {
         display: block;
-    }
+    } */
 }
 
 
@@ -1491,22 +1491,6 @@ footer .copy {
 
 .case-list .work:hover {
     color: #383B53;
-}
-
-.case-list .work:nth-child(1) {
-    background-image: url(../images/work/10bet.jpg);
-}
-
-.case-list .work:nth-child(2) {
-    background-image: url(../images/work/sbet.jpg);
-}
-
-.case-list .work:nth-child(3) {
-    background-image: url(../images/work/letou.jpg);
-}
-
-.case-list .work:nth-child(4) {
-    background-image: url(../images/work/vwin.jpg);
 }
 
 .case-list .work-body {
