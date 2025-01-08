@@ -1519,6 +1519,26 @@ footer .copy {
     }
 }
 
+.banner-box {
+    display: flex;
+    height: 320px;
+    overflow-x: auto;
+}
+
+.banner-box img {
+    display: inline-block;
+    gap: 10pxl;
+    padding: 10px;
+    height: 100%;
+}
+
+@media (max-width: 992px) {
+    .banner-box {
+        height: 62vw;
+    }
+}
+
+
 
 /* animaton */
 @-webkit-keyframes fadeIn {
