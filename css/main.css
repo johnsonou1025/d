@@ -16,7 +16,8 @@
 }
 
 body {
-    padding-top: 120px;
+    /* padding-top: 120px; */
+    padding-top: 96px;
     background: #F6F7F8;
     font-family: "Roboto", sans-serif;
     font-weight: 300;
@@ -130,6 +131,7 @@ h5,
 .headline {
     display: inline-block;
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .headline h1 {
@@ -328,7 +330,8 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 120px;
+    /* height: 120px; */
+    height: 96px;
     background-color: #fff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
     z-index: 1;
@@ -342,7 +345,13 @@ header .mx-width {
 }
 
 header .logo {
-    height: 64px;
+    padding: 24px 0;
+    height: 100%;
+}
+
+header .logo a {
+    display: inline-block;
+    height: 100%;
 }
 
 header .logo img {
@@ -483,7 +492,7 @@ header .logo img {
     }
 
     header .logo {
-        height: 48px;
+        /* height: 48px; */
     }
 
     .nav-menu {
@@ -573,9 +582,9 @@ header .logo img {
 
 .kv {
     padding: 80px 0;
-    height: 791px;
-    background: url(../images/kv-bg.jpg) repeat-x 0 0/ auto 100%;
-    animation: moveBackground 120s linear infinite;
+    /* height: 791px; */
+    /* background: url(../images/kv-bg.jpg) repeat-x 0 0/ auto 100%; */
+    /* animation: moveBackground 120s linear infinite; */
     /* 設定動畫 */
 }
 
@@ -590,7 +599,8 @@ header .logo img {
 }
 
 .kv .headline {
-    display: flex;
+    /* display: flex; */
+    margin-bottom: 0;
 }
 
 .kv .headline h2,
@@ -600,7 +610,7 @@ p {
 }
 
 .kv .headline h2 {
-    padding-right: 40px;
+    /* padding-right: 40px; */
 }
 
 .kv .headline h2 span {
@@ -612,7 +622,7 @@ p {
 }
 
 .kv .headline p {
-    padding-left: 40px;
+    /* padding-left: 40px; */
     animation-delay: .6s;
 }
 
@@ -632,8 +642,8 @@ p {
 
 @media (max-width: 768px) {
     .kv {
-        padding-top: 20px;
-        height: calc(100vh - 80px);
+        /* padding-top: 20px; */
+        /* height: calc(100vh - 80px); */
     }
 
     .kv .headline {
@@ -1140,6 +1150,10 @@ footer .logo img {
 
 footer .footer-body {
     margin-left: 33.3%;
+}
+
+footer .footer-body .headline {
+    text-align: left;
 }
 
 .footer-body p {
