@@ -27,20 +27,18 @@
                 Left
             </div>
         </div>
-        <div class="right">
-            <div class="scroll">
-                Right
-            </div>
-        </div>
+        Right
     </main>
     <script>
         $(function () {
             $(window).scroll(function () {
                 console.log($(window).scrollTop());
                 if ($(window).scrollTop() >= 60) {
-                    $("main").addClass("active");
+                    $(".marquee").addClass("active");
+                    $("main .left").addClass("active");
                 } else {
-                    $("main").removeClass("active");
+                    $(".marquee").removeClass("active");
+                    $("main .left").removeClass("active");
                 }
             })
         })

@@ -20,12 +20,19 @@ header>div {
 header .header {
     position: fixed;
     top: 0;
+    z-index: 10;
 }
 
 header .kv {
     margin-top: 60px;
     background-color: #261132;
     color: #fff;
+}
+
+header .marquee.active {
+    position: fixed;
+    top: 60px;
+    z-index: 10;
 }
 
 main {
@@ -35,44 +42,37 @@ main {
 }
 
 main {
-    height: calc(100vh - 120px);
-}
-
-main>div {
-    float: left;
-    height: 100%;
-    /* overflow-y: scroll; */
-}
-
-main.active>div {
-    overflow-y: scroll;
-}
-
-main>div>div {
+    position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    /* height: calc(100vh - 120px); */
+    width: calc(100% - 20%);
+    height: 150vh;
+    padding-left: 20%;
+    background-color: #E0CA3C;
 }
 
 .left {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 20%;
+    height: 100%;
+    background-color: #3E2F5B;
+    z-index: 1;
+}
+
+.left.active {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
 }
 
 .left .scroll {
-    width: 100%;
-    height: 100vh;
-    background-color: #3E2F5B;
-    color: #fff;
-}
-
-.right {
-    width: 80%;
-}
-
-.right .scroll {
-    width: 100%;
-    height: 120vh;
-    background-color: #E0CA3C;
+    height: 150vh;
 }
 
 @media (max-width: 1200px) and (min-width: 992px) {}
