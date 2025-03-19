@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+/*!
+ * Copyright 2024-2024 Johnson
+ */
+
+@import "reset.css";
+
+
+header>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    height: 60px;
+    background-color: #FFB86F;
+}
+
+header .header {
+    position: fixed;
+    top: 0;
+}
+
+header .kv {
+    margin-top: 60px;
+    background-color: #261132;
+    color: #fff;
+}
+
+main {
+    /* display: flex;
+    justify-content: center; */
+    overflow: hidden;
+}
+
+main {
+    height: calc(100vh - 120px);
+}
+
+main>div {
+    float: left;
+    height: 100%;
+    /* overflow-y: scroll; */
+}
+
+main.active>div {
+    overflow-y: scroll;
+}
+
+main>div>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    width: 20%;
+}
+
+.left .scroll {
+    width: 100%;
+    height: 100vh;
+    background-color: #3E2F5B;
+    color: #fff;
+}
+
+.right {
+    width: 80%;
+}
+
+.right .scroll {
+    width: 100%;
+    height: 120vh;
+    background-color: #E0CA3C;
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {}
+
+@media (max-width: 992px) {}
+
+/*css end*/
