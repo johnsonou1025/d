@@ -58,8 +58,10 @@ main {
     top: 0;
     left: 0;
     width: 20%;
-    height: 100%;
+    height: calc(100vh - 180px);
     background-color: #3E2F5B;
+    color: #fff;
+    overflow-y: scroll;
     z-index: 1;
 }
 
