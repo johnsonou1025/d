@@ -7,13 +7,13 @@ $(function () {
         if (!$("body").hasClass("freezed")) {
             if (currentScrollTop >= 176) {
                 $("body").addClass("freezed");
-                $('html, body').scrollTop(1);
+                // $('html, body').scrollTop(1);
                 // $('html, body').animate({ scrollTop: 1 }, 'fast');
             }
         } else {
             if (currentScrollTop <= 0) {
                 $("body").removeClass("freezed");
-                $('html, body').scrollTop(175);
+                // $('html, body').scrollTop(175);
                 // $('html, body').animate({ scrollTop: 175 }, 'fast');
             }
         }
