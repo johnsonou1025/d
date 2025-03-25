@@ -4,6 +4,7 @@ $(function () {
     // freezed
     $(window).on('scroll', function () {
         var currentScrollTop = $(this).scrollTop();
+        console.log(currentScrollTop);
         if (!$("body").hasClass("freezed")) {
             if (currentScrollTop >= 176) {
                 $("body").addClass("freezed");
@@ -11,7 +12,7 @@ $(function () {
                 // $('html, body').animate({ scrollTop: 1 }, 'fast');
             }
         } else {
-            if (currentScrollTop <= 0) {
+            if (currentScrollTop < 176) {
                 $("body").removeClass("freezed");
                 // $('html, body').scrollTop(175);
                 // $('html, body').animate({ scrollTop: 175 }, 'fast');
