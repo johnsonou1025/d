@@ -20,11 +20,9 @@ $(function () {
     })
 
     // **阻止 touchmove 事件，避免手指滑動導致跳動**
-    // $(document).on('touchmove', function (e) {
-    //     if ($("body").hasClass("freezed")) {
-    //         e.preventDefault(); // 禁止滾動
-    //     }
-    // });
+    $(document).on('touchmove', function (e) {
+        e.preventDefault(); // 禁止滾動
+    });
 
     // jackpot number 
 
