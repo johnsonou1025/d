@@ -1,0 +1,128 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {}
+
+
+body {
+    font-size: 14px;
+    letter-spacing: 0.1rem;
+}
+
+.freeze-box {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.flex-center>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    height: 80px;
+    background: #333;
+    color: #fff;
+}
+
+.qarquee {
+    height: 20px;
+    background: #555;
+    color: #fff;
+}
+
+.jackpot {
+    height: 80px;
+    background: #777;
+    color: #fff;
+}
+
+.account {
+    height: 80px;
+    background: #999;
+    color: #fff;
+}
+
+.kv {
+    margin-bottom: 12px;
+    height: 200px;
+    background: #aaa;
+    color: #fff;
+}
+
+.control {
+    visibility: hidden;
+    position: fixed;
+    top: 60vh;
+    transform: translateY(-50%);
+    padding: 10px;
+    background: #ccc;
+    opacity: 0;
+    transition: .3s;
+}
+
+.control li {
+    width: 32px;
+    height: 32px;
+    background: #aaa;
+}
+
+.control li+li {
+    margin-top: 8px;
+}
+
+.control.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.games {
+    flex-wrap: wrap;
+}
+
+.games ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.games ul+ul {
+    margin-top: 24px;
+}
+
+.games li {
+    width: calc((100% - 16px) / 3);
+    height: 40vw;
+    border-radius: 12px;
+    background: #eee;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: #666;
+    color: #fff;
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+
+
+
+
+
+/*css end*/

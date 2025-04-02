@@ -20,14 +20,18 @@
     --shadow: 0px 5px 10px rgba(126, 119, 108, 0.12), 0px 1px 3px rgba(126, 119, 108, 0.1);
     --border1: 1px solid #eee;
     --kv-bg-color: #F9F9F9;
-    --mx-width: 440px;
-
+    --mx-width: 400px;
+    /* --scale-factor: calc(100vw / 300); */
+    /* font-size: 12px; */
+    /* font-size: calc(12px * var(--scale-factor)); */
+    font-size: calc((100vw / 300) * 12);
 }
 
 body {
     background-color: var(--body-bg-color);
     font-family: "Noto Sans CJK", sans-serif;
     font-size: 12px;
+    font-size: 1rem;
     color: #7E776C;
     letter-spacing: 0.05em;
 }
@@ -64,6 +68,7 @@ header {
     position: relative;
     height: 100%;
     width: 80px;
+    width: 6rem;
     z-index: 3;
 }
 
@@ -89,7 +94,9 @@ header {
 .header-right .system-box i {
     display: inline-block;
     width: 28px;
+    width: 2.33rem;
     height: 28px;
+    height: 2.33rem;
 }
 
 .header-middle {
@@ -434,7 +441,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 11px;
+    /* font-size: 11px; */
+    font-size: 1rem;
     color: #000;
 }
 
@@ -464,10 +472,9 @@ main {
     background: transparent url(../image/jpbgNoShadow.png) no-repeat center center / 100% 100%;
     font-family: 'DINPro';
     font-size: 30px;
+    font-size: 2.5rem;
     /* font-weight: bold; */
     color: #000;
-
-    /* padding-top: calc((100% - 66px) / 10 * 1.67); */
     width: calc((100% - 66px) / 10);
 }
 
@@ -483,6 +490,7 @@ main {
 
 .info-box {
     float: right;
+    width: 50%;
 }
 
 .info-box .info {
@@ -503,7 +511,9 @@ main {
     display: flex;
     align-items: center;
     font-family: 'DINPro';
+    /* font-size: 24px; */
     font-size: 24px;
+    font-size: 2rem;
     color: #D0925D;
 }
 
@@ -514,6 +524,12 @@ main {
     width: 26.67px;
     height: 20px;
     background-color: #abc;
+}
+
+.account-box .amount span {
+    width: calc(100% - 54.67px);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .account-box .refresh {
@@ -558,7 +574,7 @@ main {
     display: flex;
     align-items: center;
     border-radius: 8px;
-    padding: 0 8px;
+    padding: 0 4px;
     /* padding: 0 34px; */
     height: 28px;
     transition: .3s;
@@ -644,7 +660,7 @@ main {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 46px;
+    /* height: 46px; */
     border-radius: 8px 8px 0 0;
     border: 1px solid #E8E8E8;
     background-color: #F9F9F9;
