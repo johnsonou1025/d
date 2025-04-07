@@ -5,13 +5,17 @@ $(function () {
     let mainHeight = $(".main-fix").height();
     $(window).scroll(function () {
         let currentScrollTop = $(window).scrollTop();
-        console.log(currentScrollTop);
+        // console.log(currentScrollTop);
         if (currentScrollTop >= kvHeight) {
-            $("body").addClass("jackpot-fixed");
+            $("body").addClass("freezed");
         }
         if (currentScrollTop <= mainHeight) {
-            $("body").removeClass("jackpot-fixed");
+            $("body").removeClass("freezed");
         }
+    })
+
+    $(".control li").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
     })
     // console.log();
 })
