@@ -1,17 +1,31 @@
 // Copyright 2025 Johnson
 $(function () {
 
-    let kvHeight = $(".kv").height();
-    let mainHeight = $(".main-fix").height();
-    console.log(mainHeight);
+    const $body = $("body");
+    const $scrollBox = $(".scroll-box");
+    const headerHeight = $(".header").outerHeight();
+    const kvHeight = $(".kv").outerHeight();
+    const mainHeight = $(".main-fix").outerHeight();
+    const totalPadding = headerHeight + kvHeight + mainHeight;
 
-    $(window).scroll(function () {
-        let currentScrollTop = $(window).scrollTop();
+    let isFreezed = false;
+
+    $(window).on("scroll", function () {
+        const currentScrollTop = $(this).scrollTop();
+
         if (currentScrollTop >= kvHeight) {
-            $("body").addClass("freezed");
+            if (!isFreezed) {
+                $body.addClass("freezed");
+                $scrollBox.css("padding-top", totalPadding);
+                isFreezed = true;
+            }
         } else {
-            $("body").removeClass("freezed");
+            if (isFreezed) {
+                $body.removeClass("freezed");
+                $scrollBox.css("padding-top", "");
+                isFreezed = false;
+            }
         }
-    })
+    });
     // console.log();
 })
