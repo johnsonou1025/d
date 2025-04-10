@@ -1,0 +1,165 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {}
+
+
+body {
+    font-size: 14px;
+    letter-spacing: 0.1rem;
+}
+
+.freeze-box {
+    position: fixed;
+    top: 80px;
+    width: 100%;
+}
+
+.flex-center>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: #333;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.kv {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: #aaa;
+    color: #fff;
+    z-index: 1;
+}
+
+.main-fix {
+    position: relative;
+    margin-top: 280px;
+    z-index: 1;
+}
+
+.freezed .main-fix {
+    position: fixed;
+    top: 80px;
+    width: 100%;
+    margin-top: 0;
+    z-index: 3;
+}
+
+.qarquee {
+    height: 20px;
+    background: #555;
+    color: #fff;
+}
+
+.jackpot {
+    height: 80px;
+    background: #777;
+    color: #fff;
+}
+
+.account {
+    height: 80px;
+    background: #999;
+    color: #fff;
+}
+
+.menu {
+    height: 80px;
+    background: #aaa;
+    color: #fff;
+}
+
+.scroll-box {
+    position: relative;
+    z-index: 1;
+    /* display: flex;
+    justify-content: center; */
+    padding-top: 0;
+    overflow: hidden;
+}
+
+.freezed .scroll-box {
+    background: #fff;
+    padding-top: 540px;
+    /* header + key visual + main-fix*/
+}
+
+.games {
+    float: left;
+    background: #fff;
+}
+
+.freezed .games {
+    width: 100%;
+}
+
+.games ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.games ul+ul {
+    margin-top: 24px;
+}
+
+.games li {
+    width: calc((100% - 16px) / 3);
+    height: 40vw;
+    background: #eee;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: #666;
+    color: #fff;
+    z-index: 99;
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+
+
+
+
+
+/*css end*/
