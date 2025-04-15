@@ -15,23 +15,25 @@
     </div>
 
     <script>
+        document.getElementById('fetchBtn').addEventListener('click', async () => {
+            const url = 'https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=AAPL&type=STOCKS';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4',
+                    'x-rapidapi-host': 'yahoo-finance15.p.rapidapi.com'
+                }
+            };
 
-        const url = 'https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/modules?ticker=AAPL&module=asset-profile';
-        const options = {
-            method: 'GET',
-            headers: {
-                'x-rapidapi-key': '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4',
-                'x-rapidapi-host': 'yahoo-finance15.p.rapidapi.com'
+            try {
+                const response = await fetch(url, options);
+                const result = await response.text();
+                console.log(result);
+            } catch (error) {
+                console.error(error);
             }
-        };
 
-        try {
-            const response = await fetch(url, options);
-            const result = await response.text();
-            console.log(result);
-        } catch (error) {
-            console.error(error);
-        }
+        });
         /*
         const apiKey = '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4';
 
