@@ -2,51 +2,50 @@
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台積電今日成交資訊</title>
+    <meta charset="UTF-8" />
+    <title>台積電股價資訊</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 p-6">
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-md p-6">
-        <h1 class="text-xl font-bold mb-4">📈 台積電（2330）今日成交資訊</h1>
-        <button id="fetchBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">載入資料</button>
+<body class="bg-gray-100 p-6 text-gray-900">
+    <div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-4">
+        <h1 class="text-xl font-bold mb-4">📈 台積電即時股價</h1>
+        <button id="fetchBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">取得即時價格</button>
         <div id="output" class="mt-4 text-sm"></div>
     </div>
 
     <script>
+        const apiKey = '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4';
+
         document.getElementById('fetchBtn').addEventListener('click', async () => {
             const output = document.getElementById('output');
             output.innerHTML = '讀取中...';
 
             try {
-                const apiUrl = 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL';
-                const res = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}`);
-                const wrapped = await res.json();
-                const data = JSON.parse(wrapped.contents);
-                console.log(data);
+                const res = await fetch('https://yahoo-finance15.p.rapidapi.com/api/yahoo/v8/finance/chart/TSMC', {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': apiKey,
+                        'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com'
+                    }
+                });
 
-                const tsmc = data.find(item => item['證券代號'] === '2330');
+                const result = await res.json();
+                const chart = result.chart;
+                const priceData = chart.result[0];
 
-                if (!tsmc) {
-                    output.innerHTML = '找不到台積電資料';
-                    return;
-                }
+                const timestamp = priceData.timestamp.at(-1);
+                const price = priceData.indicators.quote[0].close.at(-1);
+                const date = new Date(timestamp * 1000).toLocaleString();
 
                 output.innerHTML = `
-          <div>成交股數：${tsmc['成交股數']}</div>
-          <div>成交金額：${tsmc['成交金額']}</div>
-          <div>開盤價：${tsmc['開盤價']}</div>
-          <div>最高價：${tsmc['最高價']}</div>
-          <div>最低價：${tsmc['最低價']}</div>
-          <div>收盤價：${tsmc['收盤價']}</div>
-          <div>最後揭示買價：${tsmc['最後揭示買價']}</div>
-          <div>最後揭示賣價：${tsmc['最後揭示賣價']}</div>
+          <div>股票代號：2330.TW（台積電）</div>
+          <div>最新價格：${price.toFixed(2)} 元</div>
+          <div>時間：${date}</div>
         `;
             } catch (err) {
-                // console.error(err);
-                output.innerHTML = '資料取得失敗';
+                console.error(err);
+                output.innerHTML = '❌ 資料取得失敗';
             }
         });
     </script>
