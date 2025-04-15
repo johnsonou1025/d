@@ -2,85 +2,50 @@
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>股票自動交易面板</title>
-    <script src="https://cdn.jsdelivr.net/npm/technicalindicators@3.0.0/dist/browser.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台積電今日成交資訊</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-900 p-4">
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-md p-4">
-        <h1 class="text-xl font-bold mb-4">股票自動交易控制台</h1>
-
-        <div class="mb-4">
-            <label class="block font-medium mb-1">輸入股票代碼</label>
-            <input id="stockCode" type="text" value="2330" class="w-full border rounded px-3 py-2" />
-        </div>
-
-        <button id="fetchBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">取得分析結果</button>
-
-        <div id="output" class="mt-6 text-sm"></div>
+<body class="bg-gray-100 text-gray-800 p-6">
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-md p-6">
+        <h1 class="text-xl font-bold mb-4">📈 台積電（2330）今日成交資訊</h1>
+        <button id="fetchBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">載入資料</button>
+        <div id="output" class="mt-4 text-sm"></div>
     </div>
 
     <script>
         document.getElementById('fetchBtn').addEventListener('click', async () => {
-            const code = document.getElementById('stockCode').value;
             const output = document.getElementById('output');
             output.innerHTML = '讀取中...';
 
             try {
-                const res = await fetch(`https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY?stockNo=${code}`);
+                const proxyUrl = 'https://corsproxy.io/?';
+                const apiUrl = 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL';
+                const res = await fetch(proxyUrl + encodeURIComponent(apiUrl));
                 const data = await res.json();
-                console.log(res)
+                console.log(data);
 
-                if (!data.data || data.data.length === 0) {
-                    output.innerHTML = '查無歷史資料';
+                const tsmc = data.find(item => item['證券代號'] === '2330');
+
+                if (!tsmc) {
+                    output.innerHTML = '找不到台積電資料';
                     return;
-                }
-
-                const closePrices = data.data.map(day => parseFloat(day[6].replace(/,/g, ''))).filter(p => !isNaN(p));
-
-                if (closePrices.length < 26) {
-                    output.innerHTML = '資料不足以計算指標';
-                    return;
-                }
-
-                const bb = technicalindicators.bollingerbands.calculate({
-                    period: 20,
-                    stdDev: 2,
-                    values: closePrices
-                });
-
-                const macd = technicalindicators.macd.calculate({
-                    values: closePrices,
-                    fastPeriod: 12,
-                    slowPeriod: 26,
-                    signalPeriod: 9,
-                    SimpleMAOscillator: false,
-                    SimpleMASignal: false
-                });
-
-                const currentPrice = closePrices.at(-1);
-                const lastBB = bb.at(-1);
-                const lastMACD = macd.at(-1);
-
-                let decision = '🔍 觀察中';
-                if (lastMACD?.MACD > lastMACD?.signal && currentPrice > lastBB?.lower) {
-                    decision = '✅ 建議買進';
-                } else if (lastMACD?.MACD < lastMACD?.signal && currentPrice < lastBB?.upper) {
-                    decision = '❌ 建議賣出';
                 }
 
                 output.innerHTML = `
-          <div>股票代碼：${code}</div>
-          <div>最新收盤價：${currentPrice}</div>
-          <div>BBAND：上 ${lastBB?.upper.toFixed(2)}, 中 ${lastBB?.middle.toFixed(2)}, 下 ${lastBB?.lower.toFixed(2)}</div>
-          <div>MACD：${lastMACD?.MACD?.toFixed(2)}, 訊號線：${lastMACD?.signal?.toFixed(2)}</div>
-          <div class="font-bold mt-2 text-lg">${decision}</div>
+          <div>成交股數：${tsmc['成交股數']}</div>
+          <div>成交金額：${tsmc['成交金額']}</div>
+          <div>開盤價：${tsmc['開盤價']}</div>
+          <div>最高價：${tsmc['最高價']}</div>
+          <div>最低價：${tsmc['最低價']}</div>
+          <div>收盤價：${tsmc['收盤價']}</div>
+          <div>最後揭示買價：${tsmc['最後揭示買價']}</div>
+          <div>最後揭示賣價：${tsmc['最後揭示賣價']}</div>
         `;
-            } catch (e) {
-                console.error(e);
+            } catch (err) {
+                // console.error(err);
                 output.innerHTML = '資料取得失敗';
             }
         });
