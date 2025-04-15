@@ -21,10 +21,10 @@
             output.innerHTML = '讀取中...';
 
             try {
-                const proxyUrl = 'https://corsproxy.io/?';
                 const apiUrl = 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL';
-                const res = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-                const data = await res.json();
+                const res = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}`);
+                const wrapped = await res.json();
+                const data = JSON.parse(wrapped.contents);
                 console.log(data);
 
                 const tsmc = data.find(item => item['證券代號'] === '2330');
