@@ -35,11 +35,11 @@ $(document).ready(function () {
     })
 
     // slider card
-    $(".card-slider i:first-child").click(function () {
-        $(".card-group li:last-child").insertBefore($(".card-group li:first-child"));
+    $(".card-toggle i:first-child").click(function () {
+        $(".card-slide-group li:last-child").insertBefore($(".card-slide-group li:first-child"));
     });
-    $(".card-slider i:last-child").click(function () {
-        $(".card-group li:first-child").insertAfter($(".card-group li:last-child"));
+    $(".card-toggle i:last-child").click(function () {
+        $(".card-slide-group li:first-child").insertAfter($(".card-slide-group li:last-child"));
     });
 
     // contact
