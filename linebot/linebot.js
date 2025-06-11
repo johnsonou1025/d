@@ -4,7 +4,7 @@ var message = new Array();
 
 //line機械人主結構
 function doPost(e) {
-
+    /*--和linebot串連--*/
     /*--取得對話訊息--*/
     var msg = JSON.parse(e.postData.contents);
     console.log(msg);
@@ -31,7 +31,6 @@ function doPost(e) {
     /*--判斷指令--*/
     if (userMessage.indexOf("歐巴油價") >= 0) {
         var oil = Oil(SpreadSheet);
-        userMessage = oil;
     } else if (userMessageArray.indexOf("歐巴滾") >= 0) {
         if (typeof msg.events[0].source.roomId === 'undefined') {
             UrlFetchApp.fetch("https://api.line.me/v2/bot/group/" + msg.events[0].source.groupId + "/leave", {
@@ -67,7 +66,7 @@ function Oil(SpreadSheet) {
     //讀取到值，並將讀到的陣列轉成字串
     var getContent = SheetName.getSheetValues(1, 4, 1, 1).join('');
     userMessage = getContent;
-    return userMessage;
+    doReplyText(userMessage);
 }
 
 function oilTest() {
