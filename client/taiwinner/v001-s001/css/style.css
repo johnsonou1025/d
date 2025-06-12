@@ -1,0 +1,153 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {
+    --color-bg-main: #1D1D1F;
+    --color-main: #FFFFFF;
+    --color-bg-marquee: #E0E0E0;
+    --color-marquee: #666666;
+    --color-bg-jackpot: #F9F9F9;
+    --color-jackpot: #1D1D1F;
+    --color-bg-account: #D1D1D6;
+    --color-account: #1D1D1F;
+    --color-bg-kv: #FAFAFA;
+    --color-kv: #6E6E73;
+    --color-bg-menu: #1D1D1F;
+    --color-menu: #fff;
+    --color-bg-card: #E0E0E0;
+    --color-card: #666666;
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    letter-spacing: 0.1rem;
+    background: #F5F5F7;
+}
+
+.mx-width {
+    max-width: 480px;
+}
+
+.freeze-box {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.flex-center>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    height: 80px;
+    background: var(--color-bg-main);
+    color: var(--color-main);
+}
+
+.marquee {
+    height: 40px;
+    background: var(--color-bg-marquee);
+    color: var(--color-marquee);
+}
+
+.jackpot {
+    height: 80px;
+    background: var(--color-bg-jackpot);
+    color: var(--color-jackpot);
+}
+
+.account {
+    height: 80px;
+    background: var(--color-bg-account);
+    color: var(--color-account);
+}
+
+.kv {
+    margin-bottom: 12px;
+    height: 200px;
+    background: var(--color-bg-kv);
+    color: var(--color-kv);
+}
+
+.control {
+    visibility: hidden;
+    position: fixed;
+    top: 60vh;
+    transform: translateY(-50%);
+    padding: 10px;
+    background: var(--color-bg-menu);
+    opacity: 0;
+    transition: .3s;
+}
+
+.control li {
+    width: 32px;
+    height: 32px;
+    background: var(--color-bg-menu);
+    color: var(--color-menu);
+    font-size: 80%;
+}
+
+.control li+li {
+    margin-top: 8px;
+}
+
+.control.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.games {
+    flex-wrap: wrap;
+}
+
+.games ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.games ul+ul {
+    margin-top: 24px;
+}
+
+.games li {
+    width: calc((100% - 16px * 2) / 3);
+    aspect-ratio: 3 / 4;
+    background: var(--color-bg-card);
+    color: var(--color-card);
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 48px;
+    background: var(--color-bg-main);
+    color: var(--color-main);
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+
+
+
+
+
+/*css end*/

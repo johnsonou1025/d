@@ -1,12 +1,34 @@
 /* Copyright 2025 Johnson */
 @import "reset.css";
 
-:root {}
+:root {
+    --color-bg-main: #1D1D1F;
+    --color-main: #FFFFFF;
+    --color-bg-marquee: #E0E0E0;
+    --color-marquee: #666666;
+    --color-bg-jackpot: #F9F9F9;
+    --color-jackpot: #1D1D1F;
+    --color-bg-account: #D1D1D6;
+    --color-account: #1D1D1F;
+    --color-bg-kv: #FAFAFA;
+    --color-kv: #6E6E73;
+    --color-bg-menu: #1D1D1F;
+    --color-menu: #fff;
+    --color-bg-card: #E0E0E0;
+    --color-card: #666666;
+}
 
 
 body {
-    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 16px;
     letter-spacing: 0.1rem;
+}
+
+.mx-width {
+    max-width: 480px;
 }
 
 .freeze-box {
@@ -32,11 +54,12 @@ body {
 .header {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     height: 80px;
-    background: #333;
-    color: #fff;
+    background: var(--color-bg-main);
+    color: var(--color-main);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,19 +69,22 @@ body {
 .kv {
     position: fixed;
     top: 80px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 200px;
-    background: #aaa;
-    color: #fff;
+    background: var(--color-bg-kv);
+    color: var(--color-kv);
     z-index: 1;
 }
 
 .main-fix {
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 280px;
     z-index: 1;
 }
@@ -71,32 +97,34 @@ body {
     z-index: 3;
 }
 
-.qarquee {
+.marquee {
     height: 20px;
-    background: #555;
-    color: #fff;
+    background: var(--color-bg-marquee);
+    color: var(--color-marquee);
 }
 
 .jackpot {
     height: 80px;
-    background: #777;
-    color: #fff;
+    background: var(--color-bg-jackpot);
+    color: var(--color-jackpot);
 }
 
 .account {
     height: 80px;
-    background: #999;
-    color: #fff;
+    background: var(--color-bg-account);
+    color: var(--color-account);
 }
 
 .menu {
     height: 80px;
-    background: #aaa;
-    color: #fff;
+    background: var(--color-bg-menu);
+    color: var(--color-menu);
 }
 
 .scroll-box {
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
     /* display: flex;
     justify-content: center; */
@@ -121,7 +149,7 @@ body {
 .games ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 16px;
     width: 100%;
     padding: 0 8px;
 }
@@ -131,9 +159,10 @@ body {
 }
 
 .games li {
-    width: calc((100% - 16px) / 3);
-    height: 40vw;
-    background: #eee;
+    width: calc((100% - 16px*2) / 3);
+    aspect-ratio: 3 / 4;
+    background: var(--color-bg-card);
+    color: var(--color-card);
 }
 
 .navigation {
@@ -142,11 +171,12 @@ body {
     justify-content: center;
     position: fixed;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     height: 48px;
-    background: #666;
-    color: #fff;
+    background: var(--color-bg-main);
+    color: var(--color-main);
     z-index: 99;
 }
 

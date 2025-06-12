@@ -1,0 +1,370 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {
+    --block: #abc;
+    --block2: #123;
+    --bg: rgba(245, 245, 245, 1);
+    --shadow: 0 1px 3px rgba(60, 81, 105, 0.16);
+    --color-bg-main: #1D1D1F;
+    --color-main: #FFFFFF;
+    --color-bg-marquee: #E0E0E0;
+    --color-marquee: #666666;
+    --color-bg-jackpot: #F9F9F9;
+    --color-jackpot: #1D1D1F;
+    --color-bg-account: #D1D1D6;
+    --color-account: #1D1D1F;
+    --color-bg-kv: #FAFAFA;
+    --color-kv: #6E6E73;
+    --color-bg-menu: #1D1D1F;
+    --color-menu: #fff;
+    --color-bg-card: #E0E0E0;
+    --color-card: #666666;
+}
+
+
+body {
+    /* font-family: "PingFang SC", "Microsoft YaHei", "Arial", sans-serif; */
+    font-size: 14px;
+    letter-spacing: 0.1rem;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    height: 32px;
+    background: var(--block);
+    color: #000;
+}
+
+/* Grid  */
+.game-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 120px;
+    height: 100%;
+    background: var(--color-bg-card);
+    color: var(--color-card);
+}
+
+*[class^="grid"] {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.grid-1 {
+    width: 100%;
+}
+
+.grid-2 {
+    width: calc((100% - 8px) / 2);
+}
+
+.grid-4 {
+    width: calc((100% - 8px * 3) / 4);
+}
+
+/* Header  */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 16px;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-bg-main);
+    color: var(--color-main);
+    box-shadow: var(--shadow);
+    z-index: 2;
+}
+
+.header i {
+    text-align: left;
+    width: 36px;
+    height: 36px;
+    background: var(--block);
+}
+
+.header .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    background: var(--block);
+}
+
+.main {
+    position: fixed;
+    top: 56px;
+    /* top = header  */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.kv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 144px;
+    background: var(--color-bg-kv);
+    color: var(--color-kv);
+    box-shadow: var(--shadow);
+    z-index: 1;
+}
+
+.account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 8px 12px;
+    background: var(--color-bg-account);
+    color: var(--color-account);
+}
+
+.account .lf {
+    display: flex;
+    height: 100%;
+}
+
+.account .lf ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.account .lf ul li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.account .rt ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: end;
+    width: 100%;
+    gap: 10px;
+}
+
+.account .rt i {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: var(--block);
+}
+
+/* Marquee  */
+.marquee {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 12px;
+    padding-left: 12px;
+    width: 100%;
+    height: 40px;
+    background: var(--color-bg-marquee);
+    color: var(--color-marquee);
+    box-shadow: var(--shadow);
+}
+
+.marquee i {
+    display: block;
+    margin-right: 4px;
+    width: 14px;
+    height: 12px;
+    background: var(--block);
+}
+
+.marquee .links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 24px;
+    min-width: 120px;
+    border-radius: 12px 0 12px;
+    background: var(--block2);
+    color: #fff;
+}
+
+
+/* Game list  */
+
+.games-top-gap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 338px;
+    /* top = header + main */
+    height: 12px;
+    z-index: 1;
+}
+
+.freezed .games-top-gap {
+    position: fixed;
+    top: 56px;
+    /* top = header */
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    z-index: 2;
+}
+
+.scroll-box {
+    position: relative;
+    top: 338px;
+    /* top = header + main */
+    padding-bottom: 48px;
+    /* paddin-bottom = nav  */
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.freezed .scroll-box {
+    top: 350px;
+    /* top = header + main + games-top-gap */
+}
+
+.scroll-box:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    background: #fff;
+}
+
+.freezed .scroll-box:before {
+    position: fixed;
+    top: 68px;
+    /* top = header + gap */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+}
+
+.games {
+    position: relative;
+    padding: 0 16px;
+    z-index: 1;
+}
+
+.games-headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 8px;
+}
+
+.games-headline .lf {
+    display: flex;
+    align-items: center;
+}
+
+.games-headline .lf i {
+    display: block;
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+    background: var(--block);
+}
+
+.games-headline .rt .more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: end;
+}
+
+.games-headline .rt .more i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: var(--block);
+}
+
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 48px;
+    background: var(--color-bg-main);
+    color: var(--color-main);
+    z-index: 99;
+}
+
+.navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4px 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 -1px 2px rgba(206, 210, 218, 0.5);
+    border-radius: 12px 12px 0 0;
+}
+
+.navigation li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% / 5);
+}
+
+.navigation i {
+    display: block;
+    margin-bottom: 4px;
+    width: 32px;
+    height: 32px;
+    background: var(--block);
+}
+
+.mx-width {
+    max-width: 480px;
+}
+
+@media (max-width: 480px) {}
+
+
+
+
+
+
+/*css end*/
