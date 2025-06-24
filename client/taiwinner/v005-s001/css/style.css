@@ -18,80 +18,74 @@
     --color-card: #666666;
 }
 
-html {
-    height: 100%;
-    width: 100%;
+* {
+    box-sizing: border-box;
 }
 
-body {
-    position: relative;
-    font-size: 16px;
-    letter-spacing: 0.1rem;
-    height: 100%;
-    /* overflow: hidden; */
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-}
-
-.flex-col {
-    flex: 1;
-    height: 100%;
-    overflow: hidden;
-}
-
+/* Header */
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    width: 100%;
-    height: 80px;
-    background: var(--color-bg-header);
-    color: var(--color-header);
-}
-
-.main {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
-
-.kv {
-    height: 300px;
-    background: var(--color-bg-kv);
-    color: var(--color-kv);
-}
-
-.account {
-    height: 120px;
-    background: var(--color-bg-account);
-    color: var(--color-account);
-}
-
-.sticky {
-    position: sticky;
-    top: 0;
-}
-
-.section {
-    height: 764px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
-
-.h1000 {
-    height: 1000px;
-}
-
-.footer {
-    width: 100%;
+    left: 0;
     height: 60px;
-    background: var(--color-bg-header);
-    color: var(--color-header);
+    width: 100%;
+    background-color: #333;
+    color: white;
+    line-height: 60px;
+    text-align: center;
+    z-index: 1000;
 }
+
+/* Key Visual */
+.key-visual {
+    height: 300px;
+    background: linear-gradient(to bottom, #ffd700, #ffa500);
+    text-align: center;
+    line-height: 300px;
+    font-size: 24px;
+    color: white;
+    margin-top: 60px;
+    /* 避開 header */
+    position: relative;
+    z-index: 0;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    position: relative;
+    z-index: 10;
+    /* 蓋過 key visual */
+}
+
+.sidebar {
+    position: static;
+    width: 120px;
+    background-color: #eee;
+    padding: 20px;
+    height: calc(100vh - 60px);
+    /* 減去 header 高度 */
+    box-sizing: border-box;
+}
+
+.freezed .sidebar {
+    position: fixed;
+    top: 60px;
+}
+
+.content {
+    flex: 1;
+    /* margin-left: 120px; */
+    padding: 20px;
+    min-height: 1500px;
+    /* 模擬多內容 */
+    box-sizing: border-box;
+}
+
+.freezed .content {
+    margin-left: 120px;
+}
+
 
 
 @media (max-width: 1200px) and (min-width: 992px) {}

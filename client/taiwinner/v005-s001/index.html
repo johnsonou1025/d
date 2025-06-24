@@ -9,22 +9,25 @@
 </head>
 
 <body>
-    <div class="app">
-        <div class="flex-col">
-            <div class="header">Header</div>
-            <div class="main">
-                <div class="kv">Key visual</div>
-                <div class="account sticky">Account</div>
-                <div class="section">
-                    <div class="kv">Key visual</div>
-                    <div class="account sticky" style="top:100px">Account</div>
-                    <div class="h1000"></div>
-                </div>
-            </div>
-        </div>
-        <div class="footer">Navigation</div>
+    <header class="header">Header 固定</header>
+    <section class="key-visual">Key Visual 區塊</section>
+    <div class="layout" id="layout">
+        <aside class="sidebar" id="sidebar">側邊欄</aside>
+        <main class="content">很多內容捲動中...</main>
     </div>
+    <script>
+        const layout = document.getElementById('layout');
+        const keyVisualHeight = 300;
 
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= keyVisualHeight) {
+                layout.classList.add('freezed');
+            } else {
+                layout.classList.remove('freezed');
+            }
+        });
+
+    </script>
 </body>
 
 </html>
