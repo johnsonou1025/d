@@ -1,19 +1,57 @@
-function fetch0050Data() {
-    const lookbackDays = 240;
-    const stockNumber = "2382.TW"
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stockNumber}?interval=1d&range=${lookbackDays}d`;
+// 主程式
+function fetchMultipleStocks() {
+    const stockListSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("StockList");
+    const stockSymbols = stockListSheet.getRange("A2:B").getValues().filter(row => row[0] && row[1]);
+
+    const messages = [];
+
+    for (let [symbol, name] of stockSymbols) {
+        const result = fetchStockData(symbol.trim(), name.trim());
+        if (result) messages.push(result);
+        Utilities.sleep(2000); // 延遲避免限速
+    }
+
+    /* -------- 傳送到TG -------- */
+    /*
+    const todayStr = Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd");
+    let finalMessage = "";
+    if(messages.length > 0){
+      finalMessage = `📅 ${todayStr}\n\n${messages.join('\n\n')}`;  // 多筆合併傳送
+    } else {
+      finalMessage = `📅 ${todayStr}\n\n😐 無風無浪的一天`;  // 多筆合併傳送
+    }
+    sendTelegramMessage(finalMessage);
+    */
+
+    /* -------- 檢查最後一欄並傳送到TG -------- */
+    checkLastRowSignalsAndNotifyTelegram()
+}
+
+
+function fetchStockData(symbol, name) {
+    const lookbackDays = 90;
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=${lookbackDays}d`;
     const response = UrlFetchApp.fetch(url);
     const json = JSON.parse(response.getContentText());
-
     const result = json.chart.result[0];
+    if (!result) return;
+
     const timestamps = result.timestamp;
     const closes = result.indicators.quote[0].close;
 
-    const rsiValues = calculateRSI(closes, 14);
-
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0050 Monitor");
-    sheet.clearContents();
-    sheet.appendRow(["日期", "收盤價", "前一日收盤", "BB上緣", "BB下緣", "DIF", "MACD", "MACD(OSC)", "建議動作"]);
+    // const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("0050 Monitor");
+    // sheet.clearContents();
+    let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name + " " + symbol);
+    if (!sheet) {
+        sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(name + " " + symbol);
+    } else {
+        sheet.clearContents();
+    }
+    const head = ["日期", "收盤價", "前一日收盤", "BB上緣", "BB下緣", "DIF", "MACD", "MACD(OSC)", "建議動作"];
+    sheet.appendRow(head);
+    sheet.getRange(sheet.getLastRow(), head.length).setHorizontalAlignment('center');
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, head.length).setBackground("#dce6f1");
 
     for (let i = 26; i < timestamps.length; i++) {
         const date = new Date(timestamps[i] * 1000);
@@ -26,9 +64,9 @@ function fetch0050Data() {
         /* -------- 判斷 -------- */
         // 昨日收盤
         const closeYest = closes[i - 1];
-
-        // RSI
-        const rsi = rsiValues[i];
+        if (closeToday == null || closeYesterday == null || isNaN(closeToday) || isNaN(closeYesterday)) {
+            continue;
+        }
 
         // 布林通道 (用最近 20 天)
         const bbWindow = closes.slice(i - 19, i + 1);
@@ -62,15 +100,15 @@ function fetch0050Data() {
         const isMacdPositiveDecline = osdToday > 0 && osdToday <= osdYest;
 
         if (isTouchLowerYest && isMacdNegative) {
-            action = "✅ 昨天碰下緣，MACD負值收斂，建議買入";
+            action = "🔥 建議進場";
         } else if (isTouchUpperYest && isMacdPositiveDecline) {
-            action = "⚠️ 昨天碰上緣，MACD正值減弱，建議賣出";
+            action = "⚠️ 建議賣出";
         } else {
-            action = "📊 無明確訊號";
+            action = "無明確訊號";
         }
 
         /* -------- 寫入 Google Sheet -------- */
-        sheet.appendRow([
+        const row = [
             Utilities.formatDate(date, "Asia/Taipei", "yyyy-MM-dd"),
             closeToday.toFixed(2),
             closeYesterday.toFixed(2),
@@ -80,34 +118,21 @@ function fetch0050Data() {
             macdToday.toFixed(2),
             osdToday.toFixed(2),
             action
-        ]);
+        ];
+
+        sheet.appendRow(row);
+        sheet.getRange(sheet.getLastRow(), row.length).setHorizontalAlignment('center');
 
         // 回傳最後一筆當天訊息
+        /*
         if (i === timestamps.length - 1) {
-            const message = `${Utilities.formatDate(date, "Asia/Taipei", "yyyy-MM-dd")}\n0050\n${action}`;
+          if (action.includes("建議買入") || action.includes("建議賣出")) {
+            const message = `${name}${symbol}\n${action}`;
             return message;
+          }
         }
+        */
     }
-}
-
-// RSI 計算
-function calculateRSI(closes, period) {
-    const gains = [], losses = [], rsiArray = [];
-    for (let i = 1; i < closes.length; i++) {
-        const change = closes[i] - closes[i - 1];
-        gains.push(change > 0 ? change : 0);
-        losses.push(change < 0 ? -change : 0);
-
-        if (i >= period) {
-            const avgGain = average(gains.slice(i - period, i));
-            const avgLoss = average(losses.slice(i - period, i));
-            const rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
-            rsiArray[i] = 100 - (100 / (1 + rs));
-        } else {
-            rsiArray[i] = NaN;
-        }
-    }
-    return rsiArray;
 }
 
 // EMA 計算
@@ -171,6 +196,50 @@ function standardDeviation(arr) {
     return Math.sqrt(average(squareDiffs));
 }
 
+/* -------- get last information -------- */
+function checkLastRowSignalsAndNotifyTelegram() {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheets = ss.getSheets();
+    const messages = [];
+
+    sheets.forEach(sheet => {
+        const sheetName = sheet.getName();
+        const lastRow = sheet.getLastRow();
+        const lastCol = sheet.getLastColumn();
+        if (lastRow === 0 || lastCol === 0) return;
+
+        const lastRowValues = sheet.getRange(lastRow, 1, 1, lastCol).getValues()[0];
+
+        let hasBuy = false;
+        let hasSell = false;
+
+        lastRowValues.forEach(cell => {
+            if (typeof cell === 'string') {
+                if (cell.includes('建議進場')) hasBuy = true;
+                if (cell.includes('建議賣出')) hasSell = true;
+            }
+        });
+
+        if (hasBuy || hasSell) {
+            let msg = `${sheetName}`;
+            if (hasBuy) msg += `\n🔥 建議進場`;
+            if (hasSell) msg += `\n⚠️ 建議賣出`;
+            messages.push(msg);
+        }
+    });
+
+    const todayStr = Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyy-MM-dd');
+    let finalMessage = '';
+
+    if (messages.length > 0) {
+        finalMessage = `📅 ${todayStr}\n\n${messages.join('\n\n')}`;
+    } else {
+        finalMessage = `📅 ${todayStr}\n\n😐 無風無浪的一天`;
+    }
+
+    sendTelegramMessage(finalMessage);
+}
+
 
 /* -------- sent to Telegram -------- */
 function sendTelegramMessage(message) {
@@ -200,10 +269,6 @@ function sendTelegramMessage(message) {
     // Logger.log(response.getContentText());
 }
 
-function dayReport() {
-    var ans = fetch0050Data();
-    // sendTelegramMessage(ans);
-}
 
 
 
