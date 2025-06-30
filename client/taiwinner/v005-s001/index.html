@@ -12,10 +12,13 @@
     <header class="header">Header 固定</header>
     <section class="key-visual">Key Visual 區塊</section>
     <div class="layout" id="layout">
-        <aside class="sidebar" id="sidebar">側邊欄</aside>
-        <main class="content">很多內容捲動中...</main>
+        <div class="marquee">🔥 最新消息：這是跑馬燈效果，與內容一同捲動 🔥</div>
+        <div class="flex">
+            <aside class="sidebar" id="sidebar">側邊欄</aside>
+            <main class="content">很多內容捲動中...</main>
+        </div>
     </div>
-    <script>
+    <!-- <script>
         const layout = document.getElementById('layout');
         const keyVisualHeight = 300;
 
@@ -26,8 +29,7 @@
                 layout.classList.remove('freezed');
             }
         });
-
-    </script>
+    </script> -->
 </body>
 
 </html>

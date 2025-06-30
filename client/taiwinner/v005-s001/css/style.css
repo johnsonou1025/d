@@ -53,13 +53,36 @@
 /* Layout */
 .layout {
     display: flex;
+    flex-direction: column;
     position: relative;
     z-index: 10;
     /* 蓋過 key visual */
 }
 
+/* 跑馬燈區塊 */
+.marquee {
+    width: 100%;
+    background: #ffeb3b;
+    color: #000;
+    padding: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.flex {
+    display: flex;
+}
+
 .sidebar {
     position: static;
+    position: sticky;
+    top: 60px;
     width: 120px;
     background-color: #eee;
     padding: 20px;
@@ -68,10 +91,12 @@
     box-sizing: border-box;
 }
 
+
+/* 
 .freezed .sidebar {
-    position: fixed;
+    position: sticky;
     top: 60px;
-}
+} */
 
 .content {
     flex: 1;
@@ -80,10 +105,6 @@
     min-height: 1500px;
     /* 模擬多內容 */
     box-sizing: border-box;
-}
-
-.freezed .content {
-    margin-left: 120px;
 }
 
 
