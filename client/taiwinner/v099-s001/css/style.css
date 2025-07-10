@@ -1,0 +1,123 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {
+    --color-bg-header: #1D1D1F;
+    --color-header: #FFFFFF;
+    --color-bg-marquee: #E0E0E0;
+    --color-marquee: #666666;
+    --color-bg-jackpot: #F9F9F9;
+    --color-jackpot: #1D1D1F;
+    --color-bg-account: #D1D1D6;
+    --color-account: #1D1D1F;
+    --color-bg-kv: #FAFAFA;
+    --color-kv: #6E6E73;
+    --color-bg-menu: #1D1D1F;
+    --color-menu: #fff;
+    --color-bg-card: #E0E0E0;
+    --color-card: #666666;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    line-height: 60px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Key Visual */
+.key-visual {
+    height: 300px;
+    background: linear-gradient(to bottom, #ffd700, #ffa500);
+    text-align: center;
+    line-height: 300px;
+    font-size: 24px;
+    color: white;
+    margin-top: 60px;
+    /* 避開 header */
+    position: relative;
+    z-index: 0;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+    /* 蓋過 key visual */
+}
+
+/* 跑馬燈區塊 */
+.marquee {
+    width: 100%;
+    background: #ffeb3b;
+    color: #000;
+    padding: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.flex {
+    display: flex;
+}
+
+.sidebar {
+    position: static;
+    position: sticky;
+    top: 60px;
+    width: 120px;
+    background-color: #eee;
+    padding: 20px;
+    height: calc(100vh - 60px);
+    /* 減去 header 高度 */
+    box-sizing: border-box;
+}
+
+
+/* 
+.freezed .sidebar {
+    position: sticky;
+    top: 60px;
+} */
+
+.content {
+    flex: 1;
+    /* margin-left: 120px; */
+    padding: 20px;
+    min-height: 1500px;
+    /* 模擬多內容 */
+    box-sizing: border-box;
+}
+
+
+
+@media (max-width: 1200px) and (min-width: 992px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+
+
+
+
+
+/*css end*/
