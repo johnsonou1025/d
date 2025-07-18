@@ -1,0 +1,955 @@
+/* Copyright 2025 Johnson */
+@import "reset.css";
+
+:root {
+    --block: #abc;
+    --block2: #123;
+    --block3: #fff;
+    --bg: rgba(245, 245, 245, 1);
+    --shadow: 0 1px 3px rgba(60, 81, 105, 0.16);
+    --color-bg-main: #1D1D1F;
+    --color-main: #FFFFFF;
+    --color-bg-marquee: #E0E0E0;
+    --color-marquee: #666666;
+    --color-bg-jackpot: #F9F9F9;
+    --color-jackpot: #1D1D1F;
+    --color-bg-account: #D1D1D6;
+    --color-account: #1D1D1F;
+    --color-bg-kv: #FAFAFA;
+    --color-kv: #6E6E73;
+    --color-bg-menu: #1D1D1F;
+    --color-menu: #fff;
+    --color-bg-card: #E0E0E0;
+    --color-card: #666666;
+}
+
+input,
+select {
+    all: unset;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    /* font-family: "PingFang SC", "Microsoft YaHei", "Arial", sans-serif; */
+    font-size: 14px;
+    letter-spacing: 0.1rem;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a {
+    color: var(--block2);
+}
+
+a.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 16px;
+    background: var(--block);
+    color: var(--block2);
+}
+
+a.btn+a {
+    margin-left: 10px;
+}
+
+i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--block);
+}
+
+.btn-w100 {
+    padding: 12px;
+    width: 100%;
+}
+
+.mx-width {
+    width: 100%;
+    max-width: 480px;
+}
+
+/* Common - grid  */
+.game-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* min-height: 142px; */
+    height: 100%;
+    background: var(--block);
+}
+
+*[class^="grid"] {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.grid-1 {
+    width: 100%;
+}
+
+.grid-2 {
+    width: calc((100% - 12px) / 2);
+}
+
+.grid-3 {
+    width: calc((100% - 12px * 2) / 3);
+}
+
+.grid-4 {
+    width: calc((100% - 12px * 3) / 4);
+}
+
+/* Common - links  */
+
+.links ul {
+    display: flex;
+}
+
+.links li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.links-common ul {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.links-common li {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+.links-common i {
+    margin-bottom: 4px;
+    width: 32px;
+    height: 32px;
+}
+
+.links-social {
+    margin-top: 12px;
+}
+
+.links-social ul {
+    display: flex;
+}
+
+.links-social li {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.links-social li i {
+    width: 36px;
+    height: 36px;
+}
+
+.links-item-4 {
+    width: 100%;
+}
+
+.links-item-4 ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.links-item-4 li {
+    flex: 1 0 calc(25% - 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.links-item-4 li i {
+    width: 24px;
+    height: 24px;
+}
+
+/* Common - tags  */
+
+div[class^="tags"] {
+    padding: 0 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* 隱藏 scrollbar */
+    -ms-overflow-style: none;
+    /* 隱藏 scrollbar */
+}
+
+/* Chrome, Safari, Opera */
+div[class^="tags"]::-webkit-scrollbar {
+    display: none;
+}
+
+div[class^="tags"] ul {
+    display: flex;
+    gap: 8px;
+}
+
+div[class^="tags"] li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--block3);
+}
+
+.tags li i {
+    width: 12px;
+    height: 12px;
+}
+
+div[class^="tags"] li i+span {
+    margin-left: 4px;
+}
+
+.tags-only-logo i {
+    width: 40px;
+    height: 24px;
+}
+
+.tags-filter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tags-filter ul {
+    flex: 1;
+    width: auto;
+    overflow-y: hidden;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* 隱藏 scrollbar */
+    -ms-overflow-style: none;
+    /* 隱藏 scrollbar */
+}
+
+/* Chrome, Safari, Opera */
+.tags-filter ul::-webkit-scrollbar {
+    display: none;
+}
+
+.tags-filter i {
+    width: 12px;
+    height: 12px;
+}
+
+.tags-filter .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--block3);
+}
+
+/* Common - title  */
+
+.title-line {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.title-line span {
+    display: block;
+    padding: 0 12px;
+    background: var(--block3);
+    z-index: 1;
+}
+
+.title-line:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: var(--block);
+}
+
+.title {
+    width: 100%;
+}
+
+/* wrap  */
+.wrap {
+    display: flex;
+    flex-direction: column;
+    /* height: 100vh; */
+    height: calc(100vh - 78px - 16px);
+}
+
+/* Header  */
+
+.header {
+    padding: 10px 12px;
+    width: 100%;
+    height: 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--block3);
+    z-index: 2;
+}
+
+.header .lf,
+.header .rt {
+    height: 100%;
+}
+
+.header .logo {
+    width: auto;
+    height: 100%;
+    min-width: 80px;
+    background: var(--block);
+}
+
+.header .rt {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.header .rt i {
+    margin-left: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.header-title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.header-title .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 24px;
+}
+
+.header-only-back {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 12px;
+    width: 100%;
+}
+
+.header-only-back i {
+    width: 24px;
+    height: 24px;
+}
+
+.header-title .rt {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.header-icon {
+    position: relative;
+    padding: 10px 12px;
+    width: 100%;
+    height: 46px;
+}
+
+.header-icon .rt {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 16px;
+}
+
+.header-icon i {
+    width: 24px;
+    height: 24px;
+}
+
+/* Key visual  */
+
+.kv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    background: var(--block);
+    z-index: 1;
+}
+
+/* Marquee  */
+.marquee {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    width: 100%;
+    height: 32px;
+}
+
+.marquee .lf {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.marquee i {
+    margin-right: 4px;
+    width: 12px;
+    height: 12px;
+    background: var(--block);
+}
+
+.marquee i.more {
+    height: 16px;
+    width: 18px;
+}
+
+.marquee .links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 24px;
+    min-width: 120px;
+    border-radius: 12px 0 12px;
+    background: var(--block2);
+    color: #fff;
+}
+
+.account {
+    padding: 16px 0;
+    background-color: var(--block3);
+}
+
+.search-box i {
+    margin-right: 12px;
+    width: 12px;
+    height: 12px;
+}
+
+/* Main  */
+.main {
+    padding: 0 16px 16px;
+    margin-bottom: 16px;
+    background: var(--block3);
+}
+
+.main .tags {
+    margin-bottom: 0;
+}
+
+.main .game-img {
+    height: 88px;
+}
+
+/* Entrance  */
+.entrance-box {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 16px 0;
+    background: var(--block3);
+}
+
+.entrance-box .card-box,
+.entrance-box .card-box>div {
+    height: 100%;
+}
+
+.entrance-box {}
+
+.entrance-box {}
+
+
+/* Nav tag   */
+.nav-tags {
+    width: 100%;
+}
+
+.nav-tags ul {
+    display: flex;
+    width: 100%;
+}
+
+.nav-tags li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+}
+
+.nav-tags li.active {
+    background: var(--block3);
+}
+
+/* Common - form  */
+
+.main-login {
+    background: var(--block3);
+    padding: 24px;
+    width: 100%;
+}
+
+.form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.input-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.input-icon {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+input {
+    padding: 16px;
+    width: 100%;
+    background: var(--bg);
+}
+
+.select-icon {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    width: 100%;
+    background: var(--bg);
+}
+
+.select-icon i {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+}
+
+.select-icon select {
+    flex: 1;
+    height: 100%;
+}
+
+.input-notice {
+    display: flex;
+    align-items: center;
+}
+
+.input-notice i {
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+}
+
+.input-notice span {
+    flex: 1;
+}
+
+.checkbox-box {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* hidden checkbox */
+.checkbox-box input[type="checkbox"] {
+    position: absolute;
+    padding: 0;
+    height: 0;
+    width: 0;
+    cursor: pointer;
+    opacity: 0;
+}
+
+/* define */
+.checkbox-box .checkmark {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-right: 4px;
+    height: 16px;
+    width: 16px;
+    background-color: var(--bg);
+    transition: background 0.2s;
+}
+
+/* checked - background */
+.checkbox-box input:checked~.checkmark {
+    background-color: var(--block);
+    border-color: var(--block);
+}
+
+/* checked - icon */
+.checkbox-box .checkmark:after {
+    content: "";
+    /* display: none; */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+}
+
+/* checked - icon - show */
+.checkbox-box input:checked~.checkmark:after {
+    display: block;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+
+/* Common - card  */
+
+.card-box {
+    position: relative;
+    padding: 0 16px;
+    z-index: 1;
+}
+
+.card-box+.card-box {
+    margin-top: 12px;
+}
+
+.card-game {
+    width: 100%;
+    background-color: var(--block3);
+}
+
+.card-game .game-img {
+    height: 138px;
+}
+
+.card-game .card-name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: var(--block3);
+}
+
+.card-game .card-name i {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+}
+
+.card-promotion {
+    width: 100%;
+    background-color: var(--block3);
+}
+
+.card-promotion .card-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 96px;
+    background: var(--block);
+}
+
+.card-promotion .card-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 32px;
+}
+
+.card-promotion .card-title i {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+}
+
+/* My  */
+
+.personal-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.personal-info {
+    display: flex;
+    align-items: center;
+}
+
+.personal-info .avatar {
+    width: 48px;
+    height: 48px;
+}
+
+.personal-info .lf {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.personal-info .lf ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.personal-info .lf li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.personal-info .lf li:last-child {
+    font-size: 120%;
+}
+
+.personal-info .lf li i {
+    width: 12px;
+    height: 12px;
+}
+
+.personal-links {
+    width: 100%;
+}
+
+.personal-links .links-item-4 {
+    padding: 12px;
+    margin: 8px 0 16px;
+    background: var(--block3);
+}
+
+.personal-amount {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    margin: 16px 0;
+    width: 100%;
+    background: var(--block3);
+}
+
+.personal-amount .lf li {
+    display: flex;
+    gap: 8px;
+}
+
+.personal-amount .lf li+li {
+    margin-top: 8px;
+}
+
+.personal-amount .lf li:last-child {
+    font-size: 120%;
+}
+
+.personal-amount .lf li i {
+    width: 16px;
+    height: 16px;
+}
+
+.personal-amount .rt {
+    display: flex;
+}
+
+.personal-amount .rt ul {
+    gap: 16px;
+}
+
+/* Card vip  */
+.vip {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.vip-lv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    width: 100%;
+    /* min-height: 142px; */
+    height: 100%;
+    background: var(--block);
+}
+
+.vip-description {
+    padding: 12px 16px;
+    background: var(--block3);
+}
+
+.vip-description ul {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.vip-description li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Precent */
+.precent-bar {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    width: 100%;
+    background: var(--bg);
+}
+
+.precent-bar .current-precent {
+    height: 4px;
+    width: 0;
+    background: var(--block);
+    -webkit-animation: precent 3s forwards;
+    animation: precent 3s forwards;
+}
+
+@-webkit-keyframes precent {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes precent {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+
+/* Navigation  */
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background: var(--block3);
+    z-index: 99;
+}
+
+.navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.navigation li,
+.navigation li a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navigation li:nth-child(3) {
+    position: relative;
+}
+
+.navigation li:nth-child(3):before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    width: 100%;
+    height: 24px;
+    background: var(--block3);
+}
+
+.navigation i {
+    display: block;
+    margin-bottom: 8px;
+    width: 32px;
+    height: 32px;
+    background: var(--block);
+}
+
+.navigation li:nth-child(3) i {
+    position: absolute;
+    top: -16px;
+    width: 48px;
+    height: 48px;
+}
+
+
+@media (max-width: 480px) {}
+
+
+
+
+
+
+/*css end*/
