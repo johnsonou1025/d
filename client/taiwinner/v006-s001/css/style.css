@@ -48,6 +48,7 @@ a {
     color: var(--block2);
 }
 
+.btn,
 a.btn {
     display: flex;
     align-items: center;
@@ -469,9 +470,15 @@ div[class^="tags"] li i+span {
 
 /* Main  */
 .main {
+    display: flex;
+    flex-direction: column;
     padding: 8px 12px 12px;
     margin: 0 16px 16px;
     background: var(--block3);
+}
+
+.main.open {
+    flex: 1 1 0;
 }
 
 .main .tags {
@@ -479,6 +486,10 @@ div[class^="tags"] li i+span {
     justify-content: space-between;
     padding: 0;
     margin-bottom: 0;
+}
+
+.main .tags ul {
+    gap: 0;
 }
 
 .main .tags li {
@@ -492,8 +503,8 @@ div[class^="tags"] li i+span {
 .main .tags li+li:before {
     content: "";
     position: absolute;
-    left: 0;
-    height: 20px;
+    left: -1px;
+    height: 50%;
     width: 1px;
     background: var(--block);
 }
@@ -514,13 +525,64 @@ div[class^="tags"] li i+span {
 }
 
 .main .card-box-main {
-    display: flex;
-    justify-content: space-between;
+    overflow: hidden;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.main .game-img {
+.main.close .card-box-main {
+    display: none;
+}
+
+.main.open .card-box-main {
+    flex: 1 1 0;
+}
+
+.main .card-box-main::-webkit-scrollbar {
+    display: none;
+}
+
+.main .card-box-main ul {
+    display: flex;
+    gap: 0px;
+    width: 100%;
+    width: calc(400% + 36px);
+}
+
+.main.open .card-box-main ul {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+
+.main .card-box-main li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.main .card-box-main li+li {
+    margin-left: 12px;
+}
+
+.main.open .card-box-main li {
+    height: 100%;
+}
+
+.main.open .card-box-main li+li {
+    margin-left: 0;
+}
+
+.main .card-box-main .game-img {
     width: 75px;
     height: 88px;
+}
+
+.main.open .card-box-main .game-img {
+    height: 100%;
 }
 
 /* Entrance  */
@@ -532,14 +594,14 @@ div[class^="tags"] li i+span {
     background: var(--block3);
 }
 
+.entrance-box.close {
+    display: none;
+}
+
 .entrance-box .card-box,
 .entrance-box .card-box>div {
     height: 100%;
 }
-
-.entrance-box {}
-
-.entrance-box {}
 
 
 /* Nav tag   */

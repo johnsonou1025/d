@@ -23,5 +23,29 @@ $(function () {
             }
         }
     });
+
+    // card box main 
+    $(".main .tags .rt .btn").click(function () {
+        $(".main").removeClass("close");
+        $(".main").toggleClass("open");
+        if ($(".main").hasClass("open")) {
+            $(".entrance-box").addClass("close");
+        } else {
+            $(".entrance-box").removeClass("close");
+        }
+    })
+    $(".main .tags .rt i").click(function () {
+        $(".main").removeClass("open");
+        $(".main").toggleClass("close");
+        if ($(".main").hasClass("open")) {
+            $(".entrance-box").addClass("close");
+        } else {
+            $(".entrance-box").removeClass("close");
+        }
+    })
+
+
+
+
     // console.log();
 })
