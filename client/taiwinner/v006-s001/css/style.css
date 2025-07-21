@@ -52,7 +52,7 @@ a.btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 16px;
+    padding: 3px 16px;
     background: var(--block);
     color: var(--block2);
 }
@@ -92,6 +92,7 @@ i {
 *[class^="grid"] {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .gap-12 {
@@ -140,9 +141,8 @@ i {
 }
 
 .links-common i {
-    margin-bottom: 4px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
 }
 
 .links-social {
@@ -304,15 +304,15 @@ div[class^="tags"] li i+span {
     /* height: calc(100vh - 78px - 16px); */
     position: fixed;
     top: 0;
-    right: 0;
     bottom: calc(78px + 16px);
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Header  */
 
 .header {
-    padding: 10px 12px;
+    padding: 8px 12px;
     width: 100%;
     height: 46px;
     display: flex;
@@ -341,9 +341,9 @@ div[class^="tags"] li i+span {
 }
 
 .header .rt i {
-    margin-left: 16px;
-    width: 16px;
-    height: 16px;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 .header-title {
@@ -406,11 +406,11 @@ div[class^="tags"] li i+span {
 /* Key visual  */
 
 .kv {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120px;
+    margin: 8px 16px 0;
+    height: 112px;
     background: var(--block);
     z-index: 1;
 }
@@ -420,9 +420,8 @@ div[class^="tags"] li i+span {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 12px;
-    width: 100%;
-    height: 32px;
+    margin: 8px 16px;
+    height: 16px;
 }
 
 .marquee .lf {
@@ -431,7 +430,7 @@ div[class^="tags"] li i+span {
     justify-content: flex-start;
 }
 
-.marquee i {
+.marquee i:not(.more) {
     margin-right: 4px;
     width: 12px;
     height: 12px;
@@ -458,7 +457,7 @@ div[class^="tags"] li i+span {
 }
 
 .account {
-    padding: 16px 0;
+    padding: 8px 0;
     background-color: var(--block3);
 }
 
@@ -470,16 +469,57 @@ div[class^="tags"] li i+span {
 
 /* Main  */
 .main {
-    padding: 0 16px 16px;
-    margin-bottom: 16px;
+    padding: 8px 12px 12px;
+    margin: 0 16px 16px;
     background: var(--block3);
 }
 
 .main .tags {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
     margin-bottom: 0;
 }
 
+.main .tags li {
+    position: relative;
+}
+
+.main .tags li:first-child {
+    padding-left: 0;
+}
+
+.main .tags li+li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 20px;
+    width: 1px;
+    background: var(--block);
+}
+
+.main .tags .rt {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 8px 0;
+}
+
+.main .tags .rt i {
+    margin-left: 12px;
+}
+
+.main .tags i {
+    width: 20px;
+    height: 20px;
+}
+
+.main .card-box-main {
+    display: flex;
+    justify-content: space-between;
+}
+
 .main .game-img {
+    width: 75px;
     height: 88px;
 }
 
@@ -488,6 +528,7 @@ div[class^="tags"] li i+span {
     flex: 1 1 0;
     min-height: 0;
     padding: 16px 0;
+    margin: 0 16px;
     background: var(--block3);
 }
 
@@ -925,28 +966,19 @@ input {
     position: relative;
 }
 
-.navigation li:nth-child(3):before {
-    content: "";
-    position: absolute;
-    top: -24px;
-    width: 100%;
-    height: 24px;
-    background: var(--block3);
-}
-
 .navigation i {
     display: block;
-    margin-bottom: 8px;
-    width: 32px;
-    height: 32px;
+    margin-bottom: 6px;
+    width: 24px;
+    height: 28px;
     background: var(--block);
 }
 
 .navigation li:nth-child(3) i {
     position: absolute;
-    top: -16px;
-    width: 48px;
-    height: 48px;
+    top: -21px;
+    width: 54px;
+    height: 54px;
 }
 
 
