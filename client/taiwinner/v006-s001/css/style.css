@@ -305,7 +305,7 @@ div[class^="tags"] li i+span {
     /* height: calc(100vh - 78px - 16px); */
     position: fixed;
     top: 0;
-    bottom: calc(78px + 16px);
+    bottom: calc(72px + 12px);
     left: 50%;
     transform: translateX(-50%);
 }
