@@ -547,8 +547,8 @@ div[class^="tags"] li i+span {
 .main .card-box-main ul {
     display: flex;
     gap: 0px;
-    width: 100%;
-    width: calc(400% + 36px);
+    /* width: 100%; */
+    width: calc(300% + 36px);
 }
 
 .main.open .card-box-main ul {
