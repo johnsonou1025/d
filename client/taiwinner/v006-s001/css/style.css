@@ -56,6 +56,7 @@ a.btn {
     padding: 3px 16px;
     background: var(--block);
     color: var(--block2);
+    cursor: pointer;
 }
 
 a.btn+a {
@@ -518,6 +519,8 @@ div[class^="tags"] li i+span {
 
 .main .tags .rt i {
     margin-left: 12px;
+    width: auto;
+    cursor: pointer;
 }
 
 .main .tags i {
