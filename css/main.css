@@ -29,6 +29,7 @@ body {
     /* padding-top: 120px; */
     padding-top: 120px;
     background: var(--color-bg-primary);
+    background: linear-gradient(225deg, #F8F9FD, #E1E5F3);
     font-family: "Roboto", sans-serif;
     font-weight: 300;
     font-size: 16px;
@@ -240,6 +241,7 @@ a.active {
     padding: 40px;
     margin: 20px;
     background: var(--color-bg-highlight);
+    box-shadow: 2px 2px 4px #dfdfe8, -6px -6px 20px #ffffff, 4px 4px 16px rgba(144, 161, 183, 0.26);
     overflow: hidden;
     transition: .3s;
 }
@@ -347,7 +349,7 @@ header {
     background-color: rgba(255, 255, 255, .75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 4px #dfdfe8, 4px 4px 16px rgba(144, 161, 183, 0.26);
     z-index: 1;
 }
 
@@ -427,7 +429,7 @@ header .logo img {
     border-radius: 20px;
     padding: 16px 40px;
     background-color: var(--color-bg-highlight);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 4px #dfdfe8, 4px 4px 16px rgba(144, 161, 183, 0.26);
     opacity: 0;
     visibility: hidden;
     transition: .3s;
@@ -682,6 +684,7 @@ p {
     height: 513px;
     width: calc(25% - 40px);
     background: #fff no-repeat center center / cover;
+    box-shadow: 2px 2px 4px #dfdfe8, -6px -6px 20px #ffffff, 4px 4px 16px rgba(144, 161, 183, 0.26);
 }
 
 .portfolio .card:first-child,
@@ -1330,7 +1333,7 @@ footer .copy {
     border-radius: 20px;
     width: 225px;
     overflow: hidden;
-    box-shadow: var(--shadow);
+    box-shadow: 2px 2px 4px #dfdfe8, -6px -6px 20px #ffffff, 4px 4px 16px rgba(144, 161, 183, 0.26);
 }
 
 .case-demo ul li+li {
@@ -1492,7 +1495,7 @@ footer .copy {
     border-radius: 20px;
     border-top: 1px solid #fff;
     width: 100%;
-    box-shadow: var(--shadow);
+    box-shadow: 2px 2px 4px #dfdfe8, -6px -6px 20px #ffffff, 4px 4px 16px rgba(144, 161, 183, 0.26);
 }
 
 .case-demo-2 img+img {
