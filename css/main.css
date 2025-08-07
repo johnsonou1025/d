@@ -1677,6 +1677,78 @@ footer .copy {
     animation-name: fadeUp;
 }
 
+/* horizontal move */
+.horizontal-box {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .horizontal-box {
+        margin-top: -40px;
+        margin-bottom: -40px;
+        height: 400px;
+        overflow: hidden;
+    }
+}
+
+.horizontal-move {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg) rotateX(20deg) rotateY(30deg) skewX(6deg) skewY(12deg);
+    /*   width: 200%; */
+    overflow: hidden;
+}
+
+.horizontal-move ul {
+    padding: 20px 0;
+    text-wrap: nowrap;
+    -webkit-animation: move 20s linear infinite;
+    animation: move 20s linear infinite;
+}
+
+.horizontal-move li {
+    display: inline-block;
+    margin: 0 8px;
+    border-radius: 16px;
+    width: 120px;
+    height: 260px;
+    border: 1px solid #fff;
+    background: #f6f6fa;
+    box-shadow: 2px 2px 4px #dfdfe8, -6px -6px 20px #ffffff, 4px 4px 16px rgba(144, 161, 183, 0.26);
+    color: #A5AFCA;
+    overflow: hidden;
+}
+
+.horizontal-move li img {
+    display: block;
+    height: 100%;
+    width: auto;
+}
+
+@-webkit-keyframes move {
+    from {
+        transform: translateX(-25%);
+    }
+
+    to {
+        transform: translateX(25%);
+    }
+}
+
+@keyframes move {
+    from {
+        transform: translateX(-25%);
+    }
+
+    to {
+        transform: translateX(25%);
+    }
+}
+
 @media (max-width: 1200px) and (min-width: 992px) {}
 
 @media (max-width: 992px) {}
