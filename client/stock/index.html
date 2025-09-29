@@ -1,74 +1,211 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>台積電股價資訊</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock web app</title>
+    <script src="jquery-3.7.0.min.js"></script>
+
+    <style>
+        :root {
+            --color-bg: #F6F8FE;
+            --color-bg-varient: linear-gradient(225.43deg, #F5EAE6 0%, #D5DBF1 49.63%, #F5EAE6 99.26%);
+            --color-card: rgb(255, 255, 255, .4);
+            --color-on-card: #191A35;
+            --color-up: #FFEEEA;
+            --color-on-up: #C6777A;
+            --color-down: #EEF8F9;
+            --color-on-down: #6EB0A2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 24px;
+            height: 100vh;
+            background: var(--color-bg-varient);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-star;
+            align-items: center;
+        }
+
+        ul,
+        li {
+            all: unset;
+        }
+
+        .wrap {
+            padding: 16px 16px 40px;
+            width: 100%;
+            max-width: 1280px;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+            font-family: "PingFang SC", "Microsoft YaHei", "Arial", sans-serif;
+            font-size: 12px;
+            color: var(--color-on-card);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: start;
+            gap: 16px;
+        }
+
+        .wrap p {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            padding: 12px;
+            width: calc((100% - 16px * 4)/5);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 1);
+            background: var(--color-card);
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.2), 0 4px 8px rgba(0, 0, 0, .02);
+            backdrop-filter: blur(8px);
+        }
+
+        .card ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .card ul li div {
+            font-size: 14px;
+        }
+
+        .card ul li:nth-child(1) {
+            width: 100%;
+        }
+
+        .card ul li:nth-child(1) span {
+            display: inline-block;
+            padding: 4px 12px;
+            max-width: 100%;
+            border-radius: 16px;
+            background: var(--color-up);
+            color: var(--color-on-up);
+            overflow: hidden;
+            text-wrap: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .card.down ul li:nth-child(1) span {
+            background: var(--color-down);
+            color: var(--color-on-down);
+        }
+
+        .card ul li:nth-child(2) {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .card ul li:nth-child(2) div {
+            font-size: 32px;
+            color: var(--color-on-up);
+        }
+
+        .card.down ul li:nth-child(2) div {
+            color: var(--color-on-down);
+        }
+
+        .card ul li:nth-child(3),
+        .card ul li:nth-child(4) {
+            flex: 0 0 calc((100% - 8px * 1)/2);
+        }
+
+        @media (max-width:1024px) {
+            .card {
+                width: calc((100% - 16px * 3)/4);
+            }
+        }
+
+        @media (max-width:768px) {
+            .card {
+                width: calc((100% - 16px * 1)/2);
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 p-6 text-gray-900">
-    <div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-4">
-        <h1 class="text-xl font-bold mb-4">📈 台積電即時股價</h1>
-        <button id="fetchBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">取得即時價格</button>
-        <div id="output" class="mt-4 text-sm"></div>
+<body>
+    <div class="wrap">
+        <p class="results">載入中…</p>
+        <!-- <div class="card">
+            <ul>
+                <li><span>Name Code</span></li>
+                <li>Rate of return<div>1111</div>
+                </li>
+                <li>Entry price<div>1111</div>
+                </li>
+                <li>Current price<div>1111</div>
+                </li>
+            </ul>
+        </div>
+        <div class="card down">
+            <ul>
+                <li><span>Name Code</span></li>
+                <li>Rate of return<div>1111</div>
+                </li>
+                <li>Entry price<div>1111</div>
+                </li>
+                <li>Current price<div>1111</div>
+                </li>
+            </ul>
+        </div> -->
     </div>
-
     <script>
-        document.getElementById('fetchBtn').addEventListener('click', async () => {
-            const url = 'https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=AAPL&type=STOCKS';
-            const options = {
-                method: 'GET',
-                headers: {
-                    'x-rapidapi-key': '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4',
-                    'x-rapidapi-host': 'yahoo-finance15.p.rapidapi.com'
-                }
-            };
+        const API = "https://script.google.com/macros/s/AKfycbxGtR8NWam6AzC4-Onb8Jye4q6LKpQqifXIronmQtd0rMMjj4m2nukpX_wVW5MzwAzF3g/exec"; // Web App exec URL[web:184]
 
+        $(async function () {
+            const $wrap = $('div.wrap');
+            const $status = $('p.results').text('初始化…');
             try {
-                const response = await fetch(url, options);
-                const result = await response.text();
-                console.log(result);
-            } catch (error) {
-                console.error(error);
-            }
+                const data = await $.getJSON(API);          // 後端回 JSON[web:176]
+                if (!data.ok) { $status.text('錯誤：' + (data.message || '未知錯誤')); return; }
 
-        });
-        /*
-        const apiKey = '01987ca9cdmsh193a9f34b8c27bfp18db6djsn0f394b8e67c4';
+                const header = data.header || '結果';       // 標題[web:184]
+                const items = Array.isArray(data.results) ? data.results : []; // 陣列[web:181]
+                $status.text(header);
+                console.log(header);                 // 顯示標題[web:181]
 
-        document.getElementById('fetchBtn').addEventListener('click', async () => {
-            const output = document.getElementById('output');
-            output.innerHTML = '讀取中...';
-
-            try {
-                const res = await fetch('https://yahoo-finance15.p.rapidapi.com/api/yahoo/v8/finance/chart/TSMC', {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': apiKey,
-                        'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com'
+                let i = 0;
+                let timer = setInterval(() => {             // 用 let 以便清除後設為 null[web:181]
+                    if (i >= items.length) {
+                        clearInterval(timer);
+                        timer = null;
+                        return;
                     }
-                });
+                    const item = items[i] || {};
+                    const nameCode = item.sheetName;
+                    const rate = item.rate;
+                    const entryPrice = item.avgEntry;
+                    const currentPrice = item.currentPrice;
 
-                const result = await res.json();
-                const chart = result.chart;
-                const priceData = chart.result[0];
+                    const $card = $('<div/>', { class: 'card' });
+                    const numRate = Number(item.rate);
+                    if (!isNaN(numRate) && numRate < 0) {
+                        $card.addClass('down');  // rate < 0 時加上 red 類別
+                    }
+                    const $ul = $('<ul/>').appendTo($card);
+                    $('<li/>').append($('<span/>', { text: nameCode })).appendTo($ul);
+                    $('<li/>').append('報酬率').append($('<div/>', { text: rate })).appendTo($ul);
+                    $('<li/>').append('進場均價').append($('<div/>', { text: entryPrice })).appendTo($ul);
+                    $('<li/>').append('目前價格').append($('<div/>', { text: currentPrice })).appendTo($ul);
 
-                const timestamp = priceData.timestamp.at(-1);
-                const price = priceData.indicators.quote[0].close.at(-1);
-                const date = new Date(timestamp * 1000).toLocaleString();
-
-                output.innerHTML = `
-          <div>股票代號：2330.TW（台積電）</div>
-          <div>最新價格：${price.toFixed(2)} 元</div>
-          <div>時間：${date}</div>
-        `;
+                    $wrap.append($card);
+                    i++;
+                }, 250);
             } catch (err) {
-                console.error(err);
-                output.innerHTML = '❌ 資料取得失敗';
+                $status.text('請求失敗：' + err);
             }
         });
-        */
     </script>
 </body>
 
