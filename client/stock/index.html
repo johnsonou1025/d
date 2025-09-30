@@ -165,7 +165,7 @@
 
         $(async function () {
             const $wrap = $('div.wrap');
-            const $status = $('p.results').text('初始化…');
+            const $status = $('p.results').text('資料載入中，請勿離開…');
             try {
                 const data = await $.getJSON(API);          // 後端回 JSON[web:176]
                 if (!data.ok) { $status.text('錯誤：' + (data.message || '未知錯誤')); return; }
@@ -195,7 +195,7 @@
                     }
                     const $ul = $('<ul/>').appendTo($card);
                     $('<li/>').append($('<span/>', { text: nameCode })).appendTo($ul);
-                    $('<li/>').append('報酬率').append($('<div/>', { text: rate })).appendTo($ul);
+                    $('<li/>').append('報酬率').append($('<div/>', { text: rate + "%" })).appendTo($ul);
                     $('<li/>').append('進場均價').append($('<div/>', { text: entryPrice })).appendTo($ul);
                     $('<li/>').append('目前價格').append($('<div/>', { text: currentPrice })).appendTo($ul);
 
