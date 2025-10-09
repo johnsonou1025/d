@@ -2,6 +2,7 @@ const API = "https://script.google.com/macros/s/AKfycbxGtR8NWam6AzC4-Onb8Jye4q6L
 
 $(async function () {
     const $wrap = $('div.wrap');
+    const $section = $('div.section');
     const $status = $('p.results').text('資料載入中，請勿離開…');
     try {
         const data = await $.getJSON(API);          // 後端回 JSON[web:176]
@@ -11,8 +12,6 @@ $(async function () {
         const dayReport = Array.isArray(data.dayReport) ? data.dayReport : [];
         const finishStock = Array.isArray(data.finishStock) ? data.finishStock : [];
         $status.text(header);
-        console.log(dayReport);                 // 顯示標題[web:181]
-        console.log(finishStock);                 // 顯示標題[web:181]
 
         let i = 0;
         let timer = setInterval(() => {             // 用 let 以便清除後設為 null[web:181]
@@ -42,6 +41,37 @@ $(async function () {
 
             $wrap.append($card);
             i++;
+        }, 250);
+
+        let j = finishStock.length - 1;
+        let timer2 = setInterval(() => {             // 用 let 以便清除後設為 null[web:181]
+            if (j <= 0) {
+                clearInterval(timer2);
+                timer2 = null;
+                return;
+            }
+            const item = finishStock[j] || {};
+            const time = item.time;
+            const nameCode = item.sheetName;
+            const avgEntry = item.avgEntry;
+            const quantity = item.quantity;
+            const benefit = item.benefit;
+            const rate = item.rate;
+
+            const $cardFinish = $('<div/>', { class: 'card-finish' });
+            const $info = $('<div/>', { class: 'info' }).appendTo($cardFinish);
+            const $infoUl = $('<ul/>').appendTo($info);
+            $('<li/>', { text: time }).appendTo($infoUl);
+            $('<li/>', { text: nameCode }).appendTo($infoUl);
+            $('<p/>', { text: benefit }).appendTo($info);
+            const $detail = $('<div/>', { class: 'detail' }).appendTo($cardFinish);
+            const $detailUl = $('<ul/>').appendTo($detail);
+            $('<li/>').append('進場均價').append($('<span/>', { text: avgEntry })).appendTo($detailUl);
+            $('<li/>').append('進場張數').append($('<span/>', { text: quantity })).appendTo($detailUl);
+            $('<li/>').append('報酬率').append($('<span/>', { text: rate + "%" })).appendTo($detailUl);
+
+            $section.append($cardFinish);
+            j--;
         }, 250);
     } catch (err) {
         $status.text('請求失敗：' + err);
