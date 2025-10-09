@@ -8,18 +8,20 @@ $(async function () {
         if (!data.ok) { $status.text('錯誤：' + (data.message || '未知錯誤')); return; }
 
         const header = data.header || '結果';       // 標題[web:184]
-        const items = Array.isArray(data.results) ? data.results : []; // 陣列[web:181]
+        const dayReport = Array.isArray(data.dayReport) ? data.dayReport : [];
+        const finishStock = Array.isArray(data.finishStock) ? data.finishStock : [];
         $status.text(header);
-        console.log(header);                 // 顯示標題[web:181]
+        console.log(dayReport);                 // 顯示標題[web:181]
+        console.log(finishStock);                 // 顯示標題[web:181]
 
         let i = 0;
         let timer = setInterval(() => {             // 用 let 以便清除後設為 null[web:181]
-            if (i >= items.length) {
+            if (i >= dayReport.length) {
                 clearInterval(timer);
                 timer = null;
                 return;
             }
-            const item = items[i] || {};
+            const item = dayReport[i] || {};
             const nameCode = item.sheetName;
             const rate = item.rate;
             const entryPrice = item.avgEntry;

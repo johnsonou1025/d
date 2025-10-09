@@ -151,6 +151,76 @@ li {
     flex: 0 0 calc((100% - 8px * 1)/2);
 }
 
+/* Section  */
+.section {
+    margin-top: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 1280px;
+    border-radius: 16px;
+    border-top: 1px solid rgba(255, 255, 255, .4);
+    border-left: 1px solid rgba(255, 255, 255, .4);
+    border-right: 1px solid rgba(0, 0, 0, .04);
+    border-bottom: 1px solid rgba(0, 0, 0, .04);
+    background: var(--color-card);
+    box-shadow: var(--shadow);
+    font-family: "PingFang SC", "Microsoft YaHei", "Arial", sans-serif;
+    font-size: 12px;
+    color: var(--color-on-card);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.card-finish {
+    padding: 16px 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, .4);
+}
+
+.card-finish:last-child {
+    border-bottom: none;
+}
+
+.card-finish+.card-finish {
+    border-top: 1px solid rgba(55, 83, 111, .07);
+}
+
+.card-finish .info {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-finish .info li {
+    opacity: .6;
+}
+
+.card-finish .info li:last-child {
+    font-size: 16px;
+}
+
+.card-finish .info p {
+    font-size: 32px;
+}
+
+.card-finish .detail ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-finish .detail li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    opacity: .6;
+}
+
+.card-finish .detail li span {
+    margin-top: 4px;
+}
+
 @media (max-width:1024px) {
     .card {
         width: calc((100% - 16px * 3)/4);
