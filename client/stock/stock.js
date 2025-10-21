@@ -34,7 +34,7 @@ $(async function () {
             $card.attr('data-price', String(currentPrice));
             const numRate = Number(item.rate);
             $card.attr('data-rate', String(numRate));
-            if (!isNaN(numRate) && numRate < 0) {
+            if (!isNaN(rate) && rate < 0) {
                 $card.addClass('down');  // rate < 0 時加上 red 類別
             }
             $('<p/>').append($('<span/>')).append(nameCode).appendTo($card);
@@ -67,6 +67,10 @@ $(async function () {
             const state = item.state;
             // console.log(time + "/" + nameCode + "/" + avgEntry + "/" + quantity + "/" + benefit + "/" + rate + "/" + state);
             const $card = $('<div/>', { class: 'card' });
+            const numRate = Number(item.rate);
+            if (!isNaN(rate) && rate < 0) {
+                $card.addClass('down');  // rate < 0 時加上 red 類別
+            }
             $('<p/>').append(($('<span/>')).text(time)).append(nameCode).appendTo($card);
             $('<p/>').append(benefit).appendTo($card);
             $('<p/>').append(($('<span/>')).text("進場均價")).append(avgEntry).appendTo($card);
@@ -83,7 +87,6 @@ $(async function () {
                     $top.append($card);
                 }
             }
-
             j--;
         }, 250);
 
@@ -91,6 +94,16 @@ $(async function () {
         $status.text('請求失敗：' + err);
     }
 });
+
+$(function () {
+    $(".tags li").click(function () {
+        $li = $(this);
+        $li.addClass("active").siblings().removeClass("active")
+        $index = $li.index();
+        console.log($index);
+        $(".content>div").eq($index).addClass("active").siblings().removeClass("active");
+    })
+})
 
 // $(function () {
 //     $(".filter li").click(function () {

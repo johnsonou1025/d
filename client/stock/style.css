@@ -20,14 +20,16 @@
 }
 
 body {
+    background: linear-gradient(116.82deg, #0D203A 0%, #0B0D1A 50%, #0E182E 100%);
     font-family: 'Roboto';
     font-size: 12px;
     color: #fff;
-    background: linear-gradient(116.82deg, #0D203A 0%, #0B0D1A 50%, #0E182E 100%);
+    line-height: 1.5;
+    letter-spacing: 0.05em;
 }
 
 .wrap {
-    padding: 40px 0;
+    padding: 40px 20px;
     margin: auto;
     max-width: 1280px;
     min-height: 100vh;
@@ -38,7 +40,7 @@ body {
 
 .title {
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 18px;
     opacity: .6;
 }
 
@@ -53,7 +55,7 @@ body {
     padding: 20px;
     border-radius: 20px;
     border: 1px solid #252E49;
-    background: linear-gradient(108.39deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
+    background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-wrap: wrap;
@@ -80,6 +82,7 @@ body {
 .card p:nth-child(2) {
     align-items: flex-end;
     font-size: 28px;
+    color: #73D9AE;
 }
 
 .card p:nth-child(3),
@@ -88,10 +91,55 @@ body {
     flex: 0 0 33.33%;
 }
 
+.card p:nth-child(5) {
+    color: #73D9AE;
+}
+
+.card-box:not(.list-style) .card.down p:nth-child(2),
+.card.down p:nth-child(5) {
+    color: #E66E6D;
+}
+
+.card p:nth-child(5) span {
+    color: #fff;
+}
+
 .card p span {
     font-size: 12px;
-    opacity: .8;
+    opacity: .7;
     font-weight: normal;
+}
+
+.tags {
+    display: none;
+}
+
+.tags ul {
+    margin-bottom: -20px;
+    display: flex;
+    gap: 16px;
+}
+
+.tags li {
+    position: relative;
+    padding: 10px 0;
+    font-size: 18px;
+    opacity: .7;
+}
+
+.tags li.active {
+    opacity: 1;
+}
+
+.tags li.active:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 50%;
+    background: #FFF;
 }
 
 .top-news .card-box {
@@ -99,7 +147,9 @@ body {
 }
 
 .top-news .card-box .card {
-    flex: 0 0 calc((100% - 20px * 3)/4);
+    /* flex: 0 0 calc((100% - 20px * 3)/4); */
+    flex: 0 0 auto;
+    width: 100%;
 }
 
 .content {
@@ -108,18 +158,32 @@ body {
     gap: 20px;
 }
 
-.content>div {
+.content>div:not(.tags) {
     padding: 20px;
     border-radius: 20px;
     border: 1px solid #252E49;
-    background: linear-gradient(108.39deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
+    background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
 
+
+@media (max-width: 768px) {
+    .tags {
+        display: block;
+    }
+
+    .content>div {
+        display: none;
+    }
+
+    .content>div.active {
+        display: block;
+    }
+}
+
 .entry {
-    flex: 0 0 calc((100% - 20px)/4*3);
-    min-height: 100px;
-    flex-shrink: 0;
+    /* flex: 0 0 calc((100% - 20px)/4*3); */
+    flex: 1 1 0;
 }
 
 .list-style {
@@ -140,12 +204,19 @@ body {
     background: #121929;
 }
 
-
 .list-style .card p {
     all: unset;
     flex: 1;
     display: flex;
     justify-content: flex-end;
+}
+
+.list-style .card:not(.down) p:nth-child(5) {
+    color: #73D9AE;
+}
+
+.list-style .card:first-child p:nth-child(5) {
+    color: #FFF;
 }
 
 .list-style .card:first-child p {
@@ -157,19 +228,62 @@ body {
     justify-content: flex-start;
 }
 
+
 .list-style .card p span {
     display: none;
 }
 
 .take-profit {
-    flex: 0 0 calc((100% - 20px)/4);
-    overflow-y: auto;
-    /* 超高度時出現垂直滾動條 */
-    min-height: 0;
-    flex-shrink: 1;
-    max-height: 100%;
+    /* flex: 0 0 calc((100% - 20px)/4); */
+    flex: 0 0 auto;
+    max-width: 40%;
 }
 
 .take-profit .card-box {
     flex-direction: column;
 }
+
+/* .tags ul {
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: #080D19;
+    display: flex;
+    gap: 20px;
+}
+
+.tags li {
+    flex: 1;
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    opacity: .7;
+}
+
+.tags li.active {
+    border: 1px solid rgba(255, 255, 255, .5);
+    opacity: 1;
+} */
+
+@media (max-width: 768px) {
+    .wrap {
+        padding: 40px 10px;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content>div {
+        flex: auto;
+        width: 100%;
+    }
+
+    .take-profit {
+        max-width: 100%;
+    }
+}
+
+
+@media (max-width: 768px) {}
