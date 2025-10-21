@@ -38,6 +38,12 @@ body {
     gap: 40px;
 }
 
+@media (max-width: 768px) {
+    .wrap {
+        padding: 40px 10px;
+    }
+}
+
 .title {
     margin-bottom: 20px;
     font-size: 18px;
@@ -142,6 +148,12 @@ body {
     background: #FFF;
 }
 
+@media (max-width: 768px) {
+    .tags {
+        display: block;
+    }
+}
+
 .top-news .card-box {
     gap: 20px;
 }
@@ -149,7 +161,12 @@ body {
 .top-news .card-box .card {
     /* flex: 0 0 calc((100% - 20px * 3)/4); */
     flex: 0 0 auto;
-    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .top-news .card-box .card {
+        width: 100%;
+    }
 }
 
 .content {
@@ -168,12 +185,15 @@ body {
 
 
 @media (max-width: 768px) {
-    .tags {
-        display: block;
+    .content {
+        flex-direction: column;
+        align-items: center;
     }
 
     .content>div {
         display: none;
+        flex: auto;
+        width: 100%;
     }
 
     .content>div.active {
@@ -243,43 +263,7 @@ body {
     flex-direction: column;
 }
 
-/* .tags ul {
-    padding: 10px 20px;
-    border-radius: 100px;
-    background: #080D19;
-    display: flex;
-    gap: 20px;
-}
-
-.tags li {
-    flex: 1;
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    opacity: .7;
-}
-
-.tags li.active {
-    border: 1px solid rgba(255, 255, 255, .5);
-    opacity: 1;
-} */
-
 @media (max-width: 768px) {
-    .wrap {
-        padding: 40px 10px;
-    }
-
-    .content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .content>div {
-        flex: auto;
-        width: 100%;
-    }
-
     .take-profit {
         max-width: 100%;
     }
