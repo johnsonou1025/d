@@ -21,7 +21,8 @@
 }
 
 body {
-    background: linear-gradient(116.82deg, #0D203A 0%, #0B0D1A 50%, #0E182E 100%);
+    background-color: #0E182E;
+    background-image: linear-gradient(116.82deg, #0D203A 0%, #0B0D1A 50%, #0E182E 100%);
     font-family: 'Roboto', "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     font-size: 14px;
     color: #fff;
@@ -269,6 +270,7 @@ body {
         max-width: 100%;
     }
 }
+
 
 
 @media (max-width: 768px) {}
