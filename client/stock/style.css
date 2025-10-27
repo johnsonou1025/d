@@ -113,8 +113,8 @@ body {
 }
 
 .card p span {
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     font-size: 12px;
     opacity: .7;
     font-weight: normal;
@@ -122,18 +122,18 @@ body {
 
 .sell p:first-child span:before,
 .buy p:first-child span:before {
-    content:"賣";
-    padding:2px 4px;
-    border-radius:4px;
-    margin-right:8px;
-    font-size:10px;
-    color:#FFF;
-    background:#2882EC;
-    text-align:center;
+    content: "賣";
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-size: 10px;
+    color: #FFF;
+    background: #2882EC;
+    text-align: center;
 }
 
 .buy p:first-child span:before {
-    content:"買";
+    content: "買";
 }
 
 .tags {
@@ -237,6 +237,7 @@ body {
     border-radius: 8px;
     background: #080D19;
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
+    order: -999;
 }
 
 .list-style .card:first-child {
@@ -249,6 +250,14 @@ body {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+}
+
+.list-style .card p.active:after {
+    content: "";
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    mask: url(sorting.svg) no-repeat center center / cover;
 }
 
 .list-style .card:not(.down) p:nth-child(5) {
@@ -292,7 +301,3 @@ body {
 
 
 @media (max-width: 768px) {}
-
-
-
-

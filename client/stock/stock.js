@@ -76,7 +76,7 @@ $(async function () {
             $('<p/>').append(($('<span/>')).text("進場均價")).append(avgEntry).appendTo($card);
             $('<p/>').append(($('<span/>')).text("進場張數")).append(quantity).appendTo($card);
             $('<p/>').append(($('<span/>')).text("報酬率")).append(rate + "%").appendTo($card);
-            $card.addClass(state); 
+            $card.addClass(state);
             if (state == "sell") {
                 $take.append($card);
                 if (time == lastTime) {
@@ -97,6 +97,7 @@ $(async function () {
 });
 
 $(function () {
+    // buy or sell 
     $(".tags li").click(function () {
         $li = $(this);
         $li.addClass("active").siblings().removeClass("active")
@@ -104,32 +105,27 @@ $(function () {
         console.log($index);
         $(".content>div").eq($index).addClass("active").siblings().removeClass("active");
     })
+
+    // filter rate of return
+    $(".list-style p:nth-child(5)").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".card").each(function () {
+            var cardRate = -(Math.floor(Number($(this).data('rate'))));
+            $(this).css('order', cardRate);
+        })
+    })
+
+    // filter price 
+    $(".list-style p:nth-child(2)").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".card").each(function () {
+            var cardPrice = Math.floor(Number($(this).data('price')));
+            $(this).css('order', cardPrice)
+        })
+    })
+
+
 })
 
-// $(function () {
-//     $(".filter li").click(function () {
-//         if ($(this).hasClass("active")) {
-//             $(this).removeClass("active");
-//             $(".card").each(function () {
-//                 $(this).css('order', '1')
-//             })
-//         } else {
-//             $(this).addClass("active").siblings().removeClass("active");
-//             if ($(this).hasClass("rate")) {
-//                 $(".card").each(function () {
-//                     var cardRate = -(Math.floor(Number($(this).data('rate'))));
-//                     $(this).css('order', cardRate);
-//                 })
-//             } else if ($(this).hasClass("price")) {
-//                 $(".card").each(function () {
-//                     var cardPrice = Math.floor(Number($(this).data('price')));
-//                     $(this).css('order', cardPrice)
-//                 })
-//             }
-//         }
-
-//     })
-
-// })
 
 
