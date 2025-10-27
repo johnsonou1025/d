@@ -120,7 +120,7 @@ body {
     font-weight: normal;
 }
 
-.sell p:first-child span:before {
+.sell p:first-child span:before,
 .buy p:first-child span:before {
     content:"賣出";
     padding:2px 4px;
@@ -292,5 +292,6 @@ body {
 
 
 @media (max-width: 768px) {}
+
 
 
