@@ -76,6 +76,7 @@ $(async function () {
             $('<p/>').append(($('<span/>')).text("進場均價")).append(avgEntry).appendTo($card);
             $('<p/>').append(($('<span/>')).text("進場張數")).append(quantity).appendTo($card);
             $('<p/>').append(($('<span/>')).text("報酬率")).append(rate + "%").appendTo($card);
+            console.log(state);
             $card.addClass(state); 
             if (state == "sell") {
                 $take.append($card);
@@ -131,3 +132,4 @@ $(function () {
 //     })
 
 // })
+
