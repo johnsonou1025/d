@@ -121,25 +121,19 @@ body {
 }
 
 .sell p:first-child span:before {
+.buy p:first-child span:before {
     content:"賣出";
     padding:2px 4px;
     border-radius:4px;
     margin-right:8px;
     font-size:10px;
     color:#0E182E;
-    background:#73D9AE;
+    background:#2882EC;
     text-align:center;
 }
 
 .buy p:first-child span:before {
     content:"買入";
-    padding:2px 4px;
-    border-radius:4px;
-    margin-right:8px;
-    font-size:10px;
-    color:#0E182E;
-    background:#E66E6D;
-    text-align:center;
 }
 
 .tags {
@@ -298,4 +292,5 @@ body {
 
 
 @media (max-width: 768px) {}
+
 
