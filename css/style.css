@@ -26,7 +26,7 @@ h5 {
 
 a {
     all: unset;
-    pointer-events: none;
+    cursor: pointer;
 }
 
 p {
@@ -320,6 +320,7 @@ p {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    pointer-events: none;
 }
 
 .works li i {
