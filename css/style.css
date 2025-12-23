@@ -488,7 +488,8 @@ p {
 
 @media (max-width: 768px) {
     .services li {
-        flex: 0 0 calc((100% - 40px));
+        /* flex: 0 0 calc((100% - 40px)); */
+        flex: 0 0 240px;
     }
 }
 
