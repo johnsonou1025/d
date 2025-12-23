@@ -298,6 +298,10 @@ p {
 }
 
 .works li a {
+    flex: 1;
+}
+
+.works li a {
     display: flex;
     flex-direction: column;
     gap: 20px;
