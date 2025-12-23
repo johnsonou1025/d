@@ -4,6 +4,10 @@
 
 :root {}
 
+html {
+    background: #0F0A23;
+}
+
 h3 {
     margin-top: -10px;
     font-size: 40px;
