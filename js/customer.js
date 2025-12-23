@@ -1,10 +1,10 @@
 // Copyright 2025 Johnson
 $(function () {
     const SVG_NS = "http://www.w3.org/2000/svg";
-    const NUM_PARTICLES = 1600;
-    const PARTICLE_SIZE = 2;
+    const NUM_PARTICLES = 2000;
+    const PARTICLE_SIZE = 3;
     const PARTICLE_RADIUS = PARTICLE_SIZE / 2;
-    const SVG_WIDTH = 600;
+    const SVG_WIDTH = 800;
     const SVG_HEIGHT = 150;
     const particlesGroup = document.getElementById("particles-group");
 
@@ -13,7 +13,7 @@ $(function () {
 
     // 粒子逐步增加的控制
     let currentParticleCount = 0;      // 現在已建立的粒子數
-    const particlesPerFrame = 10;      // 每 frame 新增幾顆
+    const particlesPerFrame = 50;      // 每 frame 新增幾顆
     let particlesReady = false;        // 是否已經建立完 1000 顆
 
     function rand(min, max) {
