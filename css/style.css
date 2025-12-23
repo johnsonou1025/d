@@ -297,7 +297,7 @@ p {
     gap: 40px;
 }
 
-.works li a {
+.works li {
     flex: 1;
 }
 
