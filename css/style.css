@@ -146,6 +146,12 @@ p {
     z-index: 2;
 }
 
+@media (max-width: 768px) {
+    .particles .headline {
+        font-size: 80px;
+    }
+}
+
 #particle-container {
     position: relative;
     width: 80%;
