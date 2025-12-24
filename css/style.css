@@ -557,8 +557,8 @@ p {
     background: rgba(8, 185, 247, 0.2);
     -webkit-filter: blur(50px);
     filter: blur(50px);
-    -webkit-animation: myAnimation 3s infinite;
-    animation: myAnimation 3s infinite alternate;
+    /* -webkit-animation: myAnimation 3s infinite;
+    animation: myAnimation 3s infinite alternate; */
 }
 
 @-webkit-keyframes myAnimation {
@@ -691,5 +691,6 @@ p {
 }
 
 @media (max-width: 768px) {}
+
 
 /*css end*/
