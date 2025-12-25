@@ -60,6 +60,7 @@ p {
     font-size: 14px;
     font-weight: 400;
     /* 100 300 400 500 700 900 */
+    overflow: hidden;
 }
 
 .section {
