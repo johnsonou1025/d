@@ -53,6 +53,7 @@ p {
 }
 
 .page {
+    padding-top: 100vh;
     background: #0F0A23;
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
     color: #FFF;
@@ -70,11 +71,14 @@ p {
     width: 100%;
     max-width: 1280px;
     min-height: 100vh;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
     .page {
         padding: 0;
+        padding-top: 100vh;
         font-size: 12px;
     }
 
@@ -98,6 +102,8 @@ p {
 }
 
 .particles {
+    position: fixed;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,12 +162,13 @@ p {
 }
 
 #particleCanvas {
-    /* 
-    position: fixed; 
+    position: fixed;
     inset: 0;
-    */
-    position: absolute;
 }
+
+/* @media (max-width: 768px) {
+    #particleCanvas {}
+} */
 
 .intro {
     display: flex;
