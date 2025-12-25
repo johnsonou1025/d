@@ -53,8 +53,8 @@ p {
 }
 
 .page {
-    padding-top: 100vh;
-    background: #0F0A23;
+    position: relative;
+    margin-top: 100vh;
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
     color: #FFF;
     line-height: 150%;
@@ -62,6 +62,9 @@ p {
     font-weight: 400;
     /* 100 300 400 500 700 900 */
     overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1;
 }
 
 .section {
@@ -71,14 +74,11 @@ p {
     width: 100%;
     max-width: 1280px;
     min-height: 100vh;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
     .page {
         padding: 0;
-        padding-top: 100vh;
         font-size: 12px;
     }
 
@@ -161,10 +161,7 @@ p {
     }
 }
 
-#particleCanvas {
-    position: fixed;
-    inset: 0;
-}
+#particleCanvas {}
 
 /* @media (max-width: 768px) {
     #particleCanvas {}
