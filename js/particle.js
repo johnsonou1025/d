@@ -1,18 +1,18 @@
 // ===========================================
-// 可調整參數設定區塊 (依需求獨立)
+// 可調整變數
 // ===========================================
 const config = {
-    targetText: "JOINJO\nSTUDIO",
-    fontFamily: "Arial, sans-serif",
-    baseFontSize: 160,
-    lineHeightRatio: .9,
-    particleCount: 2400,
-    particleSize: 2,
-    friction: 0.92,
-    textToParticleRatio: 6,
-    mouseRepelRadius: 50,
-    mouseRepelForce: 1,
-    particleReturnForce: 0.02,
+    targetText: "JOINJO\nSTUDIO",// 粒子要組成的文字，用 \n 換行
+    fontFamily: "Roboto",// 字體
+    baseFontSize: 160,// 字體大小
+    lineHeightRatio: 1,// 行高
+    particleCount: 2400,//粒子數量
+    particleSize: 2,// 粒子半徑
+    friction: .9,// 摩擦力
+    textToParticleRatio: 4,// 像素點取樣比例，越大粒子越稀疏
+    mouseRepelRadius: 50,// 滑鼠排斥範圍
+    mouseRepelForce: 0.2,// 滑鼠排斥力道
+    particleReturnForce: 0.02,// 粒子回歸目標位置的拉力
     gradientColors: [
         { stop: 0, color: "#FF1493" },
         // { stop: 0.5, color: "#ff7b00" },
@@ -21,39 +21,68 @@ const config = {
 };
 
 const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d', { alpha: true }); // 優化效能
-
+const ctx = canvas.getContext('2d', { alpha: false }); // 優化效能：關閉透明度緩衝
 let particles = [];
-let mouse = { x: null, y: null };
+let mouse = { x: -9999, y: -9999, active: false };
+let isMobile = window.innerWidth < 765;
 
 // ===========================================
 // 核心邏輯
 // ===========================================
 
-window.addEventListener('mousemove', (e) => {
-    // 檢測目前滑鼠下方的元素 z-index
-    // 如果你使用標準的 HTML 層級，瀏覽器會優先觸發 z-index 最高的元素
-    // 當滑鼠在 .overlay-section 上時，這段 code 依然會跑，但我們可以透過座標判斷
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
-
-window.addEventListener('resize', () => {
-    setupCanvas();
-    initParticles();
-});
-
-function setupCanvas() {
+function updateScreenSettings() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    isMobile = window.innerWidth < 765;
+    initParticles();
+}
+
+// 監測滑鼠位置與 Z-index 判定
+window.addEventListener('mousemove', (e) => {
+    if (isMobile) return; // 手機版直接跳過
+
+    // 檢測滑鼠指向的最上層元素
+    const topElement = document.elementFromPoint(e.clientX, e.clientY);
+
+    // 只有當最上層是 Canvas 時才啟動粒子排斥
+    if (topElement === canvas) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.active = true;
+    } else {
+        mouse.active = false; // 被其他 z-index 遮住
+    }
+});
+
+window.addEventListener('resize', updateScreenSettings);
+
+function getGradientColor(ratio) {
+    let start = config.gradientColors[0];
+    let end = config.gradientColors[config.gradientColors.length - 1];
+
+    for (let i = 0; i < config.gradientColors.length - 1; i++) {
+        if (ratio >= config.gradientColors[i].stop && ratio <= config.gradientColors[i + 1].stop) {
+            start = config.gradientColors[i];
+            end = config.gradientColors[i + 1];
+            break;
+        }
+    }
+    const t = (ratio - start.stop) / (end.stop - start.stop);
+    const hexToRgb = hex => hex.match(/\w\w/g).map(x => parseInt(x, 16));
+    const c1 = hexToRgb(start.color);
+    const c2 = hexToRgb(end.color);
+    const r = Math.round(c1[0] + (c2[0] - c1[0]) * t);
+    const g = Math.round(c1[1] + (c2[1] - c1[1]) * t);
+    const b = Math.round(c1[2] + (c2[2] - c1[2]) * t);
+    return `rgb(${r},${g},${b})`;
 }
 
 class Particle {
-    constructor(targetX, targetY, color) {
+    constructor(tx, ty, color) {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.targetX = targetX;
-        this.targetY = targetY;
+        this.targetX = tx;
+        this.targetY = ty;
         this.color = color;
         this.vx = 0;
         this.vy = 0;
@@ -68,25 +97,18 @@ class Particle {
 
     update() {
         // 回歸力
-        let dx = this.targetX - this.x;
-        let dy = this.targetY - this.y;
-        this.vx += dx * config.particleReturnForce;
-        this.vy += dy * config.particleReturnForce;
+        this.vx += (this.targetX - this.x) * config.particleReturnForce;
+        this.vy += (this.targetY - this.y) * config.particleReturnForce;
 
-        // 滑鼠排斥 (檢查 Z-Index 感應)
-        // 技巧：利用 elementFromPoint 檢查滑鼠當前位置的最上層元素是否為 canvas
-        if (mouse.x !== null) {
-            const topElement = document.elementFromPoint(mouse.x, mouse.y);
-            // 只有當最上層是 canvas 或 hero-section 時才觸發動力
-            if (topElement === canvas || topElement?.classList.contains('hero-section')) {
-                let mdx = mouse.x - this.x;
-                let mdy = mouse.y - this.y;
-                let dist = Math.sqrt(mdx * mdx + mdy * mdy);
-                if (dist < config.mouseRepelRadius) {
-                    let force = (config.mouseRepelRadius - dist) / config.mouseRepelRadius;
-                    this.vx -= mdx * force * config.mouseRepelForce;
-                    this.vy -= mdy * force * config.mouseRepelForce;
-                }
+        // 滑鼠排斥 (僅限非手機且無遮蓋)
+        if (!isMobile && mouse.active) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < config.mouseRepelRadius) {
+                let force = (config.mouseRepelRadius - dist) / config.mouseRepelRadius;
+                this.vx -= dx * force * config.mouseRepelForce;
+                this.vy -= dy * force * config.mouseRepelForce;
             }
         }
 
@@ -97,36 +119,6 @@ class Particle {
     }
 }
 
-function getGradientColor(xRatio) {
-    const colors = config.gradientColors;
-    let start, end;
-    for (let i = 0; i < colors.length - 1; i++) {
-        if (xRatio >= colors[i].stop && xRatio <= colors[i + 1].stop) {
-            start = colors[i];
-            end = colors[i + 1];
-            break;
-        }
-    }
-    if (!start) return colors[colors.length - 1].color;
-
-    const t = (xRatio - start.stop) / (end.stop - start.stop);
-    const c1 = hexToRgb(start.color);
-    const c2 = hexToRgb(end.color);
-    const r = Math.round(c1.r + (c2.r - c1.r) * t);
-    const g = Math.round(c1.g + (c2.g - c1.g) * t);
-    const b = Math.round(c1.b + (c2.b - c1.b) * t);
-    return `rgb(${r},${g},${b})`;
-}
-
-function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
-}
-
 function initParticles() {
     particles = [];
     const tempCanvas = document.createElement('canvas');
@@ -134,28 +126,27 @@ function initParticles() {
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
 
-    const fontSize = window.innerWidth < 768 ? config.baseFontSize * 0.5 : config.baseFontSize;
-    tempCtx.font = `bold ${fontSize}px ${config.fontFamily}`;
+    let size = isMobile ? config.baseFontSize * 0.5 : config.baseFontSize;
+    tempCtx.font = `bold ${size}px ${config.fontFamily}`;
     tempCtx.textAlign = 'center';
     tempCtx.textBaseline = 'middle';
 
     const lines = config.targetText.split('\n');
-    const lh = fontSize * config.lineHeightRatio;
-    const totalH = (lines.length - 1) * lh;
-    const startY = (canvas.height / 2) - (totalH / 2);
+    const lHeight = size * config.lineHeightRatio;
+    const startY = (canvas.height / 2) - ((lines.length - 1) * lHeight / 2);
 
     lines.forEach((line, i) => {
-        tempCtx.fillText(line, canvas.width / 2, startY + (i * lh));
+        tempCtx.fillText(line, canvas.width / 2, startY + i * lHeight);
     });
 
     const data = tempCtx.getImageData(0, 0, canvas.width, canvas.height).data;
-    let points = [];
+    let positions = [];
     let minX = canvas.width, maxX = 0;
 
     for (let y = 0; y < canvas.height; y += config.textToParticleRatio) {
         for (let x = 0; x < canvas.width; x += config.textToParticleRatio) {
-            if (data[((y * canvas.width + x) * 4) + 3] > 128) {
-                points.push({ x, y });
+            if (data[(y * canvas.width + x) * 4 + 3] > 128) {
+                positions.push({ x, y });
                 if (x < minX) minX = x;
                 if (x > maxX) maxX = x;
             }
@@ -163,23 +154,23 @@ function initParticles() {
     }
 
     for (let i = 0; i < config.particleCount; i++) {
-        const pt = points[Math.floor(Math.random() * points.length)];
-        if (pt) {
-            const color = getGradientColor((pt.x - minX) / (maxX - minX));
-            particles.push(new Particle(pt.x, pt.y, color));
+        const pos = positions[Math.floor(Math.random() * positions.length)];
+        if (pos) {
+            const ratio = (pos.x - minX) / (maxX - minX || 1);
+            particles.push(new Particle(pos.x, pos.y, getGradientColor(ratio)));
         }
     }
 }
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let p of particles) {
         p.update();
         p.draw();
-    });
+    }
     requestAnimationFrame(animate);
 }
 
-setupCanvas();
-initParticles();
+updateScreenSettings();
 animate();
