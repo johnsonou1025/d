@@ -314,7 +314,6 @@ p {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    pointer-events: none;
 }
 
 .works li i {
@@ -632,6 +631,7 @@ p {
 }
 
 .footer {
+    color: #FFF;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -678,6 +678,11 @@ p {
     border-top: 1px solid #F8FAFC;
     display: flex;
     justify-content: space-between;
+    gap: 20px;
+}
+
+.copy p span:last-child {
+    text-align: right;
 }
 
 @media (max-width: 768px) {
@@ -688,8 +693,82 @@ p {
         text-align: center;
         gap: 40px;
     }
+
+    .copy p span:last-child {
+        text-align: center;
+    }
 }
 
-@media (max-width: 768px) {}
+.page-featured {
+    position: relative;
+    margin: 0 auto;
+    padding-top: 48px;
+    max-width: 960px;
+}
+
+.page-featured:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    margin: 20px 0;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+}
+
+.header .logo {
+    height: 100%;
+}
+
+.header .logo img {
+    height: 100%;
+}
+
+.header .close {
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .close i {
+    display: block;
+    height: 50%;
+    aspect-ratio: 1/1;
+    background: #FFF;
+    mask: url(../img/close.svg) no-repeat center / cover;
+}
+
+.page-featured img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+
+@media (max-width: 768px) {
+    .page-featured {
+        padding-top: 32px;
+    }
+
+    .header {
+        height: 32px;
+    }
+}
 
 /*css end*/
