@@ -6,7 +6,7 @@ const config = {
     fontFamily: "Roboto",// 字體
     baseFontSize: 160,// 字體大小
     lineHeightRatio: 1,// 行高
-    particleCount: 2400,//粒子數量
+    particleCount: 1600,//粒子數量
     particleSize: 2,// 粒子半徑
     friction: .9,// 摩擦力
     textToParticleRatio: 4,// 像素點取樣比例，越大粒子越稀疏
@@ -24,7 +24,7 @@ const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d', { alpha: false }); // 優化效能：關閉透明度緩衝
 let particles = [];
 let mouse = { x: -9999, y: -9999, active: false };
-let isMobile = window.innerWidth < 765;
+let isMobile = window.innerWidth < 768;
 
 // ===========================================
 // 核心邏輯
