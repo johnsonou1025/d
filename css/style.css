@@ -6,6 +6,7 @@
 :root {}
 
 html {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     background: #0F0A23;
 }
 
@@ -55,7 +56,6 @@ p {
 .page {
     position: relative;
     margin-top: 100vh;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     color: #FFF;
     line-height: 150%;
     font-size: 14px;
@@ -774,3 +774,4 @@ p {
 
 
 /*css end*/
+
