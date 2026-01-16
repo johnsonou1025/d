@@ -60,8 +60,8 @@ body {
 
 .card {
     flex: 0 0 auto;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 12px;
+    border-radius: 8px;
     border: 1px solid #252E49;
     background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
@@ -119,10 +119,9 @@ body {
     opacity: .7;
     font-weight: normal;
 }
-
 .sell p:first-child span:before,
 .buy p:first-child span:before {
-    content: "賣";
+    content: "賣出";
     padding: 2px 4px;
     border-radius: 4px;
     margin-right: 8px;
@@ -133,7 +132,7 @@ body {
 }
 
 .buy p:first-child span:before {
-    content: "買";
+    content: "買進";
 }
 
 .tags {
@@ -178,6 +177,10 @@ body {
     gap: 20px;
 }
 
+.top-news .sell{
+    background: linear-gradient(90deg, #5D88B5 0%, #094887 100%);
+}
+
 .top-news .card-box .card {
     /* flex: 0 0 calc((100% - 20px * 3)/4); */
     flex: 0 0 auto;
@@ -196,8 +199,8 @@ body {
 }
 
 .content>div:not(.tags) {
-    padding: 20px;
-    border-radius: 20px;
+    padding: 12px;
+    border-radius: 8px;
     border: 1px solid #252E49;
     background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
@@ -232,7 +235,7 @@ body {
 }
 
 .list-style .card {
-    padding: 20px;
+    padding: 12px;
     border: 1px solid #252E49;
     border-radius: 8px;
     background: #080D19;
@@ -241,8 +244,9 @@ body {
 }
 
 .list-style .card:first-child {
-    padding: 10px 20px;
+    padding: 12px;
     background: #121929;
+    font-size: 12px;
 }
 
 .list-style .card p {
@@ -297,6 +301,7 @@ body {
         max-width: 100%;
     }
 }
+
 
 
 
