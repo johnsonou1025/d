@@ -189,7 +189,8 @@ body {
 
 @media (max-width: 768px) {
     .top-news .card-box .card {
-        width: 100%;
+        /* width: 100%; */
+       flex: 0 0 80%;
     }
 }
 
@@ -307,4 +308,5 @@ body {
 
 
 @media (max-width: 768px) {}
+
 
