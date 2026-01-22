@@ -178,12 +178,13 @@ body {
 }
 
 .top-news .sell{
-    background: linear-gradient(90deg, #5D88B5 0%, #094887 100%);
+    /* background: linear-gradient(90deg, #5D88B5 0%, #094887 100%); */
+    background: #080D19;
 }
 
 .top-news .card-box .card {
-    /* flex: 0 0 calc((100% - 20px * 3)/4); */
-    flex: 0 0 auto;
+    flex: 0 0 calc((100% - 20px * 2)/3.5);
+    /* flex: 0 0 auto; */
 }
 
 @media (max-width: 768px) {
@@ -306,3 +307,4 @@ body {
 
 
 @media (max-width: 768px) {}
+
