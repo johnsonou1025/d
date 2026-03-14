@@ -7,31 +7,6 @@ $(async function () {
     const $status = $('p.results'); // 確保有這個元素顯示狀態
     $('body').addClass('loading-view');
 
-    // --- 工具函式：抓取大盤指數 ---
-    async function updateMarketIndex() {
-
-        const symbol = "^TWII";
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`)}`;
-
-        try {
-            const response = await $.getJSON(proxyUrl);
-            const data = JSON.parse(response.contents);
-            const price = data.chart.result[0].meta.regularMarketPrice;
-            const prevClose = data.chart.result[0].meta.chartPreviousClose;
-            const change = (price - prevClose).toFixed(2);
-            const percent = ((change / prevClose) * 100).toFixed(2);
-
-            const color = change >= 0 ? '#ff4d4d' : '#2ecc71';
-            const sign = change >= 0 ? '+' : '';
-
-            $('#market-index').html(`${price.toLocaleString()} <span style="color:${color}; font-size:0.8em;">(${sign}${change} / ${sign}${percent}%)</span>`);
-        } catch (e) {
-            console.error("大盤抓取失敗", e);
-            $('#market-index').text("連線超時");
-        }
-
-    }
-
     try {
         $status.text('資料載入中…');
         const data = await $.getJSON(API);
@@ -86,9 +61,6 @@ $(async function () {
         $plEl.text(Math.round(totalPL).toLocaleString());
         $plEl.css('color', totalPL >= 0 ? '#ff4d4d' : '#2ecc71');
 
-        // 5. 抓取 Yahoo 大盤數據
-        updateMarketIndex();
-
         /**
          * 歷史紀錄數據
          */
@@ -111,19 +83,24 @@ $(async function () {
         // 3. 渲染到表格並計算總獲利
         let total30DayProfit = 0; // 用於累加獲利
         let total30DayAmount = 0; // 用於累加報酬率
+        let fixedTotal30DayProfit = 0; // 用於定額累加獲利
+        let fixedTotal30DayAmount = 0; // 用於定額累加報酬率
 
         $soldTable.find('tr:gt(0)').remove(); // 清空舊資料
 
         recentSoldTrades.forEach(item => {
-            const { time, sheetName, avgEntry, quantity, rate, state } = item;
+            const { time, sheetName, avgEntry, quantity, benefit, rate, state } = item;
             const numRate = Number(rate) || 0;
 
-            // 計算單筆獲利金額 (公式: 2000 * 張數 * 報酬率%)
-            const soldProfitAmount = 2000 * Number(quantity) * (numRate / 100);
-            total30DayProfit += soldProfitAmount; // 累加總額
+            total30DayProfit += Number(benefit); // 累加總額
             // 計算單筆投資金額 (公式: 2000 * 張數)
-            const soldAmonut = 2000 * Number(quantity);
+            // const soldAmonut = 2000 * Number(quantity);
+            const soldAmonut = Number(avgEntry) * Number(quantity) * 1000;
             total30DayAmount += soldAmonut; // 累加總額
+            // 定額
+            // 計算單筆獲利金額 (公式: 2000 * 張數 * 報酬率%)
+            fixedTotal30DayProfit += 2000 * Number(quantity) * (numRate / 100); // 定額累加總額
+            fixedTotal30DayAmount += 2000 * Number(quantity);
 
             const $tr = $('<tr/>');
             if (!isNaN(numRate) && numRate < 0) { $tr.addClass('down'); }
@@ -133,7 +110,7 @@ $(async function () {
             $('<td/>').append(avgEntry).appendTo($tr);
             $('<td/>').append(quantity).appendTo($tr);
             $('<td/>').append(rate + "%").appendTo($tr);
-            $('<td/>').text(soldProfitAmount.toFixed(0)).appendTo($tr); // 顯示單筆獲利
+            $('<td/>').append(benefit).appendTo($tr); // 顯示單筆獲利
 
             $soldTable.append($tr);
         });
@@ -141,6 +118,10 @@ $(async function () {
         // 4. 將總獲利填入指定欄位
         const total30DayRate = total30DayProfit / total30DayAmount * 100;
         $('.month-profit-loss span').text(Math.round(total30DayProfit).toLocaleString() + '(' + Math.round(total30DayRate).toLocaleString() + '%)');
+
+        // 5. 將定額總獲利更新看板數據
+        const fixedTotal30DayRate = fixedTotal30DayProfit / fixedTotal30DayAmount * 100;
+        $('#sell-month-profit-loss').text(Math.round(fixedTotal30DayProfit).toLocaleString() + '(' + Math.round(fixedTotal30DayRate).toLocaleString() + '%)');
 
         /**
          * 今日數據
@@ -170,8 +151,9 @@ $(async function () {
                 $('<td/>').text(item.avgEntry).appendTo($tr);
                 $('<td/>').text(item.quantity).appendTo($tr);
                 $('<td/>').text(item.rate + "%").appendTo($tr);
-                const soldProfitAmount = 2000 * item.quantity * item.rate / 100;
-                $('<td/>').text(soldProfitAmount).appendTo($tr);
+                // const soldProfitAmount = 2000 * item.quantity * item.rate / 100;
+                // $('<td/>').text(soldProfitAmount).appendTo($tr);
+                $('<td/>').text(item.benefit).appendTo($tr);
                 $table.append($tr);
             });
         };
@@ -201,7 +183,6 @@ $(async function () {
         $status.text('載入完成');
         //顯示更新時間
         const $updateTime = $('.data-update-time');
-        console.log(getLastUpdateLabel());
         $updateTime.text(getLastUpdateLabel());
         setTimeout(() => {
             $('body').removeClass('loading-view');
