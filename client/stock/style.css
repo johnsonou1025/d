@@ -1,312 +1,232 @@
 /* Copyright 2025 Johnson */
 
-@import url(https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css);
+@import url('reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-:root {
-    --color-bg: #F6F8FE;
-    --color-bg-varient: linear-gradient(225.43deg, #F5EAE6 0%, #D5DBF1 49.63%, #F5EAE6 99.26%);
-    --color-card: rgb(255, 255, 255, .4);
-    --color-on-card: #31456A;
-    --color-up: #FFEEEA;
-    --color-on-up: #C6777A;
-    --color-down: #EEF8F9;
-    --color-on-down: #6EB0A2;
-    --shadow: -16px -2px 56px rgba(255, 255, 255, 1), 16px 10px 48px rgba(136, 165, 191, .58);
-    --shadow-wrap: -16px -16px 40px rgba(255, 255, 255, 0.8), 16px 4px 64px rgba(18, 61, 101, 0.3), inset -8px -6px 80px rgba(255, 255, 255, 0.18);
-}
-
-* {
-    box-sizing: border-box;
-}
 
 body {
-    background-color: #0E182E;
-    background-image: linear-gradient(116.82deg, #0D203A 0%, #0B0D1A 50%, #0E182E 100%);
+    background-color: #F9FAFB;
+    background-image: linear-gradient(116.82deg, #F8FAFC 0%, #EFF6FF 50%, #F8FAFC 100%);
     font-family: 'Roboto', "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    font-size: 14px;
-    color: #fff;
+    font-size: 12px;
+    color: #0F172B;
     line-height: 1.5;
     letter-spacing: 0.05em;
 }
 
-.wrap {
-    padding: 40px 20px;
-    margin: auto;
-    max-width: 1280px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-@media (max-width: 768px) {
-    .wrap {
-        padding: 40px 10px;
-    }
-}
-
-.title {
-    margin-bottom: 20px;
+h4 {
     font-size: 18px;
-    opacity: .6;
-}
-
-.card-box {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-}
-
-.card {
-    flex: 0 0 auto;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #252E49;
-    background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
-    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.card p {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 4px;
     font-weight: bold;
 }
 
-.card p:nth-child(1),
-.card p:nth-child(2) {
-    flex: 0 0 50%;
-    margin-bottom: 20px;
-}
+/* component  */
 
-.card p:nth-child(1) {
-    font-size: 14px;
-}
-
-.card p:nth-child(2) {
-    align-items: flex-end;
-    font-size: 28px;
-    color: #73D9AE;
-}
-
-.card p:nth-child(3),
-.card p:nth-child(4),
-.card p:nth-child(5) {
-    flex: 0 0 33.33%;
-}
-
-.card p:nth-child(5) {
-    color: #73D9AE;
-}
-
-.card-box:not(.list-style) .card.down p:nth-child(2),
-.card.down p:nth-child(5) {
-    color: #E66E6D;
-}
-
-.card p:nth-child(5) span {
-    color: #fff;
-}
-
-.card p span {
+.row {
     display: flex;
-    align-items: center;
-    font-size: 12px;
-    opacity: .7;
-    font-weight: normal;
-}
-.sell p:first-child span:before,
-.buy p:first-child span:before {
-    content: "賣出";
-    padding: 2px 4px;
-    border-radius: 4px;
-    margin-right: 8px;
-    font-size: 10px;
-    color: #FFF;
-    background: #2882EC;
-    text-align: center;
-}
-
-.buy p:first-child span:before {
-    content: "買進";
-}
-
-.tags {
-    display: none;
-}
-
-.tags ul {
-    margin-bottom: -20px;
-    display: flex;
+    flex-direction: column;
     gap: 16px;
 }
 
-.tags li {
-    position: relative;
-    padding: 10px 0;
-    font-size: 18px;
-    opacity: .7;
+.col {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
-.tags li.active {
-    opacity: 1;
+.col>* {
+    flex: 1;
 }
 
-.tags li.active:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 2px;
-    width: 50%;
+@media (max-width: 768px) {
+    .col>* {
+        flex: 0 0 calc((100% - 16px)/2);
+    }
+}
+
+.card {
+    padding: 12px;
+    border: 1px solid #E2E8F0;
     background: #FFF;
 }
 
-@media (max-width: 768px) {
-    .tags {
-        display: block;
-    }
+table {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
 }
 
-.top-news .card-box {
-    gap: 20px;
+th {
+    padding: 8px;
+    background: #F8FAFC;
+    color: #4A5565;
+    font-weight: 700;
+    text-align: left;
 }
 
-.top-news .sell{
-    /* background: linear-gradient(90deg, #5D88B5 0%, #094887 100%); */
-    background: #080D19;
+td {
+    padding: 8px;
+    border-top: 1px solid #F1F5F9;
 }
 
-.top-news .card-box .card {
-    flex: 0 0 calc((100% - 20px * 2)/3.5);
-    /* flex: 0 0 auto; */
+td:last-child {
+    color: #00A63E;
 }
 
-@media (max-width: 768px) {
-    .top-news .card-box .card {
-        /* width: 100%; */
-       flex: 0 0 80%;
-    }
+tr.down td:last-child {
+    color: #E7000B;
 }
 
-.content {
+.headline {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* page  */
+
+.wrap {
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.content>div:not(.tags) {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #252E49;
-    background: linear-gradient(135deg, rgba(17, 38, 67, 0.8) -1.61%, rgba(9, 16, 29, 0.8) 45.06%, rgba(13, 23, 44, 0.8) 91.73%);
-    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
-}
-
-
-@media (max-width: 768px) {
-    .content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .content>div {
-        display: none;
-        flex: auto;
-        width: 100%;
-    }
-
-    .content>div.active {
-        display: block;
-    }
-}
-
-.entry {
-    /* flex: 0 0 calc((100% - 20px)/4*3); */
-    flex: 1 1 0;
-}
-
-.list-style {
     flex-direction: column;
-    gap: 5px;
 }
 
-.list-style .card {
-    padding: 12px;
-    border: 1px solid #252E49;
-    border-radius: 8px;
-    background: #080D19;
-    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
-    order: -999;
-}
-
-.list-style .card:first-child {
-    padding: 12px;
-    background: #121929;
-    font-size: 12px;
-}
-
-.list-style .card p {
-    all: unset;
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.list-style .card p.active:after {
-    content: "";
-    height: 100%;
-    aspect-ratio: 1 / 1;
+.header-outer {
+    border-bottom: 1px solid #E2E8F0;
     background: #fff;
-    mask: url(sorting.svg) no-repeat center center / cover;
 }
 
-.list-style .card:not(.down) p:nth-child(5) {
-    color: #73D9AE;
+.header {
+    margin: auto;
+    padding: 0 12px;
+    max-width: 1280px;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.list-style .card:first-child p:nth-child(5) {
-    color: #FFF;
+.header .row {
+    gap: 0;
 }
 
-.list-style .card:first-child p {
-    opacity: .5;
+.data-update-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-
-.list-style .card p:first-child {
-    justify-content: flex-start;
+.main-content {
+    margin: auto;
+    padding: 16px 12px;
+    width: 100%;
+    max-width: 1280px;
 }
 
-
-.list-style .card p span {
-    display: none;
-}
-
-.take-profit {
-    /* flex: 0 0 calc((100% - 20px)/4); */
-    flex: 0 0 auto;
-    max-width: 40%;
-}
-
-.take-profit .card-box {
+.data-today {
+    display: flex;
     flex-direction: column;
 }
 
+.data-today-buy .headline {
+    background: #F0FDF4;
+    color: #008236;
+    border: 1px solid #E2E8F0;
+}
+
+.data-today-sell .headline {
+    background: #FEF2F2;
+    color: #C10007;
+    border: 1px solid #E2E8F0;
+}
+
 @media (max-width: 768px) {
-    .take-profit {
-        max-width: 100%;
+    .data-today .col {
+        flex-direction: column;
     }
 }
 
+.data-holdings .headline {
+    background: #EFF6FF;
+    color: #1447E6;
+    border: 1px solid #E2E8F0;
+}
 
+.data-holdings td:first-child,
+.data-holdings td:last-child {
+    font-weight: 700;
+}
+
+.data-sold .headline {
+    background: #FAF5FF;
+    color: #8200DB;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between
+}
+
+.data-sold .headline .month-profit-loss {
+    font-size: 12px;
+    color: #4A5565;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.data-sold .headline .month-profit-loss span:first-child {
+    color: #00A63E;
+}
+
+
+/* 載入頁 */
+body.loading-view {
+    overflow: hidden;
+}
+
+.status-wrapper {
+    position: fixed;
+    inset: 0;
+    top: 64px;
+    background: #F9FAFB;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+    transition: .3s;
+}
+
+body.loading-view .status-wrapper {
+    display: flex;
+    opacity: 1;
+}
+
+/* 載入容器 */
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    transition: opacity 0.3s ease;
+}
+
+/* 圓環動畫 */
+.spinner {
+    margin-bottom: 20px;
+    width: 24px;
+    height: 24px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    /* 轉圈圈的顏色 */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 旋轉關鍵影格 */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 
 @media (max-width: 768px) {}
-
-

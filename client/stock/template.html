@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0E182E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Stock web app</title>
     <link rel="stylesheet" href="style.css">
     <script src="jquery-3.7.0.min.js"></script>
-    <script src="stock.js"></script>
+    <!-- <script src="stock.js"></script> -->
 </head>
 
 <body>
+    <!-- 載入動畫 -->
     <div class="status-wrapper">
         <div class="loading">
             <div class="spinner"></div>
@@ -26,7 +28,7 @@
                     <h4>溫發財股票數據平台</h4>
                     <p>即時追蹤投資組合</p>
                 </div>
-                <div class="data-update-time"></div>
+                <div class="data-update-time">更新時間<span>2026-03-13 14:15</span></div>
             </div>
         </div>
         <div class="main-content row">
@@ -34,19 +36,19 @@
                 <div class="col">
                     <div class="card">
                         <span>持倉總數</span>
-                        <h4 id="holding-shares-count"></h4>
+                        <h4 id="holding-shares-count">2</h4>
                     </div>
                     <div class="card">
                         <span>持倉投入金額(單次2000)</span>
-                        <h4 id="holding-investment-amount"></h4>
+                        <h4 id="holding-investment-amount">2</h4>
                     </div>
                     <div class="card">
                         <span>持倉損益</span>
-                        <h4 id="holding-profit-loss"></h4>
+                        <h4 id="holding-profit-loss">2</h4>
                     </div>
                     <div class="card">
                         <span>大盤指數</span>
-                        <h4 id="market-index"></h4>
+                        <h4 id="market-index">2</h4>
                     </div>
                 </div>
             </div>
@@ -59,12 +61,20 @@
                         <div class="headline">建議買進</div>
                         <table>
                             <tr>
-                                <th>日期</th>
+                                <th>類型</th>
                                 <th>名稱</th>
-                                <th>買進價格</th>
+                                <th>今日價格</th>
                                 <th>進場均價</th>
                                 <th>進場張數</th>
                                 <th>報酬率</th>
+                            </tr>
+                            <tr>
+                                <td>賣出</td>
+                                <td>智原 3035.TW</td>
+                                <td>154</td>
+                                <td>154</td>
+                                <td>1</td>
+                                <td>0%</td>
                             </tr>
                         </table>
                     </div>
@@ -74,12 +84,20 @@
                         </div>
                         <table>
                             <tr>
-                                <th>日期</th>
+                                <th>類型</th>
                                 <th>名稱</th>
+                                <th>今日價格</th>
                                 <th>進場均價</th>
                                 <th>進場張數</th>
                                 <th>報酬率</th>
-                                <th>獲利金額</th>
+                            </tr>
+                            <tr>
+                                <td>買進</td>
+                                <td>弘塑 3131.TWO</td>
+                                <td>1940</td>
+                                <td>1570</td>
+                                <td>1</td>
+                                <td>13.69%</td>
                             </tr>
                         </table>
                     </div>
@@ -97,12 +115,26 @@
                         <th>進場張數</th>
                         <th>報酬率</th>
                     </tr>
+                    <tr>
+                        <td>智原 3035.TW</td>
+                        <td>154</td>
+                        <td>154</td>
+                        <td>1</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="down">
+                        <td>智原 3035.TW</td>
+                        <td>154</td>
+                        <td>154</td>
+                        <td>1</td>
+                        <td>-20%</td>
+                    </tr>
                 </table>
             </div>
             <div class="data-sold">
                 <div class="headline">
-                    已賣出股票(近30天)
-                    <div class="month-profit-loss">近30天累計損益<span></span></div>
+                    已賣出股票
+                    <div class="month-profit-loss">累計損益(近30天)<span>+12711</span><span>12%</span></div>
                 </div>
                 <table>
                     <tr>
@@ -111,7 +143,13 @@
                         <th>進場均價</th>
                         <th>進場張數</th>
                         <th>報酬率</th>
-                        <th>獲利金額</th>
+                    </tr>
+                    <tr>
+                        <td>2026-01-01</td>
+                        <td>弘塑 3131.TWO</td>
+                        <td>1570</td>
+                        <td>1</td>
+                        <td>13.69%</td>
                     </tr>
                 </table>
             </div>
