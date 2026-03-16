@@ -1,0 +1,52 @@
+const UNITS = [
+    {
+    id: "unit1",
+    name: "1～20 的加減",
+    levels: [
+            {
+        id: "u1l1",
+        name: "加法入門",
+        minCorrectToPass: 8, // 至少答對 8 題才算過關
+        questions: [
+                    {
+            id: "q1",
+            type: "choice", // 先做單選題
+            prompt: "3 + 4 = ？",
+            options: [
+                            "5",
+                            "6",
+                            "7",
+                            "8"
+                        ],
+            correctIndex: 2
+                    },
+                    {
+            id: "q2",
+            type: "choice",
+            prompt: "9 + 1 = ？",
+            options: [
+                            "10",
+                            "9",
+                            "8"
+                        ],
+            correctIndex: 0
+                    },
+                    {
+            id: "q3",
+            type: "choice",
+            prompt: "5 + 5 = ？",
+            options: [
+                            "9",
+                            "10",
+                            "11"
+                        ],
+            correctIndex: 1
+                    }
+                    // ... 你可以繼續加到 10 題
+                ]
+            }
+            // 之後可以在這裡新增更多 Level
+        ]
+    }
+    // 之後可以新增 unit2, unit3...
+];
