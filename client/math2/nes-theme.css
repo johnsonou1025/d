@@ -1,7 +1,5 @@
 /* theme.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
-
 :root {
     /* 核心色調：專業與經典的結合 */
     --mario-red: #e52521;
@@ -340,7 +338,7 @@ body::before {
     /* 加上移動動畫 */
     opacity: 1;
     /* 淡淡的就好，不要搶走題目焦點 */
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 @-webkit-keyframes bg-mario-move {
