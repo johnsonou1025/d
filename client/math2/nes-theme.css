@@ -1,5 +1,7 @@
 /* theme.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
 :root {
     /* 核心色調：專業與經典的結合 */
     --mario-red: #e52521;
@@ -14,6 +16,7 @@
 
 /* 重新定義背景 */
 body {
+    font-family: "Bopomofo", "Yuanti TC", "Comic Sans MS", "PingFang TC", sans-serif;
     background: var(--sky-blue);
     background-image:
         linear-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px),
@@ -139,6 +142,7 @@ body {
     box-shadow: 4px 4px 0 #801000;
     color: white;
     text-transform: uppercase;
+    display: block;
 }
 
 .btn-primary:active {
@@ -207,4 +211,255 @@ body {
 #nextLevelButton {
     background: var(--luigi-green) !important;
     box-shadow: 4px 4px 0 #14532d !important;
+}
+
+/* 260317 */
+/* --- 瑪利歐角色與起動畫定義 --- */
+
+/* 定義起動畫 (Sprite Animations) */
+@-webkit-keyframes mario-run {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -160px;
+    }
+
+    /* 假設有 4 幀，每幀 40px，總寬 160px */
+}
+
+@keyframes mario-run {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -160px;
+    }
+
+    /* 假設有 4 幀，每幀 40px，總寬 160px */
+}
+
+@-webkit-keyframes coin-rotate {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -120px;
+    }
+
+    /* 假設有 4 幀，每幀 30px，總寬 120px */
+}
+
+@keyframes coin-rotate {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -120px;
+    }
+
+    /* 假設有 4 幀，每幀 30px，總寬 120px */
+}
+
+/* 基礎角色類別 */
+.sprite {
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    /* 關鍵：保持像素銳利，不模糊 */
+    background-repeat: no-repeat;
+    display: block;
+}
+
+/* 奔跑的瑪利歐 (用於 UI 裝飾) */
+.mario-runner {
+    width: 40px;
+    /* 單幀寬度 */
+    height: 40px;
+    /* 單幀高度 */
+    background-image: url('images/mario-sprites.png');
+    /* ⭐ 替換為您的圖片路徑 */
+    -webkit-animation: mario-run 0.4s steps(4) infinite;
+    animation: mario-run 0.4s steps(4) infinite;
+    /* steps(4) 代表 4 幀 */
+}
+
+/* 旋轉的金幣 (用於分數區) */
+.coin-sprite {
+    width: 30px;
+    height: 30px;
+    background-image: url('images/coin-sprite.png');
+    /* ⭐ 替換為您的圖片路徑 */
+    -webkit-animation: coin-rotate 0.5s steps(4) infinite;
+    animation: coin-rotate 0.5s steps(4) infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* --- UI 布局調整 --- */
+
+/* 重新定義背景：加上像素雲朵裝飾 */
+body {
+    background: var(--sky-blue);
+    background-image:
+        /* 水平與垂直網格 */
+        linear-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+    background-size: 40px 40px;
+    position: relative;
+    overflow-x: hidden;
+    /* 防止角色跑出螢幕 */
+}
+
+/* 在背景加上一個正在跑的瑪利歐偽元素 */
+body::before {
+    content: "";
+    position: fixed;
+    bottom: 20px;
+    left: -50px;
+    /* 從左側外面開始 */
+    width: 40px;
+    height: 40px;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    background-image: url('images/mario-sprites.png');
+    /* ⭐ 替換路徑 */
+    background-repeat: no-repeat;
+    -webkit-animation:
+        mario-run .3s steps(4) infinite,
+        bg-mario-move 10s linear infinite;
+    animation:
+        mario-run .3s steps(4) infinite,
+        bg-mario-move 10s linear infinite;
+    /* 加上移動動畫 */
+    opacity: 1;
+    /* 淡淡的就好，不要搶走題目焦點 */
+    z-index: -1;
+}
+
+@-webkit-keyframes bg-mario-move {
+    from {
+        left: -50px;
+    }
+
+    to {
+        left: calc(100% + 50px);
+    }
+}
+
+@keyframes bg-mario-move {
+    from {
+        left: -50px;
+    }
+
+    to {
+        left: calc(100% + 50px);
+    }
+}
+
+/* 分數顯示區：將文字顏色改為 Luigi 綠 */
+.score {
+    color: var(--luigi-green);
+    font-weight: 800;
+}
+
+/* 下一題按鈕：加上一個向右的像素箭頭 */
+#nextButton::after {
+    content: " ➔";
+    font-family: monospace;
+}
+
+/* --- Popup (彈出視窗) 瑪利歐風格增強 --- */
+
+/* 重新定義彈窗主體 */
+.result-panel {
+    background: #fff;
+    border: var(--pixel-border) solid #000;
+    box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    /* 為內部絕對定位做準備 */
+    padding-top: 60px;
+    /* 為上方的角色留出空間 */
+}
+
+/* 在彈窗上方中央放置一個大的站立瑪利歐 */
+.result-panel::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    /* 向上偏移，半懸浮 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    background-image: url('images/mario-sprites.png');
+    /* ⭐ 替換路徑 */
+    background-repeat: no-repeat;
+    background-position: -160px 0px;
+    /* 假設第 5 幀是站立/勝利動作 */
+    -webkit-filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.2));
+}
+
+/* 過關標題：使用像素字體感並閃爍 */
+#resultTitle {
+    /* -webkit-animation: title-blink 1s steps(2) infinite;
+    animation: title-blink 1s steps(2) infinite; */
+}
+
+@-webkit-keyframes title-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes title-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 星星樣式：旋轉並放大 */
+#resultStars {
+    /* -webkit-animation: star-rotate 2s linear infinite;
+    animation: star-rotate 2s linear infinite; */
+    display: inline-block;
+    transform-origin: center;
+}
+
+@-webkit-keyframes star-rotate {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes star-rotate {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1);
+    }
 }

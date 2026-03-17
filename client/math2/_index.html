@@ -122,25 +122,19 @@
         </div>
 
         <div class="footer">
-            <!-- <div>正確題數：<span class="score" id="scoreText">0</span></div> -->
-            <div style="display: flex; align-items: center;">
-                <span class="coin-sprite"></span>
-                <span>正確題數：</span>
-                <span class="score" id="scoreText">0</span>
-            </div>
+            <div>正確題數：<span class="score" id="scoreText">0</span></div>
             <div>錯誤題數：<span id="wrongText">0</span></div>
         </div>
 
         <button class="btn-primary" id="nextButton">下一題</button>
-        <div class="modal-overlay" id="modalOverlay"
-            style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; justify-content: center; align-items: center;">
-            <div class="result-panel" id="resultPanel" style="display: block;">
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="result-panel" id="resultPanel">
                 <h2 id="resultTitle">本關完成！</h2>
                 <div class="stars" id="resultStars">★★★</div>
                 <div class="result-detail" id="resultDetail">你答對 0 / 0 題</div>
                 <button class="btn-primary" id="retryButton" style="margin-top: 12px;">重新挑戰</button>
                 <button class="btn-primary" id="nextLevelButton"
-                    style="margin-top: 8px; background: var(--luigi-green) !important;">
+                    style="margin-top: 8px; background: linear-gradient(90deg, #38bdf8, #0ea5e9);">
                     下一關
                 </button>
             </div>

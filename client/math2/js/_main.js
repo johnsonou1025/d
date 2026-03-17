@@ -106,6 +106,7 @@ function initLevel() {
     wrongTextEl.textContent = wrongCount;
     // 關閉彈窗
     modalOverlayEl.style.display = "none";
+    resultPanelEl.style.display = "none";
 
     renderQuestion();
 }
@@ -437,25 +438,23 @@ function showResult() {
     resultDetailEl.textContent = `你答對 ${correctCount} / ${total} 題`;
 
     const need = levelConfig.minCorrectToPass || 0;
-    const levelName = currentLevelId;
 
     // NPC 情緒價值內容
     if (correctCount >= need) {
         const quote = (stars === 3)
-            ? "哇！太厲害了！拿到了大星星！你是數學冒險王！🌟🍄"
-            : "你的邏輯力正在像吃了強壯蘑菇一樣變大喔！我們去下一關看看吧！👍";
+            ? "太不可思議了！你的智慧光芒簡直要穿透螢幕了！"
+            : "做得好！你已經完全掌握了這門技巧，我們繼續前進！";
         resultTitleEl.innerHTML = `<span style="font-size:14px; color:#9ca3af; display:block;">數智老人說：</span>"${quote}"`;
         nextLevelButtonEl.style.display = "block";
     } else {
-        resultTitleEl.innerHTML = `<span style="font-size:14px; color:#9ca3af; display:block;">數智老人說：</span>"沒關係，勇者也會有失手的時候，調整呼吸再試一次！🐢"`;
+        resultTitleEl.innerHTML = `<span style="font-size:14px; color:#9ca3af; display:block;">數智老人說：</span>"沒關係，勇者也會有失手的時候，調整呼吸再試一次！"`;
         nextLevelButtonEl.style.display = "none";
     }
 
-    // --- 顯示 Popup ---
-    // 先隱藏題目區的按鈕
-    nextButtonEl.style.display = "none";
-    // 顯示遮罩和彈窗
+    // 顯示 Popup
     modalOverlayEl.style.display = "flex";
+    resultPanelEl.style.display = "block";
+    nextButtonEl.style.display = "none";
 }
 
 // ===== 重新挑戰 / 下一關 =====

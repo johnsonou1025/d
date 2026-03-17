@@ -1,0 +1,667 @@
+/* ===== 任天堂瑪利歐遊戲風格 UI ===== */
+/* 直接在 HTML 加 <link rel="stylesheet" href="mario-theme.css"> 即可套用！ */
+/* ===== Google Fonts 匯入（內嵌）===== */
+@import url('https://fonts.googleapis.com/css2?family=Press Start 2P&display=swap');
+
+/* ===== 1. 全域重置 + 瑪利歐復古像素風 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    background: linear-gradient(180deg,
+            #87CEEB 0%,
+            /* 瑪利歐天空藍 */
+            #98D8C8 50%,
+            /* 草地綠 */
+            #4A90E2 100%
+            /* 藍天漸層 */
+        );
+    min-height: 100vh;
+    color: #000;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 瑪利歐風雲朵背景 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    width: 120px;
+    height: 60px;
+    background: #fff;
+    border-radius: 60px;
+    z-index: -1;
+    -webkit-animation: floatCloud 20s infinite linear;
+            animation: floatCloud 20s infinite linear;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 40%;
+    right: 5%;
+    width: 80px;
+    height: 40px;
+    background: #fff;
+    border-radius: 40px;
+    z-index: -1;
+    animation: floatCloud 25s infinite linear reverse;
+}
+
+/* ===== 2. 遊戲主容器 ===== */
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 8px solid #E8C547;
+    /* 金色邊框 */
+    border-radius: 0;
+    box-shadow:
+        inset 0 0 20px rgba(232, 197, 71, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* 瑪利歐磚塊紋理 */
+.game-container {
+    background-image:
+        linear-gradient(90deg, transparent 48px, rgba(0, 0, 0, 0.05) 48px, rgba(0, 0, 0, 0.05) 50px, transparent 50px),
+        linear-gradient(180deg, transparent 48px, rgba(0, 0, 0, 0.05) 48px, rgba(0, 0, 0, 0.05) 50px, transparent 50px);
+    background-size: 50px 50px;
+}
+
+/* ===== 3. 標題區 - 瑪利歐標題風格 ===== */
+#unitTitle,
+#levelTitle {
+    font-size: 20px;
+    font-weight: bold;
+    color: #E53E3E;
+    /* 瑪利歐紅 */
+    text-shadow:
+        2px 2px 0 #fff,
+        3px 3px 0 #000;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+#levelTitle {
+    font-size: 16px;
+    color: #F6AD17;
+    /* 火焰花橙 */
+}
+
+/* ===== 4. 年級按鈕 - 瑪利歐金幣按鈕 ===== */
+.grade-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.grade-btn {
+    padding: 12px 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #000;
+    background: linear-gradient(145deg, #F6E05E, #F7D55C);
+    border: 4px solid #D4A017;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow:
+        4px 4px 0 #D4A017,
+        inset 0 2px 0 rgba(255, 255, 255, 0.6);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+    min-width: 70px;
+    position: relative;
+    overflow: hidden;
+}
+
+.grade-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        6px 6px 0 #D4A017,
+        inset 0 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+.grade-btn:active {
+    transform: translateY(0);
+    box-shadow:
+        2px 2px 0 #D4A017,
+        inset 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.grade-btn.active {
+    background: linear-gradient(145deg, #FFD700, #FFA500);
+    border-color: #B8860B;
+    box-shadow:
+        6px 6px 0 #B8860B,
+        0 0 20px rgba(255, 215, 0, 0.6);
+    -webkit-animation: coinSpin 0.6s ease-in-out;
+            animation: coinSpin 0.6s ease-in-out;
+}
+
+/* 金幣旋轉動畫 */
+@-webkit-keyframes coinSpin {
+
+    0%,
+    100% {
+        transform: translateY(-2px) rotateY(0deg);
+    }
+
+    25% {
+        transform: translateY(-4px) rotateY(90deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotateY(270deg);
+    }
+}
+@keyframes coinSpin {
+
+    0%,
+    100% {
+        transform: translateY(-2px) rotateY(0deg);
+    }
+
+    25% {
+        transform: translateY(-4px) rotateY(90deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotateY(270deg);
+    }
+}
+
+/* ===== 5. 進度條 - 瑪利歐綠管子 ===== */
+.progress-container {
+    background: #4A5568;
+    height: 20px;
+    border: 4px solid #2D3748;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#progressFill {
+    height: 100%;
+    background: linear-gradient(90deg,
+            #48BB78 0%,
+            #38A169 50%,
+            #2F855A 100%);
+    width: 0%;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+#progressFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    -webkit-animation: progressShine 2s infinite;
+            animation: progressShine 2s infinite;
+}
+
+@-webkit-keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ===== 6. 題目區 - 瑪利歐問號磚塊 ===== */
+.question-area {
+    background: linear-gradient(145deg, #F7FAFC, #EDF2F7);
+    border: 6px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow:
+        6px 6px 0 #CBD5E0,
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        0 8px 24px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.question-area::before {
+    content: '?';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 36px;
+    color: #F6AD17;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #fff;
+    z-index: 1;
+}
+
+.question-area::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #F6AD17, #ED8936, #F6AD17);
+    -webkit-animation: questionBlock 3s ease-in-out infinite;
+            animation: questionBlock 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes questionBlock {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(-1px);
+    }
+}
+
+@keyframes questionBlock {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(-1px);
+    }
+}
+
+#questionText {
+    font-size: 22px;
+    line-height: 1.4;
+    color: #2D3748;
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+#subText {
+    font-size: 14px;
+    color: #4A5568;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* ===== 7. 選項按鈕 - 瑪利歐磚塊按鈕 ===== */
+#optionsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.option-btn {
+    padding: 20px 12px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #fff;
+    background: linear-gradient(145deg, #4299E1, #3182CE);
+    border: 4px solid #2B6CB0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow:
+        4px 4px 0 #2B6CB0,
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.option-btn:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+        6px 6px 0 #2B6CB0,
+        inset 0 4px 8px rgba(255, 255, 255, 0.4);
+}
+
+.option-btn:active:not(.disabled) {
+    transform: translateY(0);
+    box-shadow:
+        2px 2px 0 #2B6CB0,
+        inset 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.option-btn.correct {
+    background: linear-gradient(145deg, #48BB78, #38A169);
+    border-color: #2F855A;
+    box-shadow:
+        4px 4px 0 #2F855A,
+        0 0 20px rgba(72, 187, 120, 0.6),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4);
+    -webkit-animation: correctBounce 0.6s ease;
+            animation: correctBounce 0.6s ease;
+}
+
+.option-btn.incorrect {
+    background: linear-gradient(145deg, #F56565, #E53E3E);
+    border-color: #C53030;
+    box-shadow:
+        4px 4px 0 #C53030,
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    -webkit-animation: wrongShake 0.4s ease;
+            animation: wrongShake 0.4s ease;
+}
+
+.option-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@-webkit-keyframes correctBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-10px) scale(1.05);
+    }
+
+    75% {
+        transform: translateY(-5px) scale(1.02);
+    }
+}
+
+@keyframes correctBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-10px) scale(1.05);
+    }
+
+    75% {
+        transform: translateY(-5px) scale(1.02);
+    }
+}
+
+@-webkit-keyframes wrongShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes wrongShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.tag {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFF;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 8. 分數面板 - 瑪利歐計分板 ===== */
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: linear-gradient(145deg, #805AD5, #6B46C1);
+    border: 4px solid #553C9A;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 #553C9A;
+}
+
+#scoreText,
+#wrongText {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    color: #FFF;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 9. 按鈕 - 瑪利歐超級蘑菇按鈕 ===== */
+button {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    padding: 14px 28px;
+    color: #fff;
+    background: linear-gradient(145deg, #E53E3E, #C53030);
+    border: 4px solid #9B2C2C;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow:
+        4px 4px 0 #9B2C2C,
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        6px 6px 0 #9B2C2C,
+        inset 0 4px 8px rgba(255, 255, 255, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow:
+        2px 2px 0 #9B2C2C,
+        inset 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#nextButton {
+    width: 100%;
+    padding: 18px;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+/* ===== 10. 結果面板 - 瑪利歐關卡結束 ===== */
+#resultPanel {
+    background: linear-gradient(145deg, #F6E05E, #F7D55C);
+    border: 6px solid #D4A017;
+    box-shadow:
+        8px 8px 0 #D4A017,
+        inset 0 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+#resultTitle {
+    font-size: 24px;
+    color: #E53E3E;
+    text-align: center;
+    margin-bottom: 16px;
+    text-shadow:
+        3px 3px 0 #fff,
+        4px 4px 0 #000;
+}
+
+#resultStars {
+    font-size: 48px;
+    text-align: center;
+    margin: 12px 0;
+    text-shadow: 2px 2px 0 #000;
+}
+
+#resultDetail {
+    font-size: 16px;
+    text-align: center;
+    color: #2D3748;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* ===== 11. 測試面板 - 瑪利歐調試面板 ===== */
+.debug-panel {
+    background: rgba(229, 231, 235, 0.9);
+    border: 3px solid #718096;
+    box-shadow: 4px 4px 0 #4A5568;
+}
+
+.debug-panel label {
+    color: #2D3748;
+    font-weight: bold;
+}
+
+.debug-panel select {
+    background: linear-gradient(145deg, #EDF2F7, #E2E8F0);
+    border: 2px solid #4A5568;
+    color: #2D3748;
+    font-family: 'Press Start 2P', monospace;
+}
+
+/* ===== 12. 視覺化元素增強 ===== */
+.visual-stars span {
+    -webkit-animation: starTwinkle 1.5s infinite;
+            animation: starTwinkle 1.5s infinite;
+    -webkit-animation-delay: calc(var(--i, 0) * 0.1s);
+            animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+@-webkit-keyframes starTwinkle {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.2) rotate(180deg);
+    }
+}
+
+@keyframes starTwinkle {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.2) rotate(180deg);
+    }
+}
+
+.visual-shape,
+.visual-fraction,
+.visual-containers {
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ===== 13. 雲朵飄動 ===== */
+@-webkit-keyframes floatCloud {
+    0% {
+        transform: translateX(-100px);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 100px));
+    }
+}
+@keyframes floatCloud {
+    0% {
+        transform: translateX(-100px);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 100px));
+    }
+}
+
+/* ===== 14. 響應式 ===== */
+@media (max-width: 600px) {
+    .game-container {
+        margin: 10px;
+        padding: 12px;
+        border-width: 4px;
+    }
+
+    #optionsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .grade-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,685 @@
+/* ===== 動物森友會 Nook 島嶼風格 UI ===== */
+/* 直接在 HTML 加 <link rel="stylesheet" href="animal-crossing-theme.css"> 即可套用！ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== 1. 全域樣式 - 治癒系粉嫩天空 ===== */
+body {
+    font-family: 'Nunito', 'Hiragino Sans', sans-serif;
+    background: linear-gradient(135deg,
+            #FFE4E1 0%,
+            /* 櫻花粉 */
+            #E0F7FA 25%,
+            /* 水手藍 */
+            #F3E5F5 50%,
+            /* 薰衣草紫 */
+            #FFF8E1 75%,
+            /* 奶油黃 */
+            #E8F5E8 100%
+            /* 薄荷綠 */
+        );
+    min-height: 100vh;
+    color: #37474F;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 飄浮氣球 + 小島雲朵背景 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 15%;
+    left: 15%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #FF6B9D, #C44569);
+    border-radius: 50%;
+    z-index: -1;
+    animation: floatUp 25s infinite linear;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 60%;
+    right: 20%;
+    width: 120px;
+    height: 60px;
+    background: #fff;
+    border-radius: 60px 60px 20px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    animation: floatCloud 30s infinite ease-in-out;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-100vh) translateX(50px) rotate(360deg);
+    }
+}
+
+@keyframes floatCloud {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
+/* ===== 2. 主容器 - Nook 商店木桌風格 ===== */
+.game-container {
+    max-width: 850px;
+    margin: 24px auto;
+    padding: 32px;
+    background: linear-gradient(145deg,
+            #FFF8DC 0%,
+            /* 奶油木 */
+            #F5F5DC 50%,
+            /* 米白木 */
+            #EDE4D9 100%
+            /* 淺咖啡 */
+        );
+    border: 8px solid #D2B48C;
+    border-radius: 24px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.8),
+        inset 0 -4px 12px rgba(210, 180, 140, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 木桌紋理 */
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 4px,
+            rgba(210, 180, 140, 0.4) 4px,
+            rgba(210, 180, 140, 0.4) 6px);
+    pointer-events: none;
+}
+
+/* ===== 3. 標題區 - 手寫標籤風格 ===== */
+#unitTitle {
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px;
+    background: linear-gradient(135deg, #FF6B9D, #C44569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 12px;
+    padding: 12px 24px;
+    border-radius: 20px;
+    background: linear-gradient(145deg,
+            rgba(255, 107, 157, 0.9),
+            rgba(196, 69, 105, 0.9));
+    box-shadow:
+        0 8px 20px rgba(255, 107, 157, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6);
+}
+
+#levelTitle {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    color: #37474F;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: 3px solid #E0E0E0;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
+/* ===== 4. 年級按鈕 - 糖果果凍按鈕 ===== */
+.grade-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0;
+    flex-wrap: wrap;
+}
+
+.grade-btn {
+    padding: 16px 28px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    position: relative;
+    overflow: hidden;
+    min-width: 90px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.grade-btn:nth-child(1) {
+    background: linear-gradient(135deg, #FF6B9D, #C44569);
+}
+
+.grade-btn:nth-child(2) {
+    background: linear-gradient(135deg, #4ECDC4, #44A08D);
+}
+
+.grade-btn:nth-child(3) {
+    background: linear-gradient(135deg, #45B7D1, #96C93D);
+}
+
+.grade-btn:nth-child(4) {
+    background: linear-gradient(135deg, #FECA57, #FF9FF3);
+}
+
+.grade-btn:nth-child(5) {
+    background: linear-gradient(135deg, #A8E6CF, #88D8A3);
+}
+
+.grade-btn:nth-child(6) {
+    background: linear-gradient(135deg, #FF9FF3, #F368E0);
+}
+
+.grade-btn:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.3),
+        inset 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+.grade-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.grade-btn.active {
+    animation: jellyBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.25),
+        0 0 40px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes jellyBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(-2px) scale(1);
+    }
+
+    30% {
+        transform: translateY(-8px) scale(1.08);
+    }
+}
+
+/* ===== 5. 進度條 - 漁夫星球進度 ===== */
+.progress-container {
+    height: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    border: 3px solid #E0E0E0;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#progressFill {
+    height: 100%;
+    background: linear-gradient(90deg,
+            #FF6B9D, #C44569, #FF9FF3, #F368E0);
+    width: 0%;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+}
+
+#progressFill::after {
+    content: '⭐';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    animation: starSparkle 2s infinite;
+}
+
+@keyframes starSparkle {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(-50%) scale(1.3);
+    }
+}
+
+/* ===== 6. 題目區 - 紙燈籠風格 ===== */
+.question-area {
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 248, 220, 0.9) 100%);
+    border: 4px solid #FAD4C0;
+    border-radius: 28px;
+    padding: 32px;
+    margin: 28px 0;
+    box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.9),
+        inset 0 -2px 8px rgba(250, 212, 192, 0.4);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.question-area::before {
+    content: '🌸';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    z-index: 1;
+    animation: petalFloat 4s ease-in-out infinite;
+}
+
+@keyframes petalFloat {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-8px) rotate(180deg);
+    }
+}
+
+#questionText {
+    font-family: 'Fredoka One', cursive;
+    font-size: 26px;
+    line-height: 1.4;
+    color: #37474F;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#subText {
+    font-size: 16px;
+    color: #6B7280;
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 600;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    border: 2px dashed #FAD4C0;
+}
+
+/* ===== 7. 選項按鈕 - 毛絨絨動物按鈕 ===== */
+#optionsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.option-btn {
+    padding: 28px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #37474F;
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(248, 250, 252, 0.9));
+    border: 4px solid #E2E8F0;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.option-btn::before {
+    content: '🐾';
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+.option-btn:hover:not(.disabled) {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.2),
+        inset 0 6px 16px rgba(255, 255, 255, 1);
+    border-color: #CBD5E1;
+}
+
+.option-btn:active:not(.disabled) {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.option-btn.correct {
+    background: linear-gradient(145deg,
+            #10B981, #059669);
+    color: white;
+    border-color: #34D399;
+    box-shadow:
+        0 16px 32px rgba(16, 185, 129, 0.4),
+        inset 0 6px 16px rgba(255, 255, 255, 0.6);
+    animation: pawBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.option-btn.incorrect {
+    background: linear-gradient(145deg,
+            #F87171, #EF4444);
+    color: white;
+    border-color: #FCA5A5;
+    box-shadow:
+        0 12px 24px rgba(248, 113, 113, 0.4),
+        inset 0 4px 12px rgba(255, 255, 255, 0.3);
+    animation: pawWiggle 0.5s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pawBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(-8px) scale(1);
+    }
+
+    30% {
+        transform: translateY(-16px) scale(1.08);
+    }
+}
+
+@keyframes pawWiggle {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
+}
+
+.label {
+    font-size: 20px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tag {
+    font-size: 22px;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== 8. 分數面板 - 鈴鐺計分板 ===== */
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 20px;
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 248, 220, 0.9));
+    border: 4px solid #FAD4C0;
+    border-radius: 24px;
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.9);
+    position: relative;
+}
+
+.score-panel::before {
+    content: '🔔';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+}
+
+#scoreText,
+#wrongText {
+    font-family: 'Fredoka One', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* ===== 9. 按鈕 - 氣球禮物按鈕 ===== */
+button {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 20px 36px;
+    color: #37474F;
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.95),
+            rgba(255, 248, 220, 0.95));
+    border: 4px solid #FAD4C0;
+    border-radius: 28px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '🎁';
+    margin-right: 8px;
+}
+
+button:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.2),
+        inset 0 6px 16px rgba(255, 255, 255, 1);
+    border-color: #F8D7C7;
+}
+
+button:active {
+    transform: translateY(-2px);
+}
+
+#nextButton {
+    width: 100%;
+    padding: 24px;
+    font-size: 18px;
+    margin-top: 20px;
+    background: linear-gradient(145deg,
+            #10B981, #059669);
+    color: white;
+    border-color: #34D399;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== 10. 結果面板 - 煙火派對 ===== */
+#resultPanel {
+    background: linear-gradient(145deg,
+            rgba(255, 107, 157, 0.95),
+            rgba(196, 69, 105, 0.95));
+    border: 6px solid #FF6B9D;
+    box-shadow:
+        0 24px 48px rgba(255, 107, 157, 0.4),
+        inset 0 6px 16px rgba(255, 255, 255, 0.6);
+    border-radius: 32px;
+}
+
+#resultTitle {
+    font-family: 'Fredoka One', cursive;
+    font-size: 32px;
+    color: white;
+    text-align: center;
+    margin-bottom: 24px;
+    text-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        0 0 16px rgba(255, 255, 255, 0.8);
+}
+
+#resultStars {
+    font-size: 64px;
+    text-align: center;
+    margin: 20px 0;
+    text-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.5),
+        0 0 24px rgba(255, 255, 255, 0.9);
+    animation: fireworkSparkle 2s ease-in-out infinite;
+}
+
+@keyframes fireworkSparkle {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15) rotate(180deg);
+        opacity: 0.9;
+    }
+}
+
+#resultDetail {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    margin-bottom: 28px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== 11. 測試面板 - 小信箱 ===== */
+.debug-panel {
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(248, 250, 252, 0.9));
+    border: 4px solid #E2E8F0;
+    border-radius: 20px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.debug-panel label {
+    font-weight: 700;
+    color: #37474F;
+}
+
+.debug-panel select {
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid #E2E8F0;
+    border-radius: 16px;
+    color: #37474F;
+    font-family: 'Nunito', sans-serif;
+    padding: 8px 16px;
+}
+
+/* ===== 12. 視覺化元素 - 糖果風格 ===== */
+.visual-stars span {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    animation: candyBounce 1.5s infinite;
+}
+
+@keyframes candyBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.visual-shape,
+.visual-fraction,
+.visual-containers {
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.2),
+        inset 0 4px 8px rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+}
+
+/* ===== 13. 響應式設計 ===== */
+@media (max-width: 768px) {
+    .game-container {
+        margin: 16px;
+        padding: 20px;
+    }
+
+    #optionsContainer {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .grade-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    #questionText {
+        font-size: 22px;
+    }
+}
