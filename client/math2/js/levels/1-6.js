@@ -12,29 +12,26 @@ window.LEVEL_DATA["1-6"] = {
     generateQuestions() {
         const list = [];
         for (let i = 0; i < this.questionCount; i++) {
-            const baseNum = randInt(0, 98); // 確保 +1 不超過 99
-            const correctNum = baseNum + 1;
+            const isNext = Math.random() > 0.5; // 隨機切換問「前一個」或「下一個」
+            const baseNum = randInt(2, 98);
+            const correctNum = isNext ? baseNum + 1 : baseNum - 1;
+            const promptText = isNext ? `${baseNum} 的下一個數是？` : `${baseNum} 的前一個數是？`;
 
-            const optionValues = new Set();
-            optionValues.add(correctNum);
+            const optionSet = new Set([correctNum]);
+            while (optionSet.size < 3) {
+                const wrong = correctNum + randInt(-3, 3);
+                if (wrong >= 0 && wrong <= 100 && wrong !== correctNum) {
+                    optionSet.add(wrong);
+                }
+            }
 
-            // 產生錯誤選項：前一個數、後兩個數、隨機數
-            const wrong1 = baseNum;           // 前一個
-            const wrong2 = baseNum + 2;       // 後兩個
-            const wrong3 = randInt(0, 99);    // 隨機
-
-            optionValues.add(wrong1);
-            if (wrong2 <= 99) optionValues.add(wrong2);
-            optionValues.add(wrong3);
-
-            const optionsArray = shuffle(Array.from(optionValues));
-            const correctIndex = optionsArray.indexOf(correctNum);
+            const finalOptions = shuffle(Array.from(optionSet)).map(String);
 
             list.push({
                 type: "choice",
-                prompt: `${baseNum} 的下一個數是？`,
-                options: Array.from(optionValues).map(String),
-                correctIndex
+                prompt: promptText,
+                options: finalOptions,
+                correctIndex: finalOptions.indexOf(String(correctNum))
             });
         }
         return list;

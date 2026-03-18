@@ -4,7 +4,7 @@ window.LEVEL_DATA = window.LEVEL_DATA || {};
 window.LEVEL_DATA["3-9"] = {
     id: "3-9",
     unitName: "三年級：重量單位",
-    levelName: "公克與公斤",
+    levelName: "公克與公斤的換算",
     type: "weight_g_kg",
     questionCount: 10,
     minCorrectToPass: 8,
@@ -14,70 +14,83 @@ window.LEVEL_DATA["3-9"] = {
 
         for (let i = 0; i < this.questionCount; i++) {
             const mode = randInt(1, 3);
+            let prompt = "";
+            let correctStr = "";
+            let optionSet = new Set();
 
             if (mode === 1) {
-                // g → kg
-                const kg = randInt(1, 5);
+                // 【模式 1】公克 → 公斤 (整數換算)
+                const kg = randInt(1, 9);
                 const g = kg * 1000;
-                const correctStr = `${kg} 公斤`;
-                const prompt = `${g} 公克等於幾公斤？`;
+                prompt = `${g} 公克等於幾公斤？`;
+                correctStr = `${kg} 公斤`;
 
-                const optionValues = new Set([correctStr]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-2, 2);
-                    const candKg = kg + offset;
-                    if (candKg > 0) {
-                        const candStr = `${candKg} 公斤`;
-                        if (candStr !== correctStr) optionValues.add(candStr);
+                optionSet.add(correctStr);
+                while (optionSet.size < 4) {
+                    const wrongKg = [kg * 10, kg / 10, kg + 1, kg + 2][randInt(0, 3)];
+                    if (wrongKg > 0 && Number.isInteger(wrongKg)) {
+                        optionSet.add(`${wrongKg} 公斤`);
+                    } else {
+                        optionSet.add(`${randInt(1, 15)} 公斤`);
                     }
                 }
 
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correctStr);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray,
-                    correctIndex
-                });
             } else if (mode === 2) {
-                // kg → g
-                const kg = randInt(1, 10);
-                const correct = kg * 1000;
-                const prompt = `${kg} 公斤等於幾公克？`;
+                // 【模式 2】公斤 → 公克
+                const kg = randInt(1, 12);
+                const g = kg * 1000;
+                prompt = `${kg} 公斤等於幾公克？`;
+                correctStr = `${g} 公克`;
 
-                const optionValues = new Set([correct]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-500, 500);
-                    const cand = correct + offset;
-                    if (cand > 0 && cand !== correct) optionValues.add(cand);
+                optionSet.add(correctStr);
+                while (optionSet.size < 4) {
+                    // 模擬常見錯誤：少一個 0 或多一個 0
+                    const distractors = [kg * 100, kg * 10000, g + 500, g - 500];
+                    const cand = distractors[randInt(0, distractors.length - 1)];
+                    if (cand > 0) optionSet.add(`${cand} 公克`);
                 }
 
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correct);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray.map(v => `${v} 公克`),
-                    correctIndex
-                });
             } else {
-                // 估測較重 / 較輕
-                const prompt = "下列哪一個東西比較重？";
-                const options = ["1 公克的橡皮擦", "1 公斤的西瓜", "10 公克的紙張", "100 公克的鉛筆盒"];
-                const correctIndex = 1;
+                // 【模式 3】重量估測 (動態隨機物體)
+                const items = [
+                    { name: "一顆西瓜", weight: 3000, label: "3 公斤的西瓜" },
+                    { name: "一隻大象", weight: 5000000, label: "5 公噸的大象" },
+                    { name: "一枚硬幣", weight: 5, label: "5 公克的硬幣" },
+                    { name: "一包食鹽", weight: 1000, label: "1 公斤的食鹽" },
+                    { name: "一隻小貓", weight: 2000, label: "2 公斤的小貓" },
+                    { name: "一支鉛筆", weight: 10, label: "10 公克的鉛筆" },
+                    { name: "一顆蘋果", weight: 200, label: "200 公克的蘋果" }
+                ];
 
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options,
-                    correctIndex
-                });
+                // 隨機選 4 個不重複的物體
+                const selectedItems = [];
+                const tempItems = [...items];
+                while (selectedItems.length < 4) {
+                    const idx = randInt(0, tempItems.length - 1);
+                    selectedItems.push(tempItems.splice(idx, 1)[0]);
+                }
+
+                const isAskingHeavy = Math.random() < 0.5;
+                prompt = isAskingHeavy ? "下列哪一個東西「最重」？" : "下列哪一個東西「最輕」？";
+
+                // 排序找出正確答案
+                const sorted = [...selectedItems].sort((a, b) => b.weight - a.weight);
+                const target = isAskingHeavy ? sorted[0] : sorted[sorted.length - 1];
+
+                correctStr = target.label;
+                selectedItems.forEach(item => optionSet.add(item.label));
             }
-        }
 
+            // 隨機洗牌選項
+            const finalOptions = shuffle(Array.from(optionSet));
+
+            list.push({
+                type: "choice",
+                prompt: prompt,
+                options: finalOptions,
+                correctIndex: finalOptions.indexOf(correctStr)
+            });
+        }
         return list;
     }
 };

@@ -1,23 +1,36 @@
+/* style.css 修正 */
 body {
     margin: 0;
     padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
-    background: #0f172a;
-    color: #e5e7eb;
+    /* 確保 body 不會因為內容太少而縮小，給予足夠空間讓瑪利歐跑 */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: flex-start;
+    /* 改為頂部對齊，模擬手機 App 載入感 */
+    background: var(--sky-blue);
+    overflow-x: hidden;
+    /* 防止瑪利歐跑出螢幕寬度時出現捲軸 */
 }
 
 .game-shell {
     width: 100%;
-    max-width: 420px;
-    background: #020617;
-    border-radius: 24px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-    padding: 16px 16px 20px;
+    max-width: 450px;
+    /* 桌面端最大寬度 */
+    min-height: 100vh;
+    /* 關鍵：滿版高度 */
+    background: #ffffff;
+    border: none;
+    /* 手機滿版時通常不需要外邊框 */
+    border-left: var(--pixel-border) solid #000;
+    /* 桌面端裝飾用 */
+    border-right: var(--pixel-border) solid #000;
+    box-shadow: none;
+    padding: 20px 16px 80px;
+    /* 底部預留空間給瑪利歐跑動 */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -181,7 +194,7 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
     -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     z-index: 100;
     justify-content: center;
     align-items: center;
@@ -328,4 +341,21 @@ body {
 
 .shape-square {
     border-radius: 0 !important;
+}
+
+/* 260318 */
+.game-header {
+    margin-top: env(safe-area-inset-top);
+    /* 支援 iPhone 瀏海屏 */
+    padding: 10px 0;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+/* 讓按鈕在手機上更好按 (Fitts's Law) */
+.option-btn {
+    padding: 16px 20px;
+    margin-bottom: 4px;
+    font-size: 18px;
+    /* 稍微放大字體 */
 }

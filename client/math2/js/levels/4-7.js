@@ -11,56 +11,61 @@ window.LEVEL_DATA["4-7"] = {
 
     generateQuestions() {
         const list = [];
+
         for (let i = 0; i < this.questionCount; i++) {
             const isAdd = Math.random() < 0.5;
+            let aInt, bInt, correctInt;
+            let prompt = "";
 
             if (isAdd) {
-                // 加法
-                const a = (randInt(1, 99) / 100).toFixed(2);  // 0.01 ~ 0.99
-                const b = (randInt(1, 99) / 100).toFixed(2);
-                const correct = (parseFloat(a) + parseFloat(b)).toFixed(2);
-
-                const prompt = `${a} + ${b} = ？`;
-                const optionValues = new Set([correct]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-20, 20) / 100;
-                    const cand = (parseFloat(correct) + offset).toFixed(2);
-                    if (cand !== correct) optionValues.add(cand);
-                }
-
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correct);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray,
-                    correctIndex
-                });
+                // 加法：使用整數運算避免浮點數誤差 (0.01 ~ 4.99)
+                aInt = randInt(10, 499);
+                bInt = randInt(10, 499);
+                correctInt = aInt + bInt;
+                prompt = `${(aInt / 100).toFixed(2)} + ${(bInt / 100).toFixed(2)} = ？`;
             } else {
-                // 減法
-                const a = (randInt(50, 99) / 100).toFixed(2);  // 0.50 ~ 0.99
-                const b = (randInt(1, parseInt(a * 100) - 10) / 100).toFixed(2);
-                const correct = (parseFloat(a) - parseFloat(b)).toFixed(2);
+                // 減法：確保結果為正
+                aInt = randInt(100, 999);
+                bInt = randInt(10, aInt - 5);
+                correctInt = aInt - bInt;
+                prompt = `${(aInt / 100).toFixed(2)} - ${(bInt / 100).toFixed(2)} = ？`;
+            }
 
-                const prompt = `${a} - ${b} = ？`;
-                const optionValues = new Set([correct]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-20, 20) / 100;
-                    const cand = (parseFloat(correct) + offset).toFixed(2);
-                    if (cand !== correct) optionValues.add(cand);
+            const correctStr = (correctInt / 100).toFixed(2);
+            const optionSet = new Set();
+            optionSet.add(correctStr);
+
+            // --- 智慧干擾項生成 ---
+            while (optionSet.size < 4) {
+                let distractor = "";
+                const errorType = randInt(1, 3);
+
+                if (errorType === 1) {
+                    // 錯誤 1：小數點位置算錯 (放大或縮小 10 倍)
+                    distractor = (correctInt / 10).toFixed(2);
+                } else if (errorType === 2) {
+                    // 錯誤 2：進退位錯誤 (差 0.1 或 0.01)
+                    const offset = [1, 10, -1, -10][randInt(0, 3)];
+                    distractor = ((correctInt + offset) / 100).toFixed(2);
+                } else {
+                    // 錯誤 3：整數部分加減對，但小數部分搞混
+                    const randOffset = randInt(-50, 50);
+                    distractor = ((correctInt + randOffset) / 100).toFixed(2);
                 }
 
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correct);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray,
-                    correctIndex
-                });
+                if (distractor !== correctStr && parseFloat(distractor) > 0) {
+                    optionSet.add(distractor);
+                }
             }
+
+            const finalOptions = shuffle(Array.from(optionSet));
+
+            list.push({
+                type: "choice",
+                prompt: prompt,
+                options: finalOptions,
+                correctIndex: finalOptions.indexOf(correctStr)
+            });
         }
         return list;
     }

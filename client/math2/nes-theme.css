@@ -461,3 +461,92 @@ body::before {
         transform: rotate(360deg) scale(1);
     }
 }
+
+/* 260318 */
+
+/* 建立地面層 */
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: var(--brick-brown);
+    border-top: 4px solid #000;
+    z-index: 10;
+    /* 確保在最上層 */
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 50%, transparent 50%);
+    background-size: 8px 100%;
+    /* 模擬像素地面紋理 */
+}
+
+/* 修改瑪利歐動畫：讓他貼在地面上 */
+body::before {
+    content: "";
+    position: fixed;
+    bottom: 16px;
+    /* 剛好在地面上方 */
+    left: -50px;
+    width: 40px;
+    height: 40px;
+    z-index: 11;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    background-image: url('images/mario-sprites.png');
+    /* ⚠️ 請確保路徑正確 */
+    background-size: 200px 40px;
+    /* 假設 5 幀，總寬 200px */
+    background-repeat: no-repeat;
+
+    /* 結合跑步與位移動畫 */
+    -webkit-animation:
+        mario-run 0.4s steps(4) infinite,
+        bg-mario-move 12s linear infinite;
+            animation:
+        mario-run 0.4s steps(4) infinite,
+        bg-mario-move 12s linear infinite;
+}
+
+/* 跑步幀動畫 */
+@keyframes mario-run {
+    from {
+        background-position: 0px 0px;
+    }
+
+    to {
+        background-position: -160px 0px;
+    }
+}
+
+/* 橫穿螢幕動畫 */
+@keyframes bg-mario-move {
+    0% {
+        left: -50px;
+        transform: scaleX(1);
+    }
+
+    /* 向右跑 */
+    45% {
+        left: 110%;
+        transform: scaleX(1);
+    }
+
+    50% {
+        left: 110%;
+        transform: scaleX(-1);
+    }
+
+    /* 轉身 */
+    95% {
+        left: -50px;
+        transform: scaleX(-1);
+    }
+
+    /* 向左跑 */
+    100% {
+        left: -50px;
+        transform: scaleX(1);
+    }
+}

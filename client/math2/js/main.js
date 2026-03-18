@@ -125,67 +125,92 @@ function loadAndStartLevel(levelId) {
 function renderQuestion() {
     const q = questions[currentIndex];
 
-    // ⭐ 先清除所有視覺元素
-    const existingStars = document.querySelectorAll(".visual-stars, .visual-shape, .visual-fraction, .visual-containers");
-    existingStars.forEach(el => el.remove());
+    // 如果因為腳本載入問題導致 q 是空的，直接跳出防止當機
+    if (!q) {
+        console.error("目前索引找不到題目:", currentIndex);
+        return;
+    }
 
-    subTextEl.textContent = "請選出正確的答案";
+    // 1. 清除所有舊的視覺元素 (防止 DOM 堆疊導致效能問題或當機)
+    const selectors = [
+        ".visual-stars", ".visual-shape", ".visual-fraction",
+        ".visual-containers", ".visual-length", ".visual-sequence",
+        ".visual-groups", ".visual-place-value", ".visual-vertical-math"
+    ];
+
+    selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => el.remove());
+    });
+
+    // 2. 更新基礎文字與進度條
+    subTextEl.textContent = "請選出正確的答案"; // 預設值
     questionTextEl.textContent = q.prompt;
     progressTextEl.textContent = `${currentIndex + 1} / ${questions.length} 題`;
+
     const percent = (currentIndex / questions.length) * 100;
     progressFillEl.style.width = `${percent}%`;
 
-    // ⭐ 根據題庫 type 自動顯示視覺化內容
+    // 3. 根據題庫 type 顯示視覺化內容
     switch (levelConfig.type) {
         case 'counting':
             if (q.visualCount !== undefined) {
                 renderStars(q.visualCount);
-                subTextEl.textContent = `（數一數星星）`;
+                subTextEl.textContent = "（數一數星星）";
             }
             break;
-        case 'fractions_basic':  // ⭐ 新增這行
-        case 'fractions':        // ⭐ 和這行
+        case 'fractions_basic':
+        case 'fractions':
             if (q.visualFraction) {
                 renderFraction(q.visualFraction.shaded, q.visualFraction.total);
-                subTextEl.textContent = `（陰影部分占幾分之幾？）`;
+                subTextEl.textContent = "（陰影部分占幾分之幾？）";
             }
             break;
         case 'shapes':
             if (q.visualShape) {
                 renderShape(q.visualShape);
-                subTextEl.textContent = `（辨識圖形）`;
+                subTextEl.textContent = "（辨識圖形）";
             }
             break;
         case 'capacity':
             if (q.visualContainers) {
                 renderContainers(q.visualContainers.left, q.visualContainers.right, q.visualContainers.maxHeight);
-                subTextEl.textContent = `（比較容器內液體多寡）`;
+                subTextEl.textContent = "（比較容器內液體多寡）";
             }
             break;
-        default:
-            // 其他關卡（算術題）不顯示視覺化
+        case 'length_comparison':
+            if (q.visualLength) {
+                renderLengthComparison(q.visualLength.a, q.visualLength.b);
+                subTextEl.textContent = "（看一看，比比看唷！）";
+            }
+            break;
+        case 'multiplication_concept':
+            if (q.visualGroups) {
+                renderGroupedItems(q.visualGroups.each, q.visualGroups.groups);
+                subTextEl.textContent = "（可以數一數畫面上的金幣唷！）";
+            }
+            break;
+        case 'place_value':
+            // ⭐ 這裡原本可能有邏輯衝突或遺漏 renderPlaceValueBlocks 函式
+            if (q.visualPlaceValue) {
+                if (typeof renderPlaceValueBlocks === 'function') {
+                    renderPlaceValueBlocks(q.visualPlaceValue);
+                    subTextEl.textContent = "（觀察積木來判斷位值）";
+                }
+            }
             break;
     }
 
+    // 4. 生成選項按鈕
     optionsContainerEl.innerHTML = "";
     questionAnswered = false;
 
     q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.className = "option-btn";
-        btn.dataset.index = idx;
-
-        const left = document.createElement("span");
-        left.className = "label";
-        left.textContent = opt;
-
-        const right = document.createElement("span");
-        right.className = "tag";
-        right.textContent = String.fromCharCode(65 + idx);
-
-        btn.appendChild(left);
-        btn.appendChild(right);
-
+        btn.innerHTML = `
+            <span class="label">${opt}</span>
+            <span class="tag">${String.fromCharCode(65 + idx)}</span>
+        `;
         btn.addEventListener("click", () => handleAnswerClick(idx, btn));
         optionsContainerEl.appendChild(btn);
     });
@@ -270,6 +295,113 @@ function renderContainers(leftLevel, rightLevel, maxHeight) {
     containerDiv.appendChild(leftContainer);
     containerDiv.appendChild(rightContainer);
     questionTextEl.parentNode.insertBefore(containerDiv, questionTextEl.nextSibling);
+}
+
+// 渲染位值積木 (百格板、十棒、個積木)
+function renderPlaceValueBlocks(val) {
+    const container = document.createElement("div");
+    container.className = "visual-place-value";
+    container.style.cssText = "display:flex; justify-content:center; gap:15px; margin:15px 0; background:#f0f0f0; padding:10px; border:2px solid #000;";
+
+    // 輔助函式：建立積木組
+    const createSection = (count, color, label) => {
+        const sec = document.createElement("div");
+        sec.style.textAlign = "center";
+        const box = document.createElement("div");
+        box.style.display = "flex";
+        box.style.flexWrap = "wrap";
+        box.style.width = "60px";
+        box.style.gap = "2px";
+
+        for (let i = 0; i < count; i++) {
+            const block = document.createElement("div");
+            block.style.width = "10px";
+            block.style.height = "10px";
+            block.style.background = color;
+            block.style.border = "1px solid #000";
+            box.appendChild(block);
+        }
+        sec.appendChild(box);
+        const lab = document.createElement("div");
+        lab.textContent = label;
+        lab.style.fontSize = "12px";
+        sec.appendChild(lab);
+        return sec;
+    };
+
+    container.appendChild(createSection(val.h, "var(--mario-red)", "百"));
+    container.appendChild(createSection(val.t, "var(--luigi-green)", "十"));
+    container.appendChild(createSection(val.o, "var(--quest-yellow)", "一"));
+
+    questionTextEl.parentNode.insertBefore(container, questionTextEl.nextSibling);
+}
+// 渲染成群物品 (例如金幣群組)
+function renderGroupedItems(each, groups) {
+    const container = document.createElement("div");
+    container.className = "visual-groups";
+    container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin:20px 0;";
+
+    for (let g = 0; g < groups; g++) {
+        const groupDiv = document.createElement("div");
+        groupDiv.style.cssText = "display:grid; grid-template-columns: repeat(3, 1fr); gap:4px; padding:10px; border:2px dashed #fbbf24; border-radius:8px;";
+
+        for (let e = 0; e < each; e++) {
+            const item = document.createElement("div");
+            item.className = "coin-sprite"; // 使用 index.html 已定義的 CSS
+            item.style.transform = "scale(0.8)";
+            groupDiv.appendChild(item);
+        }
+        container.appendChild(groupDiv);
+    }
+    questionTextEl.parentNode.insertBefore(container, questionTextEl.nextSibling);
+}
+
+// 新增渲染函式：繪製兩根瑪利歐風格的水管
+function renderLengthComparison(lenA, lenB) {
+    const container = document.createElement("div");
+    container.className = "visual-length";
+    container.style.cssText = "display:flex; flex-direction:column; gap:15px; margin:20px 0; align-items:flex-start; padding-left:20px;";
+
+    // 建立水管的函式
+    const createPipe = (width, color, label) => {
+        const wrapper = document.createElement("div");
+        wrapper.style.display = "flex";
+        wrapper.style.alignContent = "center";
+        wrapper.style.alignItems = "center";
+        wrapper.style.gap = "10px";
+
+        const pipe = document.createElement("div");
+        pipe.style.cssText = `
+            width: ${width * 2}px; 
+            height: 30px; 
+            background: ${color}; 
+            border: 3px solid #000;
+            position: relative;
+            box-shadow: inset 0 8px 0 rgba(255,255,255,0.3);
+        `;
+
+        // 水管口裝飾 (8-bit 風格)
+        const cap = document.createElement("div");
+        cap.style.cssText = `
+            position: absolute; right: -5px; top: -5px; 
+            width: 10px; height: 40px; 
+            background: ${color}; border: 3px solid #000;
+        `;
+        pipe.appendChild(cap);
+
+        const text = document.createElement("span");
+        text.textContent = label;
+        text.style.fontWeight = "bold";
+
+        wrapper.appendChild(text);
+        wrapper.appendChild(pipe);
+        return wrapper;
+    };
+
+    container.appendChild(createPipe(lenA, "var(--mario-red)", "紅"));
+    container.appendChild(createPipe(lenB, "var(--luigi-green)", "綠"));
+
+    questionTextEl.parentNode.insertBefore(container, questionTextEl.nextSibling);
 }
 
 function createContainer(level, maxHeight) {

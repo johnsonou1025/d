@@ -10,24 +10,26 @@ window.LEVEL_DATA["1-5"] = {
     minCorrectToPass: 8,
 
     generateQuestions() {
-        const shapes = [
-            { name: "圓形", wrong: ["三角形", "正方形"] },
-            { name: "三角形", wrong: ["圓形", "正方形"] },
-            { name: "正方形", wrong: ["圓形", "三角形"] }
+        const shapeConfigs = [
+            { name: "圓形", id: "circle", wrong: ["三角形", "正方形"] },
+            { name: "三角形", id: "triangle", wrong: ["圓形", "正方形"] },
+            { name: "正方形", id: "square", wrong: ["圓形", "三角形"] }
         ];
 
         const list = [];
         for (let i = 0; i < this.questionCount; i++) {
-            const shape = shapes[randInt(0, shapes.length - 1)];
-            const correct = shape.name;
+            // 每次迴圈隨機挑選一個形狀配置
+            const config = shapeConfigs[randInt(0, shapeConfigs.length - 1)];
+            const correctName = config.name;
 
-            const options = [correct, ...shape.wrong];
-            const optionsArray = shuffle(options);
-            const correctIndex = optionsArray.indexOf(correct);
+            // 隨機洗牌選項，確保正確答案位置不固定
+            const optionsArray = shuffle([correctName, ...config.wrong]);
+            const correctIndex = optionsArray.indexOf(correctName);
 
             list.push({
                 type: "choice",
                 prompt: `這是什麼圖形？`,
+                visualShape: config.id, // 關鍵：告知 main.js 要畫哪種圖形
                 options: optionsArray,
                 correctIndex
             });

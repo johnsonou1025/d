@@ -1,10 +1,10 @@
-// js/levels/2-6.js（最終修正版）
+// js/levels/2-6.js
 window.LEVEL_DATA = window.LEVEL_DATA || {};
 
 window.LEVEL_DATA["2-6"] = {
     id: "2-6",
     unitName: "二年級：長度單位",
-    levelName: "公里公尺",
+    levelName: "公里公尺換算",
     type: "length_km_m",
     questionCount: 10,
     minCorrectToPass: 8,
@@ -14,84 +14,68 @@ window.LEVEL_DATA["2-6"] = {
 
         for (let i = 0; i < this.questionCount; i++) {
             const mode = randInt(1, 3);
+            let prompt = "";
+            let correctStr = "";
+            let optionSet = new Set();
 
             if (mode === 1) {
-                // ✅ 公尺 → 公里（精確到小數點後三位）
-                const m = randInt(1000, 9999);  // 1000~9999公尺
-                const km = m / 1000;            // 精確計算，不四捨五入
-                const correctStr = km.toFixed(3) + " 公里";  // 固定三位小數
+                // 【模式 1】公尺 → 公里 (含小數)
+                const m = randInt(1001, 9999);
+                const km = (m / 1000).toFixed(3);
+                correctStr = `${km} 公里`;
+                prompt = `${m} 公尺等於幾公里？`;
 
-                const prompt = `${m} 公尺等於幾公里？`;
-
-                // 生成其他選項（也用三位小數）
-                const optionValues = new Set([correctStr]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-100, 100);  // ±0.1~0.1公里
-                    const candM = m + offset;
-                    const candKm = candM / 1000;
-                    const candStr = candKm.toFixed(3) + " 公里";
-                    if (candStr !== correctStr) {
-                        optionValues.add(candStr);
-                    }
+                optionSet.add(correctStr);
+                while (optionSet.size < 4) {
+                    // 隨機偏移 10~500 公尺產生的干擾項
+                    const distKm = ((m + (randInt(0, 1) ? 1 : -1) * randInt(10, 500)) / 1000).toFixed(3);
+                    optionSet.add(`${distKm} 公里`);
                 }
-
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correctStr);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray,
-                    correctIndex
-                });
 
             } else if (mode === 2) {
-                // 公里 → 公尺（整數）
-                const km = randInt(1, 20);
+                // 【模式 2】公里 → 公尺 (整數)
+                const km = randInt(1, 15);
                 const m = km * 1000;
-                const correctStr = `${m} 公尺`;
-                const prompt = `${km} 公里等於幾公尺？`;
+                correctStr = `${m} 公尺`;
+                prompt = `${km} 公里等於幾公尺？`;
 
-                const optionValues = new Set([correctStr]);
-                while (optionValues.size < 4) {
-                    const offset = randInt(-1000, 1000);
-                    const candM = m + offset;
-                    if (candM > 0) {
-                        const candStr = `${candM} 公尺`;
-                        if (candStr !== correctStr) optionValues.add(candStr);
-                    }
+                optionSet.add(correctStr);
+                while (optionSet.size < 4) {
+                    const distM = m + (randInt(0, 1) ? 1 : -1) * randInt(1, 5) * 100;
+                    if (distM > 0) optionSet.add(`${distM} 公尺`);
                 }
 
-                const optionsArray = shuffle(Array.from(optionValues));
-                const correctIndex = optionsArray.indexOf(correctStr);
-
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options: optionsArray,
-                    correctIndex
-                });
-
             } else {
-                // 比較大小
-                const prompt = "下列哪個距離最遠？";
-                const options = [
-                    "3 公里",
-                    "3343 公尺",    // = 3.343公里
-                    "3.34 公里",    // = 3.34公里  
-                    "3000 公尺"     // = 3公里
+                // 【模式 3】比較大小 (動態隨機生成)
+                const baseKm = randInt(2, 5); // 隨機一個公里基準，例如 3 公里
+                const baseM = baseKm * 1000;
+
+                // 生成四個接近但不同的長度
+                const vals = [
+                    { label: `${baseKm} 公里`, val: baseM },
+                    { label: `${baseM + randInt(100, 500)} 公尺`, val: baseM + randInt(100, 500) },
+                    { label: `${(baseM + randInt(10, 90)) / 1000} 公里`, val: baseM + randInt(10, 90) },
+                    { label: `${baseM - randInt(100, 500)} 公尺`, val: baseM - randInt(100, 500) }
                 ];
-                const correctIndex = 1;  // 3343公尺最遠
 
-                list.push({
-                    type: "choice",
-                    prompt,
-                    options,
-                    correctIndex
-                });
+                // 找出最大的作為正確答案
+                const maxObj = vals.reduce((prev, current) => (prev.val > current.val) ? prev : current);
+                correctStr = maxObj.label;
+                prompt = "下列哪個距離「最遠」？";
+
+                vals.forEach(v => optionSet.add(v.label));
             }
-        }
 
+            // 隨機洗牌選項
+            const finalOptions = shuffle(Array.from(optionSet));
+
+            list.push({
+                type: "choice",
+                prompt: prompt,
+                options: finalOptions,
+                correctIndex: finalOptions.indexOf(correctStr)
+            });
+        }
         return list;
     }
 };

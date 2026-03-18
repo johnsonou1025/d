@@ -11,31 +11,57 @@ window.LEVEL_DATA["3-3"] = {
 
     generateQuestions() {
         const list = [];
-        for (let i = 0; i < this.questionCount; i++) {
-            const total = randInt(12, 60);          // 總數
-            const groups = randInt(2, 9);          // 人數或組數
-            const correct = Math.floor(total / groups);
+        // 生活化情境池
+        const scenarios = [
+            { item: "顆糖果", unit: "人", action: "平均分給" },
+            { item: "張貼紙", unit: "個小朋友", action: "平分給" },
+            { item: "公分長的繩子", unit: "段", action: "剪成" },
+            { item: "塊餅乾", unit: "個盒子", action: "平均裝進" },
+            { item: "元錢", unit: "個人", action: "平分給" }
+        ];
 
-            // 確保可以整除：重新算一次
+        for (let i = 0; i < this.questionCount; i++) {
+            // 先決定「答案 (商)」與「除數」，再反推「總數 (被除數)」
+            // 這樣能保證 100% 整除，且數值符合三年級心算範圍
+            const correct = randInt(2, 12);  // 每個分到 2~12 個
+            const groups = randInt(2, 9);    // 分給 2~9 組
             const realTotal = correct * groups;
 
-            const prompt = `${realTotal} 個蘋果平均分給 ${groups} 個人，每個人可以分到幾個？`;
+            const scene = scenarios[randInt(0, scenarios.length - 1)];
+            const prompt = `有 ${realTotal}${scene.item}，${scene.action} ${groups} ${scene.unit}，每${scene.unit.replace('個小朋友', '人').replace('個盒子', '盒')}可以分到幾${scene.item.replace('元錢', '元').replace('公分長的繩子', '公分')}？`;
 
-            const optionValues = new Set([correct]);
-            while (optionValues.size < 4) {
-                const offset = randInt(-3, 3);
-                const cand = correct + offset;
-                if (cand > 0 && cand !== correct) optionValues.add(cand);
+            const optionSet = new Set();
+            optionSet.add(String(correct));
+
+            // --- 智慧干擾項生成 ---
+            while (optionSet.size < 4) {
+                let distractor;
+                const errorType = randInt(1, 3);
+
+                if (errorType === 1) {
+                    // 錯誤類型 1：九九乘法附近的誤差 (±1 或 ±2)
+                    distractor = correct + (randInt(0, 1) ? 1 : -1) * randInt(1, 2);
+                } else if (errorType === 2) {
+                    // 錯誤類型 2：把除數 (groups) 當成答案
+                    distractor = groups;
+                } else {
+                    // 錯誤類型 3：隨機 2~15 的數字
+                    distractor = randInt(2, 15);
+                }
+
+                if (distractor > 1 && distractor !== correct) {
+                    optionSet.add(String(distractor));
+                }
             }
 
-            const optionsArray = shuffle(Array.from(optionValues));
-            const correctIndex = optionsArray.indexOf(correct);
+            // 隨機洗牌選項
+            const finalOptions = shuffle(Array.from(optionSet));
 
             list.push({
                 type: "choice",
-                prompt,
-                options: optionsArray.map(String),
-                correctIndex
+                prompt: prompt,
+                options: finalOptions,
+                correctIndex: finalOptions.indexOf(String(correct))
             });
         }
         return list;
