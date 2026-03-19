@@ -1,0 +1,67 @@
+/* 地圖頁面樣式 */
+.map-screen {
+    width: 100%;
+    max-width: 450px;
+    min-height: 100vh;
+    background: var(--sky-blue);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.map-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 三欄佈局 */
+    gap: 20px;
+    padding-top: 40px;
+}
+
+/* 關卡節點 */
+.level-node {
+    width: 80px;
+    height: 80px;
+    background: var(--brick-brown);
+    border: 4px solid #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s;
+}
+
+/* 鎖定狀態 */
+.level-node.locked {
+    background: #666;
+    /* 灰色 */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.level-node.locked::after {
+    content: "🔒";
+    position: absolute;
+    font-size: 20px;
+}
+
+/* 已解鎖/可點擊狀態 */
+.level-node.unlocked {
+    background: var(--quest-yellow);
+}
+
+.level-node.unlocked:hover {
+    transform: scale(1.1);
+}
+
+.level-node .node-id {
+    font-weight: 900;
+    font-size: 18px;
+    color: #000;
+}
+
+.level-node .node-stars {
+    font-size: 12px;
+    color: #801000;
+}
