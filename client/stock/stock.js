@@ -193,7 +193,6 @@ $(async function () {
                 $('<td/>').text(item.日期).appendTo($tr);
                 $('<td/>').text(item["股票代號"]).css('font-weight', '700').appendTo($tr);
                 $('<td/>').text(item["進場價格"]).appendTo($tr);
-                $('<td/>').text(item["篩選說明"]).appendTo($tr);
                 $table.append($tr);
             });
         };
