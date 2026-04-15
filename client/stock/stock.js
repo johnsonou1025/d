@@ -148,12 +148,12 @@ $(async function () {
                 const $tr = $('<tr/>');
                 $('<td/>').text(item.time).appendTo($tr);
                 $('<td/>').text(item.sheetName).appendTo($tr);
-                $('<td/>').text(item.avgEntry).appendTo($tr);
-                $('<td/>').text(item.quantity).appendTo($tr);
+                // $('<td/>').text(item.avgEntry).appendTo($tr);
+                // $('<td/>').text(item.quantity).appendTo($tr);
                 $('<td/>').text(item.rate + "%").appendTo($tr);
                 // const soldProfitAmount = 2000 * item.quantity * item.rate / 100;
                 // $('<td/>').text(soldProfitAmount).appendTo($tr);
-                $('<td/>').text(item.benefit).appendTo($tr);
+                // $('<td/>').text(item.benefit).appendTo($tr);
                 $table.append($tr);
             });
         };
@@ -168,9 +168,9 @@ $(async function () {
                 $('<td/>').text(item.time).appendTo($tr);
                 $('<td/>').text(item.sheetName).appendTo($tr);
                 $('<td/>').text(item.benefit).appendTo($tr);
-                $('<td/>').text(item.avgEntry).appendTo($tr);
-                $('<td/>').text(item.quantity).appendTo($tr);
-                $('<td/>').text(item.rate + "%").appendTo($tr);
+                // $('<td/>').text(item.avgEntry).appendTo($tr);
+                // $('<td/>').text(item.quantity).appendTo($tr);
+                // $('<td/>').text(item.rate + "%").appendTo($tr);
                 $table.append($tr);
             });
         };
