@@ -175,9 +175,35 @@ $(async function () {
             });
         };
 
+        // --- 渲染強勢股推薦表格 ---
+        const renderStrongTable = (selector, strongData) => {
+            const $table = $(selector);
+            $table.find('tr:gt(0)').remove(); // 清空舊資料
+        
+            if (!strongData || strongData.length === 0) {
+                $table.append('<tr><td colspan="4" style="text-align:center;">今日無強勢股推薦</td></tr>');
+                return;
+            }
+        
+            // 取得資料中最後一個日期（即最新推薦）
+            const latestDate = strongData[strongData.length - 1].日期;
+        
+            strongData.filter(item => item.日期 === latestDate).forEach(item => {
+                const $tr = $('<tr/>');
+                $('<td/>').text(item.日期).appendTo($tr);
+                $('<td/>').text(item["股票代號"]).css('font-weight', '700').appendTo($tr);
+                $('<td/>').text(item["進場價格"]).appendTo($tr);
+                $('<td/>').text(item["篩選說明"]).appendTo($tr);
+                $table.append($tr);
+            });
+        };
+
         // --- 執行渲染 ---
         if (lastSellDate) renderSellTable('.data-today-sell table', dailyTrades, lastSellDate);
         if (lastBuyDate) renderBuyTable('.data-today-buy table', dailyTrades, lastBuyDate);
+        // 從 API 回傳的 strongMomentum 欄位抓取資料
+        const strongStocks = Array.isArray(data.strongMomentum) ? data.strongMomentum : [];
+        renderStrongTable('.data-today-strong table', strongStocks);
 
         //載入完成後動作
         $status.text('載入完成');
