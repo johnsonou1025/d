@@ -229,10 +229,6 @@ body.loading-view .status-wrapper {
 }
 
 /* 260415 add */
-.data-today-strong {
-    margin-top: 16px; /* 增加間距 */
-}
-
 .data-today-strong .headline {
     background: #F5F3FF; /* 淺紫色背景 */
     color: #5B21B6;      /* 深紫色文字 */
