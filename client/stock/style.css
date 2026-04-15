@@ -228,5 +228,24 @@ body.loading-view .status-wrapper {
     }
 }
 
+/* 260415 add */
+.data-today-strong {
+    margin-top: 16px; /* 增加間距 */
+}
+
+.data-today-strong .headline {
+    background: #F5F3FF; /* 淺紫色背景 */
+    color: #5B21B6;      /* 深紫色文字 */
+    border: 1px solid #E2E8F0;
+    font-weight: bold;
+}
+
+/* 讓手機版顯示時也能正確排列 */
+@media (max-width: 768px) {
+    .data-today .col {
+        flex-direction: column;
+    }
+}
+
 
 @media (max-width: 768px) {}
