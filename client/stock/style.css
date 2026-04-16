@@ -3,13 +3,24 @@
 @import url('reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+    --bg-main: #0D1117;           /* 深海靛青 */
+    --text-primary: #E6EDF3;      /* 極光銀白 */
+    --text-secondary: #8B949E;    /* 次要灰色 */
+    --accent: #58A6FF;            /* 電光藍 */
+    --success: #2EA043;           /* 翡翠綠 */
+    --danger: #F85149;            /* 珊瑚紅 */
+    --border-color: #30363D;      /* 調整後的深色邊框 */
+    --card-bg: #161B22;           /* 卡片深灰藍 */
+    --header-bg: #010409;         /* 頂欄純深色 */
+}
 
 body {
-    background-color: #F9FAFB;
-    background-image: linear-gradient(116.82deg, #F8FAFC 0%, #EFF6FF 50%, #F8FAFC 100%);
+    background-color: var(--bg-main);
+    background-image: none; /* 移除原本的淺色漸層 */
     font-family: 'Roboto', "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     font-size: 12px;
-    color: #0F172B;
+    color: var(--text-primary);
     line-height: 1.5;
     letter-spacing: 0.05em;
 }
@@ -17,9 +28,10 @@ body {
 h4 {
     font-size: 18px;
     font-weight: bold;
+    color: var(--accent);
 }
 
-/* component  */
+/* --- component --- */
 
 .row {
     display: flex;
@@ -46,43 +58,49 @@ h4 {
 
 .card {
     padding: 12px;
-    border: 1px solid #E2E8F0;
-    background: #FFF;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    border-radius: 6px;
 }
 
 table {
     width: 100%;
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-collapse: collapse;
 }
 
 th {
     padding: 8px;
-    background: #F8FAFC;
-    color: #4A5565;
+    background: #21262D;
+    color: var(--text-secondary);
     font-weight: 700;
     text-align: left;
+    border-bottom: 1px solid var(--border-color);
 }
 
 td {
     padding: 8px;
-    border-top: 1px solid #F1F5F9;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
 
+/* 數據對比色應用 */
 td:last-child {
-    color: #00A63E;
+    color: var(--success);
 }
 
 tr.down td:last-child {
-    color: #E7000B;
+    color: var(--danger);
 }
 
 .headline {
     padding: 8px;
     font-size: 16px;
+    border-radius: 6px 6px 0 0;
 }
 
-/* page  */
+/* --- page --- */
 
 .wrap {
     display: flex;
@@ -90,8 +108,8 @@ tr.down td:last-child {
 }
 
 .header-outer {
-    border-bottom: 1px solid #E2E8F0;
-    background: #fff;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--header-bg);
 }
 
 .header {
@@ -112,6 +130,7 @@ tr.down td:last-child {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    color: var(--text-secondary);
 }
 
 .main-content {
@@ -126,28 +145,23 @@ tr.down td:last-child {
     flex-direction: column;
 }
 
+/* 區塊顏色優化：使用半透明背景配合重點色 */
 .data-today-buy .headline {
-    background: #F0FDF4;
-    color: #008236;
-    border: 1px solid #E2E8F0;
+    background: rgba(46, 160, 67, 0.15);
+    color: var(--success);
+    border: 1px solid var(--success);
 }
 
 .data-today-sell .headline {
-    background: #FEF2F2;
-    color: #C10007;
-    border: 1px solid #E2E8F0;
-}
-
-@media (max-width: 768px) {
-    .data-today .col {
-        flex-direction: column;
-    }
+    background: rgba(248, 81, 73, 0.15);
+    color: var(--danger);
+    border: 1px solid var(--danger);
 }
 
 .data-holdings .headline {
-    background: #EFF6FF;
-    color: #1447E6;
-    border: 1px solid #E2E8F0;
+    background: rgba(88, 166, 255, 0.15);
+    color: var(--accent);
+    border: 1px solid var(--accent);
 }
 
 .data-holdings td:first-child,
@@ -156,27 +170,27 @@ tr.down td:last-child {
 }
 
 .data-sold .headline {
-    background: #FAF5FF;
-    color: #8200DB;
-    border: 1px solid #E2E8F0;
+    background: rgba(139, 92, 246, 0.15); /* 紫色調保留 */
+    color: #A371F7;
+    border: 1px solid #A371F7;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 .data-sold .headline .month-profit-loss {
     font-size: 12px;
-    color: #4A5565;
+    color: var(--text-secondary);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 .data-sold .headline .month-profit-loss span:first-child {
-    color: #00A63E;
+    color: var(--success);
 }
 
 
-/* 載入頁 */
+/* --- 載入頁 (Loading View) --- */
 body.loading-view {
     overflow: hidden;
 }
@@ -185,7 +199,7 @@ body.loading-view {
     position: fixed;
     inset: 0;
     top: 64px;
-    background: #F9FAFB;
+    background: var(--bg-main);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -200,48 +214,32 @@ body.loading-view .status-wrapper {
     opacity: 1;
 }
 
-/* 載入容器 */
 .loading {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
-    transition: opacity 0.3s ease;
+    color: var(--text-secondary);
 }
 
-/* 圓環動畫 */
 .spinner {
     margin-bottom: 20px;
     width: 24px;
     height: 24px;
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #3498db;
-    /* 轉圈圈的顏色 */
+    border: 3px solid rgba(88, 166, 255, 0.1);
+    border-top-color: var(--accent); /* 電光藍轉圈 */
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
-/* 旋轉關鍵影格 */
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
-/* 260415 add */
+/* 260415 add - 強勢股區塊 */
 .data-today-strong .headline {
-    background: #F5F3FF; /* 淺紫色背景 */
-    color: #5B21B6;      /* 深紫色文字 */
-    border: 1px solid #E2E8F0;
+    background: rgba(163, 113, 247, 0.15);
+    color: #A371F7;
+    border: 1px solid #A371F7;
     font-weight: bold;
 }
-
-/* 讓手機版顯示時也能正確排列 */
-@media (max-width: 768px) {
-    .data-today .col {
-        flex-direction: column;
-    }
-}
-
-
-@media (max-width: 768px) {}
