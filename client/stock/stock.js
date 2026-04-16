@@ -73,52 +73,58 @@ $(async function () {
          */
         const $soldTable = $('.data-sold table');
         const dailyTrades = Array.isArray(data.finishStock) ? data.finishStock : [];
-
-        // 1. 計算 30 天前的日期 (格式化為 yyyy-MM-dd 以便比較)
+        
+        // 1. 計算 30 天前的日期
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        // 轉成字串格式 "yyyy-mm-dd" (需確保與您的 time 欄位格式一致)
         const thresholdDate = thirtyDaysAgo.toISOString().split('T')[0];
-
-        // 2. 先濾出「已結案」且「日期在 30 天內」的資料
+        
+        // 2. 濾出「已結案」且「日期在 30 天內」
         const recentSoldTrades = dailyTrades
             .filter(item => {
                 return item.state === "sell" && item.time >= thresholdDate;
             })
-            .reverse(); // 最新日期在前
-
+            .reverse();
+        
         // 3. 渲染到表格並計算總獲利
-        let total30DayProfit = 0; // 用於累加獲利
-        let total30DayAmount = 0; // 用於累加報酬率
-        let fixedTotal30DayProfit = 0; // 用於定額累加獲利
-        let fixedTotal30DayAmount = 0; // 用於定額累加報酬率
-
+        let total30DayProfit = 0;
+        let total30DayAmount = 0;
+        let fixedTotal30DayProfit = 0;
+        let fixedTotal30DayAmount = 0;
+        
         $soldTable.find('tr:gt(0)').remove(); // 清空舊資料
-
+        
         recentSoldTrades.forEach(item => {
-            const { time, sheetName, avgEntry, quantity, benefit, rate, state } = item;
+            const { time, sheetName, avgEntry, quantity, benefit, rate } = item;
             const numRate = Number(rate) || 0;
-
-            total30DayProfit += Number(benefit); // 累加總額
-            // 計算單筆投資金額 (公式: 2000 * 張數)
-            // const soldAmonut = 2000 * Number(quantity);
-            const soldAmonut = Number(avgEntry) * Number(quantity) * 1000;
-            total30DayAmount += soldAmonut; // 累加總額
-            // 定額
-            // 計算單筆獲利金額 (公式: 2000 * 張數 * 報酬率%)
-            fixedTotal30DayProfit += 2000 * Number(quantity) * (numRate / 100); // 定額累加總額
-            fixedTotal30DayAmount += 2000 * Number(quantity);
-
+            const numQty = Number(quantity) || 0;
+        
+            // 數據累加計算
+            total30DayProfit += Number(benefit);
+            const soldAmonut = Number(avgEntry) * numQty * 1000;
+            total30DayAmount += soldAmonut;
+            
+            fixedTotal30DayProfit += 2000 * numQty * (numRate / 100);
+            fixedTotal30DayAmount += 2000 * numQty;
+        
+            // --- 格式化顯示內容 ---
+            
+            // 進場均價(張數): 如果張數 > 1 才顯示括號
+            const entryDisplay = numQty > 1 ? `${avgEntry}(${numQty})` : avgEntry;
+            
+            // 獲利金額(報酬率): 例如 19800(20%)
+            const benefitDisplay = `${benefit}(${rate}%)`;
+        
             const $tr = $('<tr/>');
-            if (!isNaN(numRate) && numRate < 0) { $tr.addClass('down'); }
-
-            $('<td/>').append(time).appendTo($tr);
-            $('<td/>').append(sheetName).appendTo($tr);
-            $('<td/>').append(avgEntry).appendTo($tr);
-            $('<td/>').append(quantity).appendTo($tr);
-            $('<td/>').append(rate + "%").appendTo($tr);
-            $('<td/>').append(benefit).appendTo($tr); // 顯示單筆獲利
-
+            // 如果報酬率小於 0，加入 down class
+            if (numRate < 0) { $tr.addClass('down'); }
+        
+            // 依照新的格式 append 欄位
+            $('<td/>').text(time).appendTo($tr);
+            $('<td/>').text(sheetName).appendTo($tr);
+            $('<td/>').text(entryDisplay).appendTo($tr); // 合併後的均價與張數
+            $('<td/>').text(benefitDisplay).appendTo($tr); // 合併後的獲利與報酬率
+        
             $soldTable.append($tr);
         });
 
