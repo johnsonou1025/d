@@ -145,6 +145,12 @@ tr.down td:last-child {
     flex-direction: column;
 }
 
+@media (max-width: 768px) {
+    .data-today .col>* {
+        flex: 0 0 100%;
+    }
+}
+
 /* 區塊顏色優化：使用半透明背景配合重點色 */
 .data-today-buy .headline {
     background: rgba(46, 160, 67, 0.15);
