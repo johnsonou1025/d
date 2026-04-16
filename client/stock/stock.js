@@ -16,40 +16,47 @@ $(async function () {
         /**
          * 持倉數據
          */
-
         const todayHoldings = Array.isArray(data.dayReport) ? data.dayReport : [];
-
+        
         // 1. 清空舊數據
         $holdingsTable.find('tr:gt(0)').remove();
-
+        
         // 2. 初始化財務加總變數
         let totalInv = 0;
         let totalPL = 0;
-
+        
         // 3. 一次性渲染表格與計算
         todayHoldings.forEach(item => {
             const { sheetName, avgEntry, quantity, currentPrice, rate } = item;
             const numQty = Number(quantity) || 0;
             const numRate = Number(rate) || 0;
-
+        
             // 計算財務指標
             totalInv += numQty * 2000;
             totalPL += (numQty * 2000 * (numRate / 100));
-
+        
             const $tr = $('<tr/>').attr({
                 'data-price': currentPrice,
                 'data-rate': numRate,
                 'data-qty': numQty
             });
-
+        
             if (!isNaN(numRate) && numRate < 0) { $tr.addClass('down'); }
-
+        
+            // --- 新增：處理進場價格與張數合併邏輯 ---
+            // 如果張數大於 1，顯示為 "價格(張數)"；否則只顯示 "價格"
+            const entryDisplay = numQty > 1 ? `${avgEntry}(${numQty})` : avgEntry;
+        
             $('<td/>').append(sheetName).appendTo($tr);
             $('<td/>').append(currentPrice).appendTo($tr);
-            $('<td/>').append(avgEntry).appendTo($tr);
-            $('<td/>').append(quantity).appendTo($tr);
+            
+            // 合併後的 TD
+            $('<td/>').append(entryDisplay).appendTo($tr); 
+            
+            // 移除原本的 $('<td/>').append(quantity).appendTo($tr); 這一行
+            
             $('<td/>').append(rate + "%").appendTo($tr);
-
+        
             $holdingsTable.append($tr);
         });
 
