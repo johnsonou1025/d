@@ -114,40 +114,30 @@ p {
     background: #0F0A23; /* 影片載入前的底色 */
 }
 
-/* 影片滿版關鍵 */
-#kv-video {
+/* 共用樣式：確保影片完全覆蓋背景且不變形 */
+.kv-video {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 類似 background-size: cover */
+    object-fit: cover; /* 關鍵：確保影片像 background-size: cover 一樣滿版 */
     transform: translate(-50%, -50%);
     z-index: 0;
 }
 
-/* 調整原本的偽元素，讓它們疊在影片上增加氛圍感 */
-.particles:before,
-.particles:after {
-    content: "";
-    position: absolute;
-    width: 40%;
-    height: 50%;
-    border-radius: 100%;
-    -webkit-filter: blur(50px);
-    filter: blur(50px);
-    opacity: .3;
-    z-index: 1; /* 確保光暈在影片之上 */
-    pointer-events: none; /* 讓光暈不影響點擊 */
+/* 預設隱藏手機版 (769px 以上) */
+#kv-mobile {
+    display: none;
 }
 
-/* 如果手機版需要調整影片比例或顯示 */
+/* 當視窗小於等於 768px 時 */
 @media (max-width: 768px) {
-    #kv-video {
-        /* 手機版如果影片太橫，可以調整寬度讓畫面更集中 */
-        width: auto; 
-        min-width: 100%;
-        height: 100%;
+    #kv-pc {
+        display: none; /* 隱藏電腦版 */
+    }
+    #kv-mobile {
+        display: block; /* 顯示手機版 */
     }
 }
 
