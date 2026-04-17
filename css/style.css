@@ -110,8 +110,23 @@ p {
     text-align: center;
     color: #FFF;
     z-index: 1;
+    overflow: hidden; /* 確保影片不溢出 */
+    background: #0F0A23; /* 影片載入前的底色 */
 }
 
+/* 影片滿版關鍵 */
+#kv-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 類似 background-size: cover */
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* 調整原本的偽元素，讓它們疊在影片上增加氛圍感 */
 .particles:before,
 .particles:after {
     content: "";
@@ -122,51 +137,19 @@ p {
     -webkit-filter: blur(50px);
     filter: blur(50px);
     opacity: .3;
-    z-index: 1;
+    z-index: 1; /* 確保光暈在影片之上 */
+    pointer-events: none; /* 讓光暈不影響點擊 */
 }
 
-.particles:before {
-    left: 0%;
-    top: -30%;
-    transform: skew(10deg, 10deg);
-    background: #0C2992;
-}
-
-.particles:after {
-    right: -20%;
-    top: 40%;
-    transform: skew(-15deg, -10deg);
-    background: #0C2992;
-}
-
-.particles .headline {
-    display: none;
-    line-height: 90%;
-    font-size: 160px;
-    font-weight: 700;
-    text-transform: uppercase;
-    background-image: linear-gradient(90deg, #FF1493, #00CED1);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    z-index: 2;
-}
-
+/* 如果手機版需要調整影片比例或顯示 */
 @media (max-width: 768px) {
-    .particles .headline {
-        display: block;
-        font-size: 80px;
+    #kv-video {
+        /* 手機版如果影片太橫，可以調整寬度讓畫面更集中 */
+        width: auto; 
+        min-width: 100%;
+        height: 100%;
     }
 }
-
-#particleCanvas {}
-
-/* @media (max-width: 768px) {
-    #particleCanvas {}
-} */
 
 .intro {
     display: flex;
