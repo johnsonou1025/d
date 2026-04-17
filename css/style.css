@@ -612,6 +612,12 @@ p {
     gap: 160px;
 }
 
+@media (max-width: 768px) {
+    .footer {
+        text-align: center;
+    }
+}
+
 .footer .headline {
     font-size: 120px;
     font-weight: 700;
