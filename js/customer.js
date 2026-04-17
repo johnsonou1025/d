@@ -16,7 +16,7 @@ function checkVideoSource() {
     var source = video.find('source');
     var windowWidth = $(window).width();
     var currentSrc = source.attr('src');
-    var targetSrc = (windowWidth <= 768) ? 'kv-mobile.mp4' : 'kv.mp4';
+    var targetSrc = (windowWidth <= 768) ? 'img/kv-mobile.mp4' : 'img/kv.mp4';
 
     // 只有當目標來源與當前來源不同時，才執行切換
     if (currentSrc !== targetSrc) {
