@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EchoBoom 語音終極密碼</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #1a1a1a; color: white; transition: background 0.5s; overflow: hidden; }
+        .range { font-size: 3rem; margin-top: 20vh; }
+        .status { color: #888; margin-top: 20px; }
+        .boom { background: red !important; animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 10% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, -2px); } }
+    </style>
+</head>
+<body>
+    <div id="game-ui">
+        <div class="range"><span id="min">1</span> ~ <span id="max">100</span></div>
+        <div id="msg" class="status">正在聆聽語音... (請說出數字)</div>
+    </div>
+
+    <script>
+        // 1. 每個視窗獨立的遊戲變數
+        let min = 1, max = 100;
+        let target = Math.floor(Math.random() * 100) + 1;
+        let isGameOver = false;
+
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'zh-TW';
+        recognition.continuous = true;
+
+        recognition.onresult = (event) => {
+            if (isGameOver) return;
+            const transcript = event.results[event.results.length - 1][0].transcript;
+            const match = transcript.match(/\d+/);
+            
+            if (match) {
+                const guess = parseInt(match[0]);
+                handleGuess(guess);
+            }
+        };
+
+        function handleGuess(num) {
+            if (num <= min || num >= max) return; // 忽略不在範圍內的數字
+
+            if (num === target) {
+                document.getElementById('msg').innerText = "BOOM! 爆炸了！";
+                document.body.classList.add('boom');
+                speak("爆炸了，遊戲結束");
+                isGameOver = true;
+            } else if (num < target) {
+                min = num;
+                updateUI();
+                speak("範圍縮小到 " + min + " 到 " + max);
+            } else {
+                max = num;
+                updateUI();
+                speak("範圍縮小到 " + min + " 到 " + max);
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('min').innerText = min;
+            document.getElementById('max').innerText = max;
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        recognition.start();
+        // 處理語音中斷自動重啟
+        recognition.onend = () => { if(!isGameOver) recognition.start(); };
+    </script>
+</body>
+</html>
