@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TiltGuess - Professional Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@400;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #3DFF8B;
+            --neon-purple: #BF00FF;
+            --bg-dark: #0D0D0D;
+            --primary-purple: #7B61FF;
+            --glass: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        #question-display {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 15vw;
+            text-align: center;
+            width: 90%;
+            text-shadow: 0 0 20px rgba(123, 97, 255, 0.5);
+            z-index: 5;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0d0d0d 100%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setting-section {
+            width: 80%;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .label {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .opt-btn {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 5px;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-style {
+            font-family: 'ZCOOL KuaiLe';
+            font-size: 1.1rem;
+        }
+
+        .opt-btn.active {
+            background: var(--primary-purple);
+            color: white;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px var(--primary-purple);
+        }
+
+        .start-action-btn {
+            margin-top: 20px;
+            background: var(--neon-green);
+            color: black;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 40px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .info-bar {
+            position: absolute;
+            top: 15px;
+            width: 92%;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 900;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .correct-bg {
+            background-color: var(--neon-green) !important;
+            color: black !important;
+        }
+
+        .pass-bg {
+            background-color: var(--neon-purple) !important;
+            color: white !important;
+        }
+
+        .test-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 200;
+        }
+
+        .test-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #444;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="overlay">
+        <!-- Home 按鈕 -->
+        <a href="index.html"
+            style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-size: 1.5rem; background: var(--glass); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); color: white;">🏠</a>
+        <h1 style="font-family: 'ZCOOL KuaiLe'; font-size: 3rem; margin: 0 0 30px 0; color: var(--primary-purple);">
+            TiltGuess</h1>
+
+        <div class="setting-section">
+            <div class="label">Step 1: Select Topic</div>
+            <div class="btn-grid" id="cat-grid"></div>
+        </div>
+
+        <div class="setting-section">
+            <div class="label">Step 2: Select Time</div>
+            <div class="btn-grid" id="time-grid"></div>
+        </div>
+
+        <button class="start-action-btn" onclick="initSensors()">GO!</button>
+    </div>
+
+    <div class="info-bar">
+        <div id="timer-ui">TIME: 0</div>
+        <div id="category-ui" style="color: var(--primary-purple);">TOPIC</div>
+        <div id="score-ui">SCORE: 0</div>
+    </div>
+
+    <div id="question-display">READY?</div>
+
+    <div class="test-controls">
+        <button class="test-btn" onclick="action('correct')">TEST: CORRECT (向前傾)</button>
+        <button class="test-btn" onclick="action('pass')">TEST: PASS (向後仰)</button>
+    </div>
+
+    <script>
+        const ALL_TOPICS = {
+            "國小生活": ["黑板擦", "彩色粉筆", "墊板", "修正帶", "自動鉛筆", "大三角板", "圓規", "課桌椅", "值日生板", "愛心傘", "作業本", "字典", "印章", "鉛筆盒", "削鉛筆機", "單槓", "躲避球", "司令台", "升旗桿", "福利社", "飲水機", "垃圾桶", "洗手台", "單人課桌", "百葉窗", "大象溜滑梯", "爬竿", "跳繩", "接力棒", "哨子", "螢光棒", "蟯蟲檢查紙", "含氟漱口水", "護眼操海報", "健康檢查表", "直笛", "口風琴", "三角鐵", "響板", "黏土", "書包", "聯絡簿", "紅綠燈導護", "科展海報", "彩色鉛筆", "風琴", "健康操隊伍", "考卷", "獎狀", "午餐隔板", "餐桶", "蒸飯箱", "大隊接力", "躲避球賽", "體育股長", "風紀股長", "掃把", "拖把", "粉筆夾", "講桌"],
+            "台灣地名": ["台北", "台中", "台南", "高雄", "桃園", "基隆", "新竹", "彰化", "嘉義", "屏東", "宜蘭", "花蓮", "台東", "南投", "苗栗", "雲林", "澎湖", "金門", "馬祖", "新北", "阿里山", "日月潭", "墾丁", "太魯閣", "淡水", "九份", "野柳", "西門町", "陽明山", "鹿港", "龜山島", "蘭嶼", "綠島", "小琉球", "玉山", "安平", "旗津", "三峽", "大溪", "內灣", "北投", "士林夜市", "龍山寺", "八卦山", "合歡山", "知本", "礁溪", "蘇澳", "馬告", "奮起湖", "鹿野高台", "鵝鑾鼻", "三仙台", "清境農場", "溪頭", "杉林溪", "大湖", "竹南", "北港", "鹿谷"],
+            "台灣美食": ["珍珠奶茶", "臭豆腐", "蚵仔煎", "滷肉飯", "大腸包小腸", "大雞排", "牛肉麵", "小籠包", "蚵仔麵線", "肉圓", "割包", "筒仔米糕", "碗粿", "淡水阿給", "肉羹麵", "芒果冰", "豆花", "燒仙草", "愛玉冰", "地瓜球", "糖葫蘆", "車輪餅", "雞蛋糕", "鳳梨酥", "太陽餅", "豬血糕", "烤玉米", "炸鮮奶", "麻糬", "牛舌餅", "木瓜牛奶", "冬瓜茶", "薑母鴨", "羊肉爐", "麻辣火鍋", "黑白切", "鹹酥雞", "鐵蛋", "潤餅", "甜不辣", "麻油雞", "控肉飯", "排骨酥麵", "虱目魚湯", "擔仔麵", "藥燉排骨", "炭烤泰國蝦", "奶油螃蟹", "胡椒餅", "蔥油餅", "抓餅", "鹹水雞", "涼麵", "燒肉飯", "鴨肉扁", "旗魚黑輪", "東山鴨頭", "炸彈蔥油餅", "白糖粿", "燒麻糬"],
+            "世界地圖": ["日本", "韓國", "泰國", "新加坡", "越南", "菲律賓", "印度", "馬來西亞", "印度尼西亞", "土耳其", "法國", "英國", "義大利", "德國", "西班牙", "瑞士", "荷蘭", "希臘", "奧地利", "比利時", "葡萄牙", "冰島", "挪威", "瑞典", "丹麥", "美國", "加拿大", "巴西", "墨西哥", "阿根廷", "澳洲", "紐西蘭", "埃及", "南非", "智利", "秘魯", "古巴", "蒙古", "芬蘭", "俄羅斯", "摩納哥", "梵蒂岡", "愛爾蘭", "波蘭", "匈牙利", "捷克", "以色列", "伊朗", "伊拉克", "沙烏地阿拉伯", "肯亞", "衣索比亞", "摩洛哥", "尼泊爾", "不丹", "斯里蘭卡", "烏克蘭", "克羅埃西亞", "巴拿馬", "牙買加"],
+            "世界動物": ["大象", "長頸鹿", "獅子", "老虎", "袋鼠", "河馬", "犀牛", "斑馬", "猩猩", "猴子", "無尾熊", "熊貓", "北極熊", "狐狸", "狼", "公雞", "鴨子", "豬", "綿羊", "山羊", "牛", "兔子", "馬", "松鼠", "刺蝟", "企鵝", "鴕鳥", "孔雀", "老鷹", "貓頭鷹", "蝴蝶", "蜜蜂", "蚊子", "螳螂", "蜘蛛", "海豚", "鯊魚", "螃蟹", "章魚", "海龜", "鱷魚", "變色龍", "螢火蟲", "瓢蟲", "蝸牛", "青蛙", "水母", "海馬", "座頭鯨", "海豹", "海獺", "火烈鳥", "黑猩猩", "駱駝", "麋鹿", "蝙蝠", "松鼠猴", "浣熊", "樹懶", "土撥鼠"],
+            "世界古蹟": ["萬里長城", "秦始皇兵馬俑", "台北101", "泰姬瑪哈陵", "吳哥窟", "魚尾獅", "大佛", "紫禁城", "耶路撒冷哭牆", "佩特拉古城", "比薩斜塔", "艾菲爾鐵塔", "羅馬競技場", "帕德嫩神廟", "凱旋門", "巨石陣", "聖家堂", "白金漢宮", "紅場", "凡爾賽宮", "聖米歇爾山", "新天鵝堡", "柏林圍牆", "威尼斯運河", "龐貝古城", "自由女神像", "金字塔", "人面獅身像", "馬丘比丘", "摩艾石像", "雪梨歌劇院", "基督像", "總統山", "復活節島", "瑪雅文明", "大本鐘", "白宮", "金門大橋", "巴拿馬大運河", "空中花園", "聖巴西爾大教堂", "倫敦塔橋", "西斯汀小堂", "雅典衛城", "婆羅浮屠", "布達拉宮", "金閣寺", "嚴島神社", "海神廟", "仰光大金塔", "科隆大教堂", "米蘭大教堂", "盧浮宮", "大英博物館", "大都會藝術博物館", "阿爾罕布拉宮", "卡納克神廟", "烏魯魯", "霍夫堡", "美泉宮"]
+        };
+
+        const TIME_OPTIONS = [30, 60, 90, 120, 150, 180]; // 時間選項定義
+
+        let selectedCat = "";
+        let selectedTime = TIME_OPTIONS[0];
+        let currentQuestions = [];
+        let score = 0;
+        let timeLeft = TIME_OPTIONS[0];
+        let isGaming = false;
+        let canProcess = true;
+        let timerInterval = null;
+
+        const qDisplay = document.getElementById('question-display');
+        const scoreUI = document.getElementById('score-ui');
+        const timerUI = document.getElementById('timer-ui');
+        const overlay = document.getElementById('overlay');
+        const catUI = document.getElementById('category-ui');
+
+        function renderCategoryButtons() {
+            const grid = document.getElementById('cat-grid');
+            grid.innerHTML = '';
+            Object.keys(ALL_TOPICS).forEach((catName, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn cat-style';
+                if (index === 0) {
+                    btn.classList.add('active');
+                    selectedCat = catName;
+                }
+                btn.innerText = catName;
+                btn.onclick = function () { setCat(catName, this); };
+                grid.appendChild(btn);
+            });
+        }
+
+        function renderTimeButtons() {
+            const grid = document.getElementById('time-grid');
+            grid.innerHTML = '';
+            TIME_OPTIONS.forEach((sec, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                if (index === 0) {
+                    btn.classList.add('active');
+                    selectedTime = sec;
+                    timeLeft = sec;
+                }
+                // const label = sec >= 60 && sec % 60 === 0 ? `${sec / 60}分` : `${sec}秒`;
+                const label = sec >= 60 && sec % 60 === 0 ? `${sec}秒` : `${sec}秒`;
+                btn.innerText = label;
+                btn.onclick = function () { setTime(sec, this); };
+                grid.appendChild(btn);
+            });
+            timerUI.innerText = `TIME: ${selectedTime}`;
+        }
+
+        function setCat(cat, btn) {
+            selectedCat = cat;
+            document.querySelectorAll('#cat-grid .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function setTime(sec, btn) {
+            selectedTime = sec;
+            timeLeft = sec;
+            document.querySelectorAll('#time-grid .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            timerUI.innerText = `TIME: ${sec}`;
+        }
+
+        async function initSensors() {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                try {
+                    const permissionState = await DeviceOrientationEvent.requestPermission();
+                    if (permissionState === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        startCountdown();
+                    }
+                } catch (e) { alert('Permission Error'); }
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation);
+                startCountdown();
+            }
+        }
+
+        function startCountdown() {
+            overlay.style.display = 'none';
+            isGaming = false;
+            let count = 3;
+            qDisplay.innerText = count;
+            qDisplay.style.fontSize = "30vw";
+            qDisplay.style.color = "var(--neon-green)";
+
+            const cdTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    qDisplay.innerText = count;
+                    qDisplay.style.transform = "scale(1.2)";
+                    setTimeout(() => qDisplay.style.transform = "scale(1)", 100);
+                } else {
+                    clearInterval(cdTimer);
+                    qDisplay.innerText = "START!";
+                    qDisplay.style.fontSize = "15vw";
+                    qDisplay.style.color = "white";
+                    setTimeout(() => { startGame(); }, 500);
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = selectedTime;
+            catUI.innerText = selectedCat;
+            currentQuestions = [...ALL_TOPICS[selectedCat]].sort(() => Math.random() - 0.5);
+            isGaming = true;
+            canProcess = true;
+            updateUI();
+            startTimer();
+        }
+
+        function handleOrientation(event) {
+            if (!isGaming || !canProcess) return;
+            const pitch = event.beta;
+            if (pitch > 130) action('correct');
+            else if (pitch < 50) action('pass');
+        }
+
+        function action(type) {
+            if (!isGaming || !canProcess) return;
+            canProcess = false;
+            if (type === 'correct') {
+                score++;
+                document.body.className = 'correct-bg';
+                qDisplay.innerText = "CORRECT!";
+                if (navigator.vibrate) navigator.vibrate(50);
+            } else {
+                document.body.className = 'pass-bg';
+                qDisplay.innerText = "PASS";
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            }
+            setTimeout(() => {
+                document.body.className = '';
+                nextQuestion();
+                canProcess = true;
+            }, 800);
+        }
+
+        function nextQuestion() {
+            currentQuestions.shift();
+            if (currentQuestions.length === 0 || timeLeft <= 0) {
+                endGame();
+            } else {
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            qDisplay.innerText = currentQuestions[0] || "OUT OF TOPICS";
+            scoreUI.innerText = `SCORE: ${score}`;
+            timerUI.innerText = `TIME: ${timeLeft}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (!isGaming) return;
+                timeLeft--;
+                timerUI.innerText = `TIME: ${timeLeft}`;
+                if (timeLeft <= 0) endGame();
+            }, 1000);
+        }
+
+        function endGame() {
+            isGaming = false;
+            clearInterval(timerInterval);
+            qDisplay.style.fontSize = "10vw";
+            qDisplay.innerHTML = `
+                <div style="margin-bottom: 20px;">一共答對了 <span style="color:var(--neon-green); font-size: 15vw;">${score}</span> 題！</div>
+                <button class="start-action-btn" id="retry-btn" style="font-size: 1.5rem; padding: 10px 40px;">再玩一次</button>
+            `;
+            document.getElementById('retry-btn').onclick = function () {
+                resetGameToHome();
+            };
+        }
+
+        function resetGameToHome() {
+            qDisplay.style.fontSize = "15vw";
+            qDisplay.innerText = "READY?";
+            qDisplay.style.color = "white";
+            score = 0;
+            timeLeft = selectedTime;
+            scoreUI.innerText = `SCORE: 0`;
+            timerUI.innerText = `TIME: ${selectedTime}`;
+            overlay.style.display = 'flex';
+        }
+
+        window.onload = () => {
+            renderCategoryButtons();
+            renderTimeButtons();
+        };
+    </script>
+</body>
+
+</html>

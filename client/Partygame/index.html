@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Party Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #3DFF8B;
+            --neon-purple: #BF00FF;
+            --bg-dark: #0D0D0D;
+            --glass: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0d0d0d 100%);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 30px 0;
+        }
+
+        h1 {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--neon-green), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 自適應網格：核心邏輯 */
+        .game-grid {
+            display: grid;
+            /* auto-fit 會根據寬度自動填滿，minmax 確保按鈕最小 100px，最大平均分配 */
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            /* 限制最大寬度，確保在電腦看時不會排成一長列，最多三列(約 360px + gap) */
+            max-width: 360px;
+            width: 85%;
+            gap: 20px;
+            justify-content: center;
+            /* 內容居中 */
+        }
+
+        .game-item {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.1s;
+        }
+
+        .game-item:active {
+            transform: scale(0.92);
+        }
+
+        .icon-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .game-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #eee;
+            text-align: center;
+        }
+
+        /* 裝飾線 */
+        .icon-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 35%;
+            height: 4px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .line-tilt::after {
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .line-echo::after {
+            background: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Party Hub</h1>
+        <div style="font-size: 0.6rem; color: #555; letter-spacing: 2px; margin-top: 5px;">SELECT YOUR GAME</div>
+    </header>
+
+    <div class="game-grid">
+        <!-- 遊戲 1: TiltGuess -->
+        <a href="Tiltguess.html" class="game-item">
+            <div class="icon-box line-tilt">📱</div>
+            <div class="game-label">TiltGuess</div>
+        </a>
+
+        <!-- 遊戲 2: EchoBoom -->
+        <a href="Echoboom.html" class="game-item">
+            <div class="icon-box line-echo">💥</div>
+            <div class="game-label">EchoBoom</div>
+        </a>
+
+
+        <!-- 未來增加遊戲只要在這裡直接貼上新的 <a> 標籤即可 -->
+    </div>
+
+    <footer style="position: fixed; bottom: 20px; color: #222; font-size: 0.5rem;">
+        &copy; 2026 Party Game Collection
+    </footer>
+
+</body>
+
+</html>
