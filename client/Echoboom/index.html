@@ -374,8 +374,13 @@
     </div>
 
     <div class="drawer" id="input-drawer">
-        <p style="color: #888; margin-bottom: 15px; letter-spacing: 2px;">請輸入數字</p>
-        <input type="number" class="drawer-input" id="num-input" pattern="\d*">
+        <p style="color: #888; margin-bottom: 15px; letter-spacing: 2px;">GUESS NUMBER</p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="number" class="drawer-input" id="num-input" pattern="\d*" placeholder="0">
+            <!-- 新增發送按鈕 -->
+            <button id="submit-num"
+                style="background: var(--primary-purple); border: none; width: 60px; height: 60px; border-radius: 15px; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 0 15px var(--primary-purple);">OK</button>
+        </div>
         <button id="close-drawer"
             style="background:none; border:none; color:#666; margin-top:30px; font-weight:900; cursor:pointer;">CANCEL</button>
     </div>
@@ -584,6 +589,41 @@
         }
 
         initGame();
+
+        const submitBtn = document.getElementById('submit-num');
+
+        // 封裝一個統一的送出函式
+        function confirmInput() {
+            const val = parseInt(numInput.value);
+            if (!isNaN(val)) {
+                handleGuess(val);
+                drawer.classList.remove('active');
+                numInput.value = '';
+                // 收起手機虛擬鍵盤
+                numInput.blur();
+            } else {
+                // 如果沒輸入數字就點 OK，可以給個微弱震動提示
+                if (navigator.vibrate) navigator.vibrate(20);
+            }
+        }
+
+        // 綁定按鈕點擊
+        submitBtn.onclick = confirmInput;
+
+        // 綁定 Enter 鍵 (包含手機鍵盤的「前往/搜尋/完成」)
+        numInput.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // 防止網頁重整
+                confirmInput();
+            }
+        };
+
+        // 額外保險：部分安卓手機會觸發 oninput 而非 onkeydown
+        numInput.addEventListener('keypress', (e) => {
+            if (e.which === 13) {
+                confirmInput();
+            }
+        });
     </script>
 </body>
 
