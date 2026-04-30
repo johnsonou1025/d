@@ -108,10 +108,40 @@
             background: var(--neon-purple);
             box-shadow: 0 0 10px var(--neon-purple);
         }
+
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            /* 關鍵：確保影片不縮放變形地填滿螢幕 */
+            z-index: -1;
+            /* 確保影片在所有內容的最底層 */
+            pointer-events: none;
+            /* 確保點擊操作會穿透影片，點到按鈕 */
+
+            /* 視覺優化：調暗背景，讓按鈕文字更清晰 */
+            filter: brightness(0.2);
+            opacity: 0.8;
+        }
+
+        /* 確保內容容器在影片上方，並具有一點穿透感 */
+        header,
+        .game-grid {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 
 <body>
+    <!-- 自動播放、循環、靜音、不顯示控制項、且針對 iOS 優化 -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="home-video.mp4" type="video/mp4">
+        您的瀏覽器不支援 HTML5 影片。
+    </video>
 
     <header>
         <h1>Party Hub</h1>
