@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap');
+
+/* Deep Space Dark Mode Palette */
+:root,
+[data-theme='dark'],
+.dark-theme {
+    --bg-main: #050b18;
+    --bg-surface: #0f172a;
+    --bg-elevated: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-disabled: #475569;
+    --brand-primary: #00a3ff;
+    --brand-primary-gradient: linear-gradient(to right, #00a3ff, #0066ff);
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-critical: #ef4444;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Roboto', sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-elevated);
+    border-radius: 10px;
+}
+
+@-webkit-keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-down {
+    -webkit-animation: fadeInDown 0.4s ease-out forwards;
+    animation: fadeInDown 0.4s ease-out forwards;
+}
+
+/* Light Theme Variables */
+body.light-theme {
+    --bg-main: #e6e7ee;
+    --bg-surface: #e6e7ee;
+    --bg-elevated: #d1d5db;
+    --text-primary: #313131;
+    --text-secondary: #666a87;
+    --text-disabled: #94a3b8;
+}
+
+/* Light Theme Neumorphism UI Overrides */
+body.light-theme .bg-surface {
+    background-color: #e6e7ee;
+    border-color: transparent;
+    box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff;
+}
+
+body.light-theme .bg-main {
+    background-color: #e6e7ee;
+    border-color: transparent;
+    box-shadow: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+}
+
+body.light-theme .border-elevated {
+    border-color: transparent;
+}
+
+/* Exception for text on overlay */
+body.light-theme .text-primary:not(.absolute .text-primary):not(.z-10):not(.z-20):not(.z-30) {
+    color: #313131;
+}
+
+/* Neumorphism Scrollbar & Hover States */
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: #b8b9be;
+}
+
+body.light-theme .hover\:bg-elevated:hover,
+body.light-theme .hover\:bg-elevated\/50:hover {
+    background-color: #e6e7ee;
+    box-shadow: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Material Design 3 elevation simulation */
+.m3-surface-1 {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.m3-surface-2 {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.m3-surface-3 {
+    background-color: rgba(255, 255, 255, 0.11);
+}
