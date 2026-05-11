@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
+    <title>Reaction King - 雙人對戰模式</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red-team: #FF4D4D;
+            --blue-team: #4D97FF;
+            --bg-dark: #1A1A2E;
+            --glass: rgba(255, 255, 255, 0.1);
+            --neon-green: #3DFF8B;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            height: 100vmin;
+            width: 100vmax;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        /* 鎖定橫向：當設備直向時，將 body 旋轉 90 度 */
+        @media screen and (orientation: portrait) {
+            body {
+                transform: rotate(90deg);
+                transform-origin: left top;
+                position: absolute;
+                top: 0;
+                left: 100vw;
+            }
+        }
+
+        /* --- 頂部狀態欄 --- */
+        .top-bar {
+            height: 12vmin;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .score-box {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .score-box.red {
+            color: var(--red-team);
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        }
+
+        .score-box.blue {
+            color: var(--blue-team);
+            text-shadow: 0 0 10px rgba(77, 151, 255, 0.5);
+        }
+
+        .round-info {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #ccc;
+        }
+
+        /* 回首頁按鈕 */
+        .home-btn {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            text-decoration: none;
+            background: var(--glass);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* --- 主遊戲區 --- */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            height: 88vmin;
+        }
+
+        /* 兩側搶答按鈕 */
+        .buzz-btn {
+            width: 15%;
+            height: 100%;
+            border: none;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            gap: 10px;
+        }
+
+        .buzz-btn:active:not(:disabled) {
+            transform: scale(0.92);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .buzz-btn:disabled {
+            filter: grayscale(1);
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-red {
+            background: var(--red-team);
+            box-shadow: 5px 0 20px rgba(255, 77, 77, 0.3);
+            flex-direction: column-reverse;
+        }
+
+        .btn-red span {
+            transform: rotate(90deg);
+        }
+
+        .btn-blue {
+            background: var(--blue-team);
+            box-shadow: -5px 0 20px rgba(77, 151, 255, 0.3);
+            flex-direction: column;
+        }
+
+        .btn-blue span {
+            transform: rotate(-90deg);
+        }
+
+        /* 中央舞台 */
+        .center-stage {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 倒數計時器 */
+        .countdown {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 15vmax;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            position: absolute;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* 圓形卡片 */
+        .cards-container {
+            display: flex;
+            gap: 5vmax;
+            opacity: 0;
+            display: none;
+            /* JS 控制顯示 */
+        }
+
+        .cards-container.active {
+            display: flex;
+            animation: fadeIn 0.4s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            width: 25vmax;
+            height: 25vmax;
+            max-width: 320px;
+            max-height: 320px;
+            background: #EAEAEA;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-icon {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- 答題頁面 Overlay --- */
+        .answer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vmax;
+            height: 100vmin;
+            background: rgba(10, 10, 20, 0.9);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .answer-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .answer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+        }
+
+        .face-red {
+            transform: rotate(90deg);
+        }
+
+        .face-blue {
+            transform: rotate(-90deg);
+        }
+
+        .answer-header {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 答題九宮格與外框 */
+        .answer-board {
+            background: #25253A;
+            padding: 20px;
+            border-radius: 25px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            border: 6px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .answer-board.turn-red {
+            border-color: var(--red-team);
+            animation: breathe-red 1s infinite alternate;
+        }
+
+        .answer-board.turn-blue {
+            border-color: var(--blue-team);
+            animation: breathe-blue 1s infinite alternate;
+        }
+
+        @keyframes breathe-red {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(255, 77, 77, 0.8);
+            }
+        }
+
+        @keyframes breathe-blue {
+            0% {
+                box-shadow: 0 0 10px rgba(77, 151, 255, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(77, 151, 255, 0.8);
+            }
+        }
+
+        .grid-icon {
+            width: 14vmin;
+            height: 14vmin;
+            max-width: 100px;
+            max-height: 100px;
+            background: #EAEAEA;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7vmin;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .grid-icon:active {
+            transform: scale(0.9);
+        }
+
+        .grid-icon.disabled {
+            opacity: 0.3;
+            filter: grayscale(1);
+            pointer-events: none;
+            background: #333;
+        }
+
+        /* 倒數計時條 */
+        .timer-container {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: white;
+            transform-origin: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="home-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M6 19h3v-6h6v6h3v-9l-6-4.5L6 10zM4 21V9l8-6l8 6v12h-7v-6h-2v6z"></path>
+            </svg>
+        </a>
+        <div class="score-box red" style="margin-left: 60px;">
+            <span style="font-size: 1.2rem; font-family: 'Inter'; font-weight: 900;">RED</span>
+            <span id="score-red">0</span>
+        </div>
+        <div class="round-info" id="round-display">ROUND 1 / 10</div>
+        <div class="score-box blue">
+            <span id="score-blue">0</span>
+            <span style="font-size: 1.2rem; font-family: 'Inter'; font-weight: 900;">BLUE</span>
+        </div>
+    </div>
+
+    <div class="main-area">
+        <button class="buzz-btn btn-red" id="btn-red" onclick="buzz('red')"
+            disabled><span>搶</span><span>答</span></button>
+
+        <div class="center-stage">
+            <div class="countdown" id="countdown-text">READY</div>
+            <div class="cards-container" id="cards-container">
+                <div class="card" id="card-a"></div>
+                <div class="card" id="card-b"></div>
+            </div>
+        </div>
+
+        <button class="buzz-btn btn-blue" id="btn-blue" onclick="buzz('blue')"
+            disabled><span>搶</span><span>答</span></button>
+    </div>
+
+    <!-- 答題頁面 -->
+    <div class="answer-overlay" id="answer-overlay">
+        <div class="answer-content" id="answer-content">
+            <div class="answer-header" id="answer-header">RED TURN</div>
+            <div class="answer-board turn-red" id="answer-board">
+                <!-- 15 icons will be injected here -->
+            </div>
+            <div class="timer-container">
+                <div class="timer-bar" id="timer-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 圖示庫 (擴展加入動物與文具)
+        const SYMBOLS = [
+            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🍍', '🥝', '🍅', '🥥', '🥑', '🍔', '🍟', '🍕', '🌭', '🍿', '🍩', '🍦', '🍭', '🍬',
+            '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐧', '🐦', '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜',
+            '✏️', '✒️', '🖋️', '🖊️', '🖌️', '🖍️', '📝', '💼', '📁', '📂', '📅', '📆', '📇', '📈', '📉', '📊', '📋', '📌', '📍', '📎', '📏', '📐', '✂️', '📓', '📔', '📒', '📕', '📗', '📘', '📙', '📚', '📖'
+        ];
+        // 卡片上圖示的位置分佈 (以中心為原點的百分比)
+        const POSITIONS = [
+            { top: '50%', left: '50%' }, // 中心
+            { top: '20%', left: '50%' }, // 上
+            { top: '30%', left: '78%' }, // 右上
+            { top: '60%', left: '83%' }, // 右下
+            { top: '82%', left: '60%' }, // 下（偏右）
+            { top: '82%', left: '30%' }, // 下（偏左）
+            { top: '55%', left: '17%' }, // 左下
+            { top: '25%', left: '25%' }  // 左上
+        ];
+
+        let scores = { red: 0, blue: 0 };
+        let round = 1;
+        const MAX_ROUNDS = 10;
+
+        let currentMatch = null;
+        let currentUnion = [];
+        let gameState = 'init'; // init, countdown, playing, answering, ended
+        let currentTurn = null; // 'red' or 'blue'
+        let hasPassed = false;
+
+        let answerTimerInterval;
+        let timeLeft = 10000; // 10秒
+
+        // DOM 元素
+        const btnRed = document.getElementById('btn-red');
+        const btnBlue = document.getElementById('btn-blue');
+        const scoreRedUI = document.getElementById('score-red');
+        const scoreBlueUI = document.getElementById('score-blue');
+        const roundDisplay = document.getElementById('round-display');
+        const countdownText = document.getElementById('countdown-text');
+        const cardsContainer = document.getElementById('cards-container');
+        const cardA = document.getElementById('card-a');
+        const cardB = document.getElementById('card-b');
+        const overlay = document.getElementById('answer-overlay');
+        const answerContent = document.getElementById('answer-content');
+        const answerBoard = document.getElementById('answer-board');
+        const answerHeader = document.getElementById('answer-header');
+        const timerBar = document.getElementById('timer-bar');
+
+        // 音效模組
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'buzz') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        // 工具函數：陣列洗牌
+        function shuffle(array) {
+            let curr = array.length, rand;
+            while (curr != 0) {
+                rand = Math.floor(Math.random() * curr);
+                curr--;
+                [array[curr], array[rand]] = [array[rand], array[curr]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            scores = { red: 0, blue: 0 };
+            round = 1;
+            updateScoreUI();
+            startRound();
+        }
+
+        function updateScoreUI() {
+            scoreRedUI.innerText = scores.red;
+            scoreBlueUI.innerText = scores.blue;
+            roundDisplay.innerText = `ROUND ${Math.min(round, MAX_ROUNDS)} / ${MAX_ROUNDS}`;
+        }
+
+        function startRound(isRestart = false) {
+            if (!isRestart && round > MAX_ROUNDS) {
+                endGame();
+                return;
+            }
+            gameState = 'countdown';
+            overlay.classList.remove('active');
+            cardsContainer.classList.remove('active');
+            countdownText.style.display = 'block';
+
+            btnRed.disabled = true;
+            btnBlue.disabled = true;
+
+            let count = 5; // 5秒倒數
+            countdownText.innerText = count;
+            countdownText.style.color = "white";
+
+            const cd = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownText.innerText = count;
+                } else {
+                    clearInterval(cd);
+                    countdownText.style.display = 'none';
+                    if (isRestart) {
+                        cardsContainer.classList.add('active');
+                        gameState = 'playing';
+                        btnRed.disabled = false;
+                        btnBlue.disabled = false;
+                    } else {
+                        generateCards();
+                    }
+                }
+            }, 1000);
+        }
+
+        function generateCards() {
+            // 從 21 個圖示中選出 1 個重複的，14 個不重複的
+            let pool = shuffle([...SYMBOLS]);
+            currentMatch = pool[0];
+            let other14 = pool.slice(1, 15);
+
+            let setA = shuffle([currentMatch, ...other14.slice(0, 7)]);
+            let setB = shuffle([currentMatch, ...other14.slice(7, 14)]);
+
+            // 準備答題區的 15 個圖示 (聯集)
+            currentUnion = shuffle([...setA, ...setB.filter(x => x !== currentMatch)]);
+
+            renderCard(cardA, setA);
+            renderCard(cardB, setB);
+
+            cardsContainer.classList.add('active');
+            gameState = 'playing';
+            btnRed.disabled = false;
+            btnBlue.disabled = false;
+        }
+
+        function renderCard(cardEl, symbols) {
+            cardEl.innerHTML = '';
+            symbols.forEach((sym, index) => {
+                const pos = POSITIONS[index];
+                const icon = document.createElement('div');
+                icon.className = 'card-icon';
+                icon.innerText = sym;
+                // 加入隨機大小與旋轉增加難度
+                const scale = (Math.random() * 0.6 + 0.8).toFixed(2);
+                const rotate = Math.floor(Math.random() * 360);
+                icon.style.top = pos.top;
+                icon.style.left = pos.left;
+                icon.style.transform = `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+                // 稍微縮小圖案尺寸，以容納 8 個圖示避免過度重疊
+                icon.style.fontSize = `${4.5 * scale}vmax`;
+                cardEl.appendChild(icon);
+            });
+        }
+
+        window.buzz = function (team) {
+            if (gameState !== 'playing') return;
+            playTone('buzz');
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            gameState = 'answering';
+            currentTurn = team;
+            hasPassed = false;
+            btnRed.disabled = true;
+            btnBlue.disabled = true;
+
+            setupAnswerBoard();
+            overlay.classList.add('active');
+            startAnswerTimer();
+        };
+
+        function setupAnswerBoard() {
+            answerHeader.innerText = `${currentTurn.toUpperCase()} TURN`;
+            answerHeader.style.color = currentTurn === 'red' ? 'var(--red-team)' : 'var(--blue-team)';
+
+            answerBoard.className = `answer-board turn-${currentTurn}`;
+            answerBoard.style.pointerEvents = 'auto';
+            answerBoard.innerHTML = '';
+            answerContent.className = `answer-content face-${currentTurn}`;
+
+            currentUnion.forEach(sym => {
+                const btn = document.createElement('div');
+                btn.className = 'grid-icon';
+                btn.innerText = sym;
+                btn.onclick = () => handleAnswer(sym, btn);
+                answerBoard.appendChild(btn);
+            });
+        }
+
+        function startAnswerTimer() {
+            clearInterval(answerTimerInterval);
+            timeLeft = 10000; // 10000ms = 10s
+            timerBar.style.transform = `scaleX(1)`;
+
+            answerTimerInterval = setInterval(() => {
+                timeLeft -= 50;
+                let ratio = Math.max(0, timeLeft / 10000);
+                timerBar.style.transform = `scaleX(${ratio})`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(answerTimerInterval);
+                    handleWrong(null);
+                }
+            }, 50);
+        }
+
+        function handleAnswer(sym, btnElement) {
+            if (btnElement.classList.contains('disabled')) return;
+            clearInterval(answerTimerInterval);
+
+            if (sym === currentMatch) {
+                // 答對
+                gameState = 'transitioning';
+                playTone('correct');
+                scores[currentTurn]++;
+                btnElement.style.background = 'var(--neon-green)';
+                answerBoard.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    round++;
+                    updateScoreUI();
+                    startRound();
+                }, 1000);
+            } else {
+                // 答錯
+                handleWrong(btnElement);
+            }
+        }
+
+        function handleWrong(btnElement) {
+            playTone('wrong');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            if (btnElement) btnElement.classList.add('disabled');
+
+            if (!hasPassed) {
+                // 換人
+                hasPassed = true;
+                currentTurn = currentTurn === 'red' ? 'blue' : 'red';
+                answerHeader.innerText = `${currentTurn.toUpperCase()} TURN`;
+                answerHeader.style.color = currentTurn === 'red' ? 'var(--red-team)' : 'var(--blue-team)';
+                answerBoard.className = `answer-board turn-${currentTurn}`;
+                answerContent.className = `answer-content face-${currentTurn}`;
+                startAnswerTimer();
+            } else {
+                // 兩人都錯，同一題重新來過
+                gameState = 'transitioning';
+                answerHeader.innerText = "RESTART";
+                answerHeader.style.color = "white";
+                answerBoard.className = "answer-board"; // 移除呼吸燈
+                answerBoard.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    startRound(true);
+                }, 1000);
+            }
+        }
+
+        function endGame() {
+            gameState = 'ended';
+            overlay.classList.remove('active');
+            cardsContainer.classList.remove('active');
+            countdownText.style.display = 'block';
+
+            let msg = "DRAW!";
+            let color = "white";
+            if (scores.red > scores.blue) { msg = "RED WINS!"; color = "var(--red-team)"; }
+            else if (scores.blue > scores.red) { msg = "BLUE WINS!"; color = "var(--blue-team)"; }
+
+            countdownText.innerHTML = `<span style="color:${color}; font-size:12vmax;">${msg}</span><br>
+                <button onclick="initGame()" style="margin-top:20px; font-family:'ZCOOL KuaiLe'; font-size: 2rem; padding: 10px 40px; border-radius: 30px; border:none; background: var(--neon-green); cursor:pointer;">再來一局</button>`;
+        }
+
+        // 確保音效權限在第一次點擊時取得
+        document.body.addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }, { once: true });
+
+        // 啟動遊戲
+        window.onload = initGame;
+
+    </script>
+</body>
+
+</html>

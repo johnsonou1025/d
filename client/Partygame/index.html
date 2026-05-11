@@ -11,6 +11,7 @@
         :root {
             --neon-green: #3DFF8B;
             --neon-purple: #BF00FF;
+            --neon-blue: #4D97FF;
             --bg-dark: #0D0D0D;
             --glass: rgba(255, 255, 255, 0.08);
         }
@@ -78,6 +79,7 @@
             align-items: center;
             justify-content: center;
             font-size: 2.2rem;
+            color: white;
             margin-bottom: 10px;
             position: relative;
         }
@@ -107,6 +109,11 @@
         .line-echo::after {
             background: var(--neon-purple);
             box-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        .line-dobble::after {
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
         }
 
         #bg-video {
@@ -151,16 +158,39 @@
     <div class="game-grid">
         <!-- 遊戲 1: TiltGuess -->
         <a href="Tiltguess.html" class="game-item">
-            <div class="icon-box line-tilt">📱</div>
+            <div class="icon-box line-tilt">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M17.25 20.5H10.5q-1.05 0-1.775-.725T8 18V6q0-1.05.725-1.775T10.5 3.5h6.75q1.05 0 1.775.725T19.75 6v12q0 1.05-.725 1.775T17.25 20.5M10.5 18h6.75V6H10.5zM4.25 15.5v-2h2v-2h-2v-2l-3 3zM22.75 11.5l-3-3v2h-2v2h2v2z">
+                    </path>
+                </svg>
+            </div>
             <div class="game-label">TiltGuess</div>
         </a>
 
         <!-- 遊戲 2: EchoBoom -->
         <a href="Echoboom.html" class="game-item">
-            <div class="icon-box line-echo">💥</div>
+            <div class="icon-box line-echo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M11.5 22q-2.325 0-4.137-1.288T5.1 18.15l1.4-1.425q1.15 1.8 2.988 2.763T13.5 20q.55 0 1.075-.113t1.025-.337l-1.425-1.425q-.35.125-.725.175T12.5 18q-2.3 0-3.9-1.6T7 12.5q0-1.05.388-2.013t1.087-1.737L7.05 7.325Q6.025 8.55 5.513 9.988T5 11.5q0 3.125 2.188 5.313T12.5 19q.775 0 1.525-.175t1.425-.525l1.425 1.425q-1.1 1.025-2.537 1.638T11.5 22m8.8-8.8q0-1.5-1.012-2.713T16.5 9.25l-1.4 1.4q.95.5 1.525 1.438T17.2 14q0 .55-.112 1.075t-.338 1.025l1.425 1.425q1.025-1.1 1.638-2.537T20.3 13.2m-3.925-6.5L15.65 6L14 4.35l.725-.725q.875-.875 2.088-1.2T19.5 2q1.45 0 2.475 1.025T23 5.5q0 1.175-.325 2.388t-1.2 2.087zM19.5 7q.625 0 1.063-.437T21 5.5q0-.625-.437-1.062T19.5 4q-.625 0-1.062.438T18 5.5q0 .625.438 1.063T19.5 7M12.5 17q1.875 0 3.188-1.312T17 12.5q0-1.875-1.312-3.187T12.5 8q-1.875 0-3.187 1.313T8 12.5q0 1.875 1.313 3.188T12.5 17">
+                    </path>
+                </svg>
+            </div>
             <div class="game-label">EchoBoom</div>
         </a>
 
+        <!-- 遊戲 3: Reaction King -->
+        <a href="Dobble.html" class="game-item">
+            <div class="icon-box line-dobble">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M11 21h-1l1-7H7.5q-.5 0-.75-.375T6.5 12.5q0-.35.15-.65t.35-.5l4-7q.35-.5.9-.625t1.1.025q.35.15.575.475t.125.825l-1 5h3.5q.5 0 .75.375t.25.875q0 .35-.15.65t-.35.5l-4 7q-.35.5-.9.625T11 21">
+                    </path>
+                </svg>
+            </div>
+            <div class="game-label">Reaction King</div>
+        </a>
 
         <!-- 未來增加遊戲只要在這裡直接貼上新的 <a> 標籤即可 -->
     </div>
