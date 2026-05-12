@@ -6,23 +6,27 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
     <title>Reaction King - 雙人對戰模式</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@700;900&display=swap"
-        rel="stylesheet">
     <style>
         :root {
-            --red-team: #FF4D4D;
-            --blue-team: #4D97FF;
-            --bg-dark: #1A1A2E;
+            --red-team: #FF3366;
+            --red-team-dark: #CC0033;
+            --blue-team: #00BFFF;
+            --blue-team-dark: #007399;
+            --candy-bg-1: #FFD1FF;
+            --candy-bg-2: #80D4FF;
+            --primary-candy: #FF3399;
+            --primary-candy-dark: #CC0066;
             --glass: rgba(255, 255, 255, 0.1);
-            --neon-green: #3DFF8B;
+            --neon-green: #00CC66;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-dark);
+            background-color: var(--candy-bg-2);
+            background: radial-gradient(circle at center, var(--candy-bg-1) 0%, var(--candy-bg-2) 100%);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
             height: 100vmin;
             width: 100vmax;
             display: flex;
@@ -51,36 +55,40 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 10;
         }
 
         .score-box {
-            font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 2.5rem;
             display: flex;
             align-items: center;
             gap: 15px;
+            letter-spacing: 2px;
         }
 
         .score-box.red {
-            color: var(--red-team);
-            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+            color: white;
+            text-shadow: 0 4px 0 var(--red-team-dark), 0 8px 10px rgba(0, 0, 0, 0.3);
+            -webkit-text-stroke: 1.5px var(--red-team-dark);
         }
 
         .score-box.blue {
-            color: var(--blue-team);
-            text-shadow: 0 0 10px rgba(77, 151, 255, 0.5);
+            color: white;
+            text-shadow: 0 4px 0 var(--blue-team-dark), 0 8px 10px rgba(0, 0, 0, 0.3);
+            -webkit-text-stroke: 1.5px var(--blue-team-dark);
         }
 
         .round-info {
-            font-family: 'Inter', sans-serif;
             font-weight: 900;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
-            color: #ccc;
+            color: white;
+            background: #FF9900;
+            padding: 8px 25px;
+            border-radius: 30px;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 0 #CC6600, 0 8px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* 回首頁按鈕 */
@@ -90,16 +98,23 @@
             left: 15px;
             transform: translateY(-50%);
             text-decoration: none;
-            background: var(--glass);
+            background: #FF3399;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 3px solid #fff;
             color: white;
             font-size: 1.2rem;
+            box-shadow: 0 4px 0 #CC0066, 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .home-btn:active {
+            transform: translateY(calc(-50% + 4px));
+            box-shadow: 0 0px 0 #CC0066, 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* --- 主遊戲區 --- */
@@ -113,13 +128,14 @@
         /* 兩側搶答按鈕 */
         .buzz-btn {
             width: 15%;
-            height: 100%;
-            border: none;
-            font-family: 'ZCOOL KuaiLe', cursive;
+            height: 85%;
+            margin: auto 2%;
+            border-radius: 40px;
+            border: 6px solid #fff;
             font-size: 3rem;
             color: white;
             cursor: pointer;
-            transition: all 0.1s;
+            transition: transform 0.1s, box-shadow 0.1s, filter 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -128,8 +144,7 @@
         }
 
         .buzz-btn:active:not(:disabled) {
-            transform: scale(0.92);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(8px);
         }
 
         .buzz-btn:disabled {
@@ -139,9 +154,13 @@
         }
 
         .btn-red {
-            background: var(--red-team);
-            box-shadow: 5px 0 20px rgba(255, 77, 77, 0.3);
+            background: linear-gradient(to bottom, #FF6699, var(--red-team));
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.4), 0 8px 0 var(--red-team-dark), 0 15px 15px rgba(0, 0, 0, 0.3);
             flex-direction: column-reverse;
+        }
+
+        .btn-red:active:not(:disabled) {
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.4), 0 0px 0 var(--red-team-dark), 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
         .btn-red span {
@@ -149,9 +168,13 @@
         }
 
         .btn-blue {
-            background: var(--blue-team);
-            box-shadow: -5px 0 20px rgba(77, 151, 255, 0.3);
+            background: linear-gradient(to bottom, #66CCFF, var(--blue-team));
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.4), 0 8px 0 var(--blue-team-dark), 0 15px 15px rgba(0, 0, 0, 0.3);
             flex-direction: column;
+        }
+
+        .btn-blue:active:not(:disabled) {
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.4), 0 0px 0 var(--blue-team-dark), 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
         .btn-blue span {
@@ -169,10 +192,10 @@
 
         /* 倒數計時器 */
         .countdown {
-            font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 15vmax;
             color: white;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            -webkit-text-stroke: 4px #FF3399;
+            text-shadow: 0 8px 0 #CC0066, 0 15px 20px rgba(0, 0, 0, 0.4);
             position: absolute;
             animation: pulse 1s infinite alternate;
         }
@@ -212,9 +235,10 @@
             height: 25vmax;
             max-width: 320px;
             max-height: 320px;
-            background: #EAEAEA;
+            background: #FFFFFF;
+            border: 8px solid #fff;
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05), 0 15px 25px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -234,13 +258,13 @@
             left: 0;
             width: 100vmax;
             height: 100vmin;
-            background: rgba(10, 10, 20, 0.9);
+            background: rgba(255, 255, 255, 0.6);
             z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(15px);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.2s;
@@ -273,17 +297,20 @@
             margin-bottom: 20px;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+            -webkit-text-stroke: 1px #fff;
         }
 
         /* 答題九宮格與外框 */
         .answer-board {
-            background: #25253A;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
-            border-radius: 25px;
+            border-radius: 35px;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 15px;
-            border: 6px solid transparent;
+            border: 6px solid #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -299,21 +326,21 @@
 
         @keyframes breathe-red {
             0% {
-                box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 4px rgba(255, 51, 102, 0.3);
             }
 
             100% {
-                box-shadow: 0 0 40px rgba(255, 77, 77, 0.8);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 12px rgba(255, 51, 102, 0.1);
             }
         }
 
         @keyframes breathe-blue {
             0% {
-                box-shadow: 0 0 10px rgba(77, 151, 255, 0.5);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 4px rgba(0, 191, 255, 0.3);
             }
 
             100% {
-                box-shadow: 0 0 40px rgba(77, 151, 255, 0.8);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 12px rgba(0, 191, 255, 0.1);
             }
         }
 
@@ -322,63 +349,173 @@
             height: 14vmin;
             max-width: 100px;
             max-height: 100px;
-            background: #EAEAEA;
+            background: #FFFFFF;
             border-radius: 15px;
+            border: 3px solid #eee;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 7vmin;
             cursor: pointer;
-            transition: transform 0.1s;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 5px 0 #ddd, 0 10px 10px rgba(0, 0, 0, 0.1);
         }
 
         .grid-icon:active {
-            transform: scale(0.9);
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #ddd, 0 5px 5px rgba(0, 0, 0, 0.1);
         }
 
         .grid-icon.disabled {
             opacity: 0.3;
             filter: grayscale(1);
             pointer-events: none;
-            background: #333;
         }
 
         /* 倒數計時條 */
         .timer-container {
             width: 300px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            height: 15px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 3px solid #fff;
+            border-radius: 15px;
             margin-top: 30px;
             overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .timer-bar {
             height: 100%;
             width: 100%;
-            background: white;
+            background: linear-gradient(to right, #FFD633, #FF9900);
             transform-origin: left;
+            border-radius: 10px;
+        }
+
+        /* --- 大廳選擇疊層 --- */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 209, 255, 0.95) 0%, rgba(128, 212, 255, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setting-section {
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .label {
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: white;
+            background: #FF9900;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 0 #CC6600, 0 8px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .opt-btn {
+            background: #FFFFFF;
+            border: 3px solid #eee;
+            border-radius: 15px;
+            padding: 12px 5px;
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 4px 0 #ccc;
+        }
+
+        .opt-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #ccc;
+        }
+
+        .opt-btn.active {
+            background: var(--primary-candy);
+            color: white;
+            border-color: #fff;
+            box-shadow: 0 4px 0 var(--primary-candy-dark);
+        }
+
+        .start-action-btn {
+            margin-top: 20px;
+            background: linear-gradient(to bottom, #66FFB2, #00CC66);
+            color: white;
+            border: 4px solid #fff;
+            padding: 15px 50px;
+            border-radius: 40px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: inset 0px 6px 10px rgba(255, 255, 255, 0.6), 0 8px 0px #00994C, 0 10px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-shadow: 0 3px 0 #00994C;
+        }
+
+        .start-action-btn:active {
+            transform: translateY(6px);
+            box-shadow: inset 0px 6px 10px rgba(255, 255, 255, 0.6), 0 2px 0px #00994C, 0 4px 10px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="home-btn">
+    <div id="overlay">
+        <a href="index.html" class="home-btn" style="top: 20px; left: 20px; transform: none;">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M6 19h3v-6h6v6h3v-9l-6-4.5L6 10zM4 21V9l8-6l8 6v12h-7v-6h-2v6z"></path>
             </svg>
         </a>
+        <h1
+            style="font-size: 3.5rem; margin: 0 0 30px 0; color: white; -webkit-text-stroke: 2px var(--primary-candy); text-shadow: 0 5px 0 var(--primary-candy-dark);">
+            Reaction King</h1>
+
+        <div class="setting-section">
+            <div class="label">難度選擇 (圖案數量)</div>
+            <div class="btn-grid" id="diff-grid"></div>
+        </div>
+
+        <button class="start-action-btn" onclick="initGame()">GO!</button>
+    </div>
+
+    <div class="top-bar">
+        <a href="#" onclick="quitToLobby(); return false;" class="home-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z"></path>
+            </svg>
+        </a>
         <div class="score-box red" style="margin-left: 60px;">
-            <span style="font-size: 1.2rem; font-family: 'Inter'; font-weight: 900;">RED</span>
+            <span style="font-size: 1.2rem; font-weight: 900;">RED</span>
             <span id="score-red">0</span>
         </div>
         <div class="round-info" id="round-display">ROUND 1 / 10</div>
         <div class="score-box blue">
             <span id="score-blue">0</span>
-            <span style="font-size: 1.2rem; font-family: 'Inter'; font-weight: 900;">BLUE</span>
+            <span style="font-size: 1.2rem; font-weight: 900;">BLUE</span>
         </div>
     </div>
 
@@ -427,7 +564,10 @@
             { top: '82%', left: '60%' }, // 下（偏右）
             { top: '82%', left: '30%' }, // 下（偏左）
             { top: '55%', left: '17%' }, // 左下
-            { top: '25%', left: '25%' }  // 左上
+            { top: '25%', left: '25%' }, // 左上
+            { top: '38%', left: '38%' }, // 內左上
+            { top: '38%', left: '62%' }, // 內右上
+            { top: '62%', left: '50%' }  // 內下
         ];
 
         let scores = { red: 0, blue: 0 };
@@ -441,7 +581,17 @@
         let hasPassed = false;
 
         let answerTimerInterval;
+        let countdownInterval;
+        let transitionTimeout;
         let timeLeft = 10000; // 10秒
+
+        const DIFFICULTIES = [
+            { label: '簡單', count: 2 },
+            { label: '一般', count: 5 },
+            { label: '困難', count: 8 },
+            { label: '地獄', count: 11 }
+        ];
+        let symbolsCount = 5; // 預設為一般
 
         // DOM 元素
         const btnRed = document.getElementById('btn-red');
@@ -503,11 +653,41 @@
             return array;
         }
 
+        function showLobby() {
+            document.getElementById('overlay').style.display = 'flex';
+            renderDifficultyButtons();
+        }
+
+        function renderDifficultyButtons() {
+            const grid = document.getElementById('diff-grid');
+            grid.innerHTML = '';
+            DIFFICULTIES.forEach((diff) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn' + (diff.count === symbolsCount ? ' active' : '');
+                btn.innerHTML = `${diff.label}<br><span style="font-size:0.75rem; opacity:0.8;">(${diff.count}圖)</span>`;
+                btn.onclick = function () {
+                    symbolsCount = diff.count;
+                    document.querySelectorAll('#diff-grid .opt-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                };
+                grid.appendChild(btn);
+            });
+        }
+
         function initGame() {
+            document.getElementById('overlay').style.display = 'none';
             scores = { red: 0, blue: 0 };
             round = 1;
             updateScoreUI();
             startRound();
+        }
+
+        function quitToLobby() {
+            gameState = 'ended';
+            clearInterval(answerTimerInterval);
+            clearInterval(countdownInterval);
+            clearTimeout(transitionTimeout);
+            showLobby();
         }
 
         function updateScoreUI() {
@@ -529,16 +709,16 @@
             btnRed.disabled = true;
             btnBlue.disabled = true;
 
-            let count = 5; // 5秒倒數
+            let count = 3; // 3秒倒數
             countdownText.innerText = count;
             countdownText.style.color = "white";
 
-            const cd = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownText.innerText = count;
                 } else {
-                    clearInterval(cd);
+                    clearInterval(countdownInterval);
                     countdownText.style.display = 'none';
                     if (isRestart) {
                         cardsContainer.classList.add('active');
@@ -553,15 +733,14 @@
         }
 
         function generateCards() {
-            // 從 21 個圖示中選出 1 個重複的，14 個不重複的
             let pool = shuffle([...SYMBOLS]);
             currentMatch = pool[0];
-            let other14 = pool.slice(1, 15);
+            let neededOthers = 2 * (symbolsCount - 1);
+            let others = pool.slice(1, 1 + neededOthers);
 
-            let setA = shuffle([currentMatch, ...other14.slice(0, 7)]);
-            let setB = shuffle([currentMatch, ...other14.slice(7, 14)]);
+            let setA = shuffle([currentMatch, ...others.slice(0, symbolsCount - 1)]);
+            let setB = shuffle([currentMatch, ...others.slice(symbolsCount - 1, neededOthers)]);
 
-            // 準備答題區的 15 個圖示 (聯集)
             currentUnion = shuffle([...setA, ...setB.filter(x => x !== currentMatch)]);
 
             renderCard(cardA, setA);
@@ -575,19 +754,19 @@
 
         function renderCard(cardEl, symbols) {
             cardEl.innerHTML = '';
+            const baseSize = 25 / symbolsCount + 1.5; // 動態計算圖案大小
             symbols.forEach((sym, index) => {
                 const pos = POSITIONS[index];
                 const icon = document.createElement('div');
                 icon.className = 'card-icon';
                 icon.innerText = sym;
                 // 加入隨機大小與旋轉增加難度
-                const scale = (Math.random() * 0.6 + 0.8).toFixed(2);
+                const scale = (Math.random() * 0.5 + 0.8).toFixed(2);
                 const rotate = Math.floor(Math.random() * 360);
                 icon.style.top = pos.top;
                 icon.style.left = pos.left;
                 icon.style.transform = `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
-                // 稍微縮小圖案尺寸，以容納 8 個圖示避免過度重疊
-                icon.style.fontSize = `${4.5 * scale}vmax`;
+                icon.style.fontSize = `${baseSize * scale}vmax`;
                 cardEl.appendChild(icon);
             });
         }
@@ -617,9 +796,23 @@
             answerBoard.innerHTML = '';
             answerContent.className = `answer-content face-${currentTurn}`;
 
+            // 動態切換九宮格的排版欄數與大小
+            let cols = 3;
+            let iconSize = '18vmin';
+            if (symbolsCount === 5) { cols = 3; iconSize = '16vmin'; }
+            else if (symbolsCount === 8) { cols = 3; iconSize = '14vmin'; }
+            else if (symbolsCount === 11) { cols = 3; iconSize = '11vmin'; }
+
+            answerBoard.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
             currentUnion.forEach(sym => {
                 const btn = document.createElement('div');
                 btn.className = 'grid-icon';
+                btn.style.width = iconSize;
+                btn.style.height = iconSize;
+                btn.style.maxWidth = 'none';
+                btn.style.maxHeight = 'none';
+                btn.style.fontSize = `calc(${iconSize} * 0.5)`;
                 btn.innerText = sym;
                 btn.onclick = () => handleAnswer(sym, btn);
                 answerBoard.appendChild(btn);
@@ -654,7 +847,7 @@
                 scores[currentTurn]++;
                 btnElement.style.background = 'var(--neon-green)';
                 answerBoard.style.pointerEvents = 'none';
-                setTimeout(() => {
+                transitionTimeout = setTimeout(() => {
                     round++;
                     updateScoreUI();
                     startRound();
@@ -686,7 +879,7 @@
                 answerHeader.style.color = "white";
                 answerBoard.className = "answer-board"; // 移除呼吸燈
                 answerBoard.style.pointerEvents = 'none';
-                setTimeout(() => {
+                transitionTimeout = setTimeout(() => {
                     startRound(true);
                 }, 1000);
             }
@@ -704,7 +897,7 @@
             else if (scores.blue > scores.red) { msg = "BLUE WINS!"; color = "var(--blue-team)"; }
 
             countdownText.innerHTML = `<span style="color:${color}; font-size:12vmax;">${msg}</span><br>
-                <button onclick="initGame()" style="margin-top:20px; font-family:'ZCOOL KuaiLe'; font-size: 2rem; padding: 10px 40px; border-radius: 30px; border:none; background: var(--neon-green); cursor:pointer;">再來一局</button>`;
+                <button class="start-action-btn" onclick="showLobby()" style="margin-top:20px; font-size: 1.5rem; padding: 10px 40px;">回大廳</button>`;
         }
 
         // 確保音效權限在第一次點擊時取得
@@ -712,8 +905,8 @@
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }, { once: true });
 
-        // 啟動遊戲
-        window.onload = initGame;
+        // 初始化載入大廳
+        window.onload = showLobby;
 
     </script>
 </body>

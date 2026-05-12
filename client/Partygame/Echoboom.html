@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EchoBoom - Bomb Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@400;900&display=swap"
-        rel="stylesheet">
     <style>
         :root {
-            --primary-purple: #7B61FF;
-            --secondary-pink: #FF4D97;
-            --neon-green: #3DFF8B;
-            --dark-bg: #1A1A2E;
+            --candy-bg-1: #FFD1FF;
+            --candy-bg-2: #80D4FF;
+            --primary-candy: #FF3399;
+            --primary-candy-dark: #CC0066;
+            --secondary-candy: #00BFFF;
+            --secondary-candy-dark: #007399;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background: var(--dark-bg);
-            background-image: radial-gradient(circle at 50% 20%, #2E2E5E 0%, #1A1A2E 100%);
+            background-color: var(--candy-bg-2);
+            background: radial-gradient(circle at center, var(--candy-bg-1) 0%, var(--candy-bg-2) 100%);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -40,20 +40,29 @@
             z-index: 10;
         }
 
-        .room-id {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #aaa;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background: #FF3399;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 0 #CC0066, 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 200;
         }
 
-        .settings-icon {
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-            opacity: 0.8;
+        .home-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #CC0066, 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* 中央遊戲看板 */
@@ -70,9 +79,9 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 6px solid var(--primary-purple);
-            box-shadow: 0 0 30px var(--primary-purple), inset 0 0 20px var(--primary-purple);
+            background: rgba(255, 255, 255, 0.8);
+            border: 8px solid #fff;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -93,15 +102,23 @@
         }
 
         .range-text {
-            font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 2.5rem;
+            color: var(--primary-candy);
+            -webkit-text-stroke: 2px var(--primary-candy-dark);
+            text-shadow: 0 4px 0 var(--primary-candy-dark);
             margin: 0;
         }
 
         .range-label {
-            font-size: 0.75rem;
-            color: #888;
-            letter-spacing: 3px;
+            font-size: 0.85rem;
+            font-weight: 900;
+            background: #FFD633;
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0 3px 0 #CC9900;
+            color: white;
+            letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
@@ -111,6 +128,8 @@
             font-weight: 900;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+            -webkit-text-stroke: 1.5px #fff;
         }
 
         /* 炸彈視覺特效 */
@@ -152,7 +171,7 @@
 
         /* 爆炸震撼效果 */
         .boom-mode {
-            background: #400 !important;
+            background: #FF3366 !important;
         }
 
         .boom-shake {
@@ -199,29 +218,32 @@
             width: 110px;
             height: 110px;
             border-radius: 50%;
-            background: linear-gradient(145deg, #8A72FF, #6A4DFF);
-            box-shadow: 0 8px 0 #4A32BB, 0 12px 25px rgba(0, 0, 0, 0.4);
-            font-size: 1.1rem;
+            background: linear-gradient(to bottom, #FF6699, var(--primary-candy));
+            border: 6px solid #fff;
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.5), 0 8px 0 var(--primary-candy-dark), 0 15px 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.2rem;
+            text-shadow: 0 2px 0 var(--primary-candy-dark);
         }
 
         .main-talk-btn:active {
             transform: translateY(6px);
-            box-shadow: 0 2px 0 #4A32BB;
+            box-shadow: inset 0 8px 10px rgba(255, 255, 255, 0.5), 0 2px 0 var(--primary-candy-dark), 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
         .side-btn {
             width: 65px;
             height: 65px;
             border-radius: 20px;
-            background: #2a2a40;
-            box-shadow: 0 5px 0 #111;
+            background: linear-gradient(to bottom, #66CCFF, #00BFFF);
+            border: 4px solid #fff;
+            box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.5), 0 6px 0 var(--secondary-candy-dark), 0 10px 10px rgba(0, 0, 0, 0.2);
             font-size: 0.75rem;
-            color: #ccc;
+            color: white;
         }
 
         .side-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 #111;
+            transform: translateY(4px);
+            box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.5), 0 2px 0 var(--secondary-candy-dark), 0 5px 5px rgba(0, 0, 0, 0.2);
         }
 
         /* 輸入抽屜 */
@@ -230,8 +252,9 @@
             bottom: -100%;
             left: 0;
             width: 100%;
-            background: #252545;
-            border-top: 2px solid var(--primary-purple);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-top: 6px solid #fff;
             border-radius: 30px 30px 0 0;
             padding: 40px 0;
             transition: bottom 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -239,6 +262,7 @@
             flex-direction: column;
             align-items: center;
             z-index: 100;
+            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .drawer.active {
@@ -246,15 +270,15 @@
         }
 
         .drawer-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--primary-purple);
-            border-radius: 15px;
-            color: var(--neon-green);
+            background: #fff;
+            border: 4px solid #eee;
+            border-radius: 20px;
+            color: var(--primary-candy);
             font-size: 4rem;
             width: 220px;
             text-align: center;
-            font-family: 'ZCOOL KuaiLe', sans-serif;
             outline: none;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* 炸彈掉落與蓄力動畫 (總長 3s) */
@@ -304,7 +328,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--secondary-pink);
+            background: linear-gradient(to bottom, #FF3366, #CC0033);
             z-index: 150;
             opacity: 0;
             pointer-events: none;
@@ -362,9 +386,8 @@
 
     <div class="header">
         <!-- Home 按鈕 -->
-        <a href="index.html"
-            style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-size: 1.5rem; background: var(--glass); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); color: white;"><svg
-                xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+        <a href="index.html" class="home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                viewBox="0 0 24 24">
                 <path fill="currentColor" d="M6 19h3v-6h6v6h3v-9l-6-4.5L6 10zM4 21V9l8-6l8 6v12h-7v-6h-2v6z"></path>
             </svg></a>
     </div>
@@ -384,15 +407,17 @@
     </div>
 
     <div class="drawer" id="input-drawer">
-        <p style="color: #888; margin-bottom: 15px; letter-spacing: 2px;">GUESS NUMBER</p>
+        <p
+            style="font-weight: 900; background: #FF9900; padding: 6px 14px; border-radius: 20px; border: 2px solid #fff; box-shadow: 0 4px 0 #CC6600; color: white; margin-bottom: 15px; letter-spacing: 2px;">
+            GUESS NUMBER</p>
         <div style="display: flex; align-items: center; gap: 10px;">
             <input type="number" class="drawer-input" id="num-input" pattern="\d*" placeholder="0">
             <!-- 新增發送按鈕 -->
             <button id="submit-num"
-                style="background: var(--primary-purple); border: none; width: 60px; height: 60px; border-radius: 15px; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 0 15px var(--primary-purple);">OK</button>
+                style="background: linear-gradient(to bottom, #66FFB2, #00CC66); border: 4px solid #fff; width: 70px; height: 70px; border-radius: 20px; color: white; font-size: 1.5rem; font-weight: 900; cursor: pointer; box-shadow: inset 0 4px 8px rgba(255,255,255,0.5), 0 6px 0 #00994C;">OK</button>
         </div>
         <button id="close-drawer"
-            style="background:none; border:none; color:#666; margin-top:30px; font-weight:900; cursor:pointer;">CANCEL</button>
+            style="background:#eee; border: 3px solid #fff; padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 0 #ccc; color:#888; margin-top:30px; font-weight:900; cursor:pointer;">CANCEL</button>
     </div>
 
     <script>
@@ -421,7 +446,7 @@
             statusMsg.innerText = "READY";
             statusMsg.style.color = "white";
             talkBtn.innerText = "HOLD\nTALK";
-            talkBtn.style.background = "linear-gradient(145deg, #8A72FF, #6A4DFF)";
+            talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
 
             speak("遊戲開始");
         }
@@ -490,7 +515,7 @@
                 handleGuess(parseInt(match[0]));
             } else {
                 statusMsg.innerText = "NOT CLEAR";
-                statusMsg.style.color = "var(--secondary-pink)";
+                statusMsg.style.color = "#FF3399";
                 setTimeout(resetStatus, 1500);
             }
         };
@@ -536,7 +561,7 @@
         function handleGuess(num) {
             if (num <= min || num >= max || isNaN(num)) {
                 statusMsg.innerText = "INVALID!";
-                statusMsg.style.color = "#FF4D97";
+                statusMsg.style.color = "#FF3399";
                 return;
             }
             if (num === target) {
@@ -549,7 +574,7 @@
                 bomb.style.animation = 'bomb-sequence 3s forwards';
 
                 statusMsg.innerText = "DANGER!!";
-                statusMsg.style.color = "var(--secondary-pink)";
+                statusMsg.style.color = "#FF3399";
                 talkBtn.innerText = "BOOM";
                 talkBtn.style.background = "#444";
 
@@ -583,7 +608,7 @@
                 num < target ? min = num : max = num;
                 rangeDisplay.innerText = `${min} ~ ${max}`;
                 statusMsg.innerText = "SAFE: " + num;
-                statusMsg.style.color = "#3DFF8B";
+                statusMsg.style.color = "#00CC66";
                 speak("安全，" + num);
 
                 const circle = document.getElementById('circle');

@@ -5,24 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Party Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@700;900&display=swap"
-        rel="stylesheet">
     <style>
         :root {
-            --neon-green: #3DFF8B;
-            --neon-purple: #BF00FF;
-            --neon-blue: #4D97FF;
-            --bg-dark: #0D0D0D;
-            --glass: rgba(255, 255, 255, 0.08);
+            --candy-bg-1: #FFD1FF;
+            --candy-bg-2: #80D4FF;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-dark);
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0d0d0d 100%);
+            background-color: var(--candy-bg-2);
+            background: radial-gradient(circle at center, var(--candy-bg-1) 0%, var(--candy-bg-2) 100%);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
             min-height: 100vh;
             width: 100vw;
             display: flex;
@@ -32,16 +27,31 @@
 
         header {
             text-align: center;
-            padding: 50px 0 30px 0;
+            padding: 60px 0 30px 0;
         }
 
         h1 {
-            font-family: 'ZCOOL KuaiLe', cursive;
-            font-size: 2.5rem;
+            font-size: 3.2rem;
             margin: 0;
-            background: linear-gradient(to right, var(--neon-green), var(--neon-purple));
+            background: linear-gradient(to bottom, #FFFFFF, #FFD633, #FF9900);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 4px 0px #CC6600) drop-shadow(0px 8px 15px rgba(0, 0, 0, 0.4));
+            letter-spacing: 2px;
+        }
+
+        .sub-title {
+            font-size: 0.8rem;
+            color: #fff;
+            background: #FF3399;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 0 #CC0066, 0 8px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            margin-top: 15px;
+            display: inline-block;
+            font-weight: 900;
         }
 
         /* 自適應網格：核心邏輯 */
@@ -62,58 +72,76 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.1s;
         }
 
-        .game-item:active {
-            transform: scale(0.92);
+        .game-item:active .icon-box {
+            transform: translateY(6px);
+        }
+
+        .game-item:active .game-label {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 #CC6600, 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .icon-box {
             width: 100%;
             aspect-ratio: 1 / 1;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 22px;
+            border: 4px solid #fff;
+            border-radius: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
+            font-size: 3.5rem;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
             position: relative;
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 1;
         }
 
         .game-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #eee;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: white;
+            background: #FF9900;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 0 #CC6600, 0 8px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
+            z-index: 2;
+            margin-top: -15px;
+            transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        /* 裝飾線 */
-        .icon-box::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            width: 35%;
-            height: 4px;
-            border-radius: 10px 10px 0 0;
+        .line-tilt {
+            background: linear-gradient(to bottom, #66FFB2, #00CC66);
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 8px 0px #00994C, 0 15px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 0 #00994C;
         }
 
-        .line-tilt::after {
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
+        .game-item:active .line-tilt {
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 2px 0px #00994C, 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
-        .line-echo::after {
-            background: var(--neon-purple);
-            box-shadow: 0 0 10px var(--neon-purple);
+        .line-echo {
+            background: linear-gradient(to bottom, #FF99FF, #CC00CC);
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 8px 0px #990099, 0 15px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 0 #990099;
         }
 
-        .line-dobble::after {
-            background: var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue);
+        .game-item:active .line-echo {
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 2px 0px #990099, 0 5px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .line-dobble {
+            background: linear-gradient(to bottom, #66CCFF, #0066CC);
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 8px 0px #004C99, 0 15px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 0 #004C99;
+        }
+
+        .game-item:active .line-dobble {
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 2px 0px #004C99, 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
         #bg-video {
@@ -130,8 +158,8 @@
             /* 確保點擊操作會穿透影片，點到按鈕 */
 
             /* 視覺優化：調暗背景，讓按鈕文字更清晰 */
-            filter: brightness(0.5);
-            opacity: 0.8;
+            filter: brightness(1.3) saturate(1.5) blur(5px);
+            opacity: 0.35;
         }
 
         /* 確保內容容器在影片上方，並具有一點穿透感 */
@@ -152,7 +180,7 @@
 
     <header>
         <h1>Party Hub</h1>
-        <div style="font-size: 0.6rem; color: #555; letter-spacing: 2px; margin-top: 5px;">SELECT YOUR GAME</div>
+        <div class="sub-title">SELECT YOUR GAME</div>
     </header>
 
     <div class="game-grid">
@@ -195,7 +223,8 @@
         <!-- 未來增加遊戲只要在這裡直接貼上新的 <a> 標籤即可 -->
     </div>
 
-    <footer style="position: fixed; bottom: 20px; color: #222; font-size: 0.5rem;">
+    <footer
+        style="position: fixed; bottom: 20px; color: #fff; font-size: 0.6rem; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
         &copy; 2026 Party Game Collection
     </footer>
 

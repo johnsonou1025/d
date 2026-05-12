@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TiltGuess - Professional Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@400;900&display=swap"
-        rel="stylesheet">
     <style>
         :root {
-            --neon-green: #3DFF8B;
-            --neon-purple: #BF00FF;
-            --bg-dark: #0D0D0D;
-            --primary-purple: #7B61FF;
-            --glass: rgba(255, 255, 255, 0.08);
+            --candy-bg-1: #FFD1FF;
+            --candy-bg-2: #80D4FF;
+            --primary-candy: #FF3399;
+            --primary-candy-dark: #CC0066;
+            --correct-bg: #00CC66;
+            --pass-bg: #FF3366;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-dark);
+            background-color: var(--candy-bg-2);
+            background: radial-gradient(circle at center, var(--candy-bg-1) 0%, var(--candy-bg-2) 100%);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -33,11 +33,13 @@
         }
 
         #question-display {
-            font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 15vw;
             text-align: center;
             width: 90%;
-            text-shadow: 0 0 20px rgba(123, 97, 255, 0.5);
+            color: #FFFFFF;
+            font-weight: 900;
+            letter-spacing: 2px;
+            -webkit-text-stroke: 4px #FF9900;
             z-index: 5;
         }
 
@@ -47,12 +49,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0d0d0d 100%);
+            background: radial-gradient(circle at center, rgba(255, 209, 255, 0.85) 0%, rgba(128, 212, 255, 0.85) 100%);
+            backdrop-filter: blur(10px);
             z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background: #FF3399;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 0 #CC0066, 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 200;
+        }
+
+        .home-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #CC0066, 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .setting-section {
@@ -62,11 +90,17 @@
         }
 
         .label {
-            color: #666;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: white;
+            background: #FF9900;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 0 #CC6600, 0 8px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
             margin-bottom: 10px;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .btn-grid {
@@ -76,41 +110,52 @@
         }
 
         .opt-btn {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            background: #FFFFFF;
+            border: 3px solid #eee;
+            border-radius: 15px;
             padding: 12px 5px;
-            color: #888;
-            font-family: 'Inter', sans-serif;
+            color: #666;
             font-size: 0.9rem;
             font-weight: 900;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 4px 0 #ccc;
         }
 
         .cat-style {
-            font-family: 'ZCOOL KuaiLe';
             font-size: 1.1rem;
         }
 
+        .opt-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #ccc;
+        }
+
         .opt-btn.active {
-            background: var(--primary-purple);
+            background: var(--primary-candy);
             color: white;
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px var(--primary-purple);
+            border-color: #fff;
+            box-shadow: 0 4px 0 var(--primary-candy-dark);
         }
 
         .start-action-btn {
             margin-top: 20px;
-            background: var(--neon-green);
-            color: black;
-            border: none;
+            background: linear-gradient(to bottom, #66FFB2, #00CC66);
+            color: white;
+            border: 4px solid #fff;
             padding: 15px 50px;
             border-radius: 40px;
             font-size: 1.5rem;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 0 20px var(--neon-green);
+            box-shadow: inset 0px 6px 10px rgba(255, 255, 255, 0.6), 0 8px 0px #00994C, 0 10px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-shadow: 0 3px 0 #00994C;
+        }
+
+        .start-action-btn:active {
+            transform: translateY(6px);
+            box-shadow: inset 0px 6px 10px rgba(255, 255, 255, 0.6), 0 2px 0px #00994C, 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .info-bar {
@@ -120,38 +165,43 @@
             display: flex;
             justify-content: space-between;
             font-weight: 900;
-            font-size: 0.9rem;
-            opacity: 0.6;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            z-index: 10;
         }
 
         .correct-bg {
-            background-color: var(--neon-green) !important;
-            color: black !important;
+            background: var(--correct-bg) !important;
         }
 
         .pass-bg {
-            background-color: var(--neon-purple) !important;
-            color: white !important;
+            background: var(--pass-bg) !important;
         }
 
-        .test-controls {
+        .back-btn {
             position: absolute;
-            bottom: 15px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
+            text-decoration: none;
+            background: #FF3399;
+            width: 55px;
+            height: 55px;
             display: flex;
-            gap: 15px;
-            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 0 #CC0066, 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 10;
         }
 
-        .test-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            color: #444;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 0.7rem;
-            cursor: pointer;
+        .back-btn:active {
+            transform: translate(-50%, 4px);
+            box-shadow: 0 0px 0 #CC0066, 0 2px 5px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -160,12 +210,12 @@
 
     <div id="overlay">
         <!-- Home 按鈕 -->
-        <a href="index.html"
-            style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-size: 1.5rem; background: var(--glass); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); color: white;"><svg
-                xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+        <a href="index.html" class="home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                viewBox="0 0 24 24">
                 <path fill="currentColor" d="M6 19h3v-6h6v6h3v-9l-6-4.5L6 10zM4 21V9l8-6l8 6v12h-7v-6h-2v6z"></path>
             </svg></a>
-        <h1 style="font-family: 'ZCOOL KuaiLe'; font-size: 3rem; margin: 0 0 30px 0; color: var(--primary-purple);">
+        <h1
+            style="font-size: 3.5rem; margin: 0 0 30px 0; color: white; -webkit-text-stroke: 2px var(--primary-candy); text-shadow: 0 5px 0 var(--primary-candy-dark);">
             TiltGuess</h1>
 
         <div class="setting-section">
@@ -183,16 +233,18 @@
 
     <div class="info-bar">
         <div id="timer-ui">TIME: 0</div>
-        <div id="category-ui" style="color: var(--primary-purple);">TOPIC</div>
+        <div id="category-ui" style="color: #FFD633; -webkit-text-stroke: 1px #FF9900;">TOPIC</div>
         <div id="score-ui">SCORE: 0</div>
     </div>
 
     <div id="question-display">READY?</div>
 
-    <div class="test-controls">
-        <button class="test-btn" onclick="action('correct')">TEST: CORRECT (向前傾)</button>
-        <button class="test-btn" onclick="action('pass')">TEST: PASS (向後仰)</button>
-    </div>
+    <!-- 遊戲中斷返回大廳按鈕 -->
+    <a href="#" class="back-btn" onclick="quitGame(); return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z"></path>
+        </svg>
+    </a>
 
     <script>
         const ALL_TOPICS = {
@@ -214,6 +266,8 @@
         let isGaming = false;
         let canProcess = true;
         let timerInterval = null;
+        let cdTimer = null;
+        let startTimeout = null;
 
         const qDisplay = document.getElementById('question-display');
         const scoreUI = document.getElementById('score-ui');
@@ -292,9 +346,9 @@
             let count = 3;
             qDisplay.innerText = count;
             qDisplay.style.fontSize = "30vw";
-            qDisplay.style.color = "var(--neon-green)";
+            qDisplay.style.color = "#FFD633";
 
-            const cdTimer = setInterval(() => {
+            cdTimer = setInterval(() => {
                 count--;
                 if (count > 0) {
                     qDisplay.innerText = count;
@@ -305,7 +359,7 @@
                     qDisplay.innerText = "START!";
                     qDisplay.style.fontSize = "15vw";
                     qDisplay.style.color = "white";
-                    setTimeout(() => { startGame(); }, 500);
+                    startTimeout = setTimeout(() => { startGame(); }, 500);
                 }
             }, 1000);
         }
@@ -373,12 +427,21 @@
             }, 1000);
         }
 
+        function quitGame() {
+            isGaming = false;
+            if (timerInterval) clearInterval(timerInterval);
+            if (cdTimer) clearInterval(cdTimer);
+            if (startTimeout) clearTimeout(startTimeout);
+            resetGameToHome();
+        }
+
         function endGame() {
             isGaming = false;
             clearInterval(timerInterval);
+            qDisplay.style.webkitTextStroke = "0px"; // 結算畫面把容器外框歸零，避免小字糊掉
             qDisplay.style.fontSize = "10vw";
             qDisplay.innerHTML = `
-                <div style="margin-bottom: 20px;">一共答對了 <span style="color:var(--neon-green); font-size: 15vw;">${score}</span> 題！</div>
+                <div style="margin-bottom: 20px;">一共答對了 <span style="color:#FFD633; font-size: 15vw; -webkit-text-stroke: 4px #FF9900;">${score}</span> 題！</div>
                 <button class="start-action-btn" id="retry-btn" style="font-size: 1.5rem; padding: 10px 40px;">再玩一次</button>
             `;
             document.getElementById('retry-btn').onclick = function () {
@@ -390,6 +453,7 @@
             qDisplay.style.fontSize = "15vw";
             qDisplay.innerText = "READY?";
             qDisplay.style.color = "white";
+            qDisplay.style.webkitTextStroke = ""; // 清除 JS 寫入的 0px，回歸 CSS 預設的 4px
             score = 0;
             timeLeft = selectedTime;
             scoreUI.innerText = `SCORE: 0`;
