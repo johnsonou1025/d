@@ -20,6 +20,12 @@
             --neon-green: #00CC66;
         }
 
+        /* 深色版型變數 */
+        body.dark-theme {
+            --candy-bg-1: #2E1A47;
+            --candy-bg-2: #0D0518;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -270,6 +276,10 @@
             transition: opacity 0.2s;
         }
 
+        body.dark-theme .answer-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
         .answer-overlay.active {
             opacity: 1;
             pointer-events: auto;
@@ -408,6 +418,10 @@
             justify-content: center;
         }
 
+        body.dark-theme #overlay {
+            background: radial-gradient(circle at center, rgba(46, 26, 71, 0.95) 0%, rgba(13, 5, 24, 0.95) 100%);
+        }
+
         .setting-section {
             width: 80%;
             max-width: 500px;
@@ -483,6 +497,11 @@
 </head>
 
 <body>
+    <script>
+        if (localStorage.getItem('party-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
 
     <div id="overlay">
         <a href="index.html" class="home-btn" style="top: 20px; left: 20px; transform: none;">

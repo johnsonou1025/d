@@ -11,6 +11,12 @@
             --candy-bg-2: #80D4FF;
         }
 
+        /* 深色版型變數 */
+        body.dark-theme {
+            --candy-bg-1: #2E1A47;
+            --candy-bg-2: #0D0518;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -162,11 +168,54 @@
             opacity: 0.35;
         }
 
+        /* 深色模式下的背景影片調暗 */
+        body.dark-theme #bg-video {
+            filter: brightness(0.5) saturate(1.2) blur(5px);
+            opacity: 0.4;
+        }
+
         /* 確保內容容器在影片上方，並具有一點穿透感 */
         header,
         .game-grid {
             position: relative;
             z-index: 1;
+        }
+
+        /* 亮色/深色切換按鈕 */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 3px solid #ddd;
+            color: #555;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #ccc, 0 8px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s, box-shadow 0.1s, background 0.3s;
+            z-index: 100;
+        }
+
+        .theme-toggle-btn:active {
+            transform: translate(-50%, 4px);
+            box-shadow: 0 0 0 #ccc, 0 4px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-theme .theme-toggle-btn {
+            background: #333;
+            border-color: #555;
+            color: #ddd;
+            box-shadow: 0 4px 0 #111, 0 8px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-theme .theme-toggle-btn:active {
+            transform: translate(-50%, 4px);
+            box-shadow: 0 0 0 #111, 0 4px 5px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -223,11 +272,33 @@
         <!-- 未來增加遊戲只要在這裡直接貼上新的 <a> 標籤即可 -->
     </div>
 
+    <!-- 主題切換按鈕 -->
+    <button class="theme-toggle-btn" id="theme-toggle-btn">🌙 深色模式</button>
+
     <footer
-        style="position: fixed; bottom: 20px; color: #fff; font-size: 0.6rem; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+        style="position: fixed; bottom: 15px; color: #fff; font-size: 0.6rem; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 1;">
         &copy; 2026 Party Game Collection
     </footer>
 
+    <script>
+        const themeBtn = document.getElementById('theme-toggle-btn');
+
+        if (localStorage.getItem('party-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeBtn.innerText = '🌞 亮色模式';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                themeBtn.innerText = '🌞 亮色模式';
+                localStorage.setItem('party-theme', 'dark');
+            } else {
+                themeBtn.innerText = '🌙 深色模式';
+                localStorage.setItem('party-theme', 'light');
+            }
+        });
+    </script>
 </body>
 
 </html>

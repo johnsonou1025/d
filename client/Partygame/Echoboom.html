@@ -15,6 +15,12 @@
             --secondary-candy-dark: #007399;
         }
 
+        /* 深色版型變數 */
+        body.dark-theme {
+            --candy-bg-1: #2E1A47;
+            --candy-bg-2: #0D0518;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -265,6 +271,10 @@
             box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        body.dark-theme .drawer {
+            background: rgba(46, 26, 71, 0.9);
+        }
+
         .drawer.active {
             bottom: 0;
         }
@@ -375,6 +385,11 @@
 </head>
 
 <body>
+    <script>
+        if (localStorage.getItem('party-theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
     <div id="boom-overlay" class="boom-overlay"></div>
     <div id="bomb-visual">
         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -402,7 +417,7 @@
 
     <div class="footer">
         <button class="btn-3d side-btn" id="open-type">鍵盤</button>
-        <button class="btn-3d main-talk-btn" id="talk-btn">按住<br>說話</button>
+        <button class="btn-3d main-talk-btn" id="talk-btn">點擊<br>說話</button>
         <button class="btn-3d side-btn" id="reset-btn">開</button>
     </div>
 
@@ -445,8 +460,9 @@
             rangeDisplay.innerText = `${min} ~ ${max}`;
             statusMsg.innerText = "READY";
             statusMsg.style.color = "white";
-            talkBtn.innerText = "HOLD\nTALK";
+            talkBtn.innerHTML = "點擊<br>說話";
             talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
+            isListening = false;
 
             speak("遊戲開始");
         }
@@ -455,61 +471,76 @@
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         if (recognition) {
             recognition.lang = 'zh-TW';
-            recognition.onresult = (e) => {
-                const match = e.results[0][0].transcript.match(/\d+/);
-                if (match) handleGuess(parseInt(match[0]));
-            };
         }
 
+        let isListening = false;
         let listenTimer = null; // 監控 LISTENING 階段
         let judgeTimer = null;  // 監控 JUDGING 階段
 
-        const startTalk = (e) => {
+        const toggleTalk = (e) => {
             if (isGameOver) return;
-            e.preventDefault();
+            if (e) e.preventDefault();
+
+            if (isListening) {
+                stopTalk();
+            } else {
+                startTalk();
+            }
+        };
+
+        const startTalk = () => {
+            if (isGameOver) return;
             if (navigator.vibrate) navigator.vibrate(40);
 
+            isListening = true;
             statusMsg.innerText = "LISTENING...";
             statusMsg.style.color = "white";
+            talkBtn.innerHTML = "停止<br>收音";
+            talkBtn.style.background = "#FF3366";
 
-            // 5秒沒說話自動關閉
             if (listenTimer) clearTimeout(listenTimer);
+            if (judgeTimer) clearTimeout(judgeTimer);
+
+            // 10秒沒說話自動關閉
             listenTimer = setTimeout(() => {
-                if (statusMsg.innerText === "LISTENING...") {
-                    recognition.stop();
-                    resetStatus();
-                }
-            }, 5000);
+                if (isListening) stopTalk();
+            }, 10000);
 
             try {
                 recognition.start();
             } catch (err) { console.log("Recognition already running"); }
         };
 
-        const stopTalk = (e) => {
-            if (isGameOver) return;
-            e.preventDefault();
+        const stopTalk = () => {
+            if (isGameOver || !isListening) return;
+
+            isListening = false;
+            statusMsg.innerText = "JUDGING...";
+            talkBtn.innerHTML = "點擊<br>說話";
+            talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
 
             if (listenTimer) clearTimeout(listenTimer);
-
-            // 進入判斷階段
-            statusMsg.innerText = "JUDGING...";
-
-            // --- 關鍵修正：如果 JUDGING 卡住超過 2 秒，強制重置 ---
             if (judgeTimer) clearTimeout(judgeTimer);
+
             judgeTimer = setTimeout(() => {
                 if (statusMsg.innerText === "JUDGING...") {
-                    console.log("判斷超時，強制重置");
                     resetStatus();
                 }
             }, 2000);
 
-            setTimeout(() => { recognition.stop(); }, 400);
+            try {
+                recognition.stop();
+            } catch (err) { }
         };
 
         // 辨識成功
         recognition.onresult = (e) => {
             if (judgeTimer) clearTimeout(judgeTimer); // 成功拿到結果，清除計時器
+
+            isListening = false;
+            talkBtn.innerHTML = "點擊<br>說話";
+            talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
+
             const match = e.results[0][0].transcript.match(/\d+/);
             if (match) {
                 handleGuess(parseInt(match[0]));
@@ -523,10 +554,27 @@
         // 辨識出錯（例如沒聲音）
         recognition.onerror = (e) => {
             if (judgeTimer) clearTimeout(judgeTimer);
+
+            isListening = false;
+            talkBtn.innerHTML = "點擊<br>說話";
+            talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
+
             console.log("辨識錯誤:", e.error);
             if (e.error === 'no-speech') {
                 statusMsg.innerText = "NO SOUND";
                 setTimeout(resetStatus, 1000);
+            } else {
+                resetStatus();
+            }
+        };
+
+        // 防呆：如果語音辨識自動結束
+        recognition.onend = () => {
+            if (isListening) {
+                isListening = false;
+                talkBtn.innerHTML = "點擊<br>說話";
+                talkBtn.style.background = "linear-gradient(to bottom, #FF6699, var(--primary-candy))";
+                resetStatus();
             }
         };
 
@@ -539,10 +587,8 @@
             if (listenTimer) clearTimeout(listenTimer);
         }
 
-        talkBtn.addEventListener('mousedown', startTalk);
-        talkBtn.addEventListener('mouseup', stopTalk);
-        talkBtn.addEventListener('touchstart', startTalk);
-        talkBtn.addEventListener('touchend', stopTalk);
+        // 綁定點擊切換事件
+        talkBtn.addEventListener('click', toggleTalk);
 
         // --- 介面控制 ---
         document.getElementById('open-type').onclick = () => { if (!isGameOver) { drawer.classList.add('active'); numInput.focus(); } };
