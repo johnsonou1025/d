@@ -150,6 +150,16 @@
             box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 2px 0px #004C99, 0 5px 5px rgba(0, 0, 0, 0.3);
         }
 
+        .line-chat {
+            background: linear-gradient(to bottom, #FFD633, #FF9900);
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 8px 0px #CC6600, 0 15px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 0 #CC6600;
+        }
+
+        .game-item:active .line-chat {
+            box-shadow: inset 0px 8px 15px rgba(255, 255, 255, 0.6), 0 2px 0px #CC6600, 0 5px 5px rgba(0, 0, 0, 0.3);
+        }
+
         #bg-video {
             position: fixed;
             top: 0;
@@ -267,6 +277,18 @@
                 </svg>
             </div>
             <div class="game-label">Reaction King</div>
+        </a>
+
+        <!-- 遊戲 4: Chat Room -->
+        <a href="Chatroom.html" class="game-item">
+            <div class="icon-box line-chat">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z">
+                    </path>
+                </svg>
+            </div>
+            <div class="game-label">Chat Room</div>
         </a>
 
         <!-- 未來增加遊戲只要在這裡直接貼上新的 <a> 標籤即可 -->

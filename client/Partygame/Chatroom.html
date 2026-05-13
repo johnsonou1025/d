@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>明星聊天室 - Casual Game Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 色彩方案 */
+            --green: #78B71B;
+            --green-dark: #5A8F12;
+            --orange: #F4A42D;
+            --orange-dark: #C67A15;
+            --blue-light: #80D8FF;
+            --blue-sky: #00AEEF;
+            --dark-brown: #4E342E;
+            --star-bubble: #FFF8E1;
+            --user-bubble: #A2D027;
+            --bg-content: #F5F5E9;
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 模擬手機外框 */
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            max-height: 850px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ==============================
+           1. Header (頁首)
+           ============================== */
+        .chat-header {
+            background: linear-gradient(to bottom, var(--blue-light), var(--blue-sky));
+            padding: 20px 15px 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .btn-back {
+            position: absolute;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--green);
+            border: 2px solid var(--dark-brown);
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            /* 高光層與厚度感 */
+            box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.4), 0 4px 0 var(--green-dark), 0 5px 0 var(--dark-brown);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-back:active {
+            transform: translateY(4px);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 0 0 var(--green-dark), 0 1px 0 var(--dark-brown);
+        }
+
+        .ribbon {
+            background: var(--green);
+            padding: 8px 24px;
+            border: 2px solid var(--dark-brown);
+            border-radius: 12px;
+            box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.3), 0 4px 0 var(--green-dark), 0 5px 0 var(--dark-brown);
+        }
+
+        .chat-title {
+            color: #FFE000;
+            font-size: 22px;
+            letter-spacing: 1px;
+            -webkit-text-stroke: 1.5px var(--dark-brown);
+            text-shadow: 0 3px 0 var(--dark-brown);
+        }
+
+        /* ==============================
+           2. Menu (明星列表)
+           ============================== */
+        .star-menu {
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            padding: 15px;
+            background: white;
+            gap: 15px;
+            border-bottom: 2px solid var(--dark-brown);
+        }
+
+        .star-menu::-webkit-scrollbar {
+            display: none;
+            /* 隱藏捲軸 */
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: 0 4px 0 var(--gold-dark), 0 5px 0 var(--dark-brown);
+            object-fit: cover;
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            width: 16px;
+            height: 16px;
+            background: #00FF00;
+            border: 2px solid var(--dark-brown);
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00FF00, inset 0 2px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-add {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            background: var(--orange);
+            border: 2px solid var(--dark-brown);
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.4), 0 4px 0 var(--orange-dark), 0 5px 0 var(--dark-brown);
+            text-shadow: 0 2px 0 var(--dark-brown);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-add:active {
+            transform: translateY(4px);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 0 0 var(--orange-dark), 0 1px 0 var(--dark-brown);
+        }
+
+        /* ==============================
+           2. Content (聊天紀錄區)
+           ============================== */
+        .chat-content {
+            flex: 1;
+            background: var(--bg-content);
+            padding: 20px 15px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: inset 0 6px 15px rgba(0, 0, 0, 0.1);
+            /* 下陷視覺感 */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 100%;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .avatar-mini {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--dark-brown);
+            box-shadow: 0 2px 0 var(--dark-brown);
+        }
+
+        .bubble-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 75%;
+        }
+
+        .user-message .bubble-wrapper {
+            align-items: flex-end;
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.4;
+            border: 2px solid var(--dark-brown);
+            position: relative;
+            /* 確保長字串或網址在不同載具上不會撐破對話框 */
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .star-bubble {
+            background: var(--star-bubble);
+            color: var(--dark-brown);
+            border-radius: 16px 16px 16px 0;
+            box-shadow: 0 3px 0 var(--dark-brown), inset 0 4px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .user-bubble {
+            background: var(--user-bubble);
+            color: var(--dark-brown);
+            border-radius: 16px 16px 0 16px;
+            box-shadow: 0 3px 0 var(--dark-brown), inset 0 6px 0 rgba(255, 255, 255, 0.4);
+            /* 高光層 */
+        }
+
+        .timestamp {
+            margin-top: 6px;
+            font-size: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 2px 8px;
+            border-radius: 8px;
+            width: fit-content;
+        }
+
+        /* ==============================
+           2. Foot (輸入區域)
+           ============================== */
+        .chat-footer {
+            background: rgba(240, 240, 240, 0.95);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            border-top: 2px solid var(--dark-brown);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #D9D9D9;
+            border: 2px solid var(--dark-brown);
+            border-radius: 20px;
+            padding: 0 15px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            outline: none;
+            /* 仿遊戲數值條內凹設計 */
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .chat-input::placeholder {
+            color: #888;
+        }
+
+        .btn-send {
+            background: var(--green);
+            border: 2px solid var(--dark-brown);
+            border-radius: 12px;
+            padding: 0 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            /* Action Button 厚度與高光 */
+            box-shadow: inset 0 6px 0 rgba(255, 255, 255, 0.3), 0 4px 0 var(--green-dark), 0 5px 0 var(--dark-brown);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-send:active {
+            transform: translateY(4px);
+            box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.3), 0 0 0 var(--green-dark), 0 1px 0 var(--dark-brown);
+        }
+
+        /* ==============================
+           4. Character Selection Overlay
+           ============================== */
+        .char-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .char-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .char-modal {
+            width: 85%;
+            max-height: 70%;
+            background: var(--bg-content);
+            border: 4px solid var(--dark-brown);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.2s;
+        }
+
+        .char-overlay.active .char-modal {
+            transform: translateY(0);
+        }
+
+        .char-modal-header {
+            background: var(--orange);
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: 900;
+            text-align: center;
+            border-bottom: 4px solid var(--dark-brown);
+            border-radius: 20px 20px 0 0;
+            -webkit-text-stroke: 1px var(--dark-brown);
+            text-shadow: 0 2px 0 var(--dark-brown);
+            position: relative;
+        }
+
+        .btn-close-modal {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #FF3366;
+            border: 2px solid var(--dark-brown);
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 2px 0 var(--dark-brown);
+        }
+
+        .btn-close-modal:active {
+            transform: translateY(calc(-50% + 2px));
+            box-shadow: 0 0px 0 var(--dark-brown);
+        }
+
+        .char-list {
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .char-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 10px 15px;
+            border: 2px solid var(--dark-brown);
+            border-radius: 16px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-toggle-char {
+            margin-left: auto;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            border: 2px solid var(--dark-brown);
+            box-shadow: 0 3px 0 var(--dark-brown);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-toggle-char.add {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-toggle-char.remove {
+            background: #FF3366;
+            color: white;
+        }
+
+        .btn-toggle-char:active {
+            transform: translateY(3px);
+            box-shadow: 0 0px 0 var(--dark-brown);
+        }
+
+        .char-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--dark-brown);
+            background: var(--gold);
+        }
+
+        .char-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .char-item-name {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--dark-brown);
+        }
+
+        .char-item-desc {
+            font-size: 12px;
+            font-weight: 700;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- 頁首區塊 -->
+        <header class="chat-header">
+            <div class="header-top">
+                <button id="btn-back" class="btn-back" onclick="window.location.href='index.html'">◄</button>
+                <div class="ribbon">
+                    <h1 class="chat-title">Chat Room</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- 明星列表 -->
+        <nav class="star-menu">
+            <div id="active-stars" style="display: flex; gap: 15px;">
+                <!-- 動態注入的頭像會在這裡 -->
+            </div>
+            <!-- 新增按鈕 -->
+            <button id="btn-add" class="btn-add">+</button>
+        </nav>
+
+        <!-- 聊天內容區 -->
+        <main id="chat-content" class="chat-content">
+            <!-- 初始訊息將由 JS 動態載入 -->
+        </main>
+
+        <!-- 底部輸入區 -->
+        <footer class="chat-footer">
+            <input type="text" id="chat-input" class="chat-input" placeholder="與明星聊天中...">
+            <button id="btn-send" class="btn-send">傳送</button>
+        </footer>
+
+        <!-- 角色選擇疊層 -->
+        <div id="char-overlay" class="char-overlay">
+            <div class="char-modal">
+                <div class="char-modal-header">
+                    選擇新明星
+                    <button id="btn-close-char" class="btn-close-modal">X</button>
+                </div>
+                <div id="char-list" class="char-list">
+                    <!-- 動態注入的角色清單會在這裡 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnSend = document.getElementById('btn-send');
+            const chatInput = document.getElementById('chat-input');
+            const chatContent = document.getElementById('chat-content');
+            const btnAdd = document.getElementById('btn-add');
+            const charOverlay = document.getElementById('char-overlay');
+            const btnCloseChar = document.getElementById('btn-close-char');
+            const activeStarsContainer = document.getElementById('active-stars');
+            const charListContainer = document.getElementById('char-list');
+
+            // 顯示/隱藏角色選擇頁邏輯
+            btnAdd.addEventListener('click', () => {
+                renderCharList(); // 每次打開前重新渲染以更新按鈕狀態
+                charOverlay.classList.add('active');
+            });
+
+            btnCloseChar.addEventListener('click', () => {
+                charOverlay.classList.remove('active');
+            });
+
+            // 點擊背景灰色區域也可關閉
+            charOverlay.addEventListener('click', (e) => {
+                if (e.target === charOverlay) {
+                    charOverlay.classList.remove('active');
+                }
+            });
+
+            // --- Gemini API 設置 ---
+            let apiKey = localStorage.getItem('gemini_api_key');
+            if (!apiKey) {
+                apiKey = prompt("請輸入您的 Gemini API Key 來啟用明星聊天室：\n(僅儲存於本地端)");
+                if (apiKey) localStorage.setItem('gemini_api_key', apiKey);
+            }
+
+            // 虛擬角色設定
+            const allCharacters = [
+                {
+                    id: 'xiaos',
+                    name: '小S',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=XiaoS',
+                    desc: '國際巨星，毒舌天后',
+                    instruction: `你現在是「小S」。請嚴格遵守以下對話原則：
+1. 你是國際巨星，充滿自信且說話帶刺但幽默。
+2. 說話要直接、率性，不要怕得罪人。
+3. 嚴禁長篇大論！每一則回覆必須在 1~5 句內收尾。
+4. 禁用 AI 語氣，不准說「我能為你做什麼」。
+5. 回覆中可以適度加入「（翻白眼）」或「（撥頭髮）」等動作描述。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'kevin',
+                    name: '蔡康永',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Kevin',
+                    desc: '說話之道，溫柔一刀',
+                    instruction: `你現在是「蔡康永」。請嚴格遵守以下對話原則：
+1. 你是一個溫文儒雅的讀書人，說話有深度且帶著暖意。
+2. 語氣要淡定，常用反問句或具有哲理的短句。
+3. 嚴禁長篇大論！即使很有智慧，也要在 1~5 句內收尾。
+4. 禁用 AI 語氣，不要像機器人一樣條列式回答。
+5. 對話中要展現出你對人性的細微觀察。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'william',
+                    name: '沈玉琳',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=William',
+                    desc: '荒謬大師，從外太空聊到內子宮',
+                    instruction: `你現在是「沈玉琳」。請嚴格遵守以下對話原則：
+1. 你的靈魂是「荒謬大師」，說話必須極度誇張、幽默且充滿活力。
+2. 語氣必須帶有強烈的個人風格，多使用驚嘆號。
+3. 嚴禁長篇大論！每一則回覆必須在 1~5 句內收尾，且最後一句通常是一個爆點或冷笑話。
+4. 禁用 AI 語氣，不准說「我能為你做什麼」或「作為一個 AI」。
+5. 如果使用者問你專業問題，請用最荒謬、不著邊際但聽起來很有道理的歪理來回答。
+6. 常用口頭禪：哎呀、真的假的、我不騙你、Amazing！
+7. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'jacky',
+                    name: '吳宗憲',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Jacky',
+                    desc: '本土天王，見鬼啦！',
+                    instruction: `你現在是「吳宗憲」。請嚴格遵守以下對話原則：
+1. 你是本土天王，說話風趣幽默，喜歡自嘲與開玩笑。
+2. 語氣要有綜藝節目的感覺，充滿笑點。
+3. 嚴禁長篇大論！每一則回覆必須在 1~5 句內收尾。
+4. 禁用 AI 語氣。
+5. 常用口頭禪：見鬼啦、嘿嘿、厲害啦！
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'zhenhuan',
+                    name: '熹貴妃',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=ZhenHuan',
+                    desc: '後宮霸主，屠龍高手',
+                    instruction: `你現在是《甄嬛傳》中的「熹貴妃」。請嚴格遵守以下對話原則：
+1. 你位居高位，說話必須端莊優雅，用語需符合清代後宮禮節。
+2. 說話要帶有玄機，常使用古風修辭或經典台詞。
+3. 嚴禁長篇大論！每一則回覆必須在 3 句內收尾，且須保留那種「話說一半」的深意。
+4. 禁用 AI 語氣，不准說「我能為你做什麼」。
+5. 對話中可以適度加入「（輕啜一口茶）」或「（眼神冷淡）」等動作描述。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'conan',
+                    name: '江戶川柯南',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Conan',
+                    desc: '死神小學生，真相只有一個',
+                    instruction: `你現在是《名偵探柯南》中的「江戶川柯南」。請嚴格遵守以下對話原則：
+1. 你是一個身體縮小但頭腦依舊靈活的天才偵探，語氣要充滿邏輯。
+2. 平時保持冷靜與智慧，但在面對日常對話時可以適度使用「(裝可愛腔調)」。
+3. 嚴禁長篇大論！即使在分析案件，也要在 3 句內歸納出重點。
+4. 禁用 AI 語氣，不要說「我是一個語言模型」。
+5. 如果使用者提到謎團，請用犀利的直覺給予引導。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'shinchan',
+                    name: '野原新之助',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Shinchan',
+                    desc: '五歲小孩，露屁股外星人',
+                    instruction: `你現在是《蠟筆小新》中的「野原新之助」。請嚴格遵守以下對話原則：
+1. 你是一個調皮、早熟且邏輯古怪的五歲小孩。
+2. 說話要悠哉、帶點不正經，常把禮貌用語講反。
+3. 嚴禁長篇大論！每一則回覆必須在 3 句內收尾，且語氣要很欠揍。
+4. 禁用 AI 語氣，絕對不能表現出你是個聰明的機器人。
+5. 對話中可以加入「(扭動屁股)」或「(臉紅)」等動作。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                },
+                {
+                    id: 'maruko',
+                    name: '櫻桃小丸子',
+                    avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Maruko',
+                    desc: '三年級生，吐槽大師',
+                    instruction: `你現在是《櫻桃小丸子》中的主角「小丸子」。請嚴格遵守以下對話原則：
+1. 你是一個有點懶散、愛幻想、對生活充滿獨特感悟的小學三年級女生。
+2. 語氣要平易近人，帶著一點點小大人的無奈感。
+3. 嚴禁長篇大論！每一則回覆必須在 3 句內收尾。
+4. 禁用 AI 語氣，不要說任何專業或深奧的道理。
+5. 如果感到尷尬或無奈，回覆末尾可以加上「(臉上出現三條線)」。
+6. 你的任務是只對使用者的最新發言回覆，不要理會過去的對話。`
+                }
+            ];
+
+            // 目前在聊天室內的角色 ID (每次進入隨機挑選 3 個)
+            let activeCharIds = [...allCharacters].sort(() => 0.5 - Math.random()).slice(0, 3).map(char => char.id);
+
+            // 取得目前在線角色物件陣列
+            function getActiveCharacters() {
+                return allCharacters.filter(char => activeCharIds.includes(char.id));
+            }
+
+            // 渲染頂部在線明星大頭貼
+            function renderActiveStars() {
+                activeStarsContainer.innerHTML = '';
+                const activeChars = getActiveCharacters();
+                activeChars.forEach(char => {
+                    const div = document.createElement('div');
+                    div.className = 'avatar-wrapper';
+                    div.innerHTML = `
+                        <img src="${char.avatar}" alt="${char.name}" class="avatar-img">
+                        <span class="online-dot"></span>
+                    `;
+                    activeStarsContainer.appendChild(div);
+                });
+            }
+
+            // 渲染角色選擇列表
+            function renderCharList() {
+                charListContainer.innerHTML = '';
+                allCharacters.forEach(char => {
+                    const isAdded = activeCharIds.includes(char.id);
+                    const div = document.createElement('div');
+                    div.className = 'char-item';
+                    div.innerHTML = `
+                        <img src="${char.avatar}" alt="${char.name}">
+                        <div class="char-item-info">
+                            <span class="char-item-name">${char.name}</span>
+                            <span class="char-item-desc">${char.desc}</span>
+                        </div>
+                        <button class="btn-toggle-char ${isAdded ? 'remove' : 'add'}">${isAdded ? '移除' : '新增'}</button>
+                    `;
+                    const btn = div.querySelector('.btn-toggle-char');
+                    btn.addEventListener('click', () => {
+                        toggleCharacter(char.id);
+                    });
+                    charListContainer.appendChild(div);
+                });
+            }
+
+            // 新增/移除角色邏輯
+            function toggleCharacter(charId) {
+                if (activeCharIds.includes(charId)) {
+                    // 移除，但至少保留一人
+                    if (activeCharIds.length > 1) {
+                        activeCharIds = activeCharIds.filter(id => id !== charId);
+                    } else {
+                        alert("至少需要一位明星在聊天室裡喔！");
+                        return;
+                    }
+                } else {
+                    // 新增
+                    activeCharIds.push(charId);
+                }
+                renderActiveStars();
+                renderCharList(); // 更新按鈕狀態
+            }
+
+            // 顯示初始歡迎訊息
+            function showInitialGreetings() {
+                chatContent.innerHTML = ''; // 清空任何預設的 HTML 訊息
+                const activeChars = getActiveCharacters();
+                activeChars.forEach(char => {
+                    appendMessage(`嗨，我是${char.name}！`, false, char.avatar);
+                });
+            }
+
+            // 初始渲染
+            renderActiveStars();
+            showInitialGreetings();
+
+            // 取得目前時間 (格式: hh:mm AM/PM)
+            function getCurrentTime() {
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // 0點轉為12
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                return hours + ':' + minutes + ' ' + ampm;
+            }
+
+            // 新增訊息到畫面
+            function appendMessage(text, isUser, avatarUrl = '') {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `message ${isUser ? 'user-message' : 'star-message'}`;
+
+                let avatarHtml = isUser ? '' : `<img src="${avatarUrl}" alt="Star Mini" class="avatar-mini">`;
+
+                msgDiv.innerHTML = `
+                    ${avatarHtml}
+                    <div class="bubble-wrapper">
+                        <div class="bubble ${isUser ? 'user-bubble' : 'star-bubble'}"></div>
+                        <div class="timestamp">${getCurrentTime()}</div>
+                    </div>
+                `;
+
+                // 使用 textContent 插入文字，避免 XSS 攻擊
+                msgDiv.querySelector('.bubble').textContent = text;
+
+                // 加入聊天內容區塊並清空輸入框
+                chatContent.appendChild(msgDiv);
+                // 自動捲動到最底部
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }
+
+            // 顯示輸入中狀態
+            function showTyping(charName, avatarUrl) {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message star-message';
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <img src="${avatarUrl}" alt="${charName}" class="avatar-mini">
+                    <div class="bubble-wrapper">
+                        <div class="bubble star-bubble">${charName} 正在輸入中...</div>
+                    </div>
+                `;
+                chatContent.appendChild(typingDiv);
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }
+
+            // 移除輸入中狀態
+            function removeTyping() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
+            }
+
+            // 傳送訊息邏輯 (與 Gemini API 串接)
+            async function sendMessage() {
+                const text = chatInput.value.trim();
+                if (!text) return; // 如果沒有輸入文字則不動作
+
+                // 1. 顯示用戶訊息並清空輸入框
+                appendMessage(text, true);
+                chatInput.value = '';
+                btnSend.disabled = true; // 避免連點
+
+                if (!apiKey) {
+                    appendMessage("哎呀！你沒給我 API Key，我是要怎麼顯靈啦！真的假的！", false, allCharacters[2].avatar);
+                    btnSend.disabled = false;
+                    return;
+                }
+
+                // 決定回覆的人數 (1~3 人)
+                const activeChars = getActiveCharacters();
+                if (activeChars.length === 0) return; // 防呆
+
+                const numReplies = Math.floor(Math.random() * Math.min(3, activeChars.length)) + 1;
+
+                // 隨機打亂角色陣列，並取出 numReplies 個角色
+                const shuffledChars = [...activeChars].sort(() => 0.5 - Math.random());
+                const selectedChars = shuffledChars.slice(0, numReplies);
+
+                for (let i = 0; i < selectedChars.length; i++) {
+                    const selectedChar = selectedChars[i];
+
+                    // 2. 顯示正在輸入指示器
+                    showTyping(selectedChar.name, selectedChar.avatar);
+
+                    // 3. 呼叫 Gemini API (只傳送本次使用者的訊息，忽略先前的 star-bubble)
+                    try {
+                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                systemInstruction: {
+                                    parts: [{ text: selectedChar.instruction }]
+                                },
+                                contents: [{ role: "user", parts: [{ text: text }] }]
+                            })
+                        });
+
+                        const data = await response.json();
+                        removeTyping(); // 隱藏輸入中
+
+                        if (data.candidates && data.candidates.length > 0) {
+                            const replyText = data.candidates[0].content.parts[0].text;
+                            appendMessage(replyText, false, selectedChar.avatar);
+                        } else {
+                            console.error("API 回應錯誤:", data);
+                            appendMessage("我現在腦袋有點卡卡的，等等再聊！", false, selectedChar.avatar);
+                        }
+                    } catch (error) {
+                        console.error("連線錯誤:", error);
+                        removeTyping();
+                        appendMessage("訊號不好啦！斷線了！", false, selectedChar.avatar);
+                    }
+
+                    // 等待一下再讓下一位明星輸入，使對話更自然
+                    if (i < selectedChars.length - 1) {
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                    }
+                }
+
+                btnSend.disabled = false;
+                chatInput.focus();
+            }
+
+            // 綁定點擊傳送按鈕事件
+            btnSend.addEventListener('click', sendMessage);
+
+            // 綁定輸入框 Enter 鍵事件
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // 避免手機鍵盤等可能產生的預設換行行為
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
