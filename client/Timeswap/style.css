@@ -96,7 +96,7 @@ body {
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
 /* --- 核心數據看板 --- */
@@ -379,7 +379,7 @@ body {
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
 .role-name {
@@ -422,6 +422,32 @@ body {
     color: #3b82f6;
     transform: rotate(90deg);
     border-color: #3b82f6;
+}
+
+.theme-btn {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-muted, #94a3b8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.theme-btn:hover {
+    background: var(--bg-body, #f8fafc);
+    color: var(--primary, #3b82f6);
+    transform: scale(1.1) rotate(-15deg);
+    border-color: var(--primary, #3b82f6);
 }
 
 /* =========================================================
@@ -511,7 +537,7 @@ body {
 .tab-content.active {
     display: block;
     -webkit-animation: fadeIn 0.3s ease;
-            animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.3s ease;
 }
 
 @-webkit-keyframes fadeIn {

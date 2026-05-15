@@ -24,6 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>家長管理後台 - TimeQuest</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme-dark.css">
 </head>
 
 <body>
@@ -390,6 +391,13 @@
 
         // 初始化執行
         document.addEventListener('DOMContentLoaded', () => {
+            // 初始化主題 (自動偵測系統或讀取記憶)
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.body.classList.add('dark-mode');
+            }
+
             fetchInitialData();
             fetchAndRenderStats(); // 首次載入也抓一次統計資料
         });

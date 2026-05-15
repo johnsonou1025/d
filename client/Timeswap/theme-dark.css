@@ -1,0 +1,44 @@
+/* --- 黑夜模式 (Dark Mode) 全域變數覆寫 --- */
+body.dark-mode {
+    --bg-body: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --entry-bg-body: #0f172a;
+    --entry-bg-container: #1e293b;
+    --entry-text-main: #f8fafc;
+    --entry-card-bg: #1e293b;
+    --entry-card-border: #334155;
+    --admin-bg-body: #0f172a;
+    --border-color: #334155;
+    color: var(--text-main);
+}
+
+body.dark-mode .form-control,
+body.dark-mode .data-table th {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+body.dark-mode .admin-btn {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .admin-btn:hover {
+    background: var(--bg-body);
+}
+
+/* --- 修正深色模式下特定區域的文字與邊框顏色 --- */
+body.dark-mode .admin-header,
+body.dark-mode .tab-content {
+    color: var(--text-main);
+}
+
+body.dark-mode .task-item {
+    border-color: var(--border-color);
+}
+
+body.dark-mode .footer {
+    border-top-color: var(--border-color);
+}

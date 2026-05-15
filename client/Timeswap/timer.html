@@ -251,6 +251,13 @@
             }
         }
 
+        // 初始化主題 (自動偵測系統或讀取記憶)
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.body.classList.add('dark-mode');
+        }
+
         // 初始化執行
         fetchTimerData();
     </script>
