@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專注計時 - TimeQuest</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- 計時器專屬樣式 --- */
+        .timer-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        /* 核心計時器容器 */
+        .timer-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        /* 外環：無數小垂直線條的圓形進度條 */
+        .timer-outer-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(from 180deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b, #3b82f6);
+            /* 使用 repeating-conic-gradient 遮罩做出細緻的垂直線條感 */
+            -webkit-mask-image: repeating-conic-gradient(transparent 0deg, transparent 1deg, black 1deg, black 2.5deg);
+            mask-image: repeating-conic-gradient(transparent 0deg, transparent 1deg, black 1deg, black 2.5deg);
+            transition: opacity 0.3s;
+            opacity: 0.3;
+            /* 預設為未開始狀態，外環較暗 */
+        }
+
+        /* 內部圓心：純白帶輕微環狀陰影 */
+        .timer-inner-circle {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            /* 輕微的環狀陰影帶來層次感 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 2px 8px rgba(0, 0, 0, 0.03);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        /* 時間顯示：大型粗體 */
+        .timer-value {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--text-main, #1e293b);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        /* 控制按鈕 (深藍市立體懸浮感) */
+        .btn-control {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #2563eb, #1e3a8a);
+            border: none;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            /* 明顯的立體懸浮感陰影 */
+            box-shadow: 0 12px 24px rgba(30, 58, 138, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+        }
+
+        .btn-control:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 32px rgba(30, 58, 138, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-control:active {
+            transform: translateY(2px) scale(0.95);
+            box-shadow: 0 6px 12px rgba(30, 58, 138, 0.4);
+        }
+
+        .btn-control svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- 頂部導覽列 (共用樣式) -->
+        <header class="navbar" style="background-color: transparent; color: var(--text-main);">
+            <button class="btn-back" onclick="window.location.href='index.html'" style="color: var(--text-main);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="m12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2H7.825l5.6 5.6z" />
+                </svg>
+            </button>
+            <div class="member-name" style="font-weight: 600;">Focus Period</div>
+            <div style="width: 42px;"></div> <!-- 佔位，讓標題置中 -->
+        </header>
+
+        <main class="timer-main">
+            <!-- 核心計時器 -->
+            <div class="timer-wrapper">
+                <div class="timer-outer-ring" id="timer-ring"></div>
+                <div class="timer-inner-circle">
+                    <div class="timer-value" id="timer-display">--</div>
+                </div>
+            </div>
+
+            <!-- 暫停 / 播放 控制按鈕 -->
+            <button class="btn-control" id="btn-toggle" onclick="toggleTimer()" aria-label="Pause/Play timer">
+                <!-- 隱藏的 Pause 圖示 -->
+                <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+                <!-- 預設顯示的 Play 圖示 -->
+                <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </button>
+        </main>
+    </div>
+
+    <script>
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzlHW96hEppgLs3tbmYQxXHcgYM4EI3vyIZVqzjmJF98hpvhf0YD8sL54lXlBNSjP4/exec';
+        const TEST_MEMBER_ID = 'Cooper'; // 測試用 ID
+
+        // --- 計時器邏輯 ---
+        let timeRemaining = 0; // 初始設為 0
+        let isRunning = false; // 預設進來是未開始狀態
+        let timerInterval = null;
+        let actualMemberId = TEST_MEMBER_ID; // 儲存真實的 Member ID
+
+        const displayEl = document.getElementById('timer-display');
+        const ringEl = document.getElementById('timer-ring');
+        const iconPause = document.getElementById('icon-pause');
+        const iconPlay = document.getElementById('icon-play');
+
+        function updateDisplay() {
+            // 只顯示分鐘數，並使用無條件進位，確保畫面顯示與暫停時回傳的數值完全一致
+            const minutes = Math.ceil(timeRemaining / 60);
+            displayEl.textContent = minutes.toString().padStart(2, '0');
+        }
+
+        function toggleTimer() {
+            if (timeRemaining <= 0 && !isRunning) {
+                alert('目前沒有可用的時間喔！');
+                return;
+            }
+
+            isRunning = !isRunning;
+            if (isRunning) {
+                iconPause.style.display = 'block';
+                iconPlay.style.display = 'none';
+                ringEl.style.opacity = '1';
+                startTimer();
+            } else {
+                iconPause.style.display = 'none';
+                iconPlay.style.display = 'block';
+                ringEl.style.opacity = '0.3'; // 暫停時外環變暗
+                clearInterval(timerInterval);
+                syncRemainingTime(); // 暫停時同步剩餘時間至 GAS
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    iconPause.style.display = 'none';
+                    iconPlay.style.display = 'block';
+                    ringEl.style.opacity = '0.3';
+                    syncRemainingTime(); // 倒數結束時同步 (剩餘 0)
+                    alert('時間到！');
+                }
+            }, 1000);
+        }
+
+        // --- 同步剩餘時間至 GAS ---
+        async function syncRemainingTime() {
+            try {
+                // 將秒數轉換回分鐘，無條件進位(Math.ceil) 確保剩餘 1 秒也會算作 1 分鐘，避免多扣
+                const remainingMinutes = Math.ceil(timeRemaining / 60);
+
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        apiKey: 'TQ-2026-STRICT-AUTH',
+                        action: 'setTotalTime',
+                        memberId: actualMemberId, // 傳送真實的 Member ID 給後端
+                        remainingMinutes: remainingMinutes
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success === false) throw new Error(result.message);
+                console.log(`✅ 已同步剩餘時間至 GAS: ${remainingMinutes} 分鐘`);
+            } catch (error) {
+                console.error('同步時間失敗:', error);
+            }
+        }
+
+        // --- 向 GAS 請求可用時間 ---
+        async function fetchTimerData() {
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getChildDashboard&memberId=${TEST_MEMBER_ID}`);
+                if (!response.ok) throw new Error('網路連線錯誤');
+
+                const result = await response.json();
+                if (result.success === false) throw new Error(result.message);
+
+                // 儲存後端回傳的真實 Member ID (例如 M01)
+                actualMemberId = result.memberInfo.MemberID || TEST_MEMBER_ID;
+
+                // 取得可用時間 (分鐘) 並轉換為秒數
+                const availableMinutes = Number(result.memberInfo.TotalTime || result.memberInfo['可用時間']) || 0;
+                timeRemaining = availableMinutes * 60;
+
+                updateDisplay();
+            } catch (error) {
+                console.error('取得資料失敗:', error);
+                alert('載入可用時間失敗，請稍後再試。');
+                displayEl.textContent = '00';
+            }
+        }
+
+        // 初始化執行
+        fetchTimerData();
+    </script>
+</body>
+
+</html>

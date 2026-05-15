@@ -1,0 +1,689 @@
+/* CSS 變數定義：高對比色彩 */
+:root {
+    --bg-body: #f4f6f8;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-dark: #1e3a8a;
+    --primary-hover: #2563eb;
+    --success-bg: #d1fae5;
+    --success-text: #065f46;
+    --success: #10b981;
+    --watermark-color: rgba(16, 185, 129, 0.1);
+
+    /* --- Entry View 變數 (改為明亮簡約風) --- */
+    --entry-bg-body: #f4f6f8;
+    --entry-bg-container: #ffffff;
+    --entry-text-main: #1e293b;
+    --entry-card-bg: #ffffff;
+    --entry-card-border: #f1f5f9;
+    --entry-highlight: #3b82f6;
+    --entry-highlight-hover: #2563eb;
+    --entry-time-bg: #10b981;
+
+    /* --- 家長管理後台專用變數 --- */
+    --admin-bg-body: #f4f6f8;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --border-color: #e2e8f0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-body);
+    display: flex;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    min-height: 100vh;
+}
+
+/* 模擬手機 App 容器 */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg-card);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+/* --- 頂部導覽列 --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: transparent;
+    color: var(--text-main);
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    overflow: hidden;
+    border: 2px solid var(--primary);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+/* --- 核心數據看板 --- */
+.dashboard {
+    padding: 20px 20px 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.time-card {
+    width: 100%;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 30px;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+.time-card .label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+.time-card .value-container {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.time-card .value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.time-card .unit {
+    font-size: 1rem;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+/* --- 今日家事列表 --- */
+.task-section {
+    flex: 1;
+    padding: 0 20px;
+    overflow-y: auto;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 16px;
+    background-color: var(--bg-card);
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-right: 16px;
+    z-index: 2;
+    /* 確保在浮水印之上 */
+}
+
+.task-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.task-reward {
+    font-size: 0.95rem;
+    color: var(--primary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.task-checkbox {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 2;
+    accent-color: var(--success);
+    /* 現代瀏覽器原生支援變更核取方塊顏色 */
+}
+
+/* 任務完成狀態 */
+.task-item.completed {
+    background-color: var(--success-bg);
+    border-color: #badbcc;
+}
+
+.task-item.completed .task-name,
+.task-item.completed .task-reward {
+    text-decoration: line-through;
+    color: var(--success-text);
+    opacity: 0.7;
+}
+
+/* 完成印章浮水印 */
+.task-item.completed::after {
+    content: '已完成';
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--watermark-color);
+    border: 4px solid var(--watermark-color);
+    border-radius: 8px;
+    padding: 4px 12px;
+    pointer-events: none;
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+/* --- 底部區域 --- */
+.footer {
+    padding: 24px 20px;
+    background-color: var(--bg-card);
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.accumulated-text {
+    font-size: 1.05rem;
+    color: var(--text-main);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.accumulated-text span {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.btn-start {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(30, 58, 138, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+/* 載入中遮罩 */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: none;
+    /* 預設隱藏 */
+}
+
+/* --- 入口頁面 (黑夜模式) 專屬樣式 --- */
+.entry-container {
+    background: var(--entry-bg-container);
+    color: var(--entry-text-main);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.entry-container .header {
+    padding: 50px 20px 30px;
+    text-align: center;
+}
+
+.entry-container .header h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--entry-highlight);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.entry-container .header p {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.role-container {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.role-card {
+    background-color: var(--entry-card-bg);
+    border: 2px solid var(--entry-card-border);
+    border-radius: 20px;
+    width: calc(50% - 10px);
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--entry-text-main);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+}
+
+.role-card:hover,
+.role-card:active {
+    transform: translateY(-8px) scale(1.03);
+    border-color: var(--entry-highlight);
+    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+    background-color: #ffffff;
+}
+
+.role-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #e2e8f0;
+    background-color: #f1f5f9;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.role-card:hover .role-avatar {
+    border-color: var(--entry-highlight);
+}
+
+.role-avatar img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+.role-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.role-time {
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+}
+
+.admin-btn {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #94a3b8;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.admin-btn:hover {
+    background: #f8fafc;
+    color: #3b82f6;
+    transform: rotate(90deg);
+    border-color: #3b82f6;
+}
+
+/* =========================================================
+   家長管理後台 (Admin View) 專屬樣式
+   ========================================================= */
+.admin-container {
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--admin-bg-body);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-header {
+    background-color: var(--bg-card);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.admin-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.btn-home {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.btn-home:hover {
+    background: var(--bg-body);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+    -webkit-animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.3s ease;
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form & Cards */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.btn {
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-block {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+}
+
+/* Admin Task List */
+.admin-task-list {
+    list-style: none;
+}
+
+.admin-task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-task-item:last-child {
+    border-bottom: none;
+}
+
+.admin-task-info {
+    flex: 1;
+}
+
+.admin-task-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.admin-task-reward {
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: bold;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    color: var(--danger);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    font-weight: 600;
+    color: var(--text-muted);
+    background-color: #f8fafc;
+}
+
+.data-table td {
+    font-weight: 500;
+}

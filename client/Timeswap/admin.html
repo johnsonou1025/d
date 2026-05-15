@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<!-- 分頁 D：成員管理 -->
+<main id="tab-members" class="tab-content">
+    <div class="card">
+        <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+                <label for="new-member-name">小朋友姓名</label>
+                <input type="text" id="new-member-name" class="form-control" placeholder="例如：Cooper">
+            </div>
+            <button class="btn btn-primary" onclick="addMember()">新增</button>
+        </div>
+    </div>
+    <div class="card">
+        <ul class="admin-task-list" id="admin-member-list">
+            <!-- 成員列表由 JS 動態產生 -->
+        </ul>
+    </div>
+</main>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家長管理後台 - TimeQuest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <button class="btn-home" onclick="window.location.href='index.html'" aria-label="回到首頁">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z" />
+                </svg>
+            </button>
+            <h1>家長管理後台</h1>
+        </header>
+
+        <!-- Tab 標籤列 -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-tasks', this)">家事管理</button>
+            <button class="tab-btn" onclick="switchTab('tab-adjust', this)">時間調整</button>
+            <button class="tab-btn" onclick="switchTab('tab-stats', this)">統計報表</button>
+            <button class="tab-btn" onclick="switchTab('tab-members', this)">成員管理</button>
+        </div>
+
+        <!-- 分頁 A：家事管理 -->
+        <main id="tab-tasks" class="tab-content active">
+            <div class="card">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="new-task-name">家事名稱</label>
+                        <input type="text" id="new-task-name" class="form-control" placeholder="例如：拖地">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="new-task-reward">分鐘</label>
+                        <input type="number" id="new-task-reward" class="form-control" min="1" placeholder="15">
+                    </div>
+                    <button class="btn btn-primary" onclick="addTask()">新增</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <ul class="admin-task-list" id="admin-task-list">
+                    <!-- 任務列表由 JS 動態產生 -->
+                </ul>
+            </div>
+        </main>
+
+        <!-- 分頁 B：時間調整 -->
+        <main id="tab-adjust" class="tab-content">
+            <div class="card">
+                <div class="form-group">
+                    <label for="adjust-member">選擇孩子</label>
+                    <select id="adjust-member" class="form-control">
+                        <!-- 選項由 JS 動態產生 -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adjust-minutes">增減分鐘 (可輸入負數)</label>
+                    <input type="number" id="adjust-minutes" class="form-control" placeholder="例如：10 或 -15">
+                </div>
+                <div class="form-group">
+                    <label for="adjust-reason">調整原因</label>
+                    <input type="text" id="adjust-reason" class="form-control" placeholder="例如：考試優異獎勵、未收玩具懲罰">
+                </div>
+                <button class="btn btn-primary btn-block" style="margin-top: 10px;"
+                    onclick="submitAdjustment()">確認送出</button>
+            </div>
+        </main>
+
+        <!-- 分頁 C：統計報表 -->
+        <main id="tab-stats" class="tab-content">
+            <div class="card">
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem;">本週完成概況</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>孩子姓名</th>
+                                <th>完成家事總次數</th>
+                                <th>獲得總時間</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-table-body">
+                            <!-- 統計資料由 JS 動態產生 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzlHW96hEppgLs3tbmYQxXHcgYM4EI3vyIZVqzjmJF98hpvhf0YD8sL54lXlBNSjP4/exec';
+        const API_KEY = 'TQ-2026-STRICT-AUTH';
+
+        let globalTasks = [];
+        let globalMembers = [];
+
+        // --- Tab 切換邏輯 ---
+        function switchTab(tabId, btnElement) {
+            // 隱藏所有內容
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            // 移除所有按鈕的 active 狀態
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // 顯示目標內容與設定按鈕狀態
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+
+            // 切換到統計報表時，自動重新整理資料
+            if (tabId === 'tab-stats') {
+                fetchAndRenderStats();
+            }
+        }
+
+        // --- 通用 API 呼叫函式 ---
+        async function postToGAS(payload) {
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ apiKey: API_KEY, ...payload })
+                });
+                if (!response.ok) throw new Error(`伺服器錯誤: ${response.statusText}`);
+                const result = await response.json();
+                if (result.success === false) throw new Error(result.message || '後端處理失敗');
+                return result;
+            } catch (error) {
+                console.error('POST 請求失敗:', error);
+                alert(`操作失敗: ${error.message}`);
+                throw error; // 讓呼叫者可以捕捉到錯誤
+            }
+        }
+
+        // --- 分頁 A：家事管理邏輯 ---
+        function renderAdminTasks() {
+            const listEl = document.getElementById('admin-task-list');
+            listEl.innerHTML = '正在載入家事清單...';
+            if (globalTasks.length === 0) {
+                listEl.innerHTML = '目前沒有任何家事項目。';
+                return;
+            }
+
+            listEl.innerHTML = '';
+            globalTasks.forEach(task => {
+                const li = document.createElement('li');
+                li.className = 'admin-task-item';
+                // 欄位名稱對應 gas-code.js 的 getSheetData 函式回傳的物件 key
+                const taskName = task.TaskName || task.name;
+                const taskReward = task.Reward || task.reward;
+                const taskId = task.TaskID || task.id;
+
+                li.innerHTML = `
+                    <div class="admin-task-info">
+                        <div class="admin-task-name">${taskName}</div>
+                        <div class="admin-task-reward">+${taskReward} 分鐘</div>
+                    </div>
+                    <button class="btn-icon" onclick="deleteTask('${taskId}')" aria-label="刪除">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
+                    </button>
+                `;
+                listEl.appendChild(li);
+            });
+        }
+
+        async function addTask() {
+            const nameInput = document.getElementById('new-task-name');
+            const rewardInput = document.getElementById('new-task-reward');
+
+            const name = nameInput.value.trim();
+            const reward = parseInt(rewardInput.value, 10);
+
+            if (!name || isNaN(reward) || reward <= 0) {
+                alert('請完整輸入家事名稱與正數分鐘數！');
+                return;
+            }
+
+            try {
+                await postToGAS({
+                    action: 'addTask',
+                    name: name,
+                    reward: reward
+                });
+                alert('新增成功！');
+                // 清空輸入框
+                nameInput.value = '';
+                rewardInput.value = '';
+                // 重新載入資料
+                fetchInitialData();
+            } catch (error) {
+                // 錯誤訊息已在 postToGAS 中 alert
+            }
+        }
+
+        async function deleteTask(taskId) {
+            if (confirm('確定要刪除這項家事嗎？此操作無法復原。')) {
+                try {
+                    await postToGAS({
+                        action: 'deleteTask',
+                        taskId: taskId
+                    });
+                    alert('刪除成功！');
+                    // 從本地端移除並重新渲染，或直接重新載入
+                    globalTasks = globalTasks.filter(t => (t.TaskID || t.id) !== taskId);
+                    renderAdminTasks();
+                } catch (error) {
+                    // 錯誤訊息已在 postToGAS 中 alert
+                }
+            }
+        }
+
+        // --- 分頁 B：時間調整邏輯 ---
+        function renderMemberDropdown() {
+            const selectEl = document.getElementById('adjust-member');
+            selectEl.innerHTML = '';
+            globalMembers.forEach(member => {
+                // 欄位名稱對應 gas-code.js 的 getSheetData 函式回傳的物件 key
+                const memberId = member.MemberID;
+                const memberName = member.Name;
+                const option = document.createElement('option');
+                option.value = memberId;
+                option.textContent = memberName;
+                selectEl.appendChild(option);
+            });
+        }
+
+        async function submitAdjustment() {
+            const memberId = document.getElementById('adjust-member').value;
+            const minutes = document.getElementById('adjust-minutes').value;
+            const reason = document.getElementById('adjust-reason').value.trim();
+
+            if (!minutes || !reason) {
+                alert('請填寫分鐘數與調整原因！');
+                return;
+            }
+            if (isNaN(minutes)) {
+                alert('分鐘數必須是數字！');
+                return;
+            }
+
+            const memberName = globalMembers.find(m => m.MemberID === memberId)?.Name || memberId;
+
+            try {
+                await postToGAS({
+                    action: 'adjustTime',
+                    memberId: memberId,
+                    minutes: Number(minutes),
+                    reason: reason
+                });
+
+                const sign = minutes > 0 ? '+' : '';
+                alert(`已成功為 ${memberName} 調整 ${sign}${minutes} 分鐘！\n原因：${reason}`);
+
+                // 清空輸入框
+                document.getElementById('adjust-minutes').value = '';
+                document.getElementById('adjust-reason').value = '';
+            } catch (error) {
+                // 錯誤訊息已在 postToGAS 中 alert
+            }
+        }
+
+        // --- 分頁 C：統計報表邏輯 ---
+        async function fetchAndRenderStats() {
+            const tableBody = document.getElementById('stats-table-body');
+            tableBody.innerHTML = '<tr><td colspan="3">正在載入統計資料...</td></tr>';
+
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getStats`);
+                if (!response.ok) throw new Error('網路回應錯誤');
+                const stats = await response.json();
+
+                if (stats.success === false) throw new Error(stats.message);
+
+                tableBody.innerHTML = '';
+                if (stats.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="3">本週尚無任何紀錄。</td></tr>';
+                    return;
+                }
+
+                stats.forEach(stat => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stat.name}</td>
+                        <td>${stat.count} 次</td>
+                        <td><span style="color: var(--primary); font-weight: bold;">+${stat.totalEarned}</span> 分鐘</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="3">載入失敗: ${error.message}</td></tr>`;
+            }
+        }
+
+        // --- 分頁 D：成員管理邏輯 ---
+        function renderAdminMembers() {
+            const listEl = document.getElementById('admin-member-list');
+            if (!listEl) return;
+
+            listEl.innerHTML = '正在載入成員清單...';
+            if (globalMembers.length === 0) {
+                listEl.innerHTML = '目前沒有任何成員。';
+                return;
+            }
+
+            listEl.innerHTML = '';
+            globalMembers.forEach(member => {
+                const li = document.createElement('li');
+                li.className = 'admin-task-item';
+                const memberName = member.Name || member.姓名;
+                const memberId = member.MemberID;
+
+                li.innerHTML = `
+                    <div class="admin-task-info">
+                        <div class="admin-task-name">${memberName}</div>
+                        <div class="admin-task-reward" style="background: rgba(100, 116, 139, 0.1); color: var(--text-muted);">ID: ${memberId}</div>
+                    </div>
+                    <button class="btn-icon" onclick="deleteMember('${memberId}')" aria-label="刪除">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
+                    </button>
+                `;
+                listEl.appendChild(li);
+            });
+        }
+
+        async function addMember() {
+            const nameInput = document.getElementById('new-member-name');
+            const name = nameInput.value.trim();
+            if (!name) { alert('請輸入小朋友姓名！'); return; }
+            try {
+                await postToGAS({ action: 'addMember', name: name });
+                alert('新增成功！');
+                nameInput.value = '';
+                fetchInitialData();
+            } catch (error) { }
+        }
+
+        async function deleteMember(memberId) {
+            if (confirm('確定要刪除這位小朋友嗎？此操作無法復原。')) {
+                try {
+                    await postToGAS({ action: 'deleteMember', memberId: memberId });
+                    alert('刪除成功！');
+                    fetchInitialData();
+                } catch (error) { }
+            }
+        }
+
+        // --- 初始化執行 ---
+        async function fetchInitialData() {
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getInitialData`);
+                if (!response.ok) throw new Error('網路回應錯誤');
+                const data = await response.json();
+                if (data.success === false) throw new Error(data.message);
+
+                globalTasks = data.tasks || [];
+                globalMembers = data.members || [];
+
+                renderAdminTasks();
+                renderMemberDropdown();
+                renderAdminMembers();
+
+            } catch (error) {
+                alert(`初始化資料載入失敗: ${error.message}`);
+                console.error(error);
+            }
+        }
+
+        // 初始化執行
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchInitialData();
+            fetchAndRenderStats(); // 首次載入也抓一次統計資料
+        });
+    </script>
+</body>
+
+</html>
