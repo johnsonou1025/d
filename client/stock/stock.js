@@ -49,10 +49,21 @@ $(async function () {
             const entryDisplay = numQty > 1 ? `${avgEntry}(${numQty})` : avgEntry;
 
             $('<div class="table-cell"/>').append(sheetName).appendTo($tr);
-            $('<div class="table-cell"/>').append(currentPrice).appendTo($tr);
+            $('<div class="table-cell" style="justify-content: flex-end; text-align: right;"/>').append(currentPrice).appendTo($tr);
 
-            // 新增進場時間
-            $('<div class="table-cell"/>').append(firstEntryDate).appendTo($tr);
+            // 計算持有天數
+            let holdingDays = 0;
+            if (firstEntryDate) {
+                const entryDateObj = new Date(firstEntryDate);
+                const nowDateObj = new Date();
+                // 將時間歸零以計算純天數差異
+                entryDateObj.setHours(0, 0, 0, 0);
+                nowDateObj.setHours(0, 0, 0, 0);
+                const diffTime = nowDateObj.getTime() - entryDateObj.getTime();
+                holdingDays = Math.floor(diffTime / (1000 * 3600 * 24));
+                if (holdingDays < 0) holdingDays = 0;
+            }
+            $('<div class="table-cell" style="justify-content: flex-end; text-align: right;"/>').append(holdingDays).appendTo($tr);
 
             // 合併後的 TD
             $('<div class="table-cell"/>').append(entryDisplay).appendTo($tr);
@@ -118,6 +129,17 @@ $(async function () {
         $('#sell-month-profit-loss').siblings('span').text('賣出收益(近30天累計)');
         $('#sell-month-profit-loss').text(Math.round(sum30Profit).toLocaleString() + '(' + Math.round(sum30Rate).toLocaleString() + '%)');
 
+        // --- 動態產生下拉選單選項：近30天 + 近6個單月 ---
+        const $periodSelect = $('#sold-period-select');
+        $periodSelect.empty();
+        $periodSelect.append('<option value="30days" selected>近30天</option>');
+        for (let i = 0; i < 6; i++) {
+            const d = new Date(summaryNow.getFullYear(), summaryNow.getMonth() - i, 1);
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            $periodSelect.append(`<option value="${y}-${m}">${y}/${m}</option>`);
+        }
+
         function renderSoldTable(period) {
             const now = new Date();
             let startDate = '';
@@ -132,14 +154,15 @@ $(async function () {
                 const d = String(thirtyDaysAgo.getDate()).padStart(2, '0');
                 startDate = `${y}-${m}-${d}`;
                 periodLabel = '近30天';
-            } else if (period === 'thisMonth') {
-                const y = now.getFullYear();
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                startDate = `${y}-${m}-01`;
-                periodLabel = '本月';
-            } else if (period === 'lastMonth') {
-                const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-                const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+            } else {
+                // 處理 YYYY-MM 格式
+                const [yStr, mStr] = period.split('-');
+                const year = parseInt(yStr, 10);
+                const month = parseInt(mStr, 10) - 1;
+
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+
                 const y1 = firstDay.getFullYear();
                 const m1 = String(firstDay.getMonth() + 1).padStart(2, '0');
                 const d1 = String(firstDay.getDate()).padStart(2, '0');
@@ -148,7 +171,7 @@ $(async function () {
                 const d2 = String(lastDay.getDate()).padStart(2, '0');
                 startDate = `${y1}-${m1}-${d1}`;
                 endDate = `${y2}-${m2}-${d2}`;
-                periodLabel = '上月';
+                periodLabel = `${yStr}/${mStr}`;
             }
 
             // 濾出「已結案」且「符合日期區間」的資料

@@ -11,6 +11,13 @@
     <script src="stock.js"></script>
     <script src="market-charts.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 縮小總覽卡片的上下內距以節省版面 */
+        #summary-cards>.card {
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+        }
+    </style>
 </head>
 
 <body class="loading-view">
@@ -48,6 +55,7 @@
             </div>
 
             <!-- 總覽卡片區 -->
+            <h2 class="section-title">單筆定額操作( 2000NT )</h2>
             <div id="summary-cards">
                 <div class="card">
                     <span>持倉總數</span>
@@ -122,13 +130,13 @@
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                             </svg></div>
-                        <div class="table-cell">今日價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
+                        <div class="table-cell" style="justify-content: flex-end; text-align: right;">今日價格<svg
+                                class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                             </svg></div>
-                        <div class="table-cell">進場時間<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
+                        <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
+                                class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                             </svg></div>
@@ -155,9 +163,6 @@
                     已賣出股票
                     <div class="title-actions">
                         <select id="sold-period-select" class="period-select">
-                            <option value="30days" selected>近30天</option>
-                            <option value="thisMonth">本月</option>
-                            <option value="lastMonth">上月</option>
                         </select>
                         <div class="month-profit-loss">累計損益<span>-</span></div>
                     </div>
