@@ -151,6 +151,7 @@
         let isRunning = false; // 預設進來是未開始狀態
         let timerInterval = null;
         let actualMemberId = TEST_MEMBER_ID; // 儲存真實的 Member ID
+        let unSyncedSeconds = 0; // 新增：用來追蹤尚未同步到後端的消耗秒數
 
         const displayEl = document.getElementById('timer-display');
         const ringEl = document.getElementById('timer-ring');
@@ -189,6 +190,7 @@
             timerInterval = setInterval(() => {
                 if (timeRemaining > 0) {
                     timeRemaining--;
+                    unSyncedSeconds++;
                     updateDisplay();
                 } else {
                     clearInterval(timerInterval);
@@ -204,24 +206,26 @@
 
         // --- 同步剩餘時間至 GAS ---
         async function syncRemainingTime() {
+            if (unSyncedSeconds < 60) return; // 未滿一分鐘不需同步
             try {
-                // 將秒數轉換回分鐘，無條件進位(Math.ceil) 確保剩餘 1 秒也會算作 1 分鐘，避免多扣
-                const remainingMinutes = Math.ceil(timeRemaining / 60);
+                // 改為只傳送這段期間「消耗」的分鐘數，避免覆蓋背景(如家長)的調整
+                const consumedMinutes = Math.floor(unSyncedSeconds / 60);
 
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({
                         apiKey: 'TQ-2026-STRICT-AUTH',
-                        action: 'setTotalTime',
+                        action: 'consumeTime',
                         memberId: actualMemberId, // 傳送真實的 Member ID 給後端
-                        remainingMinutes: remainingMinutes
+                        consumedMinutes: consumedMinutes
                     })
                 });
 
                 const result = await response.json();
                 if (result.success === false) throw new Error(result.message);
-                console.log(`✅ 已同步剩餘時間至 GAS: ${remainingMinutes} 分鐘`);
+                console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes} 分鐘`);
+                unSyncedSeconds -= consumedMinutes * 60; // 扣除已同步的時間
             } catch (error) {
                 console.error('同步時間失敗:', error);
             }

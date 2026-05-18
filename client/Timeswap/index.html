@@ -214,31 +214,20 @@
         };
 
         // --- 計時器全域變數 ---
-        let timeRemaining = 0; // 剩餘秒數
-        let isRunning = false;
-        let timerInterval = null;
+        const memberTimers = {}; // { [memberId]: { timeRemaining: number, isRunning: boolean, unSyncedSeconds: number } }
+        let masterInterval = null;
 
         // --- 視圖切換邏輯 ---
         function switchView(viewId) {
-            // 如果從個人任務頁離開時正在計時，自動暫停並同步
-            if (viewId !== 'view-task' && isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-                syncRemainingTime();
-                const btn = document.getElementById('btn-start-3c');
-                btn.textContent = '開啟 3C 時間';
-                btn.style.backgroundColor = '';
-                btn.style.color = '';
-            }
 
             document.getElementById('view-entry').style.display = (viewId === 'view-entry') ? 'flex' : 'none';
             document.getElementById('view-task').style.display = (viewId === 'view-task') ? 'flex' : 'none';
             document.getElementById('view-admin').style.display = (viewId === 'view-admin') ? 'flex' : 'none';
 
             // 平滑切換背景色：如果是入口就用黑夜背景，個人頁用明亮背景
-            // 平滑切換背景色
             if (viewId === 'view-entry') {
                 document.body.style.backgroundColor = 'var(--entry-bg-body)';
+                renderEntryRoles(); // 刷新角色狀態 (顯示背景計時器圖示)
             } else if (viewId === 'view-admin') {
                 document.body.style.backgroundColor = 'var(--admin-bg-body)';
             } else {
@@ -304,7 +293,17 @@
                     // 支援不同命名欄位 (Name/姓名, TotalTime/可用時間)
                     memberData.name = result.memberInfo.Name || result.memberInfo.姓名 || memberData.name;
                     memberData.availableTime = Number(result.memberInfo.TotalTime || result.memberInfo['可用時間']) || 0;
-                    timeRemaining = memberData.availableTime * 60; // 載入時將分鐘轉換為秒數
+
+                    if (!memberTimers[memberData.id]) {
+                        memberTimers[memberData.id] = {
+                            timeRemaining: memberData.availableTime * 60,
+                            isRunning: false,
+                            unSyncedSeconds: 0
+                        };
+                    } else {
+                        // 異步結算：以資料庫真實時間扣除「尚未上傳的本地消耗秒數」
+                        memberTimers[memberData.id].timeRemaining = (memberData.availableTime * 60) - memberTimers[memberData.id].unSyncedSeconds;
+                    }
                 }
                 memberData.accumulatedTime = Number(result.todayEarned) || 0;
 
@@ -329,6 +328,7 @@
             // 更新基本資訊
             document.getElementById('member-name').textContent = memberData.name;
             updateTimerDisplay(); // 改由計時器顯示邏輯接管
+            updateTimerUIState(); // 更新按鈕狀態
             document.getElementById('accumulated-time').textContent = memberData.accumulatedTime;
 
             // 渲染任務列表
@@ -401,93 +401,127 @@
 
             task.completed = isCompleted;
 
+            const timer = memberTimers[memberData.id];
+
             // 動態增減 3C 時間 (此邏輯依據你的商業需求可調整)
             if (isCompleted) {
                 memberData.accumulatedTime += task.reward;
                 memberData.availableTime += task.reward;
-                timeRemaining += task.reward * 60; // 計時器秒數同步增加
+                if (timer) timer.timeRemaining += task.reward * 60; // 計時器秒數同步增加
             } else {
                 memberData.accumulatedTime -= task.reward;
                 memberData.availableTime -= task.reward;
-                timeRemaining -= task.reward * 60; // 計時器秒數同步扣除
+                if (timer) timer.timeRemaining -= task.reward * 60; // 計時器秒數同步扣除
             }
             updateTimerDisplay(); // 更新畫面上的可用時間
         }
 
         // ==========================================
-        // 核心計時器邏輯
+        // 核心計時器邏輯 (支援多成員獨立計時與異步結算)
         // ==========================================
 
         function updateTimerDisplay() {
+            const timer = memberTimers[memberData.id];
+            if (!timer) return;
             // 使用無條件進位，確保畫面顯示與暫停時回傳的數值完全一致
-            const minutes = Math.ceil(timeRemaining / 60);
+            const minutes = Math.ceil(timer.timeRemaining / 60);
             document.getElementById('available-time').textContent = minutes;
             memberData.availableTime = minutes; // 保持 memberData 狀態一致
         }
 
-        function toggleTimer() {
-            if (timeRemaining <= 0 && !isRunning) {
-                alert('目前沒有可用的時間喔，快去完成家事吧！');
-                return;
-            }
-
-            isRunning = !isRunning;
+        function updateTimerUIState() {
+            const timer = memberTimers[memberData.id];
             const btn = document.getElementById('btn-start-3c');
+            if (!timer || !btn) return;
 
-            if (isRunning) {
+            if (timer.isRunning) {
                 btn.textContent = '暫停計時 (計時中...)';
                 btn.style.backgroundColor = 'var(--danger)'; // 變成紅色提示目前正在消耗時間
                 btn.style.color = 'white';
-                startTimer();
             } else {
                 btn.textContent = '開啟 3C 時間';
                 btn.style.backgroundColor = ''; // 恢復原本按鈕顏色
                 btn.style.color = '';
-                clearInterval(timerInterval);
-                syncRemainingTime();
             }
         }
 
-        function startTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (timeRemaining > 0) {
-                    timeRemaining--;
-                    updateTimerDisplay();
-                } else {
-                    // 時間到
-                    clearInterval(timerInterval);
-                    isRunning = false;
+        function toggleTimer() {
+            const timer = memberTimers[memberData.id];
+            if (!timer) return;
 
-                    const btn = document.getElementById('btn-start-3c');
-                    btn.textContent = '開啟 3C 時間';
-                    btn.style.backgroundColor = '';
-                    btn.style.color = '';
+            if (timer.timeRemaining <= 0 && !timer.isRunning) {
+                alert('目前沒有可用的時間喔，快去完成家事吧！');
+                return;
+            }
 
-                    syncRemainingTime();
-                    updateTimerDisplay();
-                    alert('時間到囉！請放下 3C 產品讓眼睛休息一下。');
+            timer.isRunning = !timer.isRunning;
+            updateTimerUIState();
+
+            if (timer.isRunning) {
+                startMasterTimer();
+            } else {
+                syncRemainingTime(memberData.id);
+            }
+        }
+
+        function startMasterTimer() {
+            if (masterInterval) return;
+            masterInterval = setInterval(() => {
+                let hasRunning = false;
+                for (const id in memberTimers) {
+                    const timer = memberTimers[id];
+                    if (timer.isRunning && timer.timeRemaining > 0) {
+                        hasRunning = true;
+                        timer.timeRemaining--;
+                        timer.unSyncedSeconds++;
+
+                        // 只有當前正在檢視該成員時，才更新 UI
+                        if (memberData.id === id && document.getElementById('view-task').style.display === 'flex') {
+                            updateTimerDisplay();
+                        }
+
+                        if (timer.timeRemaining <= 0) {
+                            timer.isRunning = false;
+                            timer.timeRemaining = 0;
+                            syncRemainingTime(id);
+                            if (memberData.id === id) {
+                                updateTimerDisplay();
+                                updateTimerUIState();
+                            }
+                            alert(`時間到囉！請放下 3C 產品讓眼睛休息一下。`);
+                        }
+                    }
+                }
+                if (!hasRunning) {
+                    clearInterval(masterInterval);
+                    masterInterval = null;
                 }
             }, 1000);
         }
 
-        async function syncRemainingTime() {
+        async function syncRemainingTime(targetId) {
+            const timer = memberTimers[targetId];
+            if (!timer || timer.unSyncedSeconds < 60) return; // 滿一分鐘才同步
+
             try {
-                const remainingMinutes = Math.ceil(timeRemaining / 60);
+                const consumedMinutes = Math.floor(timer.unSyncedSeconds / 60);
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({
                         apiKey: API_KEY,
-                        action: 'setTotalTime',
-                        memberId: memberData.id,
-                        remainingMinutes: remainingMinutes
+                        action: 'consumeTime',
+                        memberId: targetId,
+                        consumedMinutes: consumedMinutes
                     })
                 });
 
                 const result = await response.json();
                 if (result.success === false) throw new Error(result.message);
-                console.log(`✅ 已同步剩餘時間至 GAS: ${remainingMinutes} 分鐘`);
+
+                // 成功同步後，扣除本地已紀錄的秒數
+                timer.unSyncedSeconds -= consumedMinutes * 60;
+                console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes} 分鐘`);
             } catch (error) {
                 console.error('同步時間失敗:', error);
             }
@@ -759,10 +793,19 @@
 
             globalMembers.forEach(member => {
                 const name = member.Name || member.姓名;
-                const totalTime = member.TotalTime || member['可用時間'] || 0; // 對應 Sheet 的 TotalTime 欄位
+                const id = member.MemberID;
+                let displayTime = member.TotalTime || member['可用時間'] || 0;
+                let isRunning = false;
+
+                // 若有本地計時狀態，即時反映在首頁
+                if (memberTimers[id]) {
+                    displayTime = Math.ceil(memberTimers[id].timeRemaining / 60);
+                    isRunning = memberTimers[id].isRunning;
+                }
 
                 const card = document.createElement('div');
-                card.className = 'role-card';
+                card.className = `role-card ${isRunning ? 'running' : ''}`;
+                if (isRunning) card.style.border = '2px solid var(--primary)'; // 背景運行時增加視覺提示
                 card.onclick = () => openTaskView(name);
 
                 card.innerHTML = `
@@ -770,7 +813,7 @@
                         <img src="https://robohash.org/${encodeURIComponent(name)}?set=set4" alt="${name}">
                     </div>
                     <div class="role-name">${name}</div>
-                    <div class="role-time">${totalTime} min</div>
+                    <div class="role-time" style="${isRunning ? 'color: var(--primary); font-weight: bold;' : ''}">${displayTime} min ${isRunning ? '⏳' : ''}</div>
                 `;
                 container.appendChild(card);
             });
