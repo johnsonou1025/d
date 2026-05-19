@@ -24,17 +24,25 @@ $(async function () {
         // 2. 初始化財務加總變數
         let totalInv = 0;
         let totalPL = 0;
+        let totalInvQty = 0; // 定量操作金額
+        let totalPLQty = 0;  // 定量操作損益
 
         // 3. 一次性渲染表格與計算
         todayHoldings.forEach(item => {
             const { sheetName, avgEntry, quantity, currentPrice, rate, firstEntryDate } = item;
             const numQty = Number(quantity) || 0;
             const numRate = parseFloat(rate) || 0;
+            const numAvgEntry = parseFloat(avgEntry) || 0;
+            const numCurrentPrice = parseFloat(currentPrice) || 0;
 
             // 計算財務指標 (1. 個股損益 = 進場張數 * 2000 * 報酬率)
             const itemProfit = numQty * 2000 * (numRate / 100);
             totalInv += numQty * 2000;
             totalPL += itemProfit; // (2. 持倉損益 = 全部進場中股票的個股損益相加)
+
+            // 計算財務指標 (定量 20股)
+            totalInvQty += numAvgEntry * numQty * 20;
+            totalPLQty += (numCurrentPrice - numAvgEntry) * numQty * 20;
 
             const $tr = $('<div class="table-row"/>').attr({
                 'data-price': currentPrice,
@@ -44,12 +52,7 @@ $(async function () {
 
             if (!isNaN(numRate) && numRate < 0) { $tr.addClass('down'); }
 
-            // --- 新增：處理進場價格與張數合併邏輯 ---
-            // 如果張數大於 1，顯示為 "價格(張數)"；否則只顯示 "價格"
-            const entryDisplay = numQty > 1 ? `${avgEntry}(${numQty})` : avgEntry;
-
             $('<div class="table-cell"/>').append(sheetName).appendTo($tr);
-            $('<div class="table-cell" style="justify-content: flex-end; text-align: right;"/>').append(currentPrice).appendTo($tr);
 
             // 計算持有天數
             let holdingDays = 0;
@@ -63,10 +66,8 @@ $(async function () {
                 holdingDays = Math.floor(diffTime / (1000 * 3600 * 24));
                 if (holdingDays < 0) holdingDays = 0;
             }
-            $('<div class="table-cell" style="justify-content: flex-end; text-align: right;"/>').append(holdingDays).appendTo($tr);
-
-            // 合併後的 TD
-            $('<div class="table-cell"/>').append(entryDisplay).appendTo($tr);
+            $('<div class="table-cell"/>').append(holdingDays).appendTo($tr);
+            $('<div class="table-cell"/>').append(currentPrice).appendTo($tr);
 
             // 針對報酬率獨立上色：若為負數則強制使用紅色
             const $rateCell = $('<div class="table-cell"/>').append(numRate + '%');
@@ -81,9 +82,9 @@ $(async function () {
         // --- 加入「查看全部」邏輯 ---
         $holdingsTable.find('.view-all-btn').remove();
         const $holdingRows = $holdingsTable.find('.table-body .table-row');
-        if ($holdingRows.length > 10) {
+        if ($holdingRows.length > 5) {
             $holdingRows.each(function (i) {
-                if (i >= 10) $(this).addClass('hidden-row');
+                if (i >= 5) $(this).addClass('hidden-row');
             });
             const $viewAllBtn = $('<div class="view-all-btn">查看全部 ▼</div>');
             $viewAllBtn.on('click', function () {
@@ -94,6 +95,8 @@ $(async function () {
         }
 
         // 4. 更新看板數據
+
+        // 定額區塊
         $('#holding-shares-count').text(todayHoldings.length);
         $('#holding-investment-amount').text(Math.round(totalInv).toLocaleString());
 
@@ -102,43 +105,107 @@ $(async function () {
         $plEl.text(Math.round(totalPL).toLocaleString() + '(' + Math.round(totalPLRate).toLocaleString() + '%)');
         $plEl.css('color', totalPL >= 0 ? '#66BB6A' : '#EF5350');
 
+        // 定量區塊
+        $('#holding-shares-count-qty').text(todayHoldings.length);
+        $('#holding-investment-amount-qty').text(Math.round(totalInvQty).toLocaleString());
+
+        const $plQtyEl = $('#holding-profit-loss-qty');
+        const totalPLRateQty = totalInvQty > 0 ? (totalPLQty / totalInvQty * 100) : 0;
+        $plQtyEl.text(Math.round(totalPLQty).toLocaleString() + '(' + Math.round(totalPLRateQty).toLocaleString() + '%)');
+        $plQtyEl.css('color', totalPLQty >= 0 ? '#66BB6A' : '#EF5350');
+
         /**
          * 歷史紀錄數據
          */
         const $soldTable = $('#sold-stocks .data-table');
         const dailyTrades = Array.isArray(data.dailyTrades) ? data.dailyTrades : [];
 
-        // --- 獨立計算總覽卡片的「近30天累計」賣出定額收益 ---
+        const $periodSelect = $('#sold-period-select');
+        const $summaryPeriodSelect = $('#summary-period-select');
+        const $summaryPeriodSelectQty = $('#summary-period-select-qty');
         const summaryNow = new Date();
-        const summary30DaysAgo = new Date();
-        summary30DaysAgo.setDate(summaryNow.getDate() - 30);
-        const sumY = summary30DaysAgo.getFullYear();
-        const sumM = String(summary30DaysAgo.getMonth() + 1).padStart(2, '0');
-        const sumD = String(summary30DaysAgo.getDate()).padStart(2, '0');
-        const summaryStartDate = `${sumY}-${sumM}-${sumD}`;
-
-        let sum30Profit = 0;
-        let sum30Amount = 0;
-        dailyTrades.filter(item => item.state === "sell" && item.time >= summaryStartDate).forEach(item => {
-            const numQty = Number(item.quantity) || 0;
-            const numRate = parseFloat(item.rate) || 0;
-            sum30Profit += 2000 * numQty * (numRate / 100);
-            sum30Amount += 2000 * numQty;
-        });
-        const sum30Rate = sum30Amount > 0 ? (sum30Profit / sum30Amount * 100) : 0;
-        $('#sell-month-profit-loss').siblings('span').text('賣出收益(近30天累計)');
-        $('#sell-month-profit-loss').text(Math.round(sum30Profit).toLocaleString() + '(' + Math.round(sum30Rate).toLocaleString() + '%)');
 
         // --- 動態產生下拉選單選項：近30天 + 近6個單月 ---
-        const $periodSelect = $('#sold-period-select');
         $periodSelect.empty();
+        $summaryPeriodSelect.empty();
+        $summaryPeriodSelectQty.empty();
         $periodSelect.append('<option value="30days" selected>近30天</option>');
+        $summaryPeriodSelect.append('<option value="30days" selected>近30天</option>');
+        $summaryPeriodSelectQty.append('<option value="30days" selected>近30天</option>');
         for (let i = 0; i < 6; i++) {
             const d = new Date(summaryNow.getFullYear(), summaryNow.getMonth() - i, 1);
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
-            $periodSelect.append(`<option value="${y}-${m}">${y}/${m}</option>`);
+            const optionHtml = `<option value="${y}-${m}">${y}/${m}</option>`;
+            $periodSelect.append(optionHtml);
+            $summaryPeriodSelect.append(optionHtml);
+            $summaryPeriodSelectQty.append(optionHtml);
         }
+
+        // --- 獨立計算總覽卡片的賣出定額/定量收益 ---
+        function renderSummarySellCard(period, isQty = false) {
+            const now = new Date();
+            let startDate = '';
+            let endDate = '9999-12-31';
+
+            if (period === '30days') {
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(now.getDate() - 30);
+                const y = thirtyDaysAgo.getFullYear();
+                const m = String(thirtyDaysAgo.getMonth() + 1).padStart(2, '0');
+                const d = String(thirtyDaysAgo.getDate()).padStart(2, '0');
+                startDate = `${y}-${m}-${d}`;
+            } else {
+                const [yStr, mStr] = period.split('-');
+                const year = parseInt(yStr, 10);
+                const month = parseInt(mStr, 10) - 1;
+
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+
+                const y1 = firstDay.getFullYear();
+                const m1 = String(firstDay.getMonth() + 1).padStart(2, '0');
+                const d1 = String(firstDay.getDate()).padStart(2, '0');
+                const y2 = lastDay.getFullYear();
+                const m2 = String(lastDay.getMonth() + 1).padStart(2, '0');
+                const d2 = String(lastDay.getDate()).padStart(2, '0');
+                startDate = `${y1}-${m1}-${d1}`;
+                endDate = `${y2}-${m2}-${d2}`;
+            }
+
+            let sumProfit = 0;
+            let sumAmount = 0;
+
+            dailyTrades.filter(item => item.state === "sell" && item.time >= startDate && item.time <= endDate).forEach(item => {
+                const numQty = Number(item.quantity) || 0;
+                const numRate = parseFloat(item.rate) || 0;
+                const numAvgEntry = parseFloat(item.avgEntry) || 0;
+
+                if (isQty) {
+                    // 定量: (賣出價 - 均價) * 張數 * 20。價差直接用 均價 * 報酬率 算出
+                    sumProfit += numAvgEntry * (numRate / 100) * numQty * 20;
+                    sumAmount += numAvgEntry * numQty * 20;
+                } else {
+                    // 定額
+                    sumProfit += 2000 * numQty * (numRate / 100);
+                    sumAmount += 2000 * numQty;
+                }
+            });
+
+            const sumRate = sumAmount > 0 ? (sumProfit / sumAmount * 100) : 0;
+            const $targetEl = isQty ? $('#sell-month-profit-loss-qty') : $('#sell-month-profit-loss');
+            $targetEl.text(Math.round(sumProfit).toLocaleString() + '(' + Math.round(sumRate).toLocaleString() + '%)');
+        }
+
+        $summaryPeriodSelect.on('change', function () {
+            renderSummarySellCard($(this).val(), false);
+        });
+        $summaryPeriodSelectQty.on('change', function () {
+            renderSummarySellCard($(this).val(), true);
+        });
+
+        renderSummarySellCard('30days', false);
+        renderSummarySellCard('30days', true);
 
         function renderSoldTable(period) {
             const now = new Date();
@@ -209,9 +276,9 @@ $(async function () {
             // --- 加入「查看全部」邏輯 ---
             $soldTable.find('.view-all-btn').remove();
             const $soldRows = $soldTable.find('.table-body .table-row');
-            if ($soldRows.length > 10) {
+            if ($soldRows.length > 5) {
                 $soldRows.each(function (i) {
-                    if (i >= 10) $(this).addClass('hidden-row');
+                    if (i >= 5) $(this).addClass('hidden-row');
                 });
                 const $viewAllBtn = $('<div class="view-all-btn">查看全部 ▼</div>');
                 $viewAllBtn.on('click', function () {
@@ -233,6 +300,61 @@ $(async function () {
 
         // 預設載入近30天
         renderSoldTable('30days');
+
+        // --- 分析重複交易排行 ---
+        const tradeStats = {};
+        const sellTradesForRank = dailyTrades.filter(item => item.state === "sell");
+
+        if (sellTradesForRank.length > 0) {
+            const earliestDate = sellTradesForRank.map(t => t.time).filter(t => t).sort()[0];
+            if (earliestDate) {
+                $('#repeated-trades-date-range').text(`(從 ${earliestDate} 至今)`);
+            }
+        }
+
+        sellTradesForRank.forEach(item => {
+            const name = item.sheetName;
+            if (!tradeStats[name]) {
+                tradeStats[name] = { name: name, sellCount: 0, totalProfit: 0 };
+            }
+            tradeStats[name].sellCount += 1; // 累加結算次數
+            tradeStats[name].totalProfit += (Number(item.benefit) || 0); // 累加總獲利
+        });
+
+        // 僅篩選出「重覆出場 (sellCount > 1)」的股票
+        const repeatedTrades = Object.values(tradeStats).filter(t => t.sellCount > 1);
+
+        const positiveTrades = repeatedTrades
+            .filter(t => t.totalProfit > 0)
+            .sort((a, b) => b.sellCount - a.sellCount || b.totalProfit - a.totalProfit) // 降冪 (結算次數最高在前，若相同則獲利最高在前)
+            .slice(0, 5);
+
+        const negativeTrades = repeatedTrades
+            .filter(t => t.totalProfit < 0)
+            .sort((a, b) => b.sellCount - a.sellCount || a.totalProfit - b.totalProfit) // 降冪 (結算次數最高在前，若相同則虧損最多在前)
+            .slice(0, 5);
+
+        const renderRepeatedTable = (selector, trades, isProfit) => {
+            const $table = $(selector);
+            $table.find('.table-body').empty();
+
+            if (trades.length === 0) {
+                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">無符合資料</div></div>');
+                return;
+            }
+
+            trades.forEach(t => {
+                const $tr = $('<div class="table-row"/>');
+                $('<div class="table-cell"/>').text(t.name).appendTo($tr);
+                $('<div class="table-cell"/>').text(t.sellCount).appendTo($tr);
+                const colorClass = isProfit ? 'color: var(--success-color);' : 'color: var(--danger-color);';
+                $(`<div class="table-cell" style="${colorClass}"/>`).text(Math.round(t.totalProfit).toLocaleString()).appendTo($tr);
+                $table.find('.table-body').append($tr);
+            });
+        };
+
+        renderRepeatedTable('#top-profit-trades .data-table', positiveTrades, true);
+        renderRepeatedTable('#top-loss-trades .data-table', negativeTrades, false);
 
         /**
          * 今日數據
@@ -340,10 +462,10 @@ $(document).on('click', '#current-holdings .table-header .table-cell', function 
     });
     $table.find('.table-body').append(rows);
 
-    // 排序後若有「查看全部」按鈕，需重新套用隱藏邏輯 (顯示排序後的前 10 筆)
+    // 排序後若有「查看全部」按鈕，需重新套用隱藏邏輯 (顯示排序後的前 5 筆)
     if ($table.find('.view-all-btn').length > 0) {
         $table.find('.table-body .table-row').each(function (i) {
-            if (i >= 10) {
+            if (i >= 5) {
                 $(this).addClass('hidden-row');
             } else {
                 $(this).removeClass('hidden-row');

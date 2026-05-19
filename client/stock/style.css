@@ -87,12 +87,49 @@ p {
     width: 100%;
 }
 
-/* --- Summary Cards --- */
-#summary-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+#personal-operations-section,
+#today-suggestions,
+#repeated-trades-section {
     margin-bottom: 32px;
+}
+
+.operations-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.operation-group .group-title {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: var(--text-main);
+    font-size: 16px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.repeated-tables-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.repeated-tables-wrapper h3 {
+    margin-top: 0;
+}
+
+/* --- Summary Cards / Personal Operations --- */
+#summary-cards,
+#summary-cards-qty {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+#summary-cards>.card,
+#summary-cards-qty>.card {
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .card {
@@ -244,7 +281,7 @@ h3 {
 
 #current-holdings .table-row,
 #current-holdings .table-header {
-    grid-template-columns: 1.5fr 1fr 1.2fr 1.5fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
 }
 
 #sold-stocks .table-row,
@@ -252,14 +289,26 @@ h3 {
     grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr;
 }
 
+#top-profit-trades .table-row,
+#top-profit-trades .table-header,
+#top-loss-trades .table-row,
+#top-loss-trades .table-header {
+    grid-template-columns: 1.5fr 1fr 1fr;
+}
+
 /* 特定數據欄位置右 */
 #today-buy .table-cell:nth-child(3),
 #today-sell .table-cell:nth-child(3),
 #today-strong .table-cell:nth-child(3),
+#current-holdings .table-cell:nth-child(2),
+#current-holdings .table-cell:nth-child(3),
 #current-holdings .table-cell:nth-child(4),
-#current-holdings .table-cell:nth-child(5),
 #sold-stocks .table-cell:nth-child(3),
-#sold-stocks .table-cell:nth-child(4) {
+#sold-stocks .table-cell:nth-child(4),
+#top-profit-trades .table-cell:nth-child(2),
+#top-profit-trades .table-cell:nth-child(3),
+#top-loss-trades .table-cell:nth-child(2),
+#top-loss-trades .table-cell:nth-child(3) {
     justify-content: flex-end;
     text-align: right;
 }
@@ -305,6 +354,7 @@ body.loading-view {
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.9);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     z-index: 50;
     align-items: center;
@@ -319,8 +369,10 @@ body.loading-view .status-wrapper {
 
 /* --- Desktop View (> 768px) --- */
 @media (min-width: 769px) {
-    #summary-cards {
-        grid-template-columns: repeat(4, 1fr);
+
+    .operations-wrapper,
+    .repeated-tables-wrapper {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .today-tables-wrapper {
@@ -345,6 +397,11 @@ body.loading-view .status-wrapper {
         font-size: 13px;
     }
 
+    .operations-wrapper {
+        gap: 32px;
+        /* 手機版時稍微增加兩個策略區塊的上下間距 */
+    }
+
     .table-header .table-cell {
         font-size: 12px;
     }
@@ -363,5 +420,14 @@ body.loading-view .status-wrapper {
 
     .data-update-time {
         text-align: left;
+    }
+}
+
+/* --- 極小螢幕手機版 --- */
+@media (max-width: 480px) {
+
+    #summary-cards,
+    #summary-cards-qty {
+        grid-template-columns: 1fr;
     }
 }

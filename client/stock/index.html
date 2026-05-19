@@ -12,11 +12,6 @@
     <script src="market-charts.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 縮小總覽卡片的上下內距以節省版面 */
-        #summary-cards>.card {
-            padding-top: 12px !important;
-            padding-bottom: 12px !important;
-        }
     </style>
 </head>
 
@@ -51,27 +46,6 @@
                             <canvas id="tpex-chart"></canvas>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- 總覽卡片區 -->
-            <h2 class="section-title">單筆定額操作( 2000NT )</h2>
-            <div id="summary-cards">
-                <div class="card">
-                    <span>持倉總數</span>
-                    <h4 id="holding-shares-count">-</h4>
-                </div>
-                <div class="card">
-                    <span>持倉金額</span>
-                    <h4 id="holding-investment-amount">-</h4>
-                </div>
-                <div class="card">
-                    <span>持倉損益</span>
-                    <h4 id="holding-profit-loss">-</h4>
-                </div>
-                <div class="card">
-                    <span>賣出收益(近30天累計)</span>
-                    <h4 id="sell-month-profit-loss">-</h4>
                 </div>
             </div>
 
@@ -115,6 +89,97 @@
                             <div class="table-body"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- 重複交易排行 -->
+            <div id="repeated-trades-section">
+                <h2 class="section-title">
+                    重複交易排行
+                    <span id="repeated-trades-date-range"
+                        style="font-size: 14px; color: var(--text-muted); font-weight: normal;"></span>
+                </h2>
+                <div class="repeated-tables-wrapper">
+                    <div id="top-profit-trades">
+                        <h3>獲利 Top 5</h3>
+                        <div class="data-table">
+                            <div class="table-header">
+                                <div class="table-cell">股票名稱</div>
+                                <div class="table-cell">結算次數</div>
+                                <div class="table-cell">總獲利</div>
+                            </div>
+                            <div class="table-body"></div>
+                        </div>
+                    </div>
+                    <div id="top-loss-trades">
+                        <h3>虧損 Top 5</h3>
+                        <div class="data-table">
+                            <div class="table-header">
+                                <div class="table-cell">股票名稱</div>
+                                <div class="table-cell">結算次數</div>
+                                <div class="table-cell">總獲利</div>
+                            </div>
+                            <div class="table-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 個人操作績效 -->
+            <div id="personal-operations-section">
+                <h2 class="section-title">個人操作績效</h2>
+                <div class="operations-wrapper">
+
+                    <div class="operation-group">
+                        <h3 class="group-title">單筆定額操作 ( 2000NT )</h3>
+                        <div id="summary-cards">
+                            <div class="card">
+                                <span>持倉總數</span>
+                                <h4 id="holding-shares-count">-</h4>
+                            </div>
+                            <div class="card">
+                                <span>持倉金額</span>
+                                <h4 id="holding-investment-amount">-</h4>
+                            </div>
+                            <div class="card">
+                                <span>持倉損益</span>
+                                <h4 id="holding-profit-loss">-</h4>
+                            </div>
+                            <div class="card">
+                                <span style="display: flex; align-items: center; justify-content: space-between;">
+                                    賣出收益
+                                    <select id="summary-period-select" class="period-select"></select>
+                                </span>
+                                <h4 id="sell-month-profit-loss">-</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="operation-group">
+                        <h3 class="group-title">單筆定量操作 ( 20股 )</h3>
+                        <div id="summary-cards-qty">
+                            <div class="card">
+                                <span>持倉總數</span>
+                                <h4 id="holding-shares-count-qty">-</h4>
+                            </div>
+                            <div class="card">
+                                <span>持倉金額</span>
+                                <h4 id="holding-investment-amount-qty">-</h4>
+                            </div>
+                            <div class="card">
+                                <span>持倉損益</span>
+                                <h4 id="holding-profit-loss-qty">-</h4>
+                            </div>
+                            <div class="card">
+                                <span style="display: flex; align-items: center; justify-content: space-between;">
+                                    賣出收益
+                                    <select id="summary-period-select-qty" class="period-select"></select>
+                                </span>
+                                <h4 id="sell-month-profit-loss-qty">-</h4>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
