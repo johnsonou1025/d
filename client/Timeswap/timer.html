@@ -62,7 +62,8 @@
 
         /* 時間顯示：大型粗體 */
         .timer-value {
-            font-size: 5rem;
+            font-size: 4rem;
+            /* 縮小字級以容納分與秒的 MM:SS 格式 */
             font-weight: 800;
             color: var(--text-main, #1e293b);
             font-variant-numeric: tabular-nums;
@@ -159,9 +160,10 @@
         const iconPlay = document.getElementById('icon-play');
 
         function updateDisplay() {
-            // 只顯示分鐘數，並使用無條件進位，確保畫面顯示與暫停時回傳的數值完全一致
-            const minutes = Math.ceil(timeRemaining / 60);
-            displayEl.textContent = minutes.toString().padStart(2, '0');
+            // 顯示分鐘與秒數 (MM:SS)
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = Math.floor(timeRemaining % 60);
+            displayEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
         function toggleTimer() {
@@ -206,10 +208,11 @@
 
         // --- 同步剩餘時間至 GAS ---
         async function syncRemainingTime() {
-            if (unSyncedSeconds < 60) return; // 未滿一分鐘不需同步
+            if (unSyncedSeconds <= 0) return; // 只要有未同步的秒數就處理
             try {
-                // 改為只傳送這段期間「消耗」的分鐘數，避免覆蓋背景(如家長)的調整
-                const consumedMinutes = Math.floor(unSyncedSeconds / 60);
+                // 改為傳送精確的分鐘數(含小數點的秒數轉換)，避免覆蓋背景(如家長)的調整
+                const consumedMinutes = unSyncedSeconds / 60;
+                const secondsToSync = unSyncedSeconds;
 
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
@@ -224,8 +227,8 @@
 
                 const result = await response.json();
                 if (result.success === false) throw new Error(result.message);
-                console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes} 分鐘`);
-                unSyncedSeconds -= consumedMinutes * 60; // 扣除已同步的時間
+                console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes.toFixed(2)} 分鐘`);
+                unSyncedSeconds -= secondsToSync; // 扣除已同步的時間
             } catch (error) {
                 console.error('同步時間失敗:', error);
             }
@@ -245,7 +248,7 @@
 
                 // 取得可用時間 (分鐘) 並轉換為秒數
                 const availableMinutes = Number(result.memberInfo.TotalTime || result.memberInfo['可用時間']) || 0;
-                timeRemaining = availableMinutes * 60;
+                timeRemaining = Math.round(availableMinutes * 60);
 
                 updateDisplay();
             } catch (error) {

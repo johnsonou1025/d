@@ -1,23 +1,35 @@
 /* --- 黑夜模式 (Dark Mode) 全域變數覆寫 --- */
 body.dark-mode {
-    --bg-body: #0f172a;
-    --bg-card: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --entry-bg-body: #0f172a;
-    --entry-bg-container: #1e293b;
-    --entry-text-main: #f8fafc;
-    --entry-card-bg: #1e293b;
-    --entry-card-border: #334155;
-    --admin-bg-body: #0f172a;
-    --border-color: #334155;
+    --bg-body: #121212;
+    --bg-card: #181818;
+    --text-main: #FFFFFF;
+    --text-muted: #B3B3B3;
+    --entry-bg-body: #121212;
+    --entry-bg-container: #181818;
+    --entry-text-main: #FFFFFF;
+    --entry-card-bg: #181818;
+    --entry-card-border: #282828;
+    --admin-bg-body: #121212;
+    --border-color: #282828;
+
+    /* Spotify 主題綠色 */
+    --primary: #1DB954;
+    --primary-dark: #1aa34a;
+    --primary-hover: #1ed760;
+    --entry-highlight: #1DB954;
     color: var(--text-main);
 }
 
 body.dark-mode .form-control,
 body.dark-mode .data-table th {
-    background-color: #0f172a;
-    color: #f8fafc;
+    background-color: #282828;
+    color: #FFFFFF;
+    border-color: #3e3e3e;
+}
+
+body.dark-mode .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
 }
 
 body.dark-mode .admin-btn {
@@ -26,7 +38,7 @@ body.dark-mode .admin-btn {
 }
 
 body.dark-mode .admin-btn:hover {
-    background: var(--bg-body);
+    background: #282828;
 }
 
 /* --- 修正深色模式下特定區域的文字與邊框顏色 --- */
@@ -35,10 +47,64 @@ body.dark-mode .tab-content {
     color: var(--text-main);
 }
 
+/* 首頁卡片 Hover 效果 (Spotify 風格) */
+body.dark-mode .role-card:hover,
+body.dark-mode .role-card:active {
+    background-color: #282828 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 頂端漸層卡片 */
+body.dark-mode .time-card {
+    background: linear-gradient(135deg, #1DB954, #1aa34a);
+    box-shadow: 0 10px 25px rgba(29, 185, 84, 0.2);
+}
+
 body.dark-mode .task-item {
-    border-color: var(--border-color);
+    background-color: #181818;
+    border-color: #282828;
+}
+
+body.dark-mode .task-item:hover {
+    background-color: #282828;
 }
 
 body.dark-mode .footer {
-    border-top-color: var(--border-color);
+    border-top-color: #282828;
+}
+
+/* 按鈕陰影修正 */
+body.dark-mode .btn-role-timer.btn-start,
+body.dark-mode .btn-start {
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
+}
+
+body.dark-mode .btn-role-timer.btn-start:hover,
+body.dark-mode .btn-start:hover {
+    box-shadow: 0 6px 16px rgba(29, 185, 84, 0.3);
+}
+
+/* 載入中遮罩深色模式 */
+body.dark-mode #loader {
+    background: rgba(18, 18, 18, 0.8);
+    color: var(--text-main);
+}
+
+/* timer.html 的計時器介面覆寫 */
+body.dark-mode .timer-outer-ring {
+    background: conic-gradient(from 180deg, #1DB954, #1aa34a, #1ed760, #1DB954) !important;
+}
+
+body.dark-mode .timer-inner-circle {
+    background-color: #121212 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode .btn-control {
+    background: linear-gradient(145deg, #1DB954, #1aa34a) !important;
+    box-shadow: 0 12px 24px rgba(29, 185, 84, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-mode .btn-control:hover {
+    box-shadow: 0 16px 32px rgba(29, 185, 84, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
 }

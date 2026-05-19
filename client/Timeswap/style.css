@@ -1,37 +1,38 @@
 /* CSS 變數定義：高對比色彩 */
 :root {
-    --bg-body: #f4f6f8;
-    --bg-card: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #94a3b8;
-    --primary: #3b82f6;
-    --primary-dark: #1e3a8a;
-    --primary-hover: #2563eb;
-    --success-bg: #d1fae5;
-    --success-text: #065f46;
-    --success: #10b981;
-    --watermark-color: rgba(16, 185, 129, 0.1);
+    /* Apple-inspired Light Theme */
+    --bg-body: #F5F5F7;
+    --bg-card: #FFFFFF;
+    --text-main: #1C1C1E;
+    --text-muted: #8E8E93;
+    --primary: #007AFF;
+    --primary-dark: #0056b3;
+    --primary-hover: #0070E5;
+    --success-bg: #E5F9E7;
+    --success-text: #248A3D;
+    --success: #34C759;
+    --watermark-color: rgba(52, 199, 89, 0.1);
 
-    /* --- Entry View 變數 (改為明亮簡約風) --- */
-    --entry-bg-body: #f4f6f8;
+    /* --- Entry View 變數 (Apple Style) --- */
+    --entry-bg-body: #F5F5F7;
     --entry-bg-container: #ffffff;
-    --entry-text-main: #1e293b;
+    --entry-text-main: #1C1C1E;
     --entry-card-bg: #ffffff;
-    --entry-card-border: #f1f5f9;
-    --entry-highlight: #3b82f6;
-    --entry-highlight-hover: #2563eb;
-    --entry-time-bg: #10b981;
+    --entry-card-border: rgba(0, 0, 0, 0.05);
+    --entry-highlight: #007AFF;
+    --entry-highlight-hover: #0070E5;
+    --entry-time-bg: #34C759;
 
     /* --- 家長管理後台專用變數 --- */
-    --admin-bg-body: #f4f6f8;
-    --danger: #ef4444;
-    --danger-hover: #dc2626;
-    --border-color: #e2e8f0;
+    --admin-bg-body: #F5F5F7;
+    --danger: #FF3B30;
+    --danger-hover: #D70015;
+    --border-color: #E5E5EA;
 }
 
 * {
     box-sizing: border-box;
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -52,7 +53,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     position: relative;
 }
 
@@ -110,13 +111,13 @@ body {
 .time-card {
     width: 100%;
     border-radius: 20px;
-    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    background: linear-gradient(135deg, var(--primary), #5856D6);
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 24px 30px;
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 122, 255, 0.25);
 }
 
 .time-card .label {
@@ -169,7 +170,7 @@ body {
     margin-bottom: 12px;
     border-radius: 16px;
     background-color: var(--bg-card);
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--border-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
     position: relative;
     overflow: hidden;
@@ -272,13 +273,13 @@ body {
     border: none;
     border-radius: 16px;
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-start:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(30, 58, 138, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 24px rgba(0, 122, 255, 0.4);
 }
 
 /* 載入中遮罩 */
@@ -303,7 +304,7 @@ body {
 .entry-container {
     background: var(--entry-bg-container);
     color: var(--entry-text-main);
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
@@ -316,7 +317,7 @@ body {
     font-size: 2.2rem;
     font-weight: 900;
     color: var(--entry-highlight);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     letter-spacing: 1px;
 }
 
@@ -329,46 +330,59 @@ body {
 .role-container {
     flex: 1;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    gap: 16px;
     padding: 20px;
-    justify-content: center;
-    align-content: flex-start;
+    justify-content: flex-start;
+    align-content: stretch;
 }
 
 .role-card {
     background-color: var(--entry-card-bg);
     border: 2px solid var(--entry-card-border);
     border-radius: 20px;
-    width: calc(50% - 10px);
-    padding: 24px 12px;
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    padding: 20px 24px;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     text-decoration: none;
     color: var(--entry-text-main);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     cursor: pointer;
 }
 
 .role-card:hover,
 .role-card:active {
-    transform: translateY(-8px) scale(1.03);
+    transform: translateY(-4px) scale(1.02);
     border-color: var(--entry-highlight);
-    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 12px 28px rgba(0, 122, 255, 0.15);
     background-color: #ffffff;
 }
 
+.role-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.role-card-right {
+    flex-shrink: 0;
+}
+
 .role-avatar {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: 3px solid #e2e8f0;
     background-color: #f1f5f9;
-    margin-bottom: 16px;
     overflow: hidden;
     transition: border-color 0.3s ease;
+    flex-shrink: 0;
+    margin-bottom: 0;
 }
 
 .role-card:hover .role-avatar {
@@ -382,20 +396,64 @@ body {
     object-fit: cover;
 }
 
+.role-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
 .role-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
 }
 
 .role-time {
-    background: linear-gradient(135deg, var(--primary), #8b5cf6);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--entry-highlight);
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.btn-role-timer {
+    padding: 12px 20px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 80px;
+    text-align: center;
+}
+
+.btn-role-timer.btn-start {
+    background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+    color: white;
+    box-shadow: 0 4px 14px rgba(0, 122, 255, 0.3);
+}
+
+.btn-role-timer.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 122, 255, 0.4);
+}
+
+.btn-role-timer.btn-stop {
+    background: var(--danger);
+    color: white;
+    box-shadow: 0 4px 14px rgba(255, 59, 48, 0.3);
+}
+
+.btn-role-timer.btn-stop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 59, 48, 0.4);
 }
 
 .admin-btn {

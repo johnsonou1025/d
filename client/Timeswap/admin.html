@@ -9,7 +9,7 @@
                 <label for="new-member-name">小朋友姓名</label>
                 <input type="text" id="new-member-name" class="form-control" placeholder="例如：Cooper">
             </div>
-            <button class="btn btn-primary" onclick="addMember()">新增</button>
+            <button class="btn btn-primary" onclick="addMember(this)">新增</button>
         </div>
     </div>
     <div class="card">
@@ -25,6 +25,22 @@
     <title>家長管理後台 - TimeQuest</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme-dark.css">
+    <style>
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .icon-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,7 +58,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('tab-tasks', this)">家事管理</button>
             <button class="tab-btn" onclick="switchTab('tab-adjust', this)">時間調整</button>
-            <button class="tab-btn" onclick="switchTab('tab-stats', this)">統計報表</button>
+            <button class="tab-btn" onclick="switchTab('tab-stats', this)">LOG記錄</button>
             <button class="tab-btn" onclick="switchTab('tab-members', this)">成員管理</button>
         </div>
 
@@ -58,7 +74,7 @@
                         <label for="new-task-reward">分鐘</label>
                         <input type="number" id="new-task-reward" class="form-control" min="1" placeholder="15">
                     </div>
-                    <button class="btn btn-primary" onclick="addTask()">新增</button>
+                    <button class="btn btn-primary" onclick="addTask(this)">新增</button>
                 </div>
             </div>
 
@@ -87,21 +103,22 @@
                     <input type="text" id="adjust-reason" class="form-control" placeholder="例如：考試優異獎勵、未收玩具懲罰">
                 </div>
                 <button class="btn btn-primary btn-block" style="margin-top: 10px;"
-                    onclick="submitAdjustment()">確認送出</button>
+                    onclick="submitAdjustment(this)">確認送出</button>
             </div>
         </main>
 
-        <!-- 分頁 C：統計報表 -->
+        <!-- 分頁 C：LOG記錄 -->
         <main id="tab-stats" class="tab-content">
             <div class="card">
-                <h3 style="margin-bottom: 16px; font-size: 1.1rem;">本週完成概況</h3>
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem;">系統活動紀錄</h3>
                 <div style="overflow-x: auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>孩子姓名</th>
-                                <th>完成家事總次數</th>
-                                <th>獲得總時間</th>
+                                <th>時間</th>
+                                <th>成員</th>
+                                <th>變更</th>
+                                <th>原因</th>
                             </tr>
                         </thead>
                         <tbody id="stats-table-body">
@@ -120,6 +137,28 @@
         let globalTasks = [];
         let globalMembers = [];
 
+        // --- 通用 UI 輔助函式：設定按鈕載入狀態 ---
+        function setButtonLoading(btn, isLoading) {
+            if (!btn) return;
+            if (isLoading) {
+                btn.disabled = true;
+                if (btn.dataset.originalHtml === undefined) {
+                    btn.dataset.originalHtml = btn.innerHTML;
+                }
+                const spinnerSvg = `<svg class="icon-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.45 0-6.012-2.287T3.05 13H5.1q.35 2.6 2.313 4.3T12 19q2.925 0 4.963-2.037T19 12t-2.037-4.962T12 5q-1.725 0-3.225.8T6.25 8H9v2H3V4h2v2.35q1.275-1.6 3.113-2.475T12 3q1.875 0 3.513.713t2.85 1.924t1.925 2.85T21 12t-.712 3.513t-1.925 2.85t-2.85 1.925T12 21"/></svg>`;
+
+                if (btn.classList.contains('btn-icon')) {
+                    btn.innerHTML = spinnerSvg;
+                } else {
+                    const originalText = btn.textContent.trim();
+                    btn.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; gap: 8px;">${spinnerSvg}<span>${originalText}</span></div>`;
+                }
+            } else {
+                btn.disabled = false;
+                if (btn.dataset.originalHtml !== undefined) btn.innerHTML = btn.dataset.originalHtml;
+            }
+        }
+
         // --- Tab 切換邏輯 ---
         function switchTab(tabId, btnElement) {
             // 隱藏所有內容
@@ -133,7 +172,7 @@
 
             // 切換到統計報表時，自動重新整理資料
             if (tabId === 'tab-stats') {
-                fetchAndRenderStats();
+                fetchAndRenderLogs();
             }
         }
 
@@ -179,7 +218,7 @@
                         <div class="admin-task-name">${taskName}</div>
                         <div class="admin-task-reward">+${taskReward} 分鐘</div>
                     </div>
-                    <button class="btn-icon" onclick="deleteTask('${taskId}')" aria-label="刪除">
+                    <button class="btn-icon" onclick="deleteTask('${taskId}', this)" aria-label="刪除">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
                     </button>
                 `;
@@ -187,7 +226,7 @@
             });
         }
 
-        async function addTask() {
+        async function addTask(btn) {
             const nameInput = document.getElementById('new-task-name');
             const rewardInput = document.getElementById('new-task-reward');
 
@@ -200,6 +239,7 @@
             }
 
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({
                     action: 'addTask',
                     name: name,
@@ -213,12 +253,15 @@
                 fetchInitialData();
             } catch (error) {
                 // 錯誤訊息已在 postToGAS 中 alert
+            } finally {
+                setButtonLoading(btn, false);
             }
         }
 
-        async function deleteTask(taskId) {
+        async function deleteTask(taskId, btn) {
             if (confirm('確定要刪除這項家事嗎？此操作無法復原。')) {
                 try {
+                    setButtonLoading(btn, true);
                     await postToGAS({
                         action: 'deleteTask',
                         taskId: taskId
@@ -229,6 +272,8 @@
                     renderAdminTasks();
                 } catch (error) {
                     // 錯誤訊息已在 postToGAS 中 alert
+                } finally {
+                    setButtonLoading(btn, false);
                 }
             }
         }
@@ -248,7 +293,7 @@
             });
         }
 
-        async function submitAdjustment() {
+        async function submitAdjustment(btn) {
             const memberId = document.getElementById('adjust-member').value;
             const minutes = document.getElementById('adjust-minutes').value;
             const reason = document.getElementById('adjust-reason').value.trim();
@@ -265,6 +310,7 @@
             const memberName = globalMembers.find(m => m.MemberID === memberId)?.Name || memberId;
 
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({
                     action: 'adjustTime',
                     memberId: memberId,
@@ -280,38 +326,46 @@
                 document.getElementById('adjust-reason').value = '';
             } catch (error) {
                 // 錯誤訊息已在 postToGAS 中 alert
+            } finally {
+                setButtonLoading(btn, false);
             }
         }
 
-        // --- 分頁 C：統計報表邏輯 ---
-        async function fetchAndRenderStats() {
+        // --- 分頁 C：LOG記錄邏輯 ---
+        async function fetchAndRenderLogs() {
             const tableBody = document.getElementById('stats-table-body');
-            tableBody.innerHTML = '<tr><td colspan="3">正在載入統計資料...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4">正在載入紀錄...</td></tr>';
 
             try {
-                const response = await fetch(`${GAS_API_URL}?action=getStats`);
+                const response = await fetch(`${GAS_API_URL}?action=getLogs`);
                 if (!response.ok) throw new Error('網路回應錯誤');
-                const stats = await response.json();
+                const result = await response.json();
 
-                if (stats.success === false) throw new Error(stats.message);
+                if (result.success === false) throw new Error(result.message);
 
                 tableBody.innerHTML = '';
-                if (stats.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="3">本週尚無任何紀錄。</td></tr>';
+                if (!result.logs || result.logs.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4">目前尚無任何紀錄。</td></tr>';
                     return;
                 }
 
-                stats.forEach(stat => {
+                result.logs.forEach(log => {
                     const row = document.createElement('tr');
+                    const changeVal = Number(log.change);
+                    const changeColor = changeVal > 0 ? 'var(--primary)' : (changeVal < 0 ? 'var(--danger)' : 'var(--text-main)');
+                    const changeSign = changeVal > 0 ? '+' : '';
+                    const memberName = globalMembers.find(m => m.MemberID === log.memberId)?.Name || log.memberId;
+
                     row.innerHTML = `
-                        <td>${stat.name}</td>
-                        <td>${stat.count} 次</td>
-                        <td><span style="color: var(--primary); font-weight: bold;">+${stat.totalEarned}</span> 分鐘</td>
+                        <td style="font-size: 0.85rem; color: var(--text-muted);">${log.timestamp}</td>
+                        <td>${memberName}</td>
+                        <td><span style="color: ${changeColor}; font-weight: bold;">${changeSign}${changeVal}</span></td>
+                        <td style="font-size: 0.9rem;">${log.reason}</td>
                     `;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="3">載入失敗: ${error.message}</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="4">載入失敗: ${error.message}</td></tr>`;
             }
         }
 
@@ -338,7 +392,7 @@
                         <div class="admin-task-name">${memberName}</div>
                         <div class="admin-task-reward" style="background: rgba(100, 116, 139, 0.1); color: var(--text-muted);">ID: ${memberId}</div>
                     </div>
-                    <button class="btn-icon" onclick="deleteMember('${memberId}')" aria-label="刪除">
+                    <button class="btn-icon" onclick="deleteMember('${memberId}', this)" aria-label="刪除">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
                     </button>
                 `;
@@ -346,25 +400,33 @@
             });
         }
 
-        async function addMember() {
+        async function addMember(btn) {
             const nameInput = document.getElementById('new-member-name');
             const name = nameInput.value.trim();
             if (!name) { alert('請輸入小朋友姓名！'); return; }
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({ action: 'addMember', name: name });
                 alert('新增成功！');
                 nameInput.value = '';
                 fetchInitialData();
             } catch (error) { }
+            finally {
+                setButtonLoading(btn, false);
+            }
         }
 
-        async function deleteMember(memberId) {
+        async function deleteMember(memberId, btn) {
             if (confirm('確定要刪除這位小朋友嗎？此操作無法復原。')) {
                 try {
+                    setButtonLoading(btn, true);
                     await postToGAS({ action: 'deleteMember', memberId: memberId });
                     alert('刪除成功！');
                     fetchInitialData();
                 } catch (error) { }
+                finally {
+                    setButtonLoading(btn, false);
+                }
             }
         }
 
@@ -399,7 +461,7 @@
             }
 
             fetchInitialData();
-            fetchAndRenderStats(); // 首次載入也抓一次統計資料
+            fetchAndRenderLogs(); // 首次載入也抓一次 LOG 紀錄
         });
     </script>
 </body>

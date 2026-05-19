@@ -7,6 +7,28 @@
     <title>換時機 Time Swap</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme-dark.css">
+    <style>
+        /* --- 按鈕載入中動畫與狀態 --- */
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .icon-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed !important;
+        }
+
+        .task-checkbox:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,7 +74,7 @@
     <div id="view-task" class="app-container" style="display: none;">
         <!-- 頂部導覽列 -->
         <header class="navbar">
-            <button id="btn-back" class="btn-back" onclick="switchView('view-entry')">
+            <button id="btn-back" class="btn-back" onclick="reloadPageSafely()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                     <path fill="currentColor" d="m12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2H7.825l5.6 5.6z" />
                 </svg>
@@ -95,7 +117,7 @@
     <!-- 視圖 3：家長管理後台 (預設隱藏) -->
     <div id="view-admin" class="admin-container" style="display: none;">
         <header class="admin-header">
-            <button class="btn-home" onclick="switchView('view-entry')" aria-label="回到首頁">
+            <button class="btn-home" onclick="reloadPageSafely()" aria-label="回到首頁">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z" />
                 </svg>
@@ -107,7 +129,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('tab-tasks', this)">家事管理</button>
             <button class="tab-btn" onclick="switchTab('tab-adjust', this)">時間調整</button>
-            <button class="tab-btn" onclick="switchTab('tab-stats', this)">統計報表</button>
+            <button class="tab-btn" onclick="switchTab('tab-stats', this)">LOG記錄</button>
             <button class="tab-btn" onclick="switchTab('tab-members', this)">成員管理</button>
         </div>
 
@@ -123,7 +145,7 @@
                         <label for="new-task-reward">分鐘</label>
                         <input type="number" id="new-task-reward" class="form-control" min="1" placeholder="15">
                     </div>
-                    <button class="btn btn-primary" onclick="addTask()">新增</button>
+                    <button class="btn btn-primary" onclick="addTask(this)">新增</button>
                 </div>
             </div>
             <div class="card">
@@ -151,21 +173,22 @@
                     <input type="text" id="adjust-reason" class="form-control" placeholder="例如：考試優異獎勵、未收玩具懲罰">
                 </div>
                 <button class="btn btn-primary btn-block" style="margin-top: 10px;"
-                    onclick="submitAdjustment()">確認送出</button>
+                    onclick="submitAdjustment(this)">確認送出</button>
             </div>
         </main>
 
-        <!-- 分頁 C：統計報表 -->
+        <!-- 分頁 C：LOG記錄 -->
         <main id="tab-stats" class="tab-content">
             <div class="card">
-                <h3 style="margin-bottom: 16px; font-size: 1.1rem;">本週完成概況</h3>
+                <h3 style="margin-bottom: 16px; font-size: 1.1rem;">系統活動紀錄</h3>
                 <div style="overflow-x: auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>孩子姓名</th>
-                                <th>完成家事總次數</th>
-                                <th>獲得總時間</th>
+                                <th>時間</th>
+                                <th>成員</th>
+                                <th>變更</th>
+                                <th>原因</th>
                             </tr>
                         </thead>
                         <tbody id="stats-table-body">
@@ -184,7 +207,7 @@
                         <label for="new-member-name">小朋友姓名</label>
                         <input type="text" id="new-member-name" class="form-control" placeholder="例如：Cooper">
                     </div>
-                    <button class="btn btn-primary" onclick="addMember()">新增</button>
+                    <button class="btn btn-primary" onclick="addMember(this)">新增</button>
                 </div>
             </div>
             <div class="card">
@@ -216,6 +239,51 @@
         // --- 計時器全域變數 ---
         const memberTimers = {}; // { [memberId]: { timeRemaining: number, isRunning: boolean, unSyncedSeconds: number } }
         let masterInterval = null;
+        let lastTickTime = null; // 用來計算真實經過的秒數，避免背景降頻導致計時不準
+
+        // --- 通用 UI 輔助函式：設定按鈕載入狀態 ---
+        function setButtonLoading(btn, isLoading) {
+            if (!btn) return;
+            if (isLoading) {
+                btn.disabled = true;
+                if (btn.dataset.originalHtml === undefined) {
+                    btn.dataset.originalHtml = btn.innerHTML;
+                }
+                const spinnerSvg = `<svg class="icon-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.45 0-6.012-2.287T3.05 13H5.1q.35 2.6 2.313 4.3T12 19q2.925 0 4.963-2.037T19 12t-2.037-4.962T12 5q-1.725 0-3.225.8T6.25 8H9v2H3V4h2v2.35q1.275-1.6 3.113-2.475T12 3q1.875 0 3.513.713t2.85 1.924t1.925 2.85T21 12t-.712 3.513t-1.925 2.85t-2.85 1.925T12 21"/></svg>`;
+
+                if (btn.classList.contains('btn-icon')) {
+                    btn.innerHTML = spinnerSvg;
+                } else {
+                    const originalText = btn.textContent.trim();
+                    btn.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; gap: 8px;">${spinnerSvg}<span>${originalText}</span></div>`;
+                }
+            } else {
+                btn.disabled = false;
+                if (btn.dataset.originalHtml !== undefined) btn.innerHTML = btn.dataset.originalHtml;
+            }
+        }
+
+        // --- 安全重新載入頁面 (防止重整時遺失未同步秒數) ---
+        function reloadPageSafely() {
+            for (const id in memberTimers) {
+                const timer = memberTimers[id];
+                if (timer && timer.unSyncedSeconds > 0) {
+                    const consumedMinutes = timer.unSyncedSeconds / 60;
+                    fetch(GAS_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            apiKey: API_KEY,
+                            action: 'consumeTime',
+                            memberId: id,
+                            consumedMinutes: consumedMinutes
+                        }),
+                        keepalive: true // 確保即使頁面重新整理，瀏覽器仍會在背景把 API 請求發出
+                    }).catch(e => console.error(e));
+                }
+            }
+            window.location.reload();
+        }
 
         // --- 視圖切換邏輯 ---
         function switchView(viewId) {
@@ -296,13 +364,13 @@
 
                     if (!memberTimers[memberData.id]) {
                         memberTimers[memberData.id] = {
-                            timeRemaining: memberData.availableTime * 60,
+                            timeRemaining: Math.round(memberData.availableTime * 60), // 防呆，處理帶小數點的秒數
                             isRunning: false,
                             unSyncedSeconds: 0
                         };
                     } else {
                         // 異步結算：以資料庫真實時間扣除「尚未上傳的本地消耗秒數」
-                        memberTimers[memberData.id].timeRemaining = (memberData.availableTime * 60) - memberTimers[memberData.id].unSyncedSeconds;
+                        memberTimers[memberData.id].timeRemaining = Math.round(memberData.availableTime * 60) - memberTimers[memberData.id].unSyncedSeconds;
                     }
                 }
                 memberData.accumulatedTime = Number(result.todayEarned) || 0;
@@ -347,6 +415,7 @@
                     </div>
                     <input type="checkbox" id="checkbox-${task.id}" class="task-checkbox" 
                            ${task.completed ? 'checked' : ''} 
+                           ${task.isSyncing ? 'disabled' : ''}
                            onchange="handleTaskToggle('${task.id}', this.checked)">
                 `;
                 taskListEl.appendChild(li);
@@ -355,6 +424,9 @@
 
         // 3. 處理核取方塊切換 (POST)
         async function handleTaskToggle(taskId, isCompleted) {
+            const task = memberData.tasks.find(t => t.id === taskId);
+            if (task) task.isSyncing = true; // 鎖定狀態，防呆
+
             // 樂觀 UI 更新 (Optimistic UI update) - 先更新畫面，讓使用者感覺操作即時
             updateLocalTaskState(taskId, isCompleted);
             renderUI();
@@ -423,10 +495,19 @@
         function updateTimerDisplay() {
             const timer = memberTimers[memberData.id];
             if (!timer) return;
-            // 使用無條件進位，確保畫面顯示與暫停時回傳的數值完全一致
-            const minutes = Math.ceil(timer.timeRemaining / 60);
-            document.getElementById('available-time').textContent = minutes;
-            memberData.availableTime = minutes; // 保持 memberData 狀態一致
+
+            // 計算分與秒，用於畫面顯示 (例如 12:34)
+            const minutes = Math.floor(timer.timeRemaining / 60);
+            const seconds = Math.floor(timer.timeRemaining % 60);
+            document.getElementById('available-time').textContent =
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // 隱藏「分鐘」單位字樣以適應 MM:SS 格式
+            const unitEl = document.querySelector('.time-card .unit');
+            if (unitEl) unitEl.style.display = 'none';
+
+            // 保持原本無條件進位的邏輯，不影響底層原本的可用時間計算
+            memberData.availableTime = Math.ceil(timer.timeRemaining / 60);
         }
 
         function updateTimerUIState() {
@@ -464,16 +545,58 @@
             }
         }
 
+        // --- 從首頁直接控制計時器的獨立函式 ---
+        function toggleTimerFromEntry(memberId) {
+            const timer = memberTimers[memberId];
+            if (!timer) return;
+
+            if (timer.timeRemaining <= 0 && !timer.isRunning) {
+                alert('目前沒有可用的時間喔，快去完成家事吧！');
+                return;
+            }
+
+            timer.isRunning = !timer.isRunning;
+
+            // 如果剛好當前也在個人頁面檢視此角色，同步更新個人頁面按鈕
+            if (memberData.id === memberId) {
+                updateTimerUIState();
+            }
+
+            if (timer.isRunning) {
+                startMasterTimer();
+            } else {
+                syncRemainingTime(memberId);
+            }
+
+            updateEntryRolesTime(); // 立即更新首頁 UI
+        }
+
         function startMasterTimer() {
             if (masterInterval) return;
+            lastTickTime = Date.now();
             masterInterval = setInterval(() => {
+                const now = Date.now();
+                // 算出與上一次執行的真實時間差（秒），解決切換分頁或背景執行時的降頻問題
+                const elapsedSeconds = Math.round((now - lastTickTime) / 1000);
+                if (elapsedSeconds < 1) return; // 避免過度頻繁觸發
+
+                lastTickTime = now;
                 let hasRunning = false;
+
                 for (const id in memberTimers) {
                     const timer = memberTimers[id];
                     if (timer.isRunning && timer.timeRemaining > 0) {
                         hasRunning = true;
-                        timer.timeRemaining--;
-                        timer.unSyncedSeconds++;
+
+                        // 扣除真實經過的秒數 (不超過剩餘時間)
+                        const actualElapsed = Math.min(elapsedSeconds, timer.timeRemaining);
+                        timer.timeRemaining -= actualElapsed;
+                        timer.unSyncedSeconds += actualElapsed;
+
+                        // 自動定期同步 (每滿 60 秒)
+                        if (timer.unSyncedSeconds >= 60) {
+                            syncRemainingTime(id);
+                        }
 
                         // 只有當前正在檢視該成員時，才更新 UI
                         if (memberData.id === id && document.getElementById('view-task').style.display === 'flex') {
@@ -484,14 +607,22 @@
                             timer.isRunning = false;
                             timer.timeRemaining = 0;
                             syncRemainingTime(id);
-                            if (memberData.id === id) {
+                            if (memberData.id === id && document.getElementById('view-task').style.display === 'flex') {
                                 updateTimerDisplay();
                                 updateTimerUIState();
                             }
-                            alert(`時間到囉！請放下 3C 產品讓眼睛休息一下。`);
+
+                            const memberName = globalMembers.find(m => m.MemberID === id)?.Name || id;
+                            alert(`${memberName} 的時間到囉！請放下 3C 產品讓眼睛休息一下。`);
                         }
                     }
                 }
+
+                // 即時更新首頁角色的時間狀態 (如果停留在首頁)
+                if (document.getElementById('view-entry').style.display === 'flex') {
+                    updateEntryRolesTime();
+                }
+
                 if (!hasRunning) {
                     clearInterval(masterInterval);
                     masterInterval = null;
@@ -501,10 +632,16 @@
 
         async function syncRemainingTime(targetId) {
             const timer = memberTimers[targetId];
-            if (!timer || timer.unSyncedSeconds < 60) return; // 滿一分鐘才同步
+            if (!timer || timer.unSyncedSeconds <= 0) return; // 只要有未同步的秒數就執行
+
+            // 帶入小數點，將準確的秒數轉換為分鐘數傳送 (例如 30秒 = 0.5分鐘)
+            const consumedMinutes = timer.unSyncedSeconds / 60;
+            const secondsToSync = timer.unSyncedSeconds;
+
+            // 提前扣除本地準備上傳的秒數，避免非同步期間重複觸發
+            timer.unSyncedSeconds -= secondsToSync;
 
             try {
-                const consumedMinutes = Math.floor(timer.unSyncedSeconds / 60);
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -519,12 +656,56 @@
                 const result = await response.json();
                 if (result.success === false) throw new Error(result.message);
 
-                // 成功同步後，扣除本地已紀錄的秒數
-                timer.unSyncedSeconds -= consumedMinutes * 60;
                 console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes} 分鐘`);
             } catch (error) {
                 console.error('同步時間失敗:', error);
+                // 若失敗則加回秒數，等待下一次自動同步
+                if (memberTimers[targetId]) {
+                    memberTimers[targetId].unSyncedSeconds += secondsToSync;
+                }
             }
+        }
+
+        // 獨立函式：即時更新首頁角色卡片的時間與狀態
+        function updateEntryRolesTime() {
+            const container = document.getElementById('role-container');
+            if (!container) return;
+
+            const cards = container.querySelectorAll('.role-card');
+            cards.forEach(card => {
+                const memberId = card.dataset.memberId;
+                if (!memberId) return;
+
+                const timer = memberTimers[memberId];
+                if (timer) {
+                    const m = Math.floor(timer.timeRemaining / 60).toString().padStart(2, '0');
+                    const s = Math.floor(timer.timeRemaining % 60).toString().padStart(2, '0');
+                    const timeEl = card.querySelector('.role-time');
+                    const btnEl = card.querySelector('.btn-role-timer');
+
+                    if (timeEl) {
+                        timeEl.innerHTML = `${m}:${s}`;
+                        if (timer.isRunning) {
+                            card.classList.add('running');
+                            card.style.border = '2px solid var(--primary)';
+                        } else {
+                            card.classList.remove('running');
+                            card.style.border = '';
+                        }
+                    }
+
+                    // 同步更新右側按鈕的文字與顏色狀態
+                    if (btnEl) {
+                        if (timer.isRunning) {
+                            btnEl.textContent = '暫停';
+                            btnEl.className = 'btn-role-timer btn-stop';
+                        } else {
+                            btnEl.textContent = '開啟';
+                            btnEl.className = 'btn-role-timer btn-start';
+                        }
+                    }
+                }
+            });
         }
 
         // 輔助函式：切換載入中畫面
@@ -538,7 +719,7 @@
             if (pwd === "1234") { // 可替換為您實際的密碼
                 switchView('view-admin'); // 直接切換到內建的家長視圖
                 fetchInitialData();
-                fetchAndRenderStats(); // 首次載入也抓一次統計資料
+                fetchAndRenderLogs(); // 首次載入也抓一次 LOG 紀錄
             } else if (pwd !== null) {
                 alert("密碼錯誤，請重新輸入！");
             }
@@ -566,7 +747,7 @@
             btnElement.classList.add('active');
 
             if (tabId === 'tab-stats') {
-                fetchAndRenderStats();
+                fetchAndRenderLogs();
             }
         }
 
@@ -609,7 +790,7 @@
                         <div class="admin-task-name">${taskName}</div>
                         <div class="admin-task-reward">+${taskReward} 分鐘</div>
                     </div>
-                    <button class="btn-icon" onclick="deleteTask('${taskId}')" aria-label="刪除">
+                    <button class="btn-icon" onclick="deleteTask('${taskId}', this)" aria-label="刪除">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
                     </button>
                 `;
@@ -617,7 +798,7 @@
             });
         }
 
-        async function addTask() {
+        async function addTask(btn) {
             const nameInput = document.getElementById('new-task-name');
             const rewardInput = document.getElementById('new-task-reward');
             const name = nameInput.value.trim();
@@ -629,6 +810,7 @@
             }
 
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({
                     action: 'addTask',
                     name: name,
@@ -639,11 +821,15 @@
                 rewardInput.value = '';
                 fetchInitialData();
             } catch (error) { }
+            finally {
+                setButtonLoading(btn, false);
+            }
         }
 
-        async function deleteTask(taskId) {
+        async function deleteTask(taskId, btn) {
             if (confirm('確定要刪除這項家事嗎？此操作無法復原。')) {
                 try {
+                    setButtonLoading(btn, true);
                     await postToGAS({
                         action: 'deleteTask',
                         taskId: taskId
@@ -652,6 +838,9 @@
                     globalTasks = globalTasks.filter(t => (t.TaskID || t.id) !== taskId);
                     renderAdminTasks();
                 } catch (error) { }
+                finally {
+                    setButtonLoading(btn, false);
+                }
             }
         }
 
@@ -668,7 +857,7 @@
             });
         }
 
-        async function submitAdjustment() {
+        async function submitAdjustment(btn) {
             const memberId = document.getElementById('adjust-member').value;
             const minutes = document.getElementById('adjust-minutes').value;
             const reason = document.getElementById('adjust-reason').value.trim();
@@ -685,6 +874,7 @@
             const memberName = globalMembers.find(m => m.MemberID === memberId)?.Name || memberId;
 
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({
                     action: 'adjustTime',
                     memberId: memberId,
@@ -698,36 +888,45 @@
                 document.getElementById('adjust-minutes').value = '';
                 document.getElementById('adjust-reason').value = '';
             } catch (error) { }
+            finally {
+                setButtonLoading(btn, false);
+            }
         }
 
-        async function fetchAndRenderStats() {
+        async function fetchAndRenderLogs() {
             const tableBody = document.getElementById('stats-table-body');
-            tableBody.innerHTML = '<tr><td colspan="3">正在載入統計資料...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4">正在載入紀錄...</td></tr>';
 
             try {
-                const response = await fetch(`${GAS_API_URL}?action=getStats`);
+                const response = await fetch(`${GAS_API_URL}?action=getLogs`);
                 if (!response.ok) throw new Error('網路回應錯誤');
-                const stats = await response.json();
+                const result = await response.json();
 
-                if (stats.success === false) throw new Error(stats.message);
+                if (result.success === false) throw new Error(result.message);
 
                 tableBody.innerHTML = '';
-                if (stats.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="3">本週尚無任何紀錄。</td></tr>';
+                if (!result.logs || result.logs.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4">目前尚無任何紀錄。</td></tr>';
                     return;
                 }
 
-                stats.forEach(stat => {
+                result.logs.forEach(log => {
                     const row = document.createElement('tr');
+                    const changeVal = Number(log.change);
+                    const changeColor = changeVal > 0 ? 'var(--primary)' : (changeVal < 0 ? 'var(--danger)' : 'var(--text-main)');
+                    const changeSign = changeVal > 0 ? '+' : '';
+                    const memberName = globalMembers.find(m => m.MemberID === log.memberId)?.Name || log.memberId;
+
                     row.innerHTML = `
-                        <td>${stat.name}</td>
-                        <td>${stat.count} 次</td>
-                        <td><span style="color: var(--primary); font-weight: bold;">+${stat.totalEarned}</span> 分鐘</td>
+                        <td style="font-size: 0.85rem; color: var(--text-muted);">${log.timestamp}</td>
+                        <td>${memberName}</td>
+                        <td><span style="color: ${changeColor}; font-weight: bold;">${changeSign}${changeVal}</span></td>
+                        <td style="font-size: 0.9rem;">${log.reason}</td>
                     `;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="3">載入失敗: ${error.message}</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="4">載入失敗: ${error.message}</td></tr>`;
             }
         }
 
@@ -754,7 +953,7 @@
                         <div class="admin-task-name">${memberName}</div>
                         <div class="admin-task-reward" style="background: rgba(100, 116, 139, 0.1); color: var(--text-muted);">ID: ${memberId}</div>
                     </div>
-                    <button class="btn-icon" onclick="deleteMember('${memberId}')" aria-label="刪除">
+                    <button class="btn-icon" onclick="deleteMember('${memberId}', this)" aria-label="刪除">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"/></svg>
                     </button>
                 `;
@@ -762,25 +961,33 @@
             });
         }
 
-        async function addMember() {
+        async function addMember(btn) {
             const nameInput = document.getElementById('new-member-name');
             const name = nameInput.value.trim();
             if (!name) { alert('請輸入小朋友姓名！'); return; }
             try {
+                setButtonLoading(btn, true);
                 await postToGAS({ action: 'addMember', name: name });
                 alert('新增成功！');
                 nameInput.value = '';
                 fetchInitialData(); // 重新拉取資料
             } catch (error) { }
+            finally {
+                setButtonLoading(btn, false);
+            }
         }
 
-        async function deleteMember(memberId) {
+        async function deleteMember(memberId, btn) {
             if (confirm('確定要刪除這位小朋友嗎？此操作無法復原。')) {
                 try {
+                    setButtonLoading(btn, true);
                     await postToGAS({ action: 'deleteMember', memberId: memberId });
                     alert('刪除成功！');
                     fetchInitialData(); // 重新拉取資料
                 } catch (error) { }
+                finally {
+                    setButtonLoading(btn, false);
+                }
             }
         }
 
@@ -794,26 +1001,55 @@
             globalMembers.forEach(member => {
                 const name = member.Name || member.姓名;
                 const id = member.MemberID;
-                let displayTime = member.TotalTime || member['可用時間'] || 0;
+                const availableMins = member.TotalTime || member['可用時間'] || 0;
+                let totalSeconds = Math.round(availableMins * 60);
                 let isRunning = false;
 
                 // 若有本地計時狀態，即時反映在首頁
                 if (memberTimers[id]) {
-                    displayTime = Math.ceil(memberTimers[id].timeRemaining / 60);
+                    totalSeconds = memberTimers[id].timeRemaining;
                     isRunning = memberTimers[id].isRunning;
+                } else {
+                    // 初始化確保首頁也能直接開始計時
+                    memberTimers[id] = {
+                        timeRemaining: totalSeconds,
+                        isRunning: false,
+                        unSyncedSeconds: 0
+                    };
                 }
+
+                const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+                const s = Math.floor(totalSeconds % 60).toString().padStart(2, '0');
+                const timeString = `${m}:${s}`;
 
                 const card = document.createElement('div');
                 card.className = `role-card ${isRunning ? 'running' : ''}`;
                 if (isRunning) card.style.border = '2px solid var(--primary)'; // 背景運行時增加視覺提示
-                card.onclick = () => openTaskView(name);
+
+                // 新增 data 屬性，供即時更新抓取對應成員
+                card.dataset.memberId = id;
+
+                // 點擊事件：避免點到按鈕時觸發進入個人頁面
+                card.onclick = (e) => {
+                    if (e.target.closest('.btn-role-timer')) return;
+                    openTaskView(name);
+                };
 
                 card.innerHTML = `
-                    <div class="role-avatar">
-                        <img src="https://robohash.org/${encodeURIComponent(name)}?set=set4" alt="${name}">
+                    <div class="role-card-left">
+                        <div class="role-avatar">
+                            <img src="https://robohash.org/${encodeURIComponent(name)}?set=set4" alt="${name}">
+                        </div>
+                        <div class="role-info">
+                            <div class="role-name">${name}</div>
+                            <div class="role-time">${timeString}</div>
+                        </div>
                     </div>
-                    <div class="role-name">${name}</div>
-                    <div class="role-time" style="${isRunning ? 'color: var(--primary); font-weight: bold;' : ''}">${displayTime} min ${isRunning ? '⏳' : ''}</div>
+                    <div class="role-card-right">
+                        <button class="btn-role-timer ${isRunning ? 'btn-stop' : 'btn-start'}" onclick="toggleTimerFromEntry('${id}')">
+                            ${isRunning ? '暫停' : '開啟'}
+                        </button>
+                    </div>
                 `;
                 container.appendChild(card);
             });
