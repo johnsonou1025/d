@@ -63,28 +63,54 @@ p {
     text-align: right;
 }
 
-/* --- Market Charts --- */
-#market-charts-section {
+/* --- Market Summary --- */
+#market-summary-section {
     margin-bottom: 32px;
 }
 
-.charts-wrapper {
+.market-summary-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 16px;
 }
 
-.chart-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
+.market-summary-wrapper h3 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: var(--text-main);
+    font-size: 16px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
 }
 
-.chart-container {
-    position: relative;
-    height: 200px;
-    width: 100%;
+.market-summary-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.market-summary-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.market-summary-item:last-child {
+    align-items: flex-end;
+}
+
+.market-summary-item:nth-child(2) {
+    align-items: center;
+}
+
+.market-summary-item span {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.market-summary-item b {
+    font-size: 24px;
+    color: var(--text-main);
 }
 
 #personal-operations-section,

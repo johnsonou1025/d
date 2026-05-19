@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#0F172A">
     <title>沈發財股票數據平台 V2</title>
     <script src="jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="stock.js"></script>
     <script src="market-charts.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -30,20 +29,42 @@
         </header>
 
         <main class="main-content">
-            <!-- 市場走勢圖 -->
-            <div id="market-charts-section">
-                <h2 class="section-title">市場走勢 (近30天)</h2>
-                <div class="charts-wrapper">
-                    <div class="chart-card">
+            <!-- 市場指數 (近20天) -->
+            <div id="market-summary-section">
+                <h2 class="section-title">市場指數 (近20天)</h2>
+                <div class="market-summary-wrapper">
+                    <div class="card">
                         <h3>加權指數</h3>
-                        <div class="chart-container">
-                            <canvas id="taiex-chart"></canvas>
+                        <div class="market-summary-data">
+                            <div class="market-summary-item">
+                                <span>前高（壓力位）</span>
+                                <b id="taiex-high">-</b>
+                            </div>
+                            <div class="market-summary-item">
+                                <span>前低（支撐位）</span>
+                                <b id="taiex-low">-</b>
+                            </div>
+                            <div class="market-summary-item">
+                                <span>今日數字</span>
+                                <b id="taiex-today">-</b>
+                            </div>
                         </div>
                     </div>
-                    <div class="chart-card">
+                    <div class="card">
                         <h3>櫃買指數</h3>
-                        <div class="chart-container">
-                            <canvas id="tpex-chart"></canvas>
+                        <div class="market-summary-data">
+                            <div class="market-summary-item">
+                                <span>前高（壓力位）</span>
+                                <b id="tpex-high">-</b>
+                            </div>
+                            <div class="market-summary-item">
+                                <span>前低（支撐位）</span>
+                                <b id="tpex-low">-</b>
+                            </div>
+                            <div class="market-summary-item">
+                                <span>今日數字</span>
+                                <b id="tpex-today">-</b>
+                            </div>
                         </div>
                     </div>
                 </div>
