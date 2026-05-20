@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0F172A">
+    <meta name="theme-color" content="#131722">
     <title>沈發財股票數據平台 V2</title>
     <script src="jquery-3.7.0.min.js"></script>
     <script src="stock.js"></script>
@@ -29,12 +29,24 @@
         </header>
 
         <main class="main-content">
+            <!-- 搜尋區塊 -->
+            <div id="search-section">
+                <div class="search-bar">
+                    <input type="text" id="stock-search-input" placeholder="輸入股票代碼或名稱搜尋...">
+                    <button id="stock-search-btn">搜尋</button>
+                </div>
+                <div id="stock-search-result"></div>
+            </div>
+
             <!-- 市場指數 (近20天) -->
             <div id="market-summary-section">
                 <h2 class="section-title">市場指數 (近20天)</h2>
                 <div class="market-summary-wrapper">
                     <div class="card">
-                        <h3>加權指數</h3>
+                        <h3>
+                            加權指數
+                            <span class="countdown-timer" id="taiex-countdown"></span>
+                        </h3>
                         <div class="market-summary-data">
                             <div class="market-summary-item">
                                 <span>前高（壓力位）</span>
@@ -51,7 +63,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>櫃買指數</h3>
+                        <h3>
+                            櫃買指數
+                            <span class="countdown-timer" id="tpex-countdown"></span>
+                        </h3>
                         <div class="market-summary-data">
                             <div class="market-summary-item">
                                 <span>前高（壓力位）</span>
@@ -216,17 +231,12 @@
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                             </svg></div>
-                        <div class="table-cell" style="justify-content: flex-end; text-align: right;">今日價格<svg
-                                class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                            </svg></div>
                         <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
                                 class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                             </svg></div>
-                        <div class="table-cell">進場均價(張數)<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                        <div class="table-cell">目前價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />

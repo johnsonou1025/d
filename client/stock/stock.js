@@ -67,7 +67,7 @@ $(async function () {
                 if (holdingDays < 0) holdingDays = 0;
             }
             $('<div class="table-cell"/>').append(holdingDays).appendTo($tr);
-            $('<div class="table-cell"/>').append(currentPrice).appendTo($tr);
+            $('<div class="table-cell"/>').append(numCurrentPrice).appendTo($tr);
 
             // 針對報酬率獨立上色：若為負數則強制使用紅色
             const $rateCell = $('<div class="table-cell"/>').append(numRate + '%');
@@ -103,7 +103,7 @@ $(async function () {
         const $plEl = $('#holding-profit-loss');
         const totalPLRate = totalInv > 0 ? (totalPL / totalInv * 100) : 0;
         $plEl.text(Math.round(totalPL).toLocaleString() + '(' + Math.round(totalPLRate).toLocaleString() + '%)');
-        $plEl.css('color', totalPL >= 0 ? '#66BB6A' : '#EF5350');
+        $plEl.css('color', totalPL >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
 
         // 定量區塊
         $('#holding-shares-count-qty').text(todayHoldings.length);
@@ -112,7 +112,7 @@ $(async function () {
         const $plQtyEl = $('#holding-profit-loss-qty');
         const totalPLRateQty = totalInvQty > 0 ? (totalPLQty / totalInvQty * 100) : 0;
         $plQtyEl.text(Math.round(totalPLQty).toLocaleString() + '(' + Math.round(totalPLRateQty).toLocaleString() + '%)');
-        $plQtyEl.css('color', totalPLQty >= 0 ? '#66BB6A' : '#EF5350');
+        $plQtyEl.css('color', totalPLQty >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
 
         /**
          * 歷史紀錄數據
@@ -430,6 +430,46 @@ $(async function () {
         const strongStocks = Array.isArray(data.strongMomentum) ? data.strongMomentum : [];
         renderStrongTable('#today-strong .data-table', strongStocks);
 
+        // --- 搜尋功能邏輯 ---
+        $('#stock-search-btn').off('click').on('click', function () {
+            const keyword = $('#stock-search-input').val().trim();
+            const $result = $('#stock-search-result');
+
+            if (!keyword) {
+                $result.html('<span style="color: var(--danger-color);">請輸入股票代碼或名稱</span>').show();
+                return;
+            }
+
+            // 收集所有相關的股票名稱
+            const holdingMatches = todayHoldings.filter(item => item.sheetName.includes(keyword));
+            const tradeMatches = dailyTrades.filter(item => item.sheetName && item.sheetName.includes(keyword));
+
+            // 如果完全沒找到
+            if (holdingMatches.length === 0 && tradeMatches.length === 0) {
+                $result.html(`<span style="color: var(--text-muted);">狀態：</span> 完全沒進場過 (找不到與「${keyword}」相關的紀錄)`).show();
+                return;
+            }
+
+            // 整理狀態並去除重複名稱
+            const holdingNames = [...new Set(holdingMatches.map(m => m.sheetName))];
+            const tradeNames = [...new Set(tradeMatches.map(m => m.sheetName))];
+            // 如果同時有歷史交易也有目前持倉，已賣出的名單中不顯示目前還持有的股票，避免混淆
+            const soldNames = tradeNames.filter(name => !holdingNames.includes(name));
+
+            let resultHtml = `搜尋「<b>${keyword}</b>」的結果：<br>`;
+            if (holdingNames.length > 0) {
+                resultHtml += `<div style="margin-top: 8px;"><span style="color: var(--success-color); font-weight: bold;">[目前進場中]</span> ${holdingNames.join(', ')}</div>`;
+            }
+            if (soldNames.length > 0) {
+                resultHtml += `<div style="margin-top: 8px;"><span style="color: var(--text-muted); font-weight: bold;">[目前已賣出]</span> ${soldNames.join(', ')}</div>`;
+            }
+            $result.html(resultHtml).show();
+        });
+
+        $('#stock-search-input').off('keypress').on('keypress', function (e) {
+            if (e.which === 13) { $('#stock-search-btn').click(); }
+        });
+
         //載入完成後動作
         $status.text('載入完成');
         //顯示更新時間
@@ -489,7 +529,7 @@ $(function () {
         } else {
             $iconSun.show();
             $iconMoon.hide();
-            $themeColorMeta.attr('content', '#121212');
+            $themeColorMeta.attr('content', '#131722');
         }
     }
 
