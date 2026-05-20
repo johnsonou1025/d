@@ -103,6 +103,8 @@ p {
     font-weight: 600;
     font-size: 14px;
     transition: transform 0.1s, background-color 0.1s, opacity 0.2s;
+    white-space: nowrap;
+    /* 避免手機版文字換行 */
 }
 
 #stock-search-btn:hover {
@@ -541,6 +543,29 @@ body.loading-view .status-wrapper {
 
     .data-update-time {
         text-align: left;
+    }
+
+    /* 手機版市場指數區塊改為垂直排列並置中 */
+    .market-summary-wrapper h3 {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .market-summary-data {
+        /* 在手機版上，維持三欄佈局但將內容置中 */
+    }
+
+    .market-summary-item,
+    .market-summary-item:nth-child(2),
+    .market-summary-item:last-child {
+        align-items: center;
+        text-align: center;
+    }
+
+    .market-summary-item b {
+        font-size: 20px;
+        /* 手機版縮小字體以容納三欄 */
     }
 }
 
