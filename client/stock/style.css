@@ -55,6 +55,8 @@ p {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    display: flex;
+    align-items: center;
 }
 
 #header p {
@@ -64,11 +66,51 @@ p {
     letter-spacing: 0.05em;
 }
 
+.version-badge {
+    font-size: 11px;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    background-color: rgba(0, 240, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 12px;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    font-family: var(--font-mono);
+}
+
 .data-update-time {
     font-size: 11px;
     color: var(--text-muted);
     text-align: right;
     font-family: var(--font-mono);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    background-color: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
 /* --- Search Section --- */
@@ -77,11 +119,20 @@ p {
     flex-direction: column;
     align-items: flex-end;
     position: relative;
-    /* 供下拉選單定位使用 */
+    align-self: flex-end;
+    /* 在相對定位時讓它靠右 */
+    z-index: 20;
     text-transform: none;
     /* 避免繼承標題的大寫設定 */
     letter-spacing: normal;
     font-weight: normal;
+}
+
+/* 當資料載入完成，市場指數出現時，切換為絕對定位以對齊標題 */
+#search-section.desktop-absolute {
+    position: absolute;
+    top: -4px;
+    right: 0;
 }
 
 .search-bar {
@@ -288,7 +339,6 @@ p {
     border-radius: 50%;
     box-shadow: 0 0 10px var(--accent-color);
     animation: pulse-glow 2s infinite alternate;
-    /* 呼吸燈動畫 */
 }
 
 /* --- 呼吸燈發光動畫 --- */
@@ -404,14 +454,13 @@ p {
 
 .chart-center-label {
     font-size: 10px;
-    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    color: var(--text-muted);
 }
 
 .donut-chart-center h4 {
     font-size: 16px;
-    /* Slightly smaller to fit */
 }
 
 .donut-chart-legend {
@@ -828,10 +877,37 @@ body.loading-view .status-wrapper {
         align-items: center;
     }
 
+    /* 手機版搜尋區塊滿版 */
+    #search-section,
+    #search-section.desktop-absolute {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    #stock-search-input {
+        max-width: none;
+        flex: 1;
+        /* 讓輸入框自動填滿剩餘寬度 */
+    }
+
+    #stock-search-result {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
     #header {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .data-update-time {
@@ -873,5 +949,14 @@ body.loading-view .status-wrapper {
         grid-template-columns: 1fr;
     }
 }
-}
+
+/* --- Footer --- */
+#footer {
+    text-align: center;
+    padding: 24px 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: var(--font-mono);
 }

@@ -526,6 +526,11 @@ $(function () {
         }
     }
 
+    // 檢查 localStorage 儲存的主題，若為 light 則預先載入 CSS
+    if (localStorage.getItem('theme') === 'light' && $('#theme-light-css').length === 0) {
+        $('head').append('<link rel="stylesheet" href="theme-light.css" id="theme-light-css">');
+    }
+
     // 初始化 Icon 與 Meta Color
     updateThemeUI($('#theme-light-css').length > 0);
 
@@ -558,6 +563,39 @@ $(function () {
             $('.content-wrapper').removeClass('show-personal').addClass('show-main');
         }
     });
+
+    // --- 加入手勢滑動 (Swipe) 切換 ---
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const contentWrapper = document.querySelector('.content-wrapper');
+    if (contentWrapper) {
+        contentWrapper.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        contentWrapper.addEventListener('touchend', function (e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+
+            const xDiff = touchStartX - touchEndX;
+            const yDiff = Math.abs(touchStartY - touchEndY);
+
+            // 判斷是否為有效且明顯的水平滑動 (X位移 > 50px 且 X位移大於Y位移，避免與上下滾動衝突)
+            if (Math.abs(xDiff) > 50 && Math.abs(xDiff) > yDiff) {
+                if (xDiff > 0 && $('.content-wrapper').hasClass('show-personal')) {
+                    // 向左滑動 (Swipe Left)：顯示右側的「市場動態」
+                    $('.mobile-tab[data-target="main"]').trigger('click');
+                } else if (xDiff < 0 && $('.content-wrapper').hasClass('show-main')) {
+                    // 向右滑動 (Swipe Right)：顯示左側的「操作績效」
+                    $('.mobile-tab[data-target="personal"]').trigger('click');
+                }
+            }
+        }, { passive: true });
+    }
 });
 
 // --- 工具函式：計算最後更新時間 (每天 14:15) ---
