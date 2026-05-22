@@ -1,14 +1,35 @@
 $(function () {
+    // --- 加入多重 CORS 代理伺服器 Fallback 機制 ---
+    // 解決單一代理服務 (如 corsproxy.io) 故障或被 Yahoo 阻擋導致無法抓取資料的問題
+    async function fetchWithProxyFallback(targetUrl) {
+        const proxies = [
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+            `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+        ];
+
+        let lastError;
+        for (const proxyUrl of proxies) {
+            try {
+                const response = await fetch(proxyUrl, { cache: 'no-store' });
+                if (response.ok) {
+                    return response;
+                } else {
+                    lastError = new Error(`HTTP 錯誤狀態碼: ${response.status}`);
+                }
+            } catch (err) {
+                lastError = err;
+                console.warn(`代理請求失敗 (${proxyUrl}):`, err);
+            }
+        }
+        throw lastError || new Error('所有代理伺服器均請求失敗');
+    }
+
     // --- 從 Yahoo Finance API 取得真實數據 ---
     async function fetchMarketData(symbol) {
         try {
             // 加入時間戳記避免代理伺服器快取
             const targetUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1mo&interval=1d&_=${Date.now()}`;
-            // 使用 CORS 代理伺服器 (corsproxy.io) 解決跨網域阻擋的問題
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-
-            const response = await fetch(proxyUrl, { cache: 'no-store' });
-            if (!response.ok) throw new Error('API 請求失敗');
+            const response = await fetchWithProxyFallback(targetUrl);
             const json = await response.json();
 
             const closePrices = json.chart.result[0].indicators.quote[0].close;
@@ -21,6 +42,19 @@ $(function () {
         }
     }
 
+    // --- 輔助函式：更新儀表板進度條 ---
+    function updateGauge(prefix, currentVal) {
+        const max = parseFloat($(`#${prefix}-high`).data('val'));
+        const min = parseFloat($(`#${prefix}-low`).data('val'));
+
+        if (!isNaN(max) && !isNaN(min) && max > min) {
+            let percentage = ((currentVal - min) / (max - min)) * 100;
+            // 限制在 0% ~ 100% 之間，避免超跌或突破時破版
+            percentage = Math.max(0, Math.min(100, percentage));
+            $(`#${prefix}-gauge`).css('width', percentage + '%');
+        }
+    }
+
     function updateMarketSummary(prefix, data) {
         if (!data || data.length === 0) return; // 確保有數據才更新
 
@@ -28,9 +62,12 @@ $(function () {
         const max = Math.max(...data);
         const min = Math.min(...data);
 
-        $(`#${prefix}-high`).text(max.toLocaleString()).css('color', 'var(--danger-color)'); // 前高使用紅色 (或危險色)
-        $(`#${prefix}-low`).text(min.toLocaleString()).css('color', 'var(--success-color)'); // 前低使用綠色 (或成功色)
+        // 將原始數值存入 data 屬性，供計算進度條使用
+        $(`#${prefix}-high`).text(max.toLocaleString()).data('val', max);
+        $(`#${prefix}-low`).text(min.toLocaleString()).data('val', min);
         $(`#${prefix}-today`).text(today.toLocaleString());
+
+        updateGauge(prefix, today);
     }
 
     // --- 從 Yahoo 網頁抓取即時數據 ---
@@ -39,18 +76,21 @@ $(function () {
             const fetchPrice = async (symbol) => {
                 // 加入時間戳記避免代理伺服器快取
                 const targetUrl = `https://tw.stock.yahoo.com/quote/${symbol}?_=${Date.now()}`;
-                // 使用 CORS 代理伺服器 (corsproxy.io) 解決跨網域阻擋的問題
-                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
-                const response = await fetch(proxyUrl, { cache: 'no-store' });
-                if (!response.ok) throw new Error('API 請求失敗');
+                const response = await fetchWithProxyFallback(targetUrl);
 
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
 
                 // Yahoo 股市網頁的主要報價數字，通常帶有 Fz(32px) 這個 class
-                const priceSpan = Array.from(doc.querySelectorAll('span')).find(el => el.className && typeof el.className === 'string' && el.className.includes('Fz(32px)'));
+                let priceSpan = Array.from(doc.querySelectorAll('span')).find(el => el.className && typeof el.className === 'string' && el.className.includes('Fz(32px)'));
+
+                // Fallback: 如果 Yahoo 修改了 class 導致 Fz(32px) 失效，改用其他包含小數點或逗號的結構特徵尋找
+                if (!priceSpan) {
+                    priceSpan = Array.from(doc.querySelectorAll('span')).find(el => el.className && typeof el.className === 'string' && el.className.includes('Fw(b)') && (el.innerText.includes(',') || el.innerText.includes('.')));
+                }
+
                 return priceSpan ? parseFloat(priceSpan.innerText.replace(/,/g, '')) : null;
             };
 
@@ -76,10 +116,15 @@ $(function () {
 
         if (webData.taiex) {
             $('#taiex-today').text(webData.taiex.toLocaleString());
+            updateGauge('taiex', webData.taiex);
         }
         if (webData.tpex) {
             $('#tpex-today').text(webData.tpex.toLocaleString());
+            updateGauge('tpex', webData.tpex);
         }
+
+        // 數據更新完成後，將整個市場指數區塊淡入顯示
+        $('#market-summary-section').fadeIn(400);
     }
 
     // 初始化先執行一次

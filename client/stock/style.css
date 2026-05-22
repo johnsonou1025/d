@@ -1,14 +1,15 @@
 /* --- CSS Reset & Variables --- */
 :root {
-    --bg-color: #131722;
-    --card-bg: #1e222d;
-    --text-main: #d1d4dc;
-    --text-muted: #787b86;
-    --border-color: #2a2e39;
-    --accent-color: #2962ff;
-    --success-color: #26a69a;
-    --danger-color: #f23645;
+    --bg-color: #06090f;
+    --card-bg: #0d121d;
+    --text-main: #e2e8f0;
+    --text-muted: #64748b;
+    --border-color: #1e293b;
+    --accent-color: #00f0ff;
+    --success-color: #00ff9d;
+    --danger-color: #ff3366;
     --font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
+    --font-mono: "Consolas", "Courier New", "Roboto Mono", monospace;
 }
 
 * {
@@ -17,11 +18,12 @@
 
 body {
     margin: 0;
-    padding: 20px;
+    padding: 12px;
     font-family: var(--font-family);
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
+    font-variant-numeric: tabular-nums;
 }
 
 h1,
@@ -33,7 +35,7 @@ p {
 }
 
 .container {
-    max-width: 1280px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -42,31 +44,44 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 20px;
-    margin-bottom: 24px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
 }
 
 #header h1 {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
 }
 
 #header p {
-    color: var(--text-muted);
-    font-size: 14px;
+    color: var(--accent-color);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .data-update-time {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--text-muted);
     text-align: right;
+    font-family: var(--font-mono);
 }
 
 /* --- Search Section --- */
 #search-section {
-    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    /* 供下拉選單定位使用 */
+    text-transform: none;
+    /* 避免繼承標題的大寫設定 */
+    letter-spacing: normal;
+    font-weight: normal;
 }
 
 .search-bar {
@@ -76,110 +91,217 @@ p {
 }
 
 #stock-search-input {
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 6px 12px;
+    border-radius: 4px;
     border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-main);
+    background: rgba(0, 240, 255, 0.02);
+    color: var(--accent-color);
     width: 100%;
     max-width: 300px;
     outline: none;
-    font-size: 14px;
-    transition: border-color 0.2s, background-color 0.2s;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #stock-search-input:focus {
     border-color: var(--accent-color);
-    background: var(--bg-color);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
 }
 
 #stock-search-btn {
-    padding: 8px 20px;
-    border-radius: 6px;
-    border: none;
-    background: var(--accent-color);
-    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--accent-color);
+    background: transparent;
+    color: var(--accent-color);
     cursor: pointer;
     font-weight: 600;
-    font-size: 14px;
-    transition: transform 0.1s, background-color 0.1s, opacity 0.2s;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: transform 0.1s, background-color 0.2s, color 0.2s, box-shadow 0.2s;
     white-space: nowrap;
-    /* 避免手機版文字換行 */
 }
 
 #stock-search-btn:hover {
     transform: translateY(-1px);
-    background-color: #1e53e5;
-    opacity: 1;
+    background-color: var(--accent-color);
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
 #stock-search-result {
-    margin-top: 12px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    min-width: 300px;
+    z-index: 100;
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: 4px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     font-size: 14px;
     display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    /* 增加下拉選單的浮空陰影 */
 }
 
 /* --- Market Summary --- */
 #market-summary-section {
-    margin-bottom: 32px;
+    display: none;
+    /* 預設隱藏，等資料載入後由 JS 顯示 */
 }
 
 .market-summary-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
+    gap: 12px;
 }
 
 .market-summary-wrapper h3 {
     margin-top: 0;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     color: var(--text-main);
-    font-size: 16px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
+    font-size: 14px;
+    text-transform: uppercase;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.market-summary-data {
+/* --- Market Summary Gauge --- */
+.market-gauge-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.market-summary-item {
+.market-gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.gauge-label {
     display: flex;
     flex-direction: column;
 }
 
-.market-summary-item:last-child {
-    align-items: flex-end;
+.gauge-label.left {
+    align-items: flex-start;
 }
 
-.market-summary-item:nth-child(2) {
+.gauge-label.center {
     align-items: center;
 }
 
-.market-summary-item span {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
+.gauge-label.right {
+    align-items: flex-end;
 }
 
-.market-summary-item b {
-    font-size: 24px;
+.gauge-label span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.gauge-label b {
+    font-size: 16px;
+    font-family: var(--font-mono);
     color: var(--text-main);
 }
 
-#personal-operations-section,
-#today-suggestions,
-#repeated-trades-section {
-    margin-bottom: 32px;
+.gauge-label.left b {
+    color: var(--success-color);
+}
+
+.gauge-label.right b {
+    color: var(--danger-color);
+}
+
+.gauge-label.center b {
+    font-size: 20px;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.market-gauge-bar {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(0, 255, 157, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 51, 102, 0.15) 100%);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 左右兩側的白圓點 (前低 / 前高) */
+.market-gauge-bar::before,
+.market-gauge-bar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+.market-gauge-bar::before {
+    left: -4px;
+}
+
+.market-gauge-bar::after {
+    right: -4px;
+}
+
+.gauge-fill {
+    height: 100%;
+    /* 雷射拖尾漸層 */
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 240, 255, 0.4) 100%);
+    width: 0%;
+    /* JS 動態控制 */
+    border-radius: 4px;
+    position: relative;
+    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* 帶有機械回彈的過場動畫 */
+    z-index: 2;
+    /* 確保今日藍點蓋過背景白點 */
+}
+
+/* 今日位置的藍圓點 */
+.gauge-fill::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    /* 稍微變大，微調置中 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-color);
+    animation: pulse-glow 2s infinite alternate;
+    /* 呼吸燈動畫 */
+}
+
+/* --- 呼吸燈發光動畫 --- */
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+        transform: translateY(-50%) scale(0.9);
+    }
+
+    100% {
+        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color), 0 0 30px rgba(0, 240, 255, 0.6);
+        transform: translateY(-50%) scale(1.2);
+    }
 }
 
 .operations-wrapper {
@@ -190,18 +312,14 @@ p {
 
 .operation-group .group-title {
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     color: var(--text-main);
-    font-size: 16px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    font-size: 15px;
 }
 
 .countdown-timer {
-    font-size: 13px;
+    font-size: 11px;
+    font-family: var(--font-mono);
     font-weight: normal;
     color: var(--text-muted);
 }
@@ -209,11 +327,7 @@ p {
 .repeated-tables-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
-}
-
-.repeated-tables-wrapper h3 {
-    margin-top: 0;
+    gap: 16px;
 }
 
 /* --- Summary Cards / Personal Operations --- */
@@ -221,80 +335,189 @@ p {
 #summary-cards-qty {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 8px;
+}
+
+#summary-cards>.card,
+#summary-cards-qty>.card,
+#summary-cards-overall>.card {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #summary-cards>.card,
 #summary-cards-qty>.card {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#summary-cards>.card span,
+#summary-cards-qty>.card span,
+#summary-cards>.card h4,
+#summary-cards-qty>.card h4 {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+/* --- Donut Chart in Overall Summary --- */
+#summary-cards-overall {
+    padding: 8px 0;
+    min-height: 142px;
+    /* 增加高度以向下推擠，對齊右側的建議買進標題 */
+    display: flex !important;
+    align-items: center;
+    /* 確保高度增加後，環狀圖依然保持垂直居中 */
+    /* Override grid/flex from inline styles */
+}
+
+.donut-chart-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.donut-chart {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--border-color);
+    /* Fallback color */
+    flex-shrink: 0;
+}
+
+.donut-chart-center {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    background: var(--bg-color);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.chart-center-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.donut-chart-center h4 {
+    font-size: 16px;
+    /* Slightly smaller to fit */
+}
+
+.donut-chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 4px;
+}
+
+.legend-label {
+    color: var(--text-muted);
+    flex-grow: 1;
+}
+
+.legend-value {
+    font-weight: bold;
+    color: var(--text-main);
 }
 
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 20px;
-    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-top: 2px solid #1a2235;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .card:hover {
-    background-color: #2a2e39;
+    background-color: #141a27;
+    border-top: 2px solid var(--accent-color);
 }
 
 .card span {
     display: block;
-    font-size: 13px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .card h4 {
-    font-size: 24px;
+    font-size: 18px;
+    font-family: var(--font-mono);
 }
 
 /* --- Sections --- */
 .section-title {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
     color: var(--text-main);
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .month-profit-loss {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-muted);
-    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .month-profit-loss span {
     color: var(--success-color);
-    font-weight: bold;
-    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    margin-left: 6px;
 }
 
 .title-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .period-select {
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--accent-color);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 13px;
+    padding: 2px 6px;
+    font-size: 11px;
     font-weight: normal;
-    font-family: var(--font-family);
+    font-family: var(--font-mono);
     outline: none;
     cursor: pointer;
-    transition: border-color 0.2s, transform 0.1s;
+    transition: border-color 0.2s;
 }
 
 .period-select:hover,
@@ -302,9 +525,77 @@ p {
     border-color: var(--accent-color);
 }
 
+/* --- Year Tabs --- */
+.year-tabs {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.year-tab {
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    padding: 4px 16px;
+    font-size: 16px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.year-tab.active {
+    background-color: var(--accent-color);
+    color: #000;
+    font-weight: 600;
+}
+
+.year-tab:hover:not(.active) {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Mobile Tabs (手機版主內容切換) --- */
+.mobile-tabs {
+    display: none;
+    /* 預設在桌機版隱藏 */
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.mobile-tab {
+    flex: 1;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    padding: 10px 0;
+    font-size: 15px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.mobile-tab.active {
+    background-color: var(--accent-color);
+    color: #000;
+}
+
+.mobile-tab:hover:not(.active) {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
 h3 {
     font-size: 15px;
-    margin: 24px 0 12px 0;
+    margin: 16px 0 8px 0;
     color: var(--text-main);
 }
 
@@ -312,7 +603,7 @@ h3 {
 .data-table {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -320,7 +611,6 @@ h3 {
 .table-header {
     display: grid;
     border-bottom: 1px solid var(--border-color);
-    border-radius: 0;
     transition: background-color 0.2s;
 }
 
@@ -329,26 +619,29 @@ h3 {
 }
 
 .table-header {
-    background-color: var(--bg-color);
-    border-bottom: 1px solid #282828;
-    border-radius: 0;
+    background-color: #06090f;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .table-row:hover {
-    background-color: #2a2e39;
+    background-color: rgba(0, 240, 255, 0.03);
 }
 
 .table-cell {
-    padding: 12px 16px;
-    font-size: 14px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: var(--font-mono);
     display: flex;
     align-items: center;
 }
 
 .table-header .table-cell {
     color: var(--text-muted);
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-family);
     gap: 4px;
 }
 
@@ -433,38 +726,38 @@ h3 {
 
 .view-all-btn {
     text-align: center;
-    padding: 12px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
+    padding: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
     cursor: pointer;
-    background-color: var(--bg-color);
+    background-color: rgba(0, 240, 255, 0.02);
     border-top: 1px solid var(--border-color);
-    transition: color 0.2s, transform 0.1s;
+    transition: background-color 0.2s;
 }
 
 .view-all-btn:hover {
-    color: var(--text-main);
-    transform: none;
+    background-color: rgba(0, 240, 255, 0.08);
 }
 
 /* --- Scrollbar styling for TradingView look --- */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-color);
+    background: #06090f;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #434651;
-    border-radius: 3px;
+    background: var(--border-color);
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #787b86;
+    background: var(--accent-color);
 }
 
 /* --- Loading State --- */
@@ -493,15 +786,10 @@ body.loading-view .status-wrapper {
 /* --- Desktop View (> 768px) --- */
 @media (min-width: 769px) {
 
-    .operations-wrapper,
-    .repeated-tables-wrapper {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .today-tables-wrapper {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
+        gap: 12px;
     }
 
     .today-tables-wrapper h3 {
@@ -516,23 +804,28 @@ body.loading-view .status-wrapper {
     }
 
     .table-cell {
-        padding: 10px 6px;
-        font-size: 13px;
+        padding: 8px 6px;
+        font-size: 11px;
     }
 
     .operations-wrapper {
-        gap: 32px;
+        gap: 20px;
         /* 手機版時稍微增加兩個策略區塊的上下間距 */
     }
 
     .table-header .table-cell {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .section-title {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+
+    #personal-operations-section .section-title {
+        flex-direction: row;
+        align-items: center;
     }
 
     #header {
@@ -548,24 +841,26 @@ body.loading-view .status-wrapper {
     /* 手機版市場指數區塊改為垂直排列並置中 */
     .market-summary-wrapper h3 {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         gap: 8px;
     }
 
-    .market-summary-data {
-        /* 在手機版上，維持三欄佈局但將內容置中 */
+    .gauge-label span {
+        font-size: 9px;
     }
 
-    .market-summary-item,
-    .market-summary-item:nth-child(2),
-    .market-summary-item:last-child {
-        align-items: center;
-        text-align: center;
+    .gauge-label b {
+        font-size: 14px;
     }
 
-    .market-summary-item b {
-        font-size: 20px;
-        /* 手機版縮小字體以容納三欄 */
+    .gauge-label.center b {
+        font-size: 18px;
+    }
+
+    #summary-cards,
+    #summary-cards-qty,
+    #summary-cards-overall {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -573,7 +868,10 @@ body.loading-view .status-wrapper {
 @media (max-width: 480px) {
 
     #summary-cards,
-    #summary-cards-qty {
+    #summary-cards-qty,
+    #summary-cards-overall {
         grid-template-columns: 1fr;
     }
+}
+}
 }

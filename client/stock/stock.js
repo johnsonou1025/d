@@ -21,11 +21,21 @@ $(async function () {
         // 1. 清空舊數據
         $holdingsTable.find('.table-body').empty();
 
-        // 2. 初始化財務加總變數
-        let totalInv = 0;
-        let totalPL = 0;
-        let totalInvQty = 0; // 定量操作金額
-        let totalPLQty = 0;  // 定量操作損益
+        // 1.5 預先計算持有天數並排序 (由小到大)
+        todayHoldings.forEach(item => {
+            let holdingDays = 0;
+            if (item.firstEntryDate) {
+                const entryDateObj = new Date(item.firstEntryDate);
+                const nowDateObj = new Date();
+                entryDateObj.setHours(0, 0, 0, 0);
+                nowDateObj.setHours(0, 0, 0, 0);
+                const diffTime = nowDateObj.getTime() - entryDateObj.getTime();
+                holdingDays = Math.floor(diffTime / (1000 * 3600 * 24));
+                if (holdingDays < 0) holdingDays = 0;
+            }
+            item._holdingDays = holdingDays;
+        });
+        todayHoldings.sort((a, b) => a._holdingDays - b._holdingDays);
 
         // 3. 一次性渲染表格與計算
         todayHoldings.forEach(item => {
@@ -34,15 +44,6 @@ $(async function () {
             const numRate = parseFloat(rate) || 0;
             const numAvgEntry = parseFloat(avgEntry) || 0;
             const numCurrentPrice = parseFloat(currentPrice) || 0;
-
-            // 計算財務指標 (1. 個股損益 = 進場張數 * 2000 * 報酬率)
-            const itemProfit = numQty * 2000 * (numRate / 100);
-            totalInv += numQty * 2000;
-            totalPL += itemProfit; // (2. 持倉損益 = 全部進場中股票的個股損益相加)
-
-            // 計算財務指標 (定量 20股)
-            totalInvQty += numAvgEntry * numQty * 20;
-            totalPLQty += (numCurrentPrice - numAvgEntry) * numQty * 20;
 
             const $tr = $('<div class="table-row"/>').attr({
                 'data-price': currentPrice,
@@ -55,17 +56,7 @@ $(async function () {
             $('<div class="table-cell"/>').append(sheetName).appendTo($tr);
 
             // 計算持有天數
-            let holdingDays = 0;
-            if (firstEntryDate) {
-                const entryDateObj = new Date(firstEntryDate);
-                const nowDateObj = new Date();
-                // 將時間歸零以計算純天數差異
-                entryDateObj.setHours(0, 0, 0, 0);
-                nowDateObj.setHours(0, 0, 0, 0);
-                const diffTime = nowDateObj.getTime() - entryDateObj.getTime();
-                holdingDays = Math.floor(diffTime / (1000 * 3600 * 24));
-                if (holdingDays < 0) holdingDays = 0;
-            }
+            let holdingDays = item._holdingDays;
             $('<div class="table-cell"/>').append(holdingDays).appendTo($tr);
             $('<div class="table-cell"/>').append(numCurrentPrice).appendTo($tr);
 
@@ -96,23 +87,8 @@ $(async function () {
 
         // 4. 更新看板數據
 
-        // 定額區塊
-        $('#holding-shares-count').text(todayHoldings.length);
-        $('#holding-investment-amount').text(Math.round(totalInv).toLocaleString());
-
-        const $plEl = $('#holding-profit-loss');
-        const totalPLRate = totalInv > 0 ? (totalPL / totalInv * 100) : 0;
-        $plEl.text(Math.round(totalPL).toLocaleString() + '(' + Math.round(totalPLRate).toLocaleString() + '%)');
-        $plEl.css('color', totalPL >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
-
-        // 定量區塊
-        $('#holding-shares-count-qty').text(todayHoldings.length);
-        $('#holding-investment-amount-qty').text(Math.round(totalInvQty).toLocaleString());
-
-        const $plQtyEl = $('#holding-profit-loss-qty');
-        const totalPLRateQty = totalInvQty > 0 ? (totalPLQty / totalInvQty * 100) : 0;
-        $plQtyEl.text(Math.round(totalPLQty).toLocaleString() + '(' + Math.round(totalPLRateQty).toLocaleString() + '%)');
-        $plQtyEl.css('color', totalPLQty >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+        // 更新進場中股票的持倉總數
+        $('#total-holding-count b').text(todayHoldings.length);
 
         /**
          * 歷史紀錄數據
@@ -120,92 +96,116 @@ $(async function () {
         const $soldTable = $('#sold-stocks .data-table');
         const dailyTrades = Array.isArray(data.dailyTrades) ? data.dailyTrades : [];
 
+        // --- 操作績效：依照年份動態渲染 ---
+        function renderOperationsByYear(year) {
+            $('.ops-year-label').text(year);
+
+            // 1. 整體數據總覽
+            const sellTradesByYear = dailyTrades.filter(item => item.state === "sell" && item.time && String(item.time).includes(year));
+
+            let profitTradesCount = 0;
+            let lossTradesCount = 0;
+            let totalProfitYear = 0;
+
+            sellTradesByYear.forEach(item => {
+                const rate = parseFloat(item.rate);
+                // 報酬率 > 0 才算正獲利, 其餘 (<= 0 或無效值) 都計入負獲利, 確保總數相符
+                if (rate > 0) {
+                    profitTradesCount++;
+                } else {
+                    lossTradesCount++;
+                }
+                // 確保文字轉數字時不會因為包含逗號等格式而出錯
+                totalProfitYear += (Number(String(item.benefit).replace(/,/g, '')) || 0);
+            });
+
+            const totalTrades = sellTradesByYear.length;
+
+            // 更新圖例數據
+            $('#overall-sold-count').text(totalTrades);
+            $('#overall-profit-count').text(profitTradesCount);
+            $('#overall-loss-count').text(lossTradesCount);
+
+            // 更新圖表中心總獲利
+            const $profitEl = $('#overall-total-profit');
+            $profitEl.text(Math.round(totalProfitYear).toLocaleString());
+            $profitEl.css('color', totalProfitYear >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+
+            // 更新環狀圖
+            const profitPercentage = totalTrades > 0 ? (profitTradesCount / totalTrades) * 100 : 0;
+            $('.donut-chart').css('background', `conic-gradient(var(--success-color) 0% ${profitPercentage}%, var(--danger-color) ${profitPercentage}% 100%)`);
+
+            // 2. 獨立計算總覽卡片的賣出定額/定量收益
+            function renderSummarySellCard(isQty = false) {
+                let sumProfit = 0;
+                let sumAmount = 0;
+
+                const yInt = parseInt(year, 10);
+                // 計算日期: 依照年份 01-01 ~ 12-31
+                const startDate = new Date(yInt, 0, 1, 0, 0, 0, 0);
+                const endDate = new Date(yInt, 11, 31, 23, 59, 59, 999);
+
+                dailyTrades.filter(item => {
+                    if (item.state !== "sell" || !item.time) return false;
+                    // 安全轉型為時間物件，精準篩選範圍
+                    const tradeDate = new Date(item.time);
+                    return tradeDate >= startDate && tradeDate <= endDate;
+                }).forEach(item => {
+                    const numQty = Number(item.quantity) || 0;     // 個股張數
+                    const numRate = parseFloat(item.rate) || 0;    // 報酬率
+                    const numAvgEntry = parseFloat(item.avgEntry) || 0;
+
+                    if (isQty) {
+                        // 定量操作 (20股):
+                        const itemProfit = numAvgEntry * (numQty * 20) * (numRate / 100);
+                        sumProfit += itemProfit;
+                        sumAmount += numAvgEntry * (numQty * 20);
+                    } else {
+                        // 定額操作 (2000NT):
+                        const itemProfit = numQty * 2000 * numRate / 100;
+                        sumProfit += itemProfit;
+                        sumAmount += 2000 * numQty;
+                    }
+                });
+
+                const sumRate = sumAmount > 0 ? (sumProfit / sumAmount * 100) : 0;
+
+                const $invEl = isQty ? $('#sold-investment-amount-qty') : $('#sold-investment-amount');
+                $invEl.text(Math.round(sumAmount).toLocaleString());
+
+                const $targetEl = isQty ? $('#sell-month-profit-loss-qty') : $('#sell-month-profit-loss');
+                $targetEl.text(Math.round(sumProfit).toLocaleString() + '(' + Math.round(sumRate).toLocaleString() + '%)');
+                $targetEl.css('color', sumProfit >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+            }
+
+            renderSummarySellCard(false); // 定額操作
+            renderSummarySellCard(true);  // 定量操作
+        }
+
+        // 綁定操作績效年份切換事件 (Tab)
+        $('#operations-year-tabs .year-tab').on('click', function () {
+            if ($(this).hasClass('active')) return;
+            $('#operations-year-tabs .year-tab').removeClass('active');
+            $(this).addClass('active');
+            renderOperationsByYear($(this).attr('data-year'));
+        });
+
+        // 預設載入 2026 年數據
+        renderOperationsByYear('2026');
+
         const $periodSelect = $('#sold-period-select');
-        const $summaryPeriodSelect = $('#summary-period-select');
-        const $summaryPeriodSelectQty = $('#summary-period-select-qty');
         const summaryNow = new Date();
 
         // --- 動態產生下拉選單選項：近30天 + 近6個單月 ---
         $periodSelect.empty();
-        $summaryPeriodSelect.empty();
-        $summaryPeriodSelectQty.empty();
         $periodSelect.append('<option value="30days" selected>近30天</option>');
-        $summaryPeriodSelect.append('<option value="30days" selected>近30天</option>');
-        $summaryPeriodSelectQty.append('<option value="30days" selected>近30天</option>');
         for (let i = 0; i < 6; i++) {
             const d = new Date(summaryNow.getFullYear(), summaryNow.getMonth() - i, 1);
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
             const optionHtml = `<option value="${y}-${m}">${y}/${m}</option>`;
             $periodSelect.append(optionHtml);
-            $summaryPeriodSelect.append(optionHtml);
-            $summaryPeriodSelectQty.append(optionHtml);
         }
-
-        // --- 獨立計算總覽卡片的賣出定額/定量收益 ---
-        function renderSummarySellCard(period, isQty = false) {
-            const now = new Date();
-            let startDate = '';
-            let endDate = '9999-12-31';
-
-            if (period === '30days') {
-                const thirtyDaysAgo = new Date();
-                thirtyDaysAgo.setDate(now.getDate() - 30);
-                const y = thirtyDaysAgo.getFullYear();
-                const m = String(thirtyDaysAgo.getMonth() + 1).padStart(2, '0');
-                const d = String(thirtyDaysAgo.getDate()).padStart(2, '0');
-                startDate = `${y}-${m}-${d}`;
-            } else {
-                const [yStr, mStr] = period.split('-');
-                const year = parseInt(yStr, 10);
-                const month = parseInt(mStr, 10) - 1;
-
-                const firstDay = new Date(year, month, 1);
-                const lastDay = new Date(year, month + 1, 0);
-
-                const y1 = firstDay.getFullYear();
-                const m1 = String(firstDay.getMonth() + 1).padStart(2, '0');
-                const d1 = String(firstDay.getDate()).padStart(2, '0');
-                const y2 = lastDay.getFullYear();
-                const m2 = String(lastDay.getMonth() + 1).padStart(2, '0');
-                const d2 = String(lastDay.getDate()).padStart(2, '0');
-                startDate = `${y1}-${m1}-${d1}`;
-                endDate = `${y2}-${m2}-${d2}`;
-            }
-
-            let sumProfit = 0;
-            let sumAmount = 0;
-
-            dailyTrades.filter(item => item.state === "sell" && item.time >= startDate && item.time <= endDate).forEach(item => {
-                const numQty = Number(item.quantity) || 0;
-                const numRate = parseFloat(item.rate) || 0;
-                const numAvgEntry = parseFloat(item.avgEntry) || 0;
-
-                if (isQty) {
-                    // 定量: (賣出價 - 均價) * 張數 * 20。價差直接用 均價 * 報酬率 算出
-                    sumProfit += numAvgEntry * (numRate / 100) * numQty * 20;
-                    sumAmount += numAvgEntry * numQty * 20;
-                } else {
-                    // 定額
-                    sumProfit += 2000 * numQty * (numRate / 100);
-                    sumAmount += 2000 * numQty;
-                }
-            });
-
-            const sumRate = sumAmount > 0 ? (sumProfit / sumAmount * 100) : 0;
-            const $targetEl = isQty ? $('#sell-month-profit-loss-qty') : $('#sell-month-profit-loss');
-            $targetEl.text(Math.round(sumProfit).toLocaleString() + '(' + Math.round(sumRate).toLocaleString() + '%)');
-        }
-
-        $summaryPeriodSelect.on('change', function () {
-            renderSummarySellCard($(this).val(), false);
-        });
-        $summaryPeriodSelectQty.on('change', function () {
-            renderSummarySellCard($(this).val(), true);
-        });
-
-        renderSummarySellCard('30days', false);
-        renderSummarySellCard('30days', true);
 
         function renderSoldTable(period) {
             const now = new Date();
@@ -304,13 +304,6 @@ $(async function () {
         // --- 分析重複交易排行 ---
         const tradeStats = {};
         const sellTradesForRank = dailyTrades.filter(item => item.state === "sell");
-
-        if (sellTradesForRank.length > 0) {
-            const earliestDate = sellTradesForRank.map(t => t.time).filter(t => t).sort()[0];
-            if (earliestDate) {
-                $('#repeated-trades-date-range').text(`(從 ${earliestDate} 至今)`);
-            }
-        }
 
         sellTradesForRank.forEach(item => {
             const name = item.sheetName;
@@ -547,6 +540,22 @@ $(function () {
             $('head').append('<link rel="stylesheet" href="theme-light.css" id="theme-light-css">');
             localStorage.setItem('theme', 'light');
             updateThemeUI(true);
+        }
+    });
+});
+
+// --- 手機版主內容 Tab 切換 ---
+$(function () {
+    $('.mobile-tab').on('click', function () {
+        if ($(this).hasClass('active')) return;
+        $('.mobile-tab').removeClass('active');
+        $(this).addClass('active');
+
+        const target = $(this).data('target');
+        if (target === 'personal') {
+            $('.content-wrapper').removeClass('show-main').addClass('show-personal');
+        } else {
+            $('.content-wrapper').removeClass('show-personal').addClass('show-main');
         }
     });
 });

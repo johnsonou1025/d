@@ -4,13 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#131722">
+    <meta name="theme-color" content="#06090f">
     <title>沈發財股票數據平台 V2</title>
     <script src="jquery-3.7.0.min.js"></script>
     <script src="stock.js"></script>
     <script src="market-charts.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* === 佈局：將選單與主內容放在同一行 === */
+        .content-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        #personal-operations-section {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            /* 避免 flex item 溢出 */
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* 確保側邊欄內部的群組垂直排列 */
+        #personal-operations-section .operations-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* 為了側邊選單卡片排版，將原本是橫向的卡片群組改為直向堆疊 */
+        #summary-cards,
+        #summary-cards-qty {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* 覆寫行內可能存在的 grid-column 設定 */
+        .operation-group[style] {
+            grid-column: unset !important;
+        }
+
+        /* 響應式：小螢幕時改為垂直排列 */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            #personal-operations-section {
+                width: 100%;
+            }
+
+            /* 平板/手機版時恢復為橫向網格排列 (交由 style.css 接手 RWD) */
+            #personal-operations-section .operations-wrapper,
+            #summary-cards,
+            #summary-cards-qty {
+                display: grid;
+            }
+
+            /* === 手機版 Tab 切換邏輯 === */
+            .mobile-tabs {
+                display: flex;
+            }
+
+            .content-wrapper.show-personal .main-content {
+                display: none !important;
+            }
+
+            .content-wrapper.show-main #personal-operations-section {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -28,164 +100,61 @@
             <div class="data-update-time"></div>
         </header>
 
-        <main class="main-content">
-            <!-- 搜尋區塊 -->
-            <div id="search-section">
-                <div class="search-bar">
-                    <input type="text" id="stock-search-input" placeholder="輸入股票代碼或名稱搜尋...">
-                    <button id="stock-search-btn">搜尋</button>
-                </div>
-                <div id="stock-search-result"></div>
+        <div class="content-wrapper show-personal">
+            <!-- 手機版主內容切換標籤 -->
+            <div class="mobile-tabs">
+                <button class="mobile-tab active" data-target="personal">操作績效</button>
+                <button class="mobile-tab" data-target="main">市場動態</button>
             </div>
 
-            <!-- 市場指數 (近20天) -->
-            <div id="market-summary-section">
-                <h2 class="section-title">市場指數 (近20天)</h2>
-                <div class="market-summary-wrapper">
-                    <div class="card">
-                        <h3>
-                            加權指數
-                            <span class="countdown-timer" id="taiex-countdown"></span>
-                        </h3>
-                        <div class="market-summary-data">
-                            <div class="market-summary-item">
-                                <span>前高（壓力位）</span>
-                                <b id="taiex-high">-</b>
-                            </div>
-                            <div class="market-summary-item">
-                                <span>前低（支撐位）</span>
-                                <b id="taiex-low">-</b>
-                            </div>
-                            <div class="market-summary-item">
-                                <span>今日數字</span>
-                                <b id="taiex-today">-</b>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>
-                            櫃買指數
-                            <span class="countdown-timer" id="tpex-countdown"></span>
-                        </h3>
-                        <div class="market-summary-data">
-                            <div class="market-summary-item">
-                                <span>前高（壓力位）</span>
-                                <b id="tpex-high">-</b>
-                            </div>
-                            <div class="market-summary-item">
-                                <span>前低（支撐位）</span>
-                                <b id="tpex-low">-</b>
-                            </div>
-                            <div class="market-summary-item">
-                                <span>今日數字</span>
-                                <b id="tpex-today">-</b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 今日操作建議 -->
-            <div id="today-suggestions">
-                <h2 class="section-title">今日操作建議</h2>
-
-                <div class="today-tables-wrapper">
-                    <div id="today-buy">
-                        <h3>建議買進</h3>
-                        <div class="data-table">
-                            <div class="table-header">
-                                <div class="table-cell">日期</div>
-                                <div class="table-cell">名稱</div>
-                                <div class="table-cell">買進價格</div>
-                            </div>
-                            <div class="table-body"></div>
-                        </div>
-                    </div>
-
-                    <div id="today-sell">
-                        <h3>建議賣出</h3>
-                        <div class="data-table">
-                            <div class="table-header">
-                                <div class="table-cell">日期</div>
-                                <div class="table-cell">名稱</div>
-                                <div class="table-cell">報酬率</div>
-                            </div>
-                            <div class="table-body"></div>
-                        </div>
-                    </div>
-
-                    <div id="today-strong">
-                        <h3>強勢股推薦</h3>
-                        <div class="data-table">
-                            <div class="table-header">
-                                <div class="table-cell">日期</div>
-                                <div class="table-cell">股票代號</div>
-                                <div class="table-cell">進場價格</div>
-                            </div>
-                            <div class="table-body"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 重複交易排行 -->
-            <div id="repeated-trades-section">
-                <h2 class="section-title">
-                    重複交易排行
-                    <span id="repeated-trades-date-range"
-                        style="font-size: 14px; color: var(--text-muted); font-weight: normal;"></span>
-                </h2>
-                <div class="repeated-tables-wrapper">
-                    <div id="top-profit-trades">
-                        <h3>獲利 Top 5</h3>
-                        <div class="data-table">
-                            <div class="table-header">
-                                <div class="table-cell">股票名稱</div>
-                                <div class="table-cell">結算次數</div>
-                                <div class="table-cell">總獲利</div>
-                            </div>
-                            <div class="table-body"></div>
-                        </div>
-                    </div>
-                    <div id="top-loss-trades">
-                        <h3>虧損 Top 5</h3>
-                        <div class="data-table">
-                            <div class="table-header">
-                                <div class="table-cell">股票名稱</div>
-                                <div class="table-cell">結算次數</div>
-                                <div class="table-cell">總獲利</div>
-                            </div>
-                            <div class="table-body"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 個人操作績效 -->
+            <!-- 個人操作績效 (與主內容同一行) -->
             <div id="personal-operations-section">
-                <h2 class="section-title">個人操作績效</h2>
+                <h2 class="section-title">
+                    操作績效
+                    <div id="operations-year-tabs" class="year-tabs">
+                        <button class="year-tab" data-year="2025">2025</button>
+                        <button class="year-tab active" data-year="2026">2026</button>
+                    </div>
+                </h2>
                 <div class="operations-wrapper">
+
+                    <div class="operation-group" style="grid-column: 1 / -1;">
+                        <div id="summary-cards-overall">
+                            <div class="donut-chart-wrapper">
+                                <div class="donut-chart">
+                                    <div class="donut-chart-center">
+                                        <span class="chart-center-label"><span class="ops-year-label">2026</span>
+                                            總獲利</span>
+                                        <h4 id="overall-total-profit">-</h4>
+                                    </div>
+                                </div>
+                                <div class="donut-chart-legend">
+                                    <div class="legend-item"><span class="legend-color"
+                                            style="background-color: var(--success-color);"></span><span
+                                            class="legend-label">正獲利次數</span><span class="legend-value"
+                                            id="overall-profit-count">-</span></div>
+                                    <div class="legend-item"><span class="legend-color"
+                                            style="background-color: var(--danger-color);"></span><span
+                                            class="legend-label">負獲利次數</span><span class="legend-value"
+                                            id="overall-loss-count">-</span></div>
+                                    <div class="legend-item"><span class="legend-color"
+                                            style="background-color: var(--text-muted);"></span><span
+                                            class="legend-label">總交易次數</span><span class="legend-value"
+                                            id="overall-sold-count">-</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="operation-group">
                         <h3 class="group-title">單筆定額操作 ( 2000NT )</h3>
                         <div id="summary-cards">
                             <div class="card">
-                                <span>持倉總數</span>
-                                <h4 id="holding-shares-count">-</h4>
+                                <span>已出場操作金額</span>
+                                <h4 id="sold-investment-amount">-</h4>
                             </div>
                             <div class="card">
-                                <span>持倉金額</span>
-                                <h4 id="holding-investment-amount">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>持倉損益</span>
-                                <h4 id="holding-profit-loss">-</h4>
-                            </div>
-                            <div class="card">
-                                <span style="display: flex; align-items: center; justify-content: space-between;">
-                                    賣出收益
-                                    <select id="summary-period-select" class="period-select"></select>
-                                </span>
+                                <span>總獲利金額 / 總獲利率</span>
                                 <h4 id="sell-month-profit-loss">-</h4>
                             </div>
                         </div>
@@ -195,23 +164,40 @@
                         <h3 class="group-title">單筆定量操作 ( 20股 )</h3>
                         <div id="summary-cards-qty">
                             <div class="card">
-                                <span>持倉總數</span>
-                                <h4 id="holding-shares-count-qty">-</h4>
+                                <span>已出場操作金額</span>
+                                <h4 id="sold-investment-amount-qty">-</h4>
                             </div>
                             <div class="card">
-                                <span>持倉金額</span>
-                                <h4 id="holding-investment-amount-qty">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>持倉損益</span>
-                                <h4 id="holding-profit-loss-qty">-</h4>
-                            </div>
-                            <div class="card">
-                                <span style="display: flex; align-items: center; justify-content: space-between;">
-                                    賣出收益
-                                    <select id="summary-period-select-qty" class="period-select"></select>
-                                </span>
+                                <span>總獲利金額 / 總獲利率</span>
                                 <h4 id="sell-month-profit-loss-qty">-</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 重複交易排行 -->
+                    <div id="repeated-trades-section">
+                        <div class="repeated-tables-wrapper">
+                            <div id="top-profit-trades" class="operation-group">
+                                <h3 class="group-title">重覆進場獲利 Top5</h3>
+                                <div class="data-table">
+                                    <div class="table-header">
+                                        <div class="table-cell">股票名稱</div>
+                                        <div class="table-cell">結算次數</div>
+                                        <div class="table-cell">總獲利</div>
+                                    </div>
+                                    <div class="table-body"></div>
+                                </div>
+                            </div>
+                            <div id="top-loss-trades" class="operation-group">
+                                <h3 class="group-title">重覆進場虧損 Top5</h3>
+                                <div class="data-table">
+                                    <div class="table-header">
+                                        <div class="table-cell">股票名稱</div>
+                                        <div class="table-cell">結算次數</div>
+                                        <div class="table-cell">總獲利</div>
+                                    </div>
+                                    <div class="table-body"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -219,61 +205,172 @@
                 </div>
             </div>
 
-            <br>
-
-            <!-- 進場中股票 -->
-            <div id="current-holdings">
-                <h2 class="section-title">進場中股票</h2>
-                <div class="data-table">
-                    <div class="table-header">
-                        <div class="table-cell">名稱<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                            </svg></div>
-                        <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
-                                class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                            </svg></div>
-                        <div class="table-cell">目前價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                            </svg></div>
-                        <div class="table-cell">報酬率<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                            </svg></div>
+            <main class="main-content">
+                <!-- 市場指數 (近20天) -->
+                <div id="market-summary-section">
+                    <h2 class="section-title">
+                        市場指數 (近20天)
+                        <!-- 搜尋區塊 -->
+                        <div id="search-section">
+                            <div class="search-bar">
+                                <input type="text" id="stock-search-input" placeholder="輸入股票代碼或名稱搜尋...">
+                                <button id="stock-search-btn">搜尋</button>
+                            </div>
+                            <div id="stock-search-result"></div>
+                        </div>
+                    </h2>
+                    <div class="market-summary-wrapper">
+                        <div class="card">
+                            <h3>
+                                加權指數
+                                <span class="countdown-timer" id="taiex-countdown"></span>
+                            </h3>
+                            <div class="market-gauge-wrapper">
+                                <div class="market-gauge-bar">
+                                    <div class="gauge-fill" id="taiex-gauge"></div>
+                                </div>
+                                <div class="market-gauge-labels">
+                                    <div class="gauge-label left">
+                                        <span>前低 (支撐)</span>
+                                        <b id="taiex-low">-</b>
+                                    </div>
+                                    <div class="gauge-label center">
+                                        <span>今日指數</span>
+                                        <b id="taiex-today">-</b>
+                                    </div>
+                                    <div class="gauge-label right">
+                                        <span>前高 (壓力)</span>
+                                        <b id="taiex-high">-</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>
+                                櫃買指數
+                                <span class="countdown-timer" id="tpex-countdown"></span>
+                            </h3>
+                            <div class="market-gauge-wrapper">
+                                <div class="market-gauge-bar">
+                                    <div class="gauge-fill" id="tpex-gauge"></div>
+                                </div>
+                                <div class="market-gauge-labels">
+                                    <div class="gauge-label left">
+                                        <span>前低 (支撐)</span>
+                                        <b id="tpex-low">-</b>
+                                    </div>
+                                    <div class="gauge-label center">
+                                        <span>今日指數</span>
+                                        <b id="tpex-today">-</b>
+                                    </div>
+                                    <div class="gauge-label right">
+                                        <span>前高 (壓力)</span>
+                                        <b id="tpex-high">-</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-body"></div>
                 </div>
-            </div>
 
-            <br>
+                <!-- 今日操作建議 -->
+                <div id="today-suggestions">
+                    <div class="today-tables-wrapper">
+                        <div id="today-buy">
+                            <h3>建議買進</h3>
+                            <div class="data-table">
+                                <div class="table-header">
+                                    <div class="table-cell">日期</div>
+                                    <div class="table-cell">名稱</div>
+                                    <div class="table-cell">買進價格</div>
+                                </div>
+                                <div class="table-body"></div>
+                            </div>
+                        </div>
 
-            <!-- 已賣出股票 -->
-            <div id="sold-stocks">
-                <h2 class="section-title">
-                    已賣出股票
-                    <div class="title-actions">
-                        <select id="sold-period-select" class="period-select">
-                        </select>
-                        <div class="month-profit-loss">累計損益<span>-</span></div>
+                        <div id="today-sell">
+                            <h3>建議賣出</h3>
+                            <div class="data-table">
+                                <div class="table-header">
+                                    <div class="table-cell">日期</div>
+                                    <div class="table-cell">名稱</div>
+                                    <div class="table-cell">報酬率</div>
+                                </div>
+                                <div class="table-body"></div>
+                            </div>
+                        </div>
+
+                        <div id="today-strong">
+                            <h3>強勢股推薦</h3>
+                            <div class="data-table">
+                                <div class="table-header">
+                                    <div class="table-cell">日期</div>
+                                    <div class="table-cell">股票代號</div>
+                                    <div class="table-cell">進場價格</div>
+                                </div>
+                                <div class="table-body"></div>
+                            </div>
+                        </div>
                     </div>
-                </h2>
-                <div class="data-table">
-                    <div class="table-header">
-                        <div class="table-cell">賣出日期</div>
-                        <div class="table-cell">名稱</div>
-                        <div class="table-cell">進場均價(張數)</div>
-                        <div class="table-cell">獲利金額(報酬率)</div>
-                    </div>
-                    <div class="table-body"></div>
                 </div>
-            </div>
-        </main>
+
+                <!-- 進場中股票 -->
+                <div id="current-holdings">
+                    <h2 class="section-title">
+                        進場中股票
+                        <span id="total-holding-count"
+                            style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); font-weight: normal; letter-spacing: 0.05em; text-transform: uppercase;">持倉總數:
+                            <b style="color: var(--text-main); font-size: 16px; margin-left: 4px;">-</b></span>
+                    </h2>
+                    <div class="data-table">
+                        <div class="table-header">
+                            <div class="table-cell">名稱<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                            <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
+                                    class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                            <div class="table-cell">目前價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                            <div class="table-cell">報酬率<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                        </div>
+                        <div class="table-body"></div>
+                    </div>
+                </div>
+
+                <!-- 已賣出股票 -->
+                <div id="sold-stocks">
+                    <h2 class="section-title">
+                        已賣出股票
+                        <div class="title-actions">
+                            <select id="sold-period-select" class="period-select">
+                            </select>
+                            <div class="month-profit-loss">累計損益<span>-</span></div>
+                        </div>
+                    </h2>
+                    <div class="data-table">
+                        <div class="table-header">
+                            <div class="table-cell">賣出日期</div>
+                            <div class="table-cell">名稱</div>
+                            <div class="table-cell">進場均價(張數)</div>
+                            <div class="table-cell">獲利金額(報酬率)</div>
+                        </div>
+                        <div class="table-body"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 </body>
 
