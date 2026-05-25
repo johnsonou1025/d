@@ -145,14 +145,14 @@
 
     <script>
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzlHW96hEppgLs3tbmYQxXHcgYM4EI3vyIZVqzjmJF98hpvhf0YD8sL54lXlBNSjP4/exec';
-        const TEST_MEMBER_ID = 'Cooper'; // 測試用 ID
+        const TEST_MEMBER_NAME = 'Cooper'; // 測試用名稱 (對應 Google Sheet 上的 Name)
 
         // --- 計時器邏輯 ---
         let timeRemaining = 0; // 初始設為 0
         let isRunning = false; // 預設進來是未開始狀態
         let timerInterval = null;
-        let actualMemberId = TEST_MEMBER_ID; // 儲存真實的 Member ID
-        let unSyncedSeconds = 0; // 新增：用來追蹤尚未同步到後端的消耗秒數
+        let lastTickTime = null; // 紀錄上次計算時間，避免背景降頻
+        let actualMemberId = null; // 儲存真實的 Member ID (例如 M01)
 
         const displayEl = document.getElementById('timer-display');
         const ringEl = document.getElementById('timer-ring');
@@ -172,89 +172,117 @@
                 return;
             }
 
-            isRunning = !isRunning;
+            const newState = !isRunning;
+            setTimerStatusOnServer(newState);
+        }
+
+        function applyTimerState(running) {
+            if (isRunning === running) return;
+            isRunning = running;
             if (isRunning) {
                 iconPause.style.display = 'block';
                 iconPlay.style.display = 'none';
                 ringEl.style.opacity = '1';
-                startTimer();
+                startLocalTimer();
             } else {
                 iconPause.style.display = 'none';
                 iconPlay.style.display = 'block';
-                ringEl.style.opacity = '0.3'; // 暫停時外環變暗
-                clearInterval(timerInterval);
-                syncRemainingTime(); // 暫停時同步剩餘時間至 GAS
+                ringEl.style.opacity = '0.3';
+                stopLocalTimer();
             }
         }
 
-        function startTimer() {
+        function startLocalTimer() {
             clearInterval(timerInterval);
+            lastTickTime = Date.now();
             timerInterval = setInterval(() => {
+                const now = Date.now();
+                const elapsed = Math.round((now - lastTickTime) / 1000);
+                if (elapsed < 1) return; // 避免過度觸發
+
+                lastTickTime = now;
                 if (timeRemaining > 0) {
-                    timeRemaining--;
-                    unSyncedSeconds++;
+                    timeRemaining -= Math.min(elapsed, timeRemaining);
                     updateDisplay();
-                } else {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    iconPause.style.display = 'none';
-                    iconPlay.style.display = 'block';
-                    ringEl.style.opacity = '0.3';
-                    syncRemainingTime(); // 倒數結束時同步 (剩餘 0)
-                    alert('時間到！');
+
+                    if (timeRemaining <= 0) {
+                        applyTimerState(false);
+                        setTimerStatusOnServer(false);
+                        alert('時間到！請讓眼睛休息一下。');
+                    }
                 }
             }, 1000);
         }
 
-        // --- 同步剩餘時間至 GAS ---
-        async function syncRemainingTime() {
-            if (unSyncedSeconds <= 0) return; // 只要有未同步的秒數就處理
-            try {
-                // 改為傳送精確的分鐘數(含小數點的秒數轉換)，避免覆蓋背景(如家長)的調整
-                const consumedMinutes = unSyncedSeconds / 60;
-                const secondsToSync = unSyncedSeconds;
+        function stopLocalTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
 
+        // --- 向 Server 更新計時狀態 ---
+        let syncLockedUntil = null;
+
+        async function setTimerStatusOnServer(targetRunningState) {
+            applyTimerState(targetRunningState); // 樂觀 UI 更新
+            syncLockedUntil = Date.now() + 8000; // 鎖定 8 秒，防止被舊的輪詢狀態覆蓋
+
+            try {
+                const command = targetRunningState ? 'start' : 'stop';
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({
                         apiKey: 'TQ-2026-STRICT-AUTH',
-                        action: 'consumeTime',
-                        memberId: actualMemberId, // 傳送真實的 Member ID 給後端
-                        consumedMinutes: consumedMinutes
+                        action: 'controlTimer',
+                        memberId: actualMemberId || TEST_MEMBER_NAME,
+                        command: command
                     })
                 });
 
                 const result = await response.json();
-                if (result.success === false) throw new Error(result.message);
-                console.log(`✅ 已異步同步消耗時間至 GAS: ${consumedMinutes.toFixed(2)} 分鐘`);
-                unSyncedSeconds -= secondsToSync; // 扣除已同步的時間
+                if (result.success) {
+                    syncLockedUntil = 0; // 提早解除防閃爍鎖定
+                    pollTimer(); // 強制即時觸發一次同步
+                }
             } catch (error) {
-                console.error('同步時間失敗:', error);
+                console.error('控制計時器失敗:', error);
             }
         }
 
-        // --- 向 GAS 請求可用時間 ---
-        async function fetchTimerData() {
+        // --- 定時輪詢最新狀態 (每 5 秒同步其他裝置的行為) ---
+        async function pollTimer() {
             try {
-                const response = await fetch(`${GAS_API_URL}?action=getChildDashboard&memberId=${TEST_MEMBER_ID}`);
+                const response = await fetch(`${GAS_API_URL}?action=getChildDashboard&memberId=${TEST_MEMBER_NAME}`);
                 if (!response.ok) throw new Error('網路連線錯誤');
 
                 const result = await response.json();
                 if (result.success === false) throw new Error(result.message);
 
                 // 儲存後端回傳的真實 Member ID (例如 M01)
-                actualMemberId = result.memberInfo.MemberID || TEST_MEMBER_ID;
+                actualMemberId = result.memberInfo.MemberID || TEST_MEMBER_NAME;
 
-                // 取得可用時間 (分鐘) 並轉換為秒數
-                const availableMinutes = Number(result.memberInfo.TotalTime || result.memberInfo['可用時間']) || 0;
-                timeRemaining = Math.round(availableMinutes * 60);
+                const timerInfo = result.timer || { isRunning: false };
+                let availableSeconds = Math.round(Number(result.memberInfo.TotalTime || result.memberInfo['可用時間'] || 0) * 60);
 
-                updateDisplay();
+                if (timerInfo.isRunning && timerInfo.startTime) {
+                    const elapsedSeconds = Math.max(0, Math.floor((result.serverNow - timerInfo.startTime) / 1000));
+                    availableSeconds = Math.max(0, availableSeconds - elapsedSeconds);
+                }
+
+                const isLocked = syncLockedUntil && Date.now() < syncLockedUntil;
+
+                if (!isLocked) {
+                    // 若狀態為暫停，或時間差異大於 2 秒，則強制對齊伺服器精準時間
+                    if (!timerInfo.isRunning || Math.abs(timeRemaining - availableSeconds) > 2) {
+                        timeRemaining = availableSeconds;
+                        updateDisplay();
+                    }
+                    applyTimerState(timerInfo.isRunning);
+                }
             } catch (error) {
-                console.error('取得資料失敗:', error);
-                alert('載入可用時間失敗，請稍後再試。');
-                displayEl.textContent = '00';
+                console.error('同步輪詢失敗:', error);
             }
         }
 
@@ -265,8 +293,9 @@
             document.body.classList.add('dark-mode');
         }
 
-        // 初始化執行
-        fetchTimerData();
+        // 初始化執行與啟動輪詢
+        pollTimer();
+        setInterval(pollTimer, 5000);
     </script>
 </body>
 

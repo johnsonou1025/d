@@ -600,6 +600,7 @@
             // Optimistic UI update (提早反應 UI)
             if (memberTimers[memberId]) {
                 memberTimers[memberId].isRunning = isRunning;
+                memberTimers[memberId].syncLockedUntil = Date.now() + 8000; // 鎖定 8 秒，防止被舊的輪詢狀態覆蓋
             }
             if (isRunning) startMasterTimer();
             updateEntryRolesTime();
@@ -620,6 +621,7 @@
 
                 const result = await response.json();
                 if (result.success) {
+                    if (memberTimers[memberId]) memberTimers[memberId].syncLockedUntil = 0; // 提早解除防閃爍鎖定
                     pollTimers(); // 強制即時觸發一次同步拉取最新總時間
                 }
             } catch (error) {
@@ -651,14 +653,19 @@
                     if (!memberTimers[id]) {
                         memberTimers[id] = { timeRemaining: availableSeconds, isRunning: timerInfo.isRunning };
                     } else {
-                        // 為了避免本地時間跳動頻繁，容許誤差2秒內不硬更新，差異過大才刷新
-                        if (Math.abs(memberTimers[id].timeRemaining - availableSeconds) > 2) {
-                            memberTimers[id].timeRemaining = availableSeconds;
+                        // 檢查該成員是否正在進行狀態更新
+                        const isLocked = memberTimers[id].syncLockedUntil && Date.now() < memberTimers[id].syncLockedUntil;
+
+                        if (!isLocked) {
+                            // 若狀態為暫停，或時間差異大於 2 秒，則強制對齊伺服器精準時間
+                            if (!timerInfo.isRunning || Math.abs(memberTimers[id].timeRemaining - availableSeconds) > 2) {
+                                memberTimers[id].timeRemaining = availableSeconds;
+                            }
+                            memberTimers[id].isRunning = timerInfo.isRunning;
                         }
-                        memberTimers[id].isRunning = timerInfo.isRunning;
                     }
 
-                    if (timerInfo.isRunning) hasRunning = true;
+                    if (memberTimers[id].isRunning) hasRunning = true;
 
                     if (memberData.id === id) {
                         memberData.availableTime = Math.ceil(memberTimers[id].timeRemaining / 60);
