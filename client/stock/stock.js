@@ -423,6 +423,30 @@ $(async function () {
         const strongStocks = Array.isArray(data.strongMomentum) ? data.strongMomentum : [];
         renderStrongTable('#today-strong .data-table', strongStocks);
 
+        // --- 渲染今日強勢類股 ---
+        const strongSectors = Array.isArray(data.strongSectors) ? data.strongSectors : [];
+        if (strongSectors.length > 0) {
+            const updateSectorUI = (index, sectorData) => {
+                $(`#strong-sector-${index}-name`).text(sectorData.sectorName || '-');
+
+                const pctStr = sectorData.changePercent || '';
+                const pctVal = parseFloat(pctStr.replace('%', ''));
+                const $pctEl = $(`#strong-sector-${index}-percent`).text(pctStr || '-');
+
+                if (!isNaN(pctVal)) {
+                    // 台股慣例：紅漲綠跌
+                    $pctEl.css('color', pctVal > 0 ? 'var(--danger-color)' : (pctVal < 0 ? 'var(--success-color)' : 'inherit'));
+                }
+            };
+
+            // 迴圈渲染前 4 名
+            for (let i = 0; i < 4; i++) {
+                if (strongSectors.length > i) {
+                    updateSectorUI(i + 1, strongSectors[i]);
+                }
+            }
+        }
+
         // --- 搜尋功能邏輯 ---
         $('#stock-search-btn').off('click').on('click', function () {
             const keyword = $('#stock-search-input').val().trim();

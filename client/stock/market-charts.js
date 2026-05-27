@@ -130,31 +130,4 @@ $(function () {
 
     // 初始化先執行一次
     refreshMarketData();
-
-    let countdownSeconds = 120; // 2分鐘 = 120秒
-
-    // 設置計時器：每隔 1 秒執行一次倒數檢查
-    setInterval(function () {
-        const now = new Date();
-        const h = now.getHours();
-        const m = now.getMinutes();
-
-        // 判斷是否在開盤時間 09:00 ~ 13:30
-        const isMarketOpen = (h === 9 && m >= 0) || (h > 9 && h < 13) || (h === 13 && m <= 30);
-
-        if (isMarketOpen) {
-            countdownSeconds--;
-            // 開盤期間：更新倒數文字並確保顯示
-            $('.countdown-timer').text(`更新倒數 ${countdownSeconds}s`).show();
-
-            if (countdownSeconds <= 0) {
-                refreshMarketData();
-                countdownSeconds = 120; // 重新重置為 2 分鐘
-            }
-        } else {
-            // 休市期間：直接將計時器隱藏
-            $('.countdown-timer').hide();
-            countdownSeconds = 120;
-        }
-    }, 1000); // 1秒 = 1000 毫秒
 });

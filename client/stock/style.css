@@ -338,10 +338,23 @@ p {
     background-color: var(--accent-color);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--accent-color);
+    -webkit-animation: pulse-glow 2s infinite alternate;
     animation: pulse-glow 2s infinite alternate;
 }
 
 /* --- 呼吸燈發光動畫 --- */
+@-webkit-keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+        transform: translateY(-50%) scale(0.9);
+    }
+
+    100% {
+        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color), 0 0 30px rgba(0, 240, 255, 0.6);
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
 @keyframes pulse-glow {
     0% {
         box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
@@ -843,6 +856,11 @@ body.loading-view .status-wrapper {
 
     .today-tables-wrapper h3 {
         margin-top: 0;
+    }
+
+    /* 強制強勢類股在桌機版時 4 個並排 */
+    #strong-sectors-section .market-summary-wrapper {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
