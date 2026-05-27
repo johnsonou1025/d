@@ -144,6 +144,14 @@ $(async function () {
                 // 計算日期: 依照年份 01-01 ~ 12-31
                 const startDate = new Date(yInt, 0, 1, 0, 0, 0, 0);
                 const endDate = new Date(yInt, 11, 31, 23, 59, 59, 999);
+                const now = new Date();
+
+                let elapsedDays = 365; // 預設整年
+                if (now.getFullYear() === yInt) {
+                    elapsedDays = Math.max(1, (now - startDate) / (1000 * 60 * 60 * 24)); // 當前年份只計算經過天數
+                } else if (now.getFullYear() < yInt) {
+                    elapsedDays = 0; // 未來年份防呆
+                }
 
                 dailyTrades.filter(item => {
                     if (item.state !== "sell" || !item.time) return false;
@@ -176,6 +184,14 @@ $(async function () {
                 const $targetEl = isQty ? $('#sell-month-profit-loss-qty') : $('#sell-month-profit-loss');
                 $targetEl.text(Math.round(sumProfit).toLocaleString() + '(' + Math.round(sumRate).toLocaleString() + '%)');
                 $targetEl.css('color', sumProfit >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+
+                // 計算年化報酬率 (IRR)
+                let irr = 0;
+                if (sumAmount > 0 && elapsedDays > 0) {
+                    irr = (Math.pow(1 + (sumProfit / sumAmount), 365 / elapsedDays) - 1) * 100;
+                }
+                const $irrEl = isQty ? $('#sell-month-irr-qty') : $('#sell-month-irr');
+                $irrEl.text(irr.toFixed(2) + '%').css('color', irr >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
             }
 
             renderSummarySellCard(false); // 定額操作
@@ -453,7 +469,7 @@ $(async function () {
             const $result = $('#stock-search-result');
 
             if (!keyword) {
-                $result.html('<span style="color: var(--danger-color);">請輸入股票代碼或名稱</span>').show();
+                $result.hide().empty();
                 return;
             }
 
@@ -461,25 +477,43 @@ $(async function () {
             const holdingMatches = todayHoldings.filter(item => item.sheetName.includes(keyword));
             const tradeMatches = dailyTrades.filter(item => item.sheetName && item.sheetName.includes(keyword));
 
+            // 整理狀態並去除重複名稱
+            const holdingNames = [...new Set(holdingMatches.map(m => m.sheetName))];
+
+            // 取得已賣出紀錄 (限定 state === 'sell'，並排除目前還持有的股票，避免混淆)
+            // 將陣列反轉，讓最近賣出的紀錄排在最上面
+            const soldMatches = tradeMatches
+                .filter(m => m.state === 'sell' && !holdingNames.includes(m.sheetName))
+                .reverse();
+
             // 如果完全沒找到
-            if (holdingMatches.length === 0 && tradeMatches.length === 0) {
+            if (holdingMatches.length === 0 && soldMatches.length === 0) {
                 $result.html(`<span style="color: var(--text-muted);">狀態：</span> 完全沒進場過 (找不到與「${keyword}」相關的紀錄)`).show();
                 return;
             }
 
-            // 整理狀態並去除重複名稱
-            const holdingNames = [...new Set(holdingMatches.map(m => m.sheetName))];
-            const tradeNames = [...new Set(tradeMatches.map(m => m.sheetName))];
-            // 如果同時有歷史交易也有目前持倉，已賣出的名單中不顯示目前還持有的股票，避免混淆
-            const soldNames = tradeNames.filter(name => !holdingNames.includes(name));
+            let resultHtml = '';
 
-            let resultHtml = `搜尋「<b>${keyword}</b>」的結果：<br>`;
-            if (holdingNames.length > 0) {
-                resultHtml += `<div style="margin-top: 8px;"><span style="color: var(--success-color); font-weight: bold;">[目前進場中]</span> ${holdingNames.join(', ')}</div>`;
+            if (holdingMatches.length > 0) {
+                const holdingDetails = holdingMatches.map(m => {
+                    const numRate = parseFloat(m.rate) || 0;
+                    const rateColor = numRate < 0 ? 'var(--danger-color)' : 'var(--success-color)';
+                    return `<div style="margin-top: 4px;">${m.sheetName} <span style="color: var(--text-muted); font-size: 13px; margin-left: 4px;">( 持有 ${m._holdingDays} 天 / 報酬率: <b style="color: ${rateColor};">${numRate}%</b> )</span></div>`;
+                }).join('');
+
+                resultHtml += `<div style="margin-bottom: ${soldMatches.length > 0 ? '12px' : '0'};"><span style="color: var(--success-color); font-weight: bold;">[目前進場中]</span>${holdingDetails}</div>`;
             }
-            if (soldNames.length > 0) {
-                resultHtml += `<div style="margin-top: 8px;"><span style="color: var(--text-muted); font-weight: bold;">[目前已賣出]</span> ${soldNames.join(', ')}</div>`;
+
+            if (soldMatches.length > 0) {
+                const soldDetails = soldMatches.map(m => {
+                    const numRate = parseFloat(m.rate) || 0;
+                    const rateColor = numRate < 0 ? 'var(--danger-color)' : 'var(--success-color)';
+                    return `<div style="margin-top: 4px;">${m.sheetName} <span style="color: var(--text-muted); font-size: 13px; margin-left: 4px;">( 賣出時間: ${m.time} / 報酬率: <b style="color: ${rateColor};">${numRate}%</b> )</span></div>`;
+                }).join('');
+
+                resultHtml += `<div><span style="color: var(--text-muted); font-weight: bold;">[目前已賣出]</span>${soldDetails}</div>`;
             }
+
             $result.html(resultHtml).show();
         });
 

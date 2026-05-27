@@ -119,20 +119,11 @@ p {
     flex-direction: column;
     align-items: flex-end;
     position: relative;
-    align-self: flex-end;
-    /* 在相對定位時讓它靠右 */
     z-index: 20;
     text-transform: none;
     /* 避免繼承標題的大寫設定 */
     letter-spacing: normal;
     font-weight: normal;
-}
-
-/* 當資料載入完成，市場指數出現時，切換為絕對定位以對齊標題 */
-#search-section.desktop-absolute {
-    position: absolute;
-    top: -4px;
-    right: 0;
 }
 
 .search-bar {
@@ -183,20 +174,15 @@ p {
 }
 
 #stock-search-result {
-    position: absolute;
-    top: 100%;
-    right: 0;
     margin-top: 8px;
-    min-width: 300px;
-    z-index: 100;
+    width: 100%;
+    box-sizing: border-box;
     padding: 12px 16px;
     border-radius: 4px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     font-size: 14px;
     display: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    /* 增加下拉選單的浮空陰影 */
 }
 
 /* --- Market Summary --- */
@@ -394,10 +380,15 @@ p {
 }
 
 /* --- Summary Cards / Personal Operations --- */
-#summary-cards,
+#summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
 #summary-cards-qty {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
 }
 
@@ -896,8 +887,7 @@ body.loading-view .status-wrapper {
     }
 
     /* 手機版搜尋區塊滿版 */
-    #search-section,
-    #search-section.desktop-absolute {
+    #search-section {
         position: relative;
         top: auto;
         right: auto;
@@ -955,6 +945,12 @@ body.loading-view .status-wrapper {
     #summary-cards-qty,
     #summary-cards-overall {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 手機版時讓第三張卡片 (IRR) 橫跨兩欄 */
+    #summary-cards>.card:last-child,
+    #summary-cards-qty>.card:last-child {
+        grid-column: 1 / -1;
     }
 }
 

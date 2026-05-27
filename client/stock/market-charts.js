@@ -125,7 +125,6 @@ $(function () {
 
         // 數據更新完成後，將整個市場指數區塊淡入顯示
         $('#market-summary-section').fadeIn(400);
-        $('#search-section').addClass('desktop-absolute');
     }
 
     // 初始化先執行一次
