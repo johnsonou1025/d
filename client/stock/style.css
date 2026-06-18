@@ -730,7 +730,7 @@ h3 {
 
 #current-holdings .table-row,
 #current-holdings .table-header {
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #sold-stocks .table-row,
@@ -752,6 +752,8 @@ h3 {
 #current-holdings .table-cell:nth-child(2),
 #current-holdings .table-cell:nth-child(3),
 #current-holdings .table-cell:nth-child(4),
+#current-holdings .table-cell:nth-child(5),
+#current-holdings .table-cell:nth-child(6),
 #sold-stocks .table-cell:nth-child(3),
 #sold-stocks .table-cell:nth-child(4),
 #top-profit-trades .table-cell:nth-child(2),
@@ -852,6 +854,15 @@ body.loading-view .status-wrapper {
     /* 強制強勢類股在桌機版時 4 個並排 */
     #strong-sectors-section .market-summary-wrapper {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* --- Tablet View (對應 HTML 內 1024px 的隱藏邏輯) --- */
+@media (max-width: 1024px) {
+
+    #current-holdings .table-row,
+    #current-holdings .table-header {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
     }
 }
 

@@ -83,6 +83,149 @@
             .content-wrapper.show-main #personal-operations-section {
                 display: none !important;
             }
+
+            /* 手機版隱藏指定欄位 */
+            .hide-on-mobile {
+                display: none !important;
+            }
+        }
+
+        /* === 市場多空判斷卡片 === */
+        .market-verdict-card {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            grid-column: 1 / -1;
+        }
+
+        .market-verdict-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .verdict-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .verdict-title {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .verdict-main {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .verdict-label {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .verdict-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 20px;
+            padding-bottom: 2px;
+        }
+
+        .verdict-bars .bar {
+            background-color: var(--border-color);
+            /* 預設淡灰色 */
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+
+        .verdict-bars .bar-1 {
+            width: 4px;
+            height: 8px;
+        }
+
+        .verdict-bars .bar-2 {
+            width: 6px;
+            height: 12px;
+        }
+
+        .verdict-bars .bar-3 {
+            width: 8px;
+            height: 16px;
+        }
+
+        .verdict-bars .bar-4 {
+            width: 10px;
+            height: 20px;
+        }
+
+        .verdict-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .verdict-right {
+            width: 160px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: right;
+        }
+
+        .indicators-title {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 16px;
+        }
+
+        .indicator-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+            justify-content: flex-end;
+        }
+
+        .indicator-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .indicator-item .name {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 600px) {
+            .market-verdict-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .verdict-right {
+                width: 100%;
+                text-align: left;
+            }
+
+            .indicator-item {
+                justify-content: flex-start;
+            }
         }
     </style>
 </head>
@@ -243,93 +386,67 @@
                         市場指數 (近20天)
                     </h2>
                     <div class="market-summary-wrapper">
-                        <div class="card">
-                            <h3>
-                                加權指數
-                            </h3>
-                            <div class="market-gauge-wrapper">
-                                <div class="market-gauge-bar">
-                                    <div class="gauge-fill" id="taiex-gauge"></div>
+                        <div class="card market-verdict-card">
+                            <div class="market-verdict-bottom">
+                                <div class="verdict-left">
+                                    <div class="verdict-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>
+                                        <span>綜合多空研判結論</span>
+                                    </div>
+                                    <div class="verdict-main">
+                                        <div id="verdict-label" class="verdict-label">-</div>
+                                        <div class="verdict-bars" id="verdict-bars">
+                                            <div class="bar bar-1"></div>
+                                            <div class="bar bar-2"></div>
+                                            <div class="bar bar-3"></div>
+                                            <div class="bar bar-4"></div>
+                                        </div>
+                                    </div>
+                                    <div id="verdict-desc" class="verdict-desc">-</div>
                                 </div>
-                                <div class="market-gauge-labels">
-                                    <div class="gauge-label left">
-                                        <span>前低 (支撐)</span>
-                                        <b id="taiex-low">-</b>
-                                    </div>
-                                    <div class="gauge-label center">
-                                        <span>今日指數</span>
-                                        <b id="taiex-today">-</b>
-                                    </div>
-                                    <div class="gauge-label right">
-                                        <span>前高 (壓力)</span>
-                                        <b id="taiex-high">-</b>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>
-                                櫃買指數
-                            </h3>
-                            <div class="market-gauge-wrapper">
-                                <div class="market-gauge-bar">
-                                    <div class="gauge-fill" id="tpex-gauge"></div>
-                                </div>
-                                <div class="market-gauge-labels">
-                                    <div class="gauge-label left">
-                                        <span>前低 (支撐)</span>
-                                        <b id="tpex-low">-</b>
-                                    </div>
-                                    <div class="gauge-label center">
-                                        <span>今日指數</span>
-                                        <b id="tpex-today">-</b>
-                                    </div>
-                                    <div class="gauge-label right">
-                                        <span>前高 (壓力)</span>
-                                        <b id="tpex-high">-</b>
+                                <div class="verdict-right">
+                                    <div class="indicators-title">指標訊號</div>
+                                    <div class="indicators-grid">
+                                        <div class="indicator-item" id="ind-ma">
+                                            <span class="dot"></span><span class="name">均線位階</span>
+                                        </div>
+                                        <div class="indicator-item" id="ind-bias">
+                                            <span class="dot"></span><span class="name">短線乖離</span>
+                                        </div>
+                                        <div class="indicator-item" id="ind-macd">
+                                            <span class="dot"></span><span class="name">MACD動能</span>
+                                        </div>
+                                        <div class="indicator-item" id="ind-bb">
+                                            <span class="dot"></span><span class="name">中軌趨勢</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 今日強勢類股 -->
-                <div id="strong-sectors-section">
-                    <h2 class="section-title">
-                        今日強勢類股
-                    </h2>
-                    <div class="market-summary-wrapper">
-                        <div class="card">
-                            <h3>排行 1</h3>
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
-                                <b id="strong-sector-1-name" style="font-size: 18px;">-</b>
-                                <span id="strong-sector-1-percent" style="font-size: 16px; font-weight: bold;">-</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>排行 2</h3>
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
-                                <b id="strong-sector-2-name" style="font-size: 18px;">-</b>
-                                <span id="strong-sector-2-percent" style="font-size: 16px; font-weight: bold;">-</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>排行 3</h3>
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
-                                <b id="strong-sector-3-name" style="font-size: 18px;">-</b>
-                                <span id="strong-sector-3-percent" style="font-size: 16px; font-weight: bold;">-</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>排行 4</h3>
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
-                                <b id="strong-sector-4-name" style="font-size: 18px;">-</b>
-                                <span id="strong-sector-4-percent" style="font-size: 16px; font-weight: bold;">-</span>
+                            <div class="market-gauge-section">
+                                <div class="market-gauge-wrapper">
+                                    <div class="market-gauge-bar">
+                                        <div class="gauge-fill" id="taiex-gauge"></div>
+                                    </div>
+                                    <div class="market-gauge-labels">
+                                        <div class="gauge-label left">
+                                            <span>前低 (支撐)</span>
+                                            <b id="taiex-low">-</b>
+                                        </div>
+                                        <div class="gauge-label center">
+                                            <span>今日加權指數</span>
+                                            <b id="taiex-today">-</b>
+                                        </div>
+                                        <div class="gauge-label right">
+                                            <span>前高 (壓力)</span>
+                                            <b id="taiex-high">-</b>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,12 +480,12 @@
                         </div>
 
                         <div id="today-strong">
-                            <h3>強勢股推薦</h3>
+                            <h3>強勢類股推薦</h3>
                             <div class="data-table">
                                 <div class="table-header">
                                     <div class="table-cell">日期</div>
-                                    <div class="table-cell">股票代號</div>
-                                    <div class="table-cell">進場價格</div>
+                                    <div class="table-cell">板塊名稱</div>
+                                    <div class="table-cell">強勢分數</div>
                                 </div>
                                 <div class="table-body"></div>
                             </div>
@@ -393,6 +510,16 @@
                                 </svg></div>
                             <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
                                     class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                            <div class="table-cell hide-on-mobile">進場均價<svg class="sort-icon"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                                </svg></div>
+                            <div class="table-cell hide-on-mobile">進場數量<svg class="sort-icon"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path fill="currentColor"
                                         d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
                                 </svg></div>

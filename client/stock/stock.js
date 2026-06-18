@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbxGtR8NWam6AzC4-Onb8Jye4q6LKpQqifXIronmQtd0rMMjj4m2nukpX_wVW5MzwAzF3g/exec";
+const API = "https://script.google.com/macros/s/AKfycbwiH2P10Y0He-7WgFtBq_7xswWLWQHVJ8TVWWtaA4i9GGI7sda_cIB6C7wlDmLZfPgW1Q/exec";
 
 $(async function () {
     const $holdingsTable = $('#current-holdings .data-table');
@@ -9,8 +9,40 @@ $(async function () {
 
     try {
         $status.text('資料載入中…');
-        const data = await $.getJSON(API);
-        if (!data.ok) { $status.text('錯誤：' + (data.message || '未知錯誤')); return; }
+        const rawData = await $.getJSON(API);
+        if (!rawData.ok) { $status.text('錯誤：' + (rawData.message || '未知錯誤')); return; }
+
+        // 渲染市場指數看板
+        if (rawData.marketStatus && typeof renderMarketSummary === 'function') {
+            renderMarketSummary(rawData.marketStatus);
+        }
+
+        // 將新版 API 的資料結構映射為原先程式預期的格式
+        // 由於新 API 的 dailyTrades 和 strongSectors 預設為倒序(最新在前)，在此反轉回正序以配合原程式的計算邏輯
+        const data = {
+            todayHoldings: (rawData.todayHoldings || []).map(item => ({
+                sheetName: item.stockInfo || item.sheetName,
+                avgEntry: item.avgPrice || item.avgEntry,
+                quantity: item.quantity,
+                currentPrice: item.marketPrice || item.currentPrice,
+                rate: item.roi || item.rate,
+                firstEntryDate: item.entryDate || item.firstEntryDate
+            })),
+            dailyTrades: (rawData.dailyTrades || []).map(item => ({
+                state: item.action || item.state,
+                time: item.date || item.time,
+                rate: item.roi || item.rate,
+                benefit: item.pnlOrCost || item.benefit,
+                quantity: item.shares || item.quantity,
+                avgEntry: item.price || item.avgEntry,
+                sheetName: item.name || item.sheetName
+            })).reverse(),
+            strongSectors: (rawData.strongSectors || []).map(item => ({
+                date: item.date,
+                sectorName: item.sectorName,
+                strengthScore: item.strengthScore
+            })).reverse()
+        };
 
 
         /**
@@ -58,6 +90,11 @@ $(async function () {
             // 計算持有天數
             let holdingDays = item._holdingDays;
             $('<div class="table-cell"/>').append(holdingDays).appendTo($tr);
+
+            // 進場均價與進場數量 (套用手機版隱藏 class)
+            $('<div class="table-cell hide-on-mobile"/>').append(numAvgEntry).appendTo($tr);
+            $('<div class="table-cell hide-on-mobile"/>').append(numQty).appendTo($tr);
+
             $('<div class="table-cell"/>').append(numCurrentPrice).appendTo($tr);
 
             // 針對報酬率獨立上色：若為負數則強制使用紅色
@@ -410,24 +447,24 @@ $(async function () {
             });
         };
 
-        // --- 渲染強勢股推薦表格 ---
+        // --- 渲染強勢類股推薦表格 ---
         const renderStrongTable = (selector, strongData) => {
             const $table = $(selector);
             $table.find('.table-body').empty(); // 清空舊資料
 
             if (!strongData || strongData.length === 0) {
-                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無強勢股推薦</div></div>');
+                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無強勢類股推薦</div></div>');
                 return;
             }
 
             // 取得資料中最後一個日期（即最新推薦）
-            const latestDate = strongData[strongData.length - 1].日期;
+            const latestDate = strongData[strongData.length - 1].date;
 
-            strongData.filter(item => item.日期 === latestDate).forEach(item => {
+            strongData.filter(item => item.date === latestDate).forEach(item => {
                 const $tr = $('<div class="table-row"/>');
-                $('<div class="table-cell"/>').text(item.日期).appendTo($tr);
-                $('<div class="table-cell"/>').text(item["股票代號"]).css('font-weight', '700').appendTo($tr);
-                $('<div class="table-cell"/>').text(item["進場價格"]).appendTo($tr);
+                $('<div class="table-cell"/>').text(item.date).appendTo($tr);
+                $('<div class="table-cell"/>').text(item.sectorName).css('font-weight', '700').appendTo($tr);
+                $('<div class="table-cell"/>').text(item.strengthScore).appendTo($tr);
                 $table.find('.table-body').append($tr);
             });
         };
@@ -435,33 +472,10 @@ $(async function () {
         // --- 執行渲染 ---
         if (lastSellDate) renderSellTable('#today-sell .data-table', dailyTrades, lastSellDate);
         if (lastBuyDate) renderBuyTable('#today-buy .data-table', dailyTrades, lastBuyDate);
-        // 從 API 回傳的 strongMomentum 欄位抓取資料
-        const strongStocks = Array.isArray(data.strongMomentum) ? data.strongMomentum : [];
+        // 從 API 回傳的 strongSectors 欄位抓取資料
+        const strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
         renderStrongTable('#today-strong .data-table', strongStocks);
 
-        // --- 渲染今日強勢類股 ---
-        const strongSectors = Array.isArray(data.strongSectors) ? data.strongSectors : [];
-        if (strongSectors.length > 0) {
-            const updateSectorUI = (index, sectorData) => {
-                $(`#strong-sector-${index}-name`).text(sectorData.sectorName || '-');
-
-                const pctStr = sectorData.changePercent || '';
-                const pctVal = parseFloat(pctStr.replace('%', ''));
-                const $pctEl = $(`#strong-sector-${index}-percent`).text(pctStr || '-');
-
-                if (!isNaN(pctVal)) {
-                    // 台股慣例：紅漲綠跌
-                    $pctEl.css('color', pctVal > 0 ? 'var(--danger-color)' : (pctVal < 0 ? 'var(--success-color)' : 'inherit'));
-                }
-            };
-
-            // 迴圈渲染前 4 名
-            for (let i = 0; i < 4; i++) {
-                if (strongSectors.length > i) {
-                    updateSectorUI(i + 1, strongSectors[i]);
-                }
-            }
-        }
 
         // --- 搜尋功能邏輯 ---
         $('#stock-search-btn').off('click').on('click', function () {

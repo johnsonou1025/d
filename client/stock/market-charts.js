@@ -1,132 +1,126 @@
-$(function () {
-    // --- 加入多重 CORS 代理伺服器 Fallback 機制 ---
-    // 解決單一代理服務 (如 corsproxy.io) 故障或被 Yahoo 阻擋導致無法抓取資料的問題
-    async function fetchWithProxyFallback(targetUrl) {
-        const proxies = [
-            `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
-            `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
-        ];
+/**
+ * --- 渲染市場指數 (由 API 取得數據) ---
+ */
+window.renderMarketSummary = function (marketStatus) {
+    if (!marketStatus) return;
 
-        let lastError;
-        for (const proxyUrl of proxies) {
-            try {
-                const response = await fetch(proxyUrl, { cache: 'no-store' });
-                if (response.ok) {
-                    return response;
-                } else {
-                    lastError = new Error(`HTTP 錯誤狀態碼: ${response.status}`);
-                }
-            } catch (err) {
-                lastError = err;
-                console.warn(`代理請求失敗 (${proxyUrl}):`, err);
+    // --- 1. 多空判斷渲染 ---
+    // 輔助函式：透過字串關鍵字判斷訊號為多、空或中立
+    function parseSignal(text, type) {
+        if (!text) return { type: 'neutral', color: 'var(--text-muted)' };
+
+        // 1. 預先對應明確定義的狀態 (綠、黃、紅)
+        if (text.includes('均線多頭排列') || text.includes('安全動能') || text.includes('多頭主控') || text.includes('中軌走揚')) {
+            return { type: 'bull', color: 'var(--success-color)' }; // 綠
+        } else if (text.includes('短線過熱') || text.includes('長線多空轉折期') || text.includes('中軌橫盤震盪')) {
+            return { type: 'neutral', color: '#eab308' }; // 黃
+        } else if (text.includes('均線蓋頂空頭') || text.includes('動能渙散') || text.includes('空頭控制') || text.includes('中軌下彎')) {
+            return { type: 'bear', color: 'var(--danger-color)' }; // 紅
+        }
+
+        // 2. 針對「短線乖離」等特定指標的專屬防呆判定
+        if (type === 'bias') {
+            if (text.includes('過熱') || text.includes('乖離過大')) {
+                return { type: 'neutral', color: '#eab308' }; // 過熱為黃色警示
+            } else if (text.includes('負乖離') || text.includes('超跌')) {
+                return { type: 'bull', color: 'var(--success-color)' }; // 跌深反彈視為多方機會 (綠)
             }
         }
-        throw lastError || new Error('所有代理伺服器均請求失敗');
-    }
 
-    // --- 從 Yahoo Finance API 取得真實數據 ---
-    async function fetchMarketData(symbol) {
-        try {
-            // 加入時間戳記避免代理伺服器快取
-            const targetUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1mo&interval=1d&_=${Date.now()}`;
-            const response = await fetchWithProxyFallback(targetUrl);
-            const json = await response.json();
-
-            const closePrices = json.chart.result[0].indicators.quote[0].close;
-            // 過濾無效值(null)並四捨五入，最後取近 20 天數據
-            const validPrices = closePrices.filter(p => p !== null).map(p => Math.round(p));
-            return validPrices.slice(-20);
-        } catch (error) {
-            console.error(`抓取 ${symbol} 數據發生錯誤:`, error);
-            return []; // 失敗時回傳空陣列以免畫面當機
+        // 3. 通用備用關鍵字判斷
+        if (text.includes('多') || text.includes('上') || text.includes('正') || text.includes('強')) {
+            return { type: 'bull', color: 'var(--success-color)' };
+        } else if (text.includes('空') || text.includes('下') || text.includes('負') || text.includes('跌') || text.includes('弱')) {
+            return { type: 'bear', color: 'var(--danger-color)' };
         }
+        return { type: 'neutral', color: 'var(--text-muted)' };
     }
 
-    // --- 輔助函式：更新儀表板進度條 ---
-    function updateGauge(prefix, currentVal) {
-        const max = parseFloat($(`#${prefix}-high`).data('val'));
-        const min = parseFloat($(`#${prefix}-low`).data('val'));
+    const indMa = parseSignal(marketStatus.maStatus, 'ma');
+    const indBias = parseSignal(marketStatus.biasStatus, 'bias');
+    const indMacd = parseSignal(marketStatus.macdStatus, 'macd');
+    const indBb = parseSignal(marketStatus.bbTrendStatus, 'bb');
 
-        if (!isNaN(max) && !isNaN(min) && max > min) {
-            let percentage = ((currentVal - min) / (max - min)) * 100;
-            // 限制在 0% ~ 100% 之間，避免超跌或突破時破版
-            percentage = Math.max(0, Math.min(100, percentage));
-            $(`#${prefix}-gauge`).css('width', percentage + '%');
+    function updateIndicator(id, data) {
+        $(`#${id} .dot`).css('background-color', data.color);
+        $(`#${id} .name`).css('color', data.color);
+    }
+
+    updateIndicator('ind-ma', indMa);
+    updateIndicator('ind-bias', indBias);
+    updateIndicator('ind-macd', indMacd);
+    updateIndicator('ind-bb', indBb);
+
+    let bullCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bull').length;
+    let bearCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bear').length;
+
+    let verdictLabel = marketStatus.finalVerdict || '-';
+
+    // 自動配對建議說明 (作為預設值)
+    let verdictDesc = "綜合各項技術指標狀態，建議保持觀望。";
+    if (bullCount >= 3) verdictDesc = "技術面多頭訊號明確，建議持多觀察突破。";
+    else if (bearCount >= 3) verdictDesc = "技術面空頭訊號強烈，建議保守應對、控管風險。";
+    else if (bullCount > bearCount) verdictDesc = "技術面呈現震盪偏多，適合逢低佈局。";
+    else if (bearCount > bullCount) verdictDesc = "技術面呈現震盪偏空，注意下檔支撐。";
+
+    // 解析 GAS 回傳的文字格式
+    const bracketMatch = verdictLabel.match(/【(.*?)】/);
+    if (bracketMatch) {
+        // 取出【】裡的文字作為標題，其餘作為說明
+        verdictLabel = bracketMatch[1].trim();
+        verdictDesc = marketStatus.finalVerdict.replace(bracketMatch[0], '').trim() || verdictDesc;
+    } else if (verdictLabel.includes('：') || verdictLabel.includes(':')) {
+        // 相容舊版冒號分隔邏輯
+        let parts = verdictLabel.split(/：|:/);
+        verdictLabel = parts[0].trim();
+        verdictDesc = parts[1].trim() || verdictDesc;
+    }
+
+    let mainColor = 'var(--text-muted)';
+    let strength = 2; // 預設訊號強度為 2 格
+    if (verdictLabel.includes('多') || verdictLabel.includes('強')) {
+        mainColor = 'var(--success-color)';
+        strength = bullCount || 3; // 依多頭指標數作為滿格數
+    } else if (verdictLabel.includes('空') || verdictLabel.includes('弱')) {
+        mainColor = 'var(--danger-color)';
+        strength = bearCount || 3; // 依空頭指標數作為滿格數
+    } else {
+        mainColor = '#eab308'; // 中立狀態以偏黃顯示
+        strength = 2;
+    }
+
+    strength = Math.max(1, Math.min(4, strength)); // 確保長條顯示在 1~4 之內
+
+    $('#verdict-label').text(verdictLabel).css('color', mainColor);
+    $('#verdict-desc').text(verdictDesc);
+
+    $('#verdict-bars .bar').each(function (index) {
+        if (index < strength) {
+            $(this).css('background-color', mainColor);
+        } else {
+            $(this).css('background-color', ''); // 恢復為 CSS 預設的淺灰色
         }
+    });
+
+    // --- 2. 指數數值與進度條 ---
+    $('#taiex-today').text(marketStatus.closePrice || '-');
+    $('#taiex-high').text(marketStatus.high20D || '-');
+    $('#taiex-low').text(marketStatus.low20D || '-');
+
+    // 清理字串逗號並轉為數字，因 GAS 傳回的資料可能包含千分位逗號
+    const closePrice = parseFloat(String(marketStatus.closePrice).replace(/,/g, ''));
+    const high20D = parseFloat(String(marketStatus.high20D).replace(/,/g, ''));
+    const low20D = parseFloat(String(marketStatus.low20D).replace(/,/g, ''));
+
+    // 計算進度條比例
+    if (!isNaN(closePrice) && !isNaN(high20D) && !isNaN(low20D) && high20D > low20D) {
+        let percentage = ((closePrice - low20D) / (high20D - low20D)) * 100;
+        // 限制在 0% ~ 100% 之間，避免超跌或突破時破版
+        percentage = Math.max(0, Math.min(100, percentage));
+        $('#taiex-gauge').css('width', percentage + '%');
+    } else {
+        $('#taiex-gauge').css('width', '0%');
     }
 
-    function updateMarketSummary(prefix, data) {
-        if (!data || data.length === 0) return; // 確保有數據才更新
-
-        const today = data[data.length - 1];
-        const max = Math.max(...data);
-        const min = Math.min(...data);
-
-        // 將原始數值存入 data 屬性，供計算進度條使用
-        $(`#${prefix}-high`).text(max.toLocaleString()).data('val', max);
-        $(`#${prefix}-low`).text(min.toLocaleString()).data('val', min);
-        $(`#${prefix}-today`).text(today.toLocaleString());
-
-        updateGauge(prefix, today);
-    }
-
-    // --- 從 Yahoo 網頁抓取即時數據 ---
-    async function fetchYahooWebMarketData() {
-        try {
-            const fetchPrice = async (symbol) => {
-                // 加入時間戳記避免代理伺服器快取
-                const targetUrl = `https://tw.stock.yahoo.com/quote/${symbol}?_=${Date.now()}`;
-
-                const response = await fetchWithProxyFallback(targetUrl);
-
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-
-                // Yahoo 股市網頁的主要報價數字，通常帶有 Fz(32px) 這個 class
-                let priceSpan = Array.from(doc.querySelectorAll('span')).find(el => el.className && typeof el.className === 'string' && el.className.includes('Fz(32px)'));
-
-                // Fallback: 如果 Yahoo 修改了 class 導致 Fz(32px) 失效，改用其他包含小數點或逗號的結構特徵尋找
-                if (!priceSpan) {
-                    priceSpan = Array.from(doc.querySelectorAll('span')).find(el => el.className && typeof el.className === 'string' && el.className.includes('Fw(b)') && (el.innerText.includes(',') || el.innerText.includes('.')));
-                }
-
-                return priceSpan ? parseFloat(priceSpan.innerText.replace(/,/g, '')) : null;
-            };
-
-            const taiex = await fetchPrice('%5ETWII');
-            const tpex = await fetchPrice('%5ETWOII');
-
-            return { taiex, tpex };
-        } catch (error) {
-            console.error('抓取 Yahoo 網頁數據發生錯誤:', error);
-            return { taiex: null, tpex: null };
-        }
-    }
-
-    async function refreshMarketData() {
-        // 1. 抓取 Yahoo 歷史數據 (用來計算近20天前高與前低)
-        const taiexData = await fetchMarketData('^TWII');
-        const tpexData = await fetchMarketData('^TWOII');
-        updateMarketSummary('taiex', taiexData);
-        updateMarketSummary('tpex', tpexData);
-
-        // 2. 抓取 Yahoo 網頁數據，覆蓋「今日數字」確保最新與精準
-        const webData = await fetchYahooWebMarketData();
-
-        if (webData.taiex) {
-            $('#taiex-today').text(webData.taiex.toLocaleString());
-            updateGauge('taiex', webData.taiex);
-        }
-        if (webData.tpex) {
-            $('#tpex-today').text(webData.tpex.toLocaleString());
-            updateGauge('tpex', webData.tpex);
-        }
-
-        // 數據更新完成後，將整個市場指數區塊淡入顯示
-        $('#market-summary-section').fadeIn(400);
-    }
-
-    // 初始化先執行一次
-    refreshMarketData();
-});
+    $('#market-summary-section').fadeIn(400);
+};
