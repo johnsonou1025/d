@@ -1,10 +1,13 @@
 /* --- CSS Reset & Variables --- */
 :root {
-    --bg-color: #06090f;
-    --card-bg: #0d121d;
+    --bg-color: #111827;
+    /* Fallback for older browsers */
+    --card-bg: rgba(255, 255, 255, 0.05);
+    /* Glass background */
     --text-main: #e2e8f0;
     --text-muted: #64748b;
-    --border-color: #1e293b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    /* Glass border */
     --accent-color: #00f0ff;
     --success-color: #00ff9d;
     --danger-color: #ff3366;
@@ -20,7 +23,8 @@ body {
     margin: 0;
     padding: 12px;
     font-family: var(--font-family);
-    background-color: var(--bg-color);
+    /* Soft gradient background to enhance glass effect */
+    background: radial-gradient(circle at top left, #1e293b, #111827 40%);
     color: var(--text-main);
     line-height: 1.6;
     font-variant-numeric: tabular-nums;
@@ -181,6 +185,10 @@ p {
     border-radius: 4px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
+    /* Glass border */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    /* Glass effect */
     font-size: 14px;
     display: none;
 }
@@ -500,16 +508,22 @@ p {
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    /* Glass effect */
     border-radius: 4px;
     padding: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    border-top: 2px solid #1a2235;
+    box-shadow: none;
+    /* Remove shadow for a cleaner glass look */
+    border-top: 1px solid var(--border-color);
+    /* Unify border */
     transition: background-color 0.2s, border-color 0.2s;
 }
 
 .card:hover {
-    background-color: #141a27;
-    border-top: 2px solid var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Lighter on hover */
+    border-color: var(--accent-color);
 }
 
 .card span {
@@ -580,7 +594,8 @@ p {
 
 /* --- Year Tabs --- */
 .year-tabs {
-    display: flex;
+    display: inline-flex;
+    /* Use inline-flex to fit content */
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -656,7 +671,10 @@ h3 {
 .data-table {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    /* Glass effect */
+    border-radius: 6px;
     overflow: hidden;
 }
 
@@ -672,7 +690,8 @@ h3 {
 }
 
 .table-header {
-    background-color: #06090f;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Slightly darker transparent header */
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -755,7 +774,9 @@ h3 {
 #current-holdings .table-cell:nth-child(5),
 #current-holdings .table-cell:nth-child(6),
 #sold-stocks .table-cell:nth-child(3),
+/* 進場均價 */
 #sold-stocks .table-cell:nth-child(4),
+/* 獲利金額 */
 #top-profit-trades .table-cell:nth-child(2),
 #top-profit-trades .table-cell:nth-child(3),
 #top-loss-trades .table-cell:nth-child(2),
@@ -824,6 +845,7 @@ body.loading-view {
     display: none;
     position: fixed;
     inset: 0;
+    /* Use inset for cleaner code */
     background: rgba(15, 23, 42, 0.9);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);

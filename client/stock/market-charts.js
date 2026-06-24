@@ -7,17 +7,18 @@ window.renderMarketSummary = function (marketStatus) {
     // --- 1. 多空判斷渲染 ---
     // 輔助函式：透過字串關鍵字判斷訊號為多、空或中立
     function parseSignal(text, type) {
-        if (!text) return { type: 'neutral', color: 'var(--text-muted)' };
-
+        if (!text) return {
+            type: 'neutral',
+            color: 'var(--text-muted)'
+        };
         // 1. 預先對應明確定義的狀態 (綠、黃、紅)
-        if (text.includes('均線多頭排列') || text.includes('安全動能') || text.includes('多頭主控') || text.includes('中軌走揚')) {
+        if (text.includes('多頭排列') || text.includes('安全動能') || text.includes('多頭主控') || text.includes('中軌走揚')) {
             return { type: 'bull', color: 'var(--success-color)' }; // 綠
-        } else if (text.includes('短線過熱') || text.includes('長線多空轉折期') || text.includes('中軌橫盤震盪')) {
+        } else if (text.includes('短線過熱') || text.includes('長線多空轉折期') || text.includes('中軌橫盤震盪') || text.includes('多頭減速') || text.includes('空頭收斂')) {
             return { type: 'neutral', color: '#eab308' }; // 黃
-        } else if (text.includes('均線蓋頂空頭') || text.includes('動能渙散') || text.includes('空頭控制') || text.includes('中軌下彎')) {
+        } else if (text.includes('蓋頂空頭') || text.includes('動能渙散') || text.includes('空頭控制') || text.includes('中軌下彎') || text.includes('空頭主控')) {
             return { type: 'bear', color: 'var(--danger-color)' }; // 紅
         }
-
         // 2. 針對「短線乖離」等特定指標的專屬防呆判定
         if (type === 'bias') {
             if (text.includes('過熱') || text.includes('乖離過大')) {
@@ -26,14 +27,13 @@ window.renderMarketSummary = function (marketStatus) {
                 return { type: 'bull', color: 'var(--success-color)' }; // 跌深反彈視為多方機會 (綠)
             }
         }
-
         // 3. 通用備用關鍵字判斷
         if (text.includes('多') || text.includes('上') || text.includes('正') || text.includes('強')) {
             return { type: 'bull', color: 'var(--success-color)' };
         } else if (text.includes('空') || text.includes('下') || text.includes('負') || text.includes('跌') || text.includes('弱')) {
             return { type: 'bear', color: 'var(--danger-color)' };
         }
-        return { type: 'neutral', color: 'var(--text-muted)' };
+        return { type: 'neutral', color: 'var(--text-muted)' }; // 如果以上條件都不符合，回傳中立
     }
 
     const indMa = parseSignal(marketStatus.maStatus, 'ma');
@@ -41,15 +41,20 @@ window.renderMarketSummary = function (marketStatus) {
     const indMacd = parseSignal(marketStatus.macdStatus, 'macd');
     const indBb = parseSignal(marketStatus.bbTrendStatus, 'bb');
 
-    function updateIndicator(id, data) {
+    function updateIndicator(id, data, text) {
+        // 移除 Emoji、括號及括號內文字，讓顯示更簡潔
+        const cleanText = text ? text.replace(/^[\p{Emoji_Presentation}\s]+/u, '').replace(/\s*\(.*\)\s*$/, '').trim() : '-';
+        const nameText = $(`#${id} .name`).text();
+
         $(`#${id} .dot`).css('background-color', data.color);
-        $(`#${id} .name`).css('color', data.color);
+        $(`#${id} .name`).text(nameText.replace(':', '') + ':');
+        $(`#${id} .value`).text(cleanText); // 填入 API 狀態文字
     }
 
-    updateIndicator('ind-ma', indMa);
-    updateIndicator('ind-bias', indBias);
-    updateIndicator('ind-macd', indMacd);
-    updateIndicator('ind-bb', indBb);
+    updateIndicator('ind-ma', indMa, marketStatus.maStatus);
+    updateIndicator('ind-bias', indBias, marketStatus.biasStatus);
+    updateIndicator('ind-macd', indMacd, marketStatus.macdStatus);
+    updateIndicator('ind-bb', indBb, marketStatus.bbTrendStatus);
 
     let bullCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bull').length;
     let bearCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bear').length;

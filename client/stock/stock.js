@@ -310,10 +310,10 @@ $(async function () {
                 const numQty = Number(quantity) || 0;
 
                 totalProfit += Number(benefit);
-                totalAmount += Number(avgEntry) * numQty * 1000;
+                totalAmount += Number(avgEntry) * numQty * 2000; // 修正為與定額操作一致的計算基準
 
                 const entryDisplay = numQty > 1 ? `${avgEntry}(${numQty})` : avgEntry;
-                const benefitDisplay = `${benefit}(${numRate}%)`;
+                const benefitDisplay = `${Math.round(benefit).toLocaleString()}(${numRate}%)`;
 
                 const $tr = $('<div class="table-row"/>');
                 if (numRate < 0) { $tr.addClass('down'); }

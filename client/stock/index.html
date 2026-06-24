@@ -173,7 +173,6 @@
         }
 
         .verdict-right {
-            width: 160px;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -195,21 +194,31 @@
         .indicator-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 13px;
             font-weight: 500;
-            color: var(--text-main);
             justify-content: flex-end;
+        }
+
+        .indicator-text {
+            display: contents;
+            /* 讓子元素直接繼承父層的 flex 排列 */
+        }
+
+        .indicator-item .value {
+            font-size: 12px;
         }
 
         .indicator-item .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
 
         .indicator-item .name {
-            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-right: 4px;
         }
 
         @media (max-width: 600px) {
@@ -221,10 +230,6 @@
             .verdict-right {
                 width: 100%;
                 text-align: left;
-            }
-
-            .indicator-item {
-                justify-content: flex-start;
             }
         }
     </style>
@@ -412,16 +417,24 @@
                                     <div class="indicators-title">指標訊號</div>
                                     <div class="indicators-grid">
                                         <div class="indicator-item" id="ind-ma">
-                                            <span class="dot"></span><span class="name">均線位階</span>
+                                            <span class="dot"></span>
+                                            <div class="indicator-text"><span class="name">均線位階</span><span
+                                                    class="value">-</span></div>
                                         </div>
                                         <div class="indicator-item" id="ind-bias">
-                                            <span class="dot"></span><span class="name">短線乖離</span>
+                                            <span class="dot"></span>
+                                            <div class="indicator-text"><span class="name">短線乖離</span><span
+                                                    class="value">-</span></div>
                                         </div>
                                         <div class="indicator-item" id="ind-macd">
-                                            <span class="dot"></span><span class="name">MACD動能</span>
+                                            <span class="dot"></span>
+                                            <div class="indicator-text"><span class="name">MACD動能</span><span
+                                                    class="value">-</span></div>
                                         </div>
                                         <div class="indicator-item" id="ind-bb">
-                                            <span class="dot"></span><span class="name">中軌趨勢</span>
+                                            <span class="dot"></span>
+                                            <div class="indicator-text"><span class="name">中軌趨勢</span><span
+                                                    class="value">-</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -552,7 +565,7 @@
                         <div class="table-header">
                             <div class="table-cell">賣出日期</div>
                             <div class="table-cell">名稱</div>
-                            <div class="table-cell">進場均價(張數)</div>
+                            <div class="table-cell">進場均價(成本)</div>
                             <div class="table-cell">獲利金額(報酬率)</div>
                         </div>
                         <div class="table-body"></div>
