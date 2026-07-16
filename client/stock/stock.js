@@ -89,7 +89,17 @@ $(async function () {
 
             // 計算持有天數
             let holdingDays = item._holdingDays;
-            $('<div class="table-cell"/>').append(holdingDays).appendTo($tr);
+            const $daysCell = $('<div class="table-cell"/>');
+            const $daysBadge = $('<span class="holding-days-badge"/>').text(holdingDays);
+
+            if (holdingDays > 90) {
+                $daysBadge.addClass('holding-days-long');
+            } else if (holdingDays > 30) {
+                $daysBadge.addClass('holding-days-medium');
+            } else {
+                $daysBadge.addClass('holding-days-short');
+            }
+            $daysCell.append($daysBadge).appendTo($tr);
 
             // 進場均價與進場數量 (套用手機版隱藏 class)
             $('<div class="table-cell hide-on-mobile"/>').append(numAvgEntry).appendTo($tr);
@@ -135,7 +145,7 @@ $(async function () {
 
         // --- 操作績效：依照年份動態渲染 ---
         function renderOperationsByYear(year) {
-            $('.ops-year-label').text(year);
+            $('.ops-year-label').text(year + ' '); // 在年份後加上空格
 
             // 1. 整體數據總覽
             const sellTradesByYear = dailyTrades.filter(item => item.state === "sell" && item.time && String(item.time).includes(year));
@@ -159,7 +169,6 @@ $(async function () {
             const totalTrades = sellTradesByYear.length;
 
             // 更新圖例數據
-            $('#overall-sold-count').text(totalTrades);
             $('#overall-profit-count').text(profitTradesCount);
             $('#overall-loss-count').text(lossTradesCount);
 
@@ -168,9 +177,11 @@ $(async function () {
             $profitEl.text(Math.round(totalProfitYear).toLocaleString());
             $profitEl.css('color', totalProfitYear >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
 
-            // 更新環狀圖
+            // 更新條形圖
             const profitPercentage = totalTrades > 0 ? (profitTradesCount / totalTrades) * 100 : 0;
-            $('.donut-chart').css('background', `conic-gradient(var(--success-color) 0% ${profitPercentage}%, var(--danger-color) ${profitPercentage}% 100%)`);
+            const lossPercentage = totalTrades > 0 ? (lossTradesCount / totalTrades) * 100 : 0;
+            $('#profit-bar').css('width', profitPercentage + '%');
+            $('#loss-bar').css('width', lossPercentage + '%');
 
             // 2. 獨立計算總覽卡片的賣出定額/定量收益
             function renderSummarySellCard(isQty = false) {
@@ -585,31 +596,38 @@ $(function () {
     const $iconSun = $themeToggle.find('.icon-sun');
     const $iconMoon = $themeToggle.find('.icon-moon');
     const $themeColorMeta = $('meta[name="theme-color"]');
+    const $body = $('body');
 
     function updateThemeUI(isLight) {
         if (isLight) {
+            $body.addClass('light-theme');
             $iconSun.hide();
             $iconMoon.show();
             $themeColorMeta.attr('content', '#F4F6F8');
         } else {
+            $body.removeClass('light-theme');
             $iconSun.show();
             $iconMoon.hide();
             $themeColorMeta.attr('content', '#131722');
         }
     }
 
-    // 檢查 localStorage 儲存的主題，若為 light 則預先載入 CSS
-    if (localStorage.getItem('theme') === 'light' && $('#theme-light-css').length === 0) {
-        $('head').append('<link rel="stylesheet" href="theme-light.css" id="theme-light-css">');
+    // 檢查 localStorage 儲存的主題
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        // 如果儲存的是亮色主題，確保 CSS 已載入
+        if ($('#theme-light-css').length === 0) {
+            $('head').append('<link rel="stylesheet" href="theme-light.css" id="theme-light-css">');
+        }
+        updateThemeUI(true);
+    } else {
+        // 預設為暗色主題
+        updateThemeUI(false);
     }
 
-    // 初始化 Icon 與 Meta Color
-    updateThemeUI($('#theme-light-css').length > 0);
-
     $themeToggle.on('click', function () {
-        let isLight = $('#theme-light-css').length > 0;
-
-        if (isLight) {
+        // 檢查 body 是否有 light-theme class 來判斷當前狀態
+        if ($body.hasClass('light-theme')) {
             $('#theme-light-css').remove();
             localStorage.setItem('theme', 'dark');
             updateThemeUI(false);
@@ -669,6 +687,40 @@ $(function () {
         }, { passive: true });
     }
 });
+
+// --- Tooltip 功能 ---
+$(function () {
+    let $tooltip = $('<div class="tooltip"></div>');
+    $('body').append($tooltip);
+
+    $(document).on('mouseenter', '[data-tooltip]', function (e) {
+        const text = $(this).data('tooltip');
+        if (!text) return;
+
+        $tooltip.text(text).addClass('visible');
+
+        const targetRect = this.getBoundingClientRect();
+        const tooltipRect = $tooltip[0].getBoundingClientRect();
+
+        let top = targetRect.bottom + window.scrollY + 8; // 預設在下方
+        let left = targetRect.left + window.scrollX + (targetRect.width / 2) - (tooltipRect.width / 2);
+
+        // 避免 tooltip 超出視窗右邊界
+        if (left + tooltipRect.width > window.innerWidth) {
+            left = window.innerWidth - tooltipRect.width - 10;
+        }
+        // 避免 tooltip 超出視窗左邊界
+        if (left < 0) {
+            left = 10;
+        }
+
+        $tooltip.css({ top: top, left: left });
+
+    }).on('mouseleave', '[data-tooltip]', function () {
+        $tooltip.removeClass('visible');
+    });
+});
+
 
 // --- 工具函式：計算最後更新時間 (每天 14:15) ---
 function getLastUpdateLabel() {

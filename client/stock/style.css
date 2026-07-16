@@ -1,6 +1,7 @@
 /* --- CSS Reset & Variables --- */
 :root {
-    --bg-color: #111827;
+    /* --- Original Theme Variables --- */
+    --bg-color: #171721;
     /* Fallback for older browsers */
     --card-bg: rgba(255, 255, 255, 0.05);
     /* Glass background */
@@ -13,6 +14,22 @@
     --danger-color: #ff3366;
     --font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
     --font-mono: "Consolas", "Courier New", "Roboto Mono", monospace;
+
+    /* --- Mercury Theme Variables --- */
+    --mc-bg: #171721;
+    --mc-bg-gradient: radial-gradient(ellipse 80% 70% at 50% 0%, #1c1c24 0%, #0b0b0f 100%);
+    --mc-card-bg: #1e1e2a;
+    --mc-border: #b4b7c81f;
+    --mc-border-hover: #393940;
+    --mc-text-main: #fcfcfc;
+    --mc-text-muted: #848490;
+    --mc-text-dim: #5f5f69;
+    --mc-accent: #4c6ef5;
+    --mc-accent-glow: rgba(76, 110, 245, 0.3);
+    --mc-success: #22c55e;
+    --mc-danger: #ef4444;
+    --mc-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mc-font-mono: "Roboto Mono", "Fira Code", "Courier New", monospace;
 }
 
 * {
@@ -23,11 +40,18 @@ body {
     margin: 0;
     padding: 12px;
     font-family: var(--font-family);
-    /* Soft gradient background to enhance glass effect */
-    background: radial-gradient(circle at top left, #1e293b, #111827 40%);
+    background: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
     font-variant-numeric: tabular-nums;
+}
+
+.mercury-theme body {
+    font-family: var(--mc-font-sans);
+    background: var(--mc-bg-gradient);
+    color: var(--mc-text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -46,11 +70,19 @@ p {
 /* --- Header --- */
 #header {
     display: flex;
+    /* 保持 flex 佈局 */
     justify-content: space-between;
     align-items: center;
     padding-bottom: 12px;
     margin-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
+}
+
+.mercury-theme #header {
+    border-bottom: 1px solid var(--mc-border);
+    margin-bottom: 24px;
+    /* 增加與下方內容的間距 */
+    padding-bottom: 16px;
 }
 
 #header h1 {
@@ -63,12 +95,27 @@ p {
     align-items: center;
 }
 
+.mercury-theme #header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-shadow: none;
+    text-transform: none;
+    /* Mercury 風格不使用大寫 */
+}
+
 #header p {
     color: var(--accent-color);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
+
+.mercury-theme #header p {
+    display: none;
+    /* 在 Mercury 風格中隱藏副標題，讓標題更簡潔 */
+}
+
 
 .version-badge {
     font-size: 11px;
@@ -83,11 +130,25 @@ p {
     font-family: var(--font-mono);
 }
 
+.mercury-theme .version-badge {
+    color: var(--mc-text-muted);
+    border: 1px solid var(--mc-border);
+    background-color: var(--mc-card-bg);
+    font-family: var(--mc-font-mono);
+    font-weight: 500;
+    margin-left: 16px;
+}
+
 .data-update-time {
     font-size: 11px;
     color: var(--text-muted);
     text-align: right;
     font-family: var(--font-mono);
+}
+
+.mercury-theme .data-update-time {
+    color: var(--mc-text-muted);
+    font-family: var(--mc-font-mono);
 }
 
 .header-right {
@@ -115,6 +176,20 @@ p {
     border-color: var(--accent-color);
     background-color: rgba(0, 240, 255, 0.05);
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.mercury-theme .theme-toggle-btn {
+    border: 1px solid var(--mc-border);
+    color: var(--mc-text-muted);
+    border-radius: 8px;
+    /* 更大的圓角 */
+    padding: 8px;
+}
+
+.mercury-theme .theme-toggle-btn:hover {
+    color: var(--mc-text-main);
+    border-color: var(--mc-border-hover);
+    background-color: var(--mc-card-bg);
 }
 
 /* --- Search Section --- */
@@ -147,12 +222,27 @@ p {
     outline: none;
     font-size: 13px;
     font-family: var(--font-mono);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.mercury-theme #stock-search-input {
+    background: var(--mc-card-bg);
+    border: 1px solid var(--mc-border);
+    color: var(--mc-text-main);
+    font-family: var(--mc-font-sans);
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
 }
 
 #stock-search-input:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+}
+
+.mercury-theme #stock-search-input:focus {
+    border-color: var(--mc-accent);
+    box-shadow: 0 0 0 3px var(--mc-accent-glow);
 }
 
 #stock-search-btn {
@@ -170,11 +260,24 @@ p {
     white-space: nowrap;
 }
 
+.mercury-theme #stock-search-btn {
+    background: var(--mc-accent);
+    color: var(--mc-text-main);
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 16px;
+    /* 配合輸入框高度 */
+    border-radius: 8px;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: background-color 0.2s;
+}
+
 #stock-search-btn:hover {
     transform: translateY(-1px);
     background-color: var(--accent-color);
     color: #000;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
 #stock-search-result {
@@ -191,6 +294,16 @@ p {
     /* Glass effect */
     font-size: 14px;
     display: none;
+}
+
+.mercury-theme #stock-search-result {
+    background: var(--mc-card-bg);
+    border: 1px solid var(--mc-border);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-top: 12px;
 }
 
 /* --- Market Summary --- */
@@ -422,15 +535,93 @@ p {
     margin-bottom: 0;
 }
 
+/* --- Bar Chart Summary (New) --- */
+.bar-chart-summary {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    /* 增加內邊距，避免內容貼邊 */
+    gap: 16px;
+}
+
+.summary-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mercury-theme .summary-total {
+    border-bottom-color: var(--mc-border);
+}
+
+.summary-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 12px;
+}
+
+.bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.bar-labels .bar-value {
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-main);
+}
+
+.bar-track {
+    width: 100%;
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.mercury-theme .bar-track {
+    background-color: var(--mc-border);
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease-out;
+}
+
+.bar-fill.profit {
+    background-color: var(--success-color);
+}
+
+.mercury-theme .bar-fill.profit {
+    background-color: var(--mc-success);
+}
+
+.bar-fill.loss {
+    background-color: var(--danger-color);
+}
+
+.mercury-theme .bar-fill.loss {
+    background-color: var(--mc-danger);
+}
+
 /* --- Donut Chart in Overall Summary --- */
 #summary-cards-overall {
-    padding: 8px 0;
-    min-height: 142px;
-    /* 增加高度以向下推擠，對齊右側的建議買進標題 */
-    display: flex !important;
-    align-items: center;
-    /* 確保高度增加後，環狀圖依然保持垂直居中 */
-    /* Override grid/flex from inline styles */
+    /* 移除舊的甜甜圈圖 flex 佈局，恢復為預設的塊級顯示 */
+    padding: 0;
+    /* 移除上下 padding，讓內容與卡片邊緣對齊 */
 }
 
 .donut-chart-wrapper {
@@ -510,21 +701,36 @@ p {
     border: 1px solid var(--border-color);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    /* Glass effect */
     border-radius: 4px;
     padding: 12px;
     box-shadow: none;
-    /* Remove shadow for a cleaner glass look */
     border-top: 1px solid var(--border-color);
-    /* Unify border */
     transition: background-color 0.2s, border-color 0.2s;
+}
+
+.mercury-theme .card {
+    background-color: var(--mc-card-bg);
+    border: 1px solid var(--mc-border);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 12px;
+    /* 更大的圓角 */
+    padding: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s, background-color 0.2s;
 }
 
 .card:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* Lighter on hover */
     border-color: var(--accent-color);
 }
+
+.mercury-theme .card:hover {
+    border-color: var(--mc-border-hover);
+    background-color: var(--mc-card-bg);
+    /* Hover 時背景色不變 */
+}
+
 
 .card span {
     display: block;
@@ -535,9 +741,23 @@ p {
     margin-bottom: 4px;
 }
 
+.mercury-theme .card span {
+    display: flex;
+    gap: 4px;
+    color: var(--mc-text-muted);
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
 .card h4 {
     font-size: 18px;
     font-family: var(--font-mono);
+}
+
+.mercury-theme .card h4 {
+    font-family: var(--mc-font-sans);
+    font-weight: 600;
 }
 
 /* --- Sections --- */
@@ -553,6 +773,13 @@ p {
     align-items: center;
 }
 
+.mercury-theme .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
 .month-profit-loss {
     font-size: 12px;
     color: var(--text-muted);
@@ -560,11 +787,22 @@ p {
     letter-spacing: 0.05em;
 }
 
+.mercury-theme .month-profit-loss {
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--mc-text-muted);
+}
+
 .month-profit-loss span {
     color: var(--success-color);
     font-family: var(--font-mono);
     font-size: 14px;
     margin-left: 6px;
+}
+
+.mercury-theme .month-profit-loss span {
+    font-family: var(--mc-font-mono);
+    font-weight: 600;
 }
 
 .title-actions {
@@ -587,6 +825,15 @@ p {
     transition: border-color 0.2s;
 }
 
+.mercury-theme .period-select {
+    background-color: var(--mc-card-bg);
+    color: var(--mc-text-main);
+    border: 1px solid var(--mc-border);
+    border-radius: 6px;
+    font-family: var(--mc-font-sans);
+    padding: 4px 8px;
+}
+
 .period-select:hover,
 .period-select:focus {
     border-color: var(--accent-color);
@@ -595,7 +842,8 @@ p {
 /* --- Year Tabs --- */
 .year-tabs {
     display: inline-flex;
-    /* Use inline-flex to fit content */
+    padding: 2px;
+    /* for inner spacing */
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -605,14 +853,27 @@ p {
 .year-tab {
     background: transparent;
     color: var(--text-muted);
-    border: none;
+    border: 0;
     padding: 4px 16px;
-    font-size: 16px;
+    font-size: 14px;
     font-family: var(--font-family);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     outline: none;
+    border-radius: 4px;
+    /* for active state */
+}
+
+.mercury-theme .year-tabs {
+    background-color: var(--mc-card-bg);
+    border: 1px solid var(--mc-border);
+    border-radius: 8px;
+}
+
+.mercury-theme .year-tab {
+    color: var(--mc-text-muted);
+    font-size: 13px;
 }
 
 .year-tab.active {
@@ -621,8 +882,13 @@ p {
     font-weight: 600;
 }
 
+.mercury-theme .year-tab.active {
+    background-color: #393940;
+    /* 使用更亮的灰色作為 active 狀態 */
+    color: var(--mc-text-main);
+}
+
 .year-tab:hover:not(.active) {
-    color: var(--text-main);
     background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -673,9 +939,17 @@ h3 {
     border: 1px solid var(--border-color);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    /* Glass effect */
     border-radius: 6px;
     overflow: hidden;
+}
+
+.mercury-theme .data-table {
+    background-color: transparent;
+    /* Let parent card handle background */
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 12px;
 }
 
 .table-row,
@@ -691,9 +965,51 @@ h3 {
 
 .table-header {
     background-color: rgba(0, 0, 0, 0.2);
-    /* Slightly darker transparent header */
+    /* Original */
     border-bottom: 1px solid var(--border-color);
 }
+
+.mercury-theme .table-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--mc-border);
+}
+
+.mercury-theme .table-row:hover {
+    background-color: var(--mc-card-bg);
+    /* 與卡片背景色一致 */
+}
+
+.mercury-theme #current-holdings .table-row,
+.mercury-theme #sold-stocks .table-row,
+.mercury-theme #today-suggestions .table-row {
+    position: relative;
+    transition: all 0.2s ease-out;
+    border-radius: 0px;
+}
+
+.mercury-theme #current-holdings .table-row:hover,
+.mercury-theme #sold-stocks .table-row:hover,
+.mercury-theme #today-suggestions .table-row:hover {
+    background-color: #b4b7c814;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.mercury-theme #current-holdings .table-body,
+.mercury-theme #sold-stocks .table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.mercury-theme .table-row {
+    border-bottom: 1px solid var(--mc-border);
+}
+
+.mercury-theme .table-row:last-child {
+    border-bottom: none;
+}
+
 
 .table-row:hover {
     background-color: rgba(0, 240, 255, 0.03);
@@ -707,6 +1023,12 @@ h3 {
     align-items: center;
 }
 
+.mercury-theme .table-cell {
+    padding: 12px 8px;
+    font-size: 13px;
+    font-family: var(--mc-font-mono);
+}
+
 .table-header .table-cell {
     color: var(--text-muted);
     font-weight: 500;
@@ -715,6 +1037,14 @@ h3 {
     letter-spacing: 0.05em;
     font-family: var(--font-family);
     gap: 4px;
+}
+
+.mercury-theme .table-header .table-cell {
+    color: var(--mc-text-muted);
+    font-family: var(--mc-font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: none;
 }
 
 #current-holdings .table-header .table-cell {
@@ -726,11 +1056,19 @@ h3 {
     color: var(--text-main);
 }
 
+.mercury-theme #current-holdings .table-header .table-cell:hover {
+    color: var(--mc-text-main);
+}
+
 .sort-icon {
     width: 16px;
     height: 16px;
     opacity: 0.5;
     transition: opacity 0.2s;
+}
+
+.mercury-theme .sort-icon {
+    opacity: 0.6;
 }
 
 .table-header .table-cell:hover .sort-icon {
@@ -791,8 +1129,33 @@ h3 {
     font-weight: 600;
 }
 
+.mercury-theme .table-row .table-cell:last-child {
+    color: var(--mc-success);
+}
+
 .table-row.down .table-cell:last-child {
     color: var(--danger-color);
+}
+
+.mercury-theme .table-row.down .table-cell:last-child {
+    color: var(--mc-danger);
+}
+
+/* Mercury Theme Specifics for table cells */
+.mercury-theme #sold-stocks .table-cell:nth-child(4) {
+    color: var(--mc-success);
+}
+
+.mercury-theme #sold-stocks .table-row.down .table-cell:nth-child(4) {
+    color: var(--mc-danger);
+}
+
+.mercury-theme #top-profit-trades .table-cell:nth-child(3) {
+    color: var(--mc-success);
+}
+
+.mercury-theme #top-loss-trades .table-cell:nth-child(3) {
+    color: var(--mc-danger);
 }
 
 /* --- View All Button --- */
@@ -813,6 +1176,13 @@ h3 {
     transition: background-color 0.2s;
 }
 
+.mercury-theme .view-all-btn {
+    color: var(--mc-text-muted);
+    background-color: transparent;
+    border-top: 1px solid var(--mc-border);
+    text-transform: none;
+}
+
 .view-all-btn:hover {
     background-color: rgba(0, 240, 255, 0.08);
 }
@@ -824,7 +1194,7 @@ h3 {
 }
 
 ::-webkit-scrollbar-track {
-    background: #06090f;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -832,8 +1202,16 @@ h3 {
     border-radius: 4px;
 }
 
+.mercury-theme ::-webkit-scrollbar-thumb {
+    background: var(--mc-border);
+}
+
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-color);
+}
+
+.mercury-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--mc-border-hover);
 }
 
 /* --- Loading State --- */
@@ -854,6 +1232,13 @@ body.loading-view {
     justify-content: center;
     flex-direction: column;
     color: var(--text-muted);
+}
+
+.mercury-theme .status-wrapper {
+    background: rgba(16, 16, 20, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--mc-text-muted);
 }
 
 body.loading-view .status-wrapper {
@@ -1006,4 +1391,116 @@ body.loading-view .status-wrapper {
     color: var(--text-muted);
     font-size: 12px;
     font-family: var(--font-mono);
+}
+
+.mercury-theme #footer {
+    border-top: 1px solid var(--mc-border);
+    color: var(--mc-text-dim);
+    font-family: var(--mc-font-sans);
+    margin-top: 48px;
+}
+
+/* --- Tooltip --- */
+.tooltip {
+    position: absolute;
+    background-color: var(--mc-card-bg);
+    color: var(--mc-text-main);
+    border: 1px solid var(--mc-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 200px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Light theme tooltip styles */
+.light-theme .tooltip {
+    background: var(--card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+.indicator-item {
+    position: relative;
+    cursor: help;
+}
+
+/* --- 表格行懸停效果 (Refactored) --- */
+/* 1. 設定目標區塊的 table-body 為 flex 容器，以啟用 gap */
+.mercury-theme #current-holdings .table-body,
+.mercury-theme #sold-stocks .table-body,
+.mercury-theme #today-suggestions .table-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    /* 增加行之間的間距 */
+}
+
+/* 2. 設定目標區塊的 table-row 預設樣式 */
+.mercury-theme #current-holdings .table-row,
+.mercury-theme #sold-stocks .table-row,
+.mercury-theme #today-suggestions .table-row {
+    position: relative;
+    transition: all 0.2s ease-out;
+    border: 1px solid transparent;
+    border-bottom-color: var(--mc-border);
+    border-radius: 0px;
+}
+
+/* 3. 統一定義懸停時的浮動卡片效果 */
+.mercury-theme #current-holdings .table-row:hover,
+.mercury-theme #sold-stocks .table-row:hover,
+.mercury-theme #today-suggestions .table-row:hover {
+    background-color: var(--mc-card-bg);
+    border: 1px solid var(--mc-border-hover);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* 移除 #today-buy 內表格行的底線 */
+.mercury-theme #today-suggestions .table-row,
+.mercury-theme #today-suggestions .table-header {
+    border-color: transparent;
+}
+
+/* --- 持有天數顏色標記 --- */
+.holding-days-badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 40px;
+}
+
+.holding-days-short {
+    background-color: rgba(132, 132, 144, 0.15);
+    color: #c0c2ce;
+}
+
+.holding-days-medium {
+    background-color: rgba(76, 110, 245, 0.15);
+    color: #91a7ff;
+}
+
+.holding-days-long {
+    background-color: rgba(233, 179, 13, 0.15);
+    color: #f5d36b;
 }

@@ -1,129 +1,357 @@
 /* === 亮色主題變數 (Light Theme Variables) === */
-:root {
-    --bg-color: #FDFBF7;
-    --card-bg: #ffffff;
-    --text-main: #1F2937;
-    --text-muted: #6B7280;
-    --border-color: #E5E7EB;
-    --accent-color: #15803D;
-    --success-color: #059669;
-    --danger-color: #dc2626;
+.light-theme {
+    /* --- Aura Glassmorphism (Dribbble Inspired) --- */
+    --bg-color: #f9f9fd;
+    /* 基礎背景色 */
+    --bg-gradient: radial-gradient(at 0% 0%, hsla(340, 80%, 95%, 0.4) 0px, transparent 50%),
+        radial-gradient(at 98% 99%, hsla(220, 80%, 95%, 0.4) 0px, transparent 50%);
+    --card-bg: rgba(255, 255, 255, 0.5);
+    /* 玻璃材質背景 */
+    --card-bg-hover: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(255, 255, 255, 0.8);
+    --card-border-hover: rgba(255, 255, 255, 1);
+    --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    --text-main: #2d3748;
+    /* 主要文字，深灰色 */
+    --text-muted: #718096;
+    --border-color: rgba(0, 0, 0, 0.05);
+    --accent-color: #4c6ef5;
+    /* 柔和的靛藍色 */
+    --accent-glow: rgba(76, 110, 245, 0.2);
+    --success-color: #10b981;
+    /* 柔和的綠色 */
+    --danger-color: #ef4444;
+    /* 柔和的紅色 */
+
+    /* 字體設定 */
+    --mc-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mc-font-mono: "SF Mono", "Fira Code", "Courier New", monospace;
 }
 
-/* === 特效與細節覆寫 === */
+/* === 整體背景與字體平滑化 === */
+.light-theme body {
+    background-color: var(--bg-color);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-/* Header 標題：移除暗色版的霓虹發光 */
-#header h1 {
+/* === 元件精緻化 === */
+.light-theme #header {
+    border-bottom-color: var(--border-color);
+}
+
+.light-theme #header h1 {
     text-shadow: none;
 }
 
-/* 版本標籤背景色調整 */
-.version-badge {
-    background-color: rgba(2, 132, 199, 0.05);
+.light-theme .version-badge {
+    color: var(--text-muted);
+    border-color: var(--border-color);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* 搜尋框：調整輸入框底色與聚焦陰影 */
-#stock-search-input {
-    background: rgba(2, 132, 199, 0.05);
+/* 搜尋框 */
+.light-theme #stock-search-input {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
 }
 
-#stock-search-btn:hover {
-    color: #ffffff;
-    /* 藍底白字對比更好 */
+.light-theme #stock-search-input:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
-/* 主題切換按鈕 Hover */
-.theme-toggle-btn:hover {
-    background-color: rgba(2, 132, 199, 0.05);
-    box-shadow: 0 0 8px rgba(2, 132, 199, 0.15);
+/* 搜尋按鈕 */
+.light-theme #stock-search-btn {
+    background: var(--accent-color);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #fff;
+    border: none;
+    box-shadow: none;
+    transition: all 0.3s ease;
 }
 
-/* 卡片：改為清爽的微陰影 */
-.card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border-top: 2px solid var(--border-color);
+.light-theme #stock-search-btn:hover {
+    transform: none;
+    box-shadow: 0 4px 20px 0 rgba(99, 102, 241, 0.3);
 }
 
-.card:hover {
-    background-color: #f8fafc;
-    border-top: 2px solid var(--accent-color);
-}
-
-/* 標籤 (Tabs) 與 下拉選單 */
-.year-tabs,
-.mobile-tabs {
-    background-color: #e2e8f0;
-}
-
-.year-tab.active,
-.mobile-tab.active {
-    color: #ffffff;
-}
-
-.year-tab:hover:not(.active),
-.mobile-tab:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.6);
+.light-theme .theme-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: var(--border-color);
     color: var(--text-main);
 }
 
-.period-select {
-    background-color: #ffffff;
+/* 搜尋結果 */
+.light-theme #stock-search-result {
+    background: var(--card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-top: 12px;
+    color: var(--text-main);
+}
+
+/* 卡片：毛玻璃效果 */
+.light-theme .card {
+    position: relative;
+    /* For pseudo-elements */
+    background: var(--card-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border-top: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    /* 確保偽元素的漸層不會溢出 */
+}
+
+.light-theme .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
+    background: var(--card-bg-hover);
+    border-color: var(--card-border-hover);
+}
+
+/* 增加權重以覆寫 style.css 中的 .mercury-theme .card:hover 背景色 */
+.light-theme.mercury-theme .card:hover {
+    background-color: var(--card-bg-hover);
+}
+
+/* 統一卡片內標題樣式 */
+.light-theme .card .section-title,
+.light-theme .card .group-title {
+    margin-bottom: 0;
+    /* 移除與下方元素的間距，改由卡片 padding 控制 */
+}
+
+/* 分頁標籤 */
+.light-theme .year-tabs,
+.light-theme .mobile-tabs {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.light-theme .year-tab.active,
+.light-theme .mobile-tab.active {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+}
+
+.light-theme .year-tab:hover:not(.active),
+.light-theme .mobile-tab:hover:not(.active) {
+    background-color: rgba(0, 0, 0, 0.03);
+    color: var(--text-main);
+}
+
+/* 下拉選單 */
+.light-theme .period-select {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--border-color);
 }
 
 /* 資料表格 */
-.table-header {
-    background-color: #f8fafc;
+.light-theme .inner-table {
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    overflow: hidden;
+    /* 確保圓角裁切 */
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 12px;
 }
 
-.table-row:hover {
-    background-color: rgba(2, 132, 199, 0.04);
+.light-theme .table-header {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-bottom-color: var(--border-color);
 }
 
-.view-all-btn {
-    background-color: rgba(2, 132, 199, 0.02);
+.light-theme .table-row {
+    border-bottom-color: var(--border-color);
 }
 
-.view-all-btn:hover {
-    background-color: rgba(2, 132, 199, 0.08);
+.light-theme .table-row:hover {
+    background: none;
 }
 
-/* 市場指數 - 進度條與發光點 */
-.market-gauge-bar {
-    background: linear-gradient(90deg, rgba(5, 150, 105, 0.15) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(220, 38, 38, 0.15) 100%);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+.light-theme .inner-table .view-all-btn {
+    background-color: transparent;
+    border-top-color: var(--border-color);
+    color: var(--accent-color);
 }
 
-.market-gauge-bar::before,
-.market-gauge-bar::after {
-    background-color: #94a3b8;
-    /* 兩側圓點改為灰色 */
-    box-shadow: none;
-}
-
-.gauge-fill {
-    background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.2) 100%);
-}
-
-.gauge-label.center b {
-    text-shadow: none;
-}
-
-/* 環狀圖中心底色 */
-.donut-chart-center {
-    background: var(--bg-color);
+.light-theme .inner-table .view-all-btn:hover {
+    background-color: rgba(76, 110, 245, 0.05);
 }
 
 /* 載入中畫面 */
-.status-wrapper {
-    background: rgba(241, 245, 249, 0.9);
+.light-theme .status-wrapper {
+    background: rgba(243, 244, 246, 0.7);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     color: var(--text-main);
 }
 
 /* 自訂滾動條 */
-::-webkit-scrollbar-track {
-    background: #e2e8f0;
+.light-theme ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #94a3b8;
+.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* === 覆寫 index.html 內的特殊樣式 === */
+
+/* 多空判斷卡片 */
+.light-theme .gauge-label.center b {
+    text-shadow: none;
+    color: var(--accent-color);
+}
+
+.light-theme .verdict-label {
+    font-weight: 700;
+}
+
+.light-theme .verdict-bars .bar {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .indicator-item .name {
+    opacity: 1;
+    color: var(--text-muted);
+}
+
+.light-theme .indicator-item .value {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* 市場指數儀表板 */
+.light-theme .market-gauge-bar {
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .market-gauge-bar::before,
+.light-theme .market-gauge-bar::after {
+    background-color: #b0b8c5;
+    box-shadow: none;
+}
+
+.light-theme .gauge-fill {
+    background: var(--accent-color);
+}
+
+.light-theme .gauge-fill::after {
+    background: var(--accent-color);
+    width: 10px;
+    height: 10px;
+    right: -5px;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--accent-color);
+    -webkit-animation: none;
+    animation: none;
+    /* 移除發光動畫 */
+}
+
+.light-theme .gauge-label.left b,
+.light-theme .gauge-label.right b {
+    color: var(--text-main);
+    /* 讓高低點數字與內文同色 */
+}
+
+.light-theme .gauge-label.left b {
+    color: var(--success-color);
+}
+
+.light-theme .gauge-label.right b {
+    color: var(--danger-color);
+}
+
+.light-theme #footer {
+    border-top-color: var(--border-color);
+}
+
+/* === 亮色主題：條形圖樣式 === */
+.light-theme .bar-chart-summary {
+    padding: 16px;
+}
+
+.light-theme .summary-total {
+    border-bottom-color: var(--border-color);
+    padding-bottom: 16px;
+}
+
+.light-theme .summary-bars {
+    padding-bottom: 0;
+}
+
+.light-theme .bar-labels .bar-value {
+    color: var(--text-main);
+}
+
+.light-theme .bar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .bar-fill.profit {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.light-theme .bar-fill.loss {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* === 亮色主題：表格行互動效果 (Refactored) === */
+/* 1. 設定目標區塊的 table-body 為 flex 容器，以啟用 gap */
+.light-theme #current-holdings .table-body,
+.light-theme #sold-stocks .table-body,
+.light-theme #today-suggestions .table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. 設定目標區塊的 table-row 預設樣式 */
+.light-theme #current-holdings .table-row,
+.light-theme #sold-stocks .table-row,
+.light-theme #today-suggestions .table-row {
+    position: relative;
+    transition: all 0.2s ease-out;
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+/* 3. 統一定義懸停時的浮動卡片效果 */
+.light-theme #current-holdings .table-row:hover,
+.light-theme #sold-stocks .table-row:hover,
+.light-theme #today-suggestions .table-row:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(76, 110, 245, 0.3);
+    box-shadow: 0 8px 24px rgba(76, 110, 245, 0.1);
+    z-index: 10;
+}
+
+/* 4. 移除 #today-suggestions 區塊的預設邊框，因為懸停效果已提供邊框 */
+.light-theme #today-suggestions .table-row,
+.light-theme #today-suggestions .table-header {
+    border-color: transparent;
 }

@@ -235,7 +235,7 @@
     </style>
 </head>
 
-<body class="loading-view">
+<body class="loading-view mercury-theme">
     <div class="status-wrapper">
         <p class="results">資料載入中…</p>
     </div>
@@ -281,28 +281,31 @@
                 <div class="operations-wrapper">
 
                     <div class="operation-group" style="grid-column: 1 / -1;">
-                        <div id="summary-cards-overall">
-                            <div class="donut-chart-wrapper">
-                                <div class="donut-chart">
-                                    <div class="donut-chart-center">
-                                        <span class="chart-center-label"><span class="ops-year-label">2026</span>
-                                            總獲利</span>
-                                        <h4 id="overall-total-profit">-</h4>
-                                    </div>
+                        <div id="summary-cards-overall" class="card">
+                            <div class="bar-chart-summary">
+                                <div class="summary-total">
+                                    <span class="chart-center-label"><span class="ops-year-label">2026</span> 總獲利</span>
+                                    <h4 id="overall-total-profit">-</h4>
                                 </div>
-                                <div class="donut-chart-legend">
-                                    <div class="legend-item"><span class="legend-color"
-                                            style="background-color: var(--success-color);"></span><span
-                                            class="legend-label">正獲利次數</span><span class="legend-value"
-                                            id="overall-profit-count">-</span></div>
-                                    <div class="legend-item"><span class="legend-color"
-                                            style="background-color: var(--danger-color);"></span><span
-                                            class="legend-label">負獲利次數</span><span class="legend-value"
-                                            id="overall-loss-count">-</span></div>
-                                    <div class="legend-item"><span class="legend-color"
-                                            style="background-color: var(--text-muted);"></span><span
-                                            class="legend-label">總交易次數</span><span class="legend-value"
-                                            id="overall-sold-count">-</span></div>
+                                <div class="summary-bars">
+                                    <div class="bar-item">
+                                        <div class="bar-labels">
+                                            <span>正獲利次數</span>
+                                            <span class="bar-value" id="overall-profit-count">-</span>
+                                        </div>
+                                        <div class="bar-track">
+                                            <div class="bar-fill profit" id="profit-bar" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar-labels">
+                                            <span>負獲利次數</span>
+                                            <span class="bar-value" id="overall-loss-count">-</span>
+                                        </div>
+                                        <div class="bar-track">
+                                            <div class="bar-fill loss" id="loss-bar" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -347,9 +350,9 @@
                     <!-- 重複交易排行 -->
                     <div id="repeated-trades-section">
                         <div class="repeated-tables-wrapper">
-                            <div id="top-profit-trades" class="operation-group">
+                            <div id="top-profit-trades" class="card">
                                 <h3 class="group-title">重覆進場獲利 Top5</h3>
-                                <div class="data-table">
+                                <div class="data-table inner-table">
                                     <div class="table-header">
                                         <div class="table-cell">股票名稱</div>
                                         <div class="table-cell">結算次數</div>
@@ -358,9 +361,9 @@
                                     <div class="table-body"></div>
                                 </div>
                             </div>
-                            <div id="top-loss-trades" class="operation-group">
+                            <div id="top-loss-trades" class="card">
                                 <h3 class="group-title">重覆進場虧損 Top5</h3>
-                                <div class="data-table">
+                                <div class="data-table inner-table">
                                     <div class="table-header">
                                         <div class="table-cell">股票名稱</div>
                                         <div class="table-cell">結算次數</div>
@@ -416,22 +419,26 @@
                                 <div class="verdict-right">
                                     <div class="indicators-title">指標訊號</div>
                                     <div class="indicators-grid">
-                                        <div class="indicator-item" id="ind-ma">
+                                        <div class="indicator-item" id="ind-ma"
+                                            data-tooltip="判斷目前股價相對於短期(5MA)和長期(60MA)均線的位置。">
                                             <span class="dot"></span>
                                             <div class="indicator-text"><span class="name">均線位階</span><span
                                                     class="value">-</span></div>
                                         </div>
-                                        <div class="indicator-item" id="ind-bias">
+                                        <div class="indicator-item" id="ind-bias"
+                                            data-tooltip="衡量股價偏離短期均線(5MA)的程度，判斷是否超買或超賣。">
                                             <span class="dot"></span>
                                             <div class="indicator-text"><span class="name">短線乖離</span><span
                                                     class="value">-</span></div>
                                         </div>
-                                        <div class="indicator-item" id="ind-macd">
+                                        <div class="indicator-item" id="ind-macd"
+                                            data-tooltip="判斷快慢線(DIF/MACD)的交叉情況與柱狀體(OSC)的增減趨勢。">
                                             <span class="dot"></span>
                                             <div class="indicator-text"><span class="name">MACD動能</span><span
                                                     class="value">-</span></div>
                                         </div>
-                                        <div class="indicator-item" id="ind-bb">
+                                        <div class="indicator-item" id="ind-bb"
+                                            data-tooltip="判斷股價是否站穩布林通道中軌(20MA)之上，以及通道的開合狀態。">
                                             <span class="dot"></span>
                                             <div class="indicator-text"><span class="name">中軌趨勢</span><span
                                                     class="value">-</span></div>
@@ -467,10 +474,11 @@
 
                 <!-- 今日操作建議 -->
                 <div id="today-suggestions">
+                    <h2 class="section-title">今日操作建議</h2>
                     <div class="today-tables-wrapper">
-                        <div id="today-buy">
-                            <h3>建議買進</h3>
-                            <div class="data-table">
+                        <div id="today-buy" class="card">
+                            <h3 class="group-title">建議買進</h3>
+                            <div class="data-table inner-table">
                                 <div class="table-header">
                                     <div class="table-cell">日期</div>
                                     <div class="table-cell">名稱</div>
@@ -480,9 +488,9 @@
                             </div>
                         </div>
 
-                        <div id="today-sell">
-                            <h3>建議賣出</h3>
-                            <div class="data-table">
+                        <div id="today-sell" class="card">
+                            <h3 class="group-title">建議賣出</h3>
+                            <div class="data-table inner-table">
                                 <div class="table-header">
                                     <div class="table-cell">日期</div>
                                     <div class="table-cell">名稱</div>
@@ -492,9 +500,9 @@
                             </div>
                         </div>
 
-                        <div id="today-strong">
-                            <h3>強勢類股推薦</h3>
-                            <div class="data-table">
+                        <div id="today-strong" class="card">
+                            <h3 class="group-title">強勢類股推薦</h3>
+                            <div class="data-table inner-table">
                                 <div class="table-header">
                                     <div class="table-cell">日期</div>
                                     <div class="table-cell">名稱</div>
@@ -514,7 +522,7 @@
                             style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); font-weight: normal; letter-spacing: 0.05em; text-transform: uppercase;">持倉總數:
                             <b style="color: var(--text-main); font-size: 16px; margin-left: 4px;">-</b></span>
                     </h2>
-                    <div class="data-table">
+                    <div class="data-table inner-table">
                         <div class="table-header">
                             <div class="table-cell">名稱<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24">
@@ -561,7 +569,7 @@
                             <div class="month-profit-loss">累計損益<span>-</span></div>
                         </div>
                     </h2>
-                    <div class="data-table">
+                    <div class="data-table inner-table">
                         <div class="table-header">
                             <div class="table-cell">賣出日期</div>
                             <div class="table-cell">名稱</div>
@@ -576,7 +584,7 @@
 
         <!-- Footer -->
         <footer id="footer">
-            <p>&copy; 2026 JOINJO 股票數據平台 v2.0. All rights reserved.</p>
+            <p>&copy; 2026 JOINJO 數據平台. All rights reserved.</p>
         </footer>
     </div>
 </body>
