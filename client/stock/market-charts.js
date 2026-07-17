@@ -129,3 +129,21 @@ window.renderMarketSummary = function (marketStatus) {
 
     $('#market-summary-section').fadeIn(400);
 };
+
+/**
+ * --- 渲染外部市場數據 (匯率、期貨) ---
+ */
+window.renderExternalData = function () {
+    // 1. 取得美金兌台幣匯率
+    // 使用支援 CORS 的公開 API (open.er-api.com)
+    $.getJSON('https://open.er-api.com/v6/latest/USD')
+        .done(function (data) {
+            if (data && data.rates && data.rates.TWD) {
+                const rate = parseFloat(data.rates.TWD).toFixed(3);
+                $('#usdtwd-rate').text(rate);
+            }
+        })
+        .fail(function () {
+            $('#usdtwd-rate').text('讀取失敗');
+        });
+};

@@ -95,7 +95,6 @@
             display: flex;
             flex-direction: column;
             gap: 28px;
-            grid-column: 1 / -1;
         }
 
         .market-verdict-bottom {
@@ -232,11 +231,35 @@
                 text-align: left;
             }
         }
+
+        /* Loading 動畫樣式 */
+        .status-wrapper .loading-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
     </style>
 </head>
 
-<body class="loading-view mercury-theme">
+<body class="loading-view">
     <div class="status-wrapper">
+        <svg class="loading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+                <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                    values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+                <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                    values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+                <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                    values="0;2;0;0" />
+            </circle>
+        </svg>
         <p class="results">資料載入中…</p>
     </div>
 
@@ -467,6 +490,13 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- 美金匯率卡片 -->
+                        <div class="card">
+                            <div class="card-content">
+                                <span>美金兌台幣匯率</span>
+                                <h4 id="usdtwd-rate">-</h4>
                             </div>
                         </div>
                     </div>

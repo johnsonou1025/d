@@ -125,8 +125,8 @@
     border-color: var(--card-border-hover);
 }
 
-/* 增加權重以覆寫 style.css 中的 .mercury-theme .card:hover 背景色 */
-.light-theme.mercury-theme .card:hover {
+/* 覆寫基礎樣式中的卡片懸停效果 */
+.light-theme .card:hover {
     background-color: var(--card-bg-hover);
 }
 

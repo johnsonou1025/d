@@ -17,6 +17,11 @@ $(async function () {
             renderMarketSummary(rawData.marketStatus);
         }
 
+        // 渲染外部數據 (匯率、期貨)
+        if (typeof renderExternalData === 'function') {
+            renderExternalData();
+        }
+
         // 將新版 API 的資料結構映射為原先程式預期的格式
         // 由於新 API 的 dailyTrades 和 strongSectors 預設為倒序(最新在前)，在此反轉回正序以配合原程式的計算邏輯
         const data = {

@@ -1,35 +1,20 @@
 /* --- CSS Reset & Variables --- */
 :root {
-    /* --- Original Theme Variables --- */
     --bg-color: #171721;
-    /* Fallback for older browsers */
-    --card-bg: rgba(255, 255, 255, 0.05);
-    /* Glass background */
-    --text-main: #e2e8f0;
-    --text-muted: #64748b;
-    --border-color: rgba(255, 255, 255, 0.1);
-    /* Glass border */
-    --accent-color: #00f0ff;
-    --success-color: #00ff9d;
-    --danger-color: #ff3366;
-    --font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
-    --font-mono: "Consolas", "Courier New", "Roboto Mono", monospace;
-
-    /* --- Mercury Theme Variables --- */
-    --mc-bg: #171721;
-    --mc-bg-gradient: radial-gradient(ellipse 80% 70% at 50% 0%, #1c1c24 0%, #0b0b0f 100%);
-    --mc-card-bg: #1e1e2a;
-    --mc-border: #b4b7c81f;
-    --mc-border-hover: #393940;
-    --mc-text-main: #fcfcfc;
-    --mc-text-muted: #848490;
-    --mc-text-dim: #5f5f69;
-    --mc-accent: #4c6ef5;
-    --mc-accent-glow: rgba(76, 110, 245, 0.3);
-    --mc-success: #22c55e;
-    --mc-danger: #ef4444;
-    --mc-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --mc-font-mono: "Roboto Mono", "Fira Code", "Courier New", monospace;
+    --card-bg: #1e1e2a;
+    --bg-gradient: radial-gradient(at 0% 100%, hsla(220, 80%, 20%, 0.2) 0px, transparent 50%),
+        radial-gradient(at 98% 0%, hsla(280, 80%, 20%, 0.2) 0px, transparent 50%);
+    --border-color: #b4b7c81f;
+    --border-hover: #393940;
+    --text-main: #fcfcfc;
+    --text-muted: #848490;
+    --text-dim: #5f5f69;
+    --accent-color: #4c6ef5;
+    --accent-glow: rgba(76, 110, 245, 0.3);
+    --success-color: #22c55e;
+    --danger-color: #ef4444;
+    --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "Roboto Mono", "Fira Code", "Courier New", monospace;
 }
 
 * {
@@ -40,16 +25,12 @@ body {
     margin: 0;
     padding: 12px;
     font-family: var(--font-family);
-    background: var(--bg-color);
+    background-color: var(--bg-color);
+    background-image: var(--bg-gradient);
     color: var(--text-main);
+    background-attachment: fixed;
     line-height: 1.6;
     font-variant-numeric: tabular-nums;
-}
-
-.mercury-theme body {
-    font-family: var(--mc-font-sans);
-    background: var(--mc-bg-gradient);
-    color: var(--mc-text-main);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -73,68 +54,33 @@ p {
     /* 保持 flex 佈局 */
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 12px;
-    margin-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
-}
-
-.mercury-theme #header {
-    border-bottom: 1px solid var(--mc-border);
     margin-bottom: 24px;
     /* 增加與下方內容的間距 */
     padding-bottom: 16px;
 }
 
 #header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-    display: flex;
-    align-items: center;
-}
-
-.mercury-theme #header h1 {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: normal;
     text-shadow: none;
     text-transform: none;
     /* Mercury 風格不使用大寫 */
+    display: flex;
+    align-items: center;
 }
 
 #header p {
-    color: var(--accent-color);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.mercury-theme #header p {
     display: none;
     /* 在 Mercury 風格中隱藏副標題，讓標題更簡潔 */
 }
 
-
 .version-badge {
-    font-size: 11px;
-    color: var(--accent-color);
-    border: 1px solid var(--accent-color);
-    background-color: rgba(0, 240, 255, 0.05);
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 12px;
-    text-shadow: none;
-    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
     font-family: var(--font-mono);
-}
-
-.mercury-theme .version-badge {
-    color: var(--mc-text-muted);
-    border: 1px solid var(--mc-border);
-    background-color: var(--mc-card-bg);
-    font-family: var(--mc-font-mono);
     font-weight: 500;
     margin-left: 16px;
 }
@@ -142,13 +88,7 @@ p {
 .data-update-time {
     font-size: 11px;
     color: var(--text-muted);
-    text-align: right;
     font-family: var(--font-mono);
-}
-
-.mercury-theme .data-update-time {
-    color: var(--mc-text-muted);
-    font-family: var(--mc-font-mono);
 }
 
 .header-right {
@@ -159,37 +99,22 @@ p {
 
 /* Theme Toggle Button */
 .theme-toggle-btn {
-    background: transparent;
     border: 1px solid var(--border-color);
     color: var(--text-muted);
     cursor: pointer;
-    padding: 6px;
-    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-}
-
-.theme-toggle-btn:hover {
-    color: var(--accent-color);
-    border-color: var(--accent-color);
-    background-color: rgba(0, 240, 255, 0.05);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-.mercury-theme .theme-toggle-btn {
-    border: 1px solid var(--mc-border);
-    color: var(--mc-text-muted);
     border-radius: 8px;
     /* 更大的圓角 */
     padding: 8px;
 }
 
-.mercury-theme .theme-toggle-btn:hover {
-    color: var(--mc-text-main);
-    border-color: var(--mc-border-hover);
-    background-color: var(--mc-card-bg);
+.theme-toggle-btn:hover {
+    color: var(--text-main);
+    border-color: var(--border-hover);
+    background-color: var(--card-bg);
 }
 
 /* --- Search Section --- */
@@ -212,58 +137,29 @@ p {
 }
 
 #stock-search-input {
-    padding: 6px 12px;
-    border-radius: 4px;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
-    background: rgba(0, 240, 255, 0.02);
-    color: var(--accent-color);
-    width: 100%;
-    max-width: 300px;
-    outline: none;
-    font-size: 13px;
-    font-family: var(--font-mono);
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-}
-
-.mercury-theme #stock-search-input {
-    background: var(--mc-card-bg);
-    border: 1px solid var(--mc-border);
-    color: var(--mc-text-main);
-    font-family: var(--mc-font-sans);
+    color: var(--text-main);
+    font-family: var(--font-family);
     font-size: 14px;
     padding: 8px 12px;
     border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 #stock-search-input:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
-}
-
-.mercury-theme #stock-search-input:focus {
-    border-color: var(--mc-accent);
-    box-shadow: 0 0 0 3px var(--mc-accent-glow);
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 #stock-search-btn {
-    padding: 6px 16px;
-    border-radius: 4px;
-    border: 1px solid var(--accent-color);
-    background: transparent;
-    color: var(--accent-color);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: transform 0.1s, background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-}
-
-.mercury-theme #stock-search-btn {
-    background: var(--mc-accent);
-    color: var(--mc-text-main);
+    background: var(--accent-color);
+    color: var(--text-main);
     border: none;
+    cursor: pointer;
     font-weight: 600;
     font-size: 14px;
     padding: 9px 16px;
@@ -272,38 +168,26 @@ p {
     text-transform: none;
     letter-spacing: normal;
     transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
 #stock-search-btn:hover {
-    transform: translateY(-1px);
     background-color: var(--accent-color);
-    color: #000;
 }
 
 #stock-search-result {
-    margin-top: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 16px;
-    border-radius: 4px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    /* Glass border */
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    /* Glass effect */
-    font-size: 14px;
-    display: none;
-}
-
-.mercury-theme #stock-search-result {
-    background: var(--mc-card-bg);
-    border: 1px solid var(--mc-border);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     margin-top: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    font-size: 14px;
+    display: none;
 }
 
 /* --- Market Summary --- */
@@ -314,8 +198,10 @@ p {
 
 .market-summary-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 12px;
+    /* 桌面版固定為 2:1 欄位 */
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    /* 增加卡片間距 */
 }
 
 .market-summary-wrapper h3 {
@@ -553,10 +439,6 @@ p {
     border-bottom: 1px solid var(--border-color);
 }
 
-.mercury-theme .summary-total {
-    border-bottom-color: var(--mc-border);
-}
-
 .summary-bars {
     display: flex;
     flex-direction: column;
@@ -591,10 +473,6 @@ p {
     overflow: hidden;
 }
 
-.mercury-theme .bar-track {
-    background-color: var(--mc-border);
-}
-
 .bar-fill {
     height: 100%;
     border-radius: 3px;
@@ -605,16 +483,8 @@ p {
     background-color: var(--success-color);
 }
 
-.mercury-theme .bar-fill.profit {
-    background-color: var(--mc-success);
-}
-
 .bar-fill.loss {
     background-color: var(--danger-color);
-}
-
-.mercury-theme .bar-fill.loss {
-    background-color: var(--mc-danger);
 }
 
 /* --- Donut Chart in Overall Summary --- */
@@ -699,18 +569,6 @@ p {
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-radius: 4px;
-    padding: 12px;
-    box-shadow: none;
-    border-top: 1px solid var(--border-color);
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.mercury-theme .card {
-    background-color: var(--mc-card-bg);
-    border: 1px solid var(--mc-border);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     border-radius: 12px;
@@ -721,42 +579,24 @@ p {
 }
 
 .card:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent-color);
-}
-
-.mercury-theme .card:hover {
-    border-color: var(--mc-border-hover);
-    background-color: var(--mc-card-bg);
+    border-color: var(--border-hover);
+    background-color: var(--card-bg);
     /* Hover 時背景色不變 */
 }
 
 
 .card span {
-    display: block;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-}
-
-.mercury-theme .card span {
     display: flex;
     gap: 4px;
-    color: var(--mc-text-muted);
+    color: var(--text-muted);
     font-size: 12px;
     text-transform: none;
     letter-spacing: normal;
 }
 
 .card h4 {
+    font-family: var(--font-family);
     font-size: 18px;
-    font-family: var(--font-mono);
-}
-
-.mercury-theme .card h4 {
-    font-family: var(--mc-font-sans);
     font-weight: 600;
 }
 
@@ -764,45 +604,29 @@ p {
 .section-title {
     font-size: 16px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
     margin-bottom: 8px;
     color: var(--text-main);
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.mercury-theme .section-title {
     font-size: 18px;
-    font-weight: 600;
     text-transform: none;
     letter-spacing: normal;
 }
 
 .month-profit-loss {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.mercury-theme .month-profit-loss {
     text-transform: none;
     letter-spacing: normal;
-    color: var(--mc-text-muted);
+    color: var(--text-muted);
+    font-size: 12px;
 }
 
 .month-profit-loss span {
     color: var(--success-color);
     font-family: var(--font-mono);
     font-size: 14px;
-    margin-left: 6px;
-}
-
-.mercury-theme .month-profit-loss span {
-    font-family: var(--mc-font-mono);
     font-weight: 600;
+    margin-left: 6px;
 }
 
 .title-actions {
@@ -812,26 +636,15 @@ p {
 }
 
 .period-select {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: var(--accent-color);
+    background-color: var(--card-bg);
+    color: var(--text-main);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 11px;
-    font-weight: normal;
-    font-family: var(--font-mono);
+    border-radius: 6px;
+    font-family: var(--font-family);
+    padding: 4px 8px;
     outline: none;
     cursor: pointer;
     transition: border-color 0.2s;
-}
-
-.mercury-theme .period-select {
-    background-color: var(--mc-card-bg);
-    color: var(--mc-text-main);
-    border: 1px solid var(--mc-border);
-    border-radius: 6px;
-    font-family: var(--mc-font-sans);
-    padding: 4px 8px;
 }
 
 .period-select:hover,
@@ -842,12 +655,11 @@ p {
 /* --- Year Tabs --- */
 .year-tabs {
     display: inline-flex;
-    padding: 2px;
-    /* for inner spacing */
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     overflow: hidden;
+    padding: 2px;
 }
 
 .year-tab {
@@ -855,37 +667,20 @@ p {
     color: var(--text-muted);
     border: 0;
     padding: 4px 16px;
-    font-size: 14px;
+    font-size: 13px;
     font-family: var(--font-family);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     outline: none;
     border-radius: 4px;
-    /* for active state */
-}
-
-.mercury-theme .year-tabs {
-    background-color: var(--mc-card-bg);
-    border: 1px solid var(--mc-border);
-    border-radius: 8px;
-}
-
-.mercury-theme .year-tab {
-    color: var(--mc-text-muted);
-    font-size: 13px;
 }
 
 .year-tab.active {
-    background-color: var(--accent-color);
-    color: #000;
-    font-weight: 600;
-}
-
-.mercury-theme .year-tab.active {
     background-color: #393940;
     /* 使用更亮的灰色作為 active 狀態 */
-    color: var(--mc-text-main);
+    color: var(--text-main);
+    font-weight: 600;
 }
 
 .year-tab:hover:not(.active) {
@@ -935,21 +730,13 @@ h3 {
 
 /* --- Data Tables (Div based) --- */
 .data-table {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.mercury-theme .data-table {
     background-color: transparent;
     /* Let parent card handle background */
     border: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     border-radius: 12px;
+    overflow: hidden;
 }
 
 .table-row,
@@ -964,87 +751,53 @@ h3 {
 }
 
 .table-header {
-    background-color: rgba(0, 0, 0, 0.2);
-    /* Original */
+    background-color: transparent;
     border-bottom: 1px solid var(--border-color);
 }
 
-.mercury-theme .table-header {
-    background-color: transparent;
-    border-bottom: 1px solid var(--mc-border);
-}
-
-.mercury-theme .table-row:hover {
-    background-color: var(--mc-card-bg);
+.table-row:hover {
+    background-color: var(--card-bg);
     /* 與卡片背景色一致 */
 }
 
-.mercury-theme #current-holdings .table-row,
-.mercury-theme #sold-stocks .table-row,
-.mercury-theme #today-suggestions .table-row {
+#current-holdings .table-row,
+#sold-stocks .table-row,
+#today-suggestions .table-row {
     position: relative;
     transition: all 0.2s ease-out;
     border-radius: 0px;
 }
 
-.mercury-theme #current-holdings .table-row:hover,
-.mercury-theme #sold-stocks .table-row:hover,
-.mercury-theme #today-suggestions .table-row:hover {
+#current-holdings .table-row:hover,
+#sold-stocks .table-row:hover,
+#today-suggestions .table-row:hover {
     background-color: #b4b7c814;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     z-index: 10;
 }
 
-.mercury-theme #current-holdings .table-body,
-.mercury-theme #sold-stocks .table-body {
+#current-holdings .table-body,
+#sold-stocks .table-body {
     display: flex;
     flex-direction: column;
 }
 
-.mercury-theme .table-row {
-    border-bottom: 1px solid var(--mc-border);
-}
-
-.mercury-theme .table-row:last-child {
-    border-bottom: none;
-}
-
-
-.table-row:hover {
-    background-color: rgba(0, 240, 255, 0.03);
-}
-
 .table-cell {
-    padding: 8px 10px;
-    font-size: 12px;
-    font-family: var(--font-mono);
+    padding: 12px 8px;
+    font-size: 13px;
+    font-family: var(--mc-font-mono);
     display: flex;
     align-items: center;
 }
 
-.mercury-theme .table-cell {
-    padding: 12px 8px;
-    font-size: 13px;
-    font-family: var(--mc-font-mono);
-}
-
 .table-header .table-cell {
     color: var(--text-muted);
-    font-weight: 500;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     font-family: var(--font-family);
-    gap: 4px;
-}
-
-.mercury-theme .table-header .table-cell {
-    color: var(--mc-text-muted);
-    font-family: var(--mc-font-sans);
     font-size: 11px;
     font-weight: 500;
     text-transform: none;
+    gap: 4px;
 }
 
 #current-holdings .table-header .table-cell {
@@ -1052,23 +805,11 @@ h3 {
     transition: color 0.2s;
 }
 
-#current-holdings .table-header .table-cell:hover {
-    color: var(--text-main);
-}
-
-.mercury-theme #current-holdings .table-header .table-cell:hover {
-    color: var(--mc-text-main);
-}
-
 .sort-icon {
     width: 16px;
     height: 16px;
     opacity: 0.5;
     transition: opacity 0.2s;
-}
-
-.mercury-theme .sort-icon {
-    opacity: 0.6;
 }
 
 .table-header .table-cell:hover .sort-icon {
@@ -1129,33 +870,25 @@ h3 {
     font-weight: 600;
 }
 
-.mercury-theme .table-row .table-cell:last-child {
-    color: var(--mc-success);
-}
-
 .table-row.down .table-cell:last-child {
     color: var(--danger-color);
 }
 
-.mercury-theme .table-row.down .table-cell:last-child {
-    color: var(--mc-danger);
-}
-
 /* Mercury Theme Specifics for table cells */
-.mercury-theme #sold-stocks .table-cell:nth-child(4) {
-    color: var(--mc-success);
+#sold-stocks .table-cell:nth-child(4) {
+    color: var(--success-color);
 }
 
-.mercury-theme #sold-stocks .table-row.down .table-cell:nth-child(4) {
-    color: var(--mc-danger);
+#sold-stocks .table-row.down .table-cell:nth-child(4) {
+    color: var(--danger-color);
 }
 
-.mercury-theme #top-profit-trades .table-cell:nth-child(3) {
-    color: var(--mc-success);
+#top-profit-trades .table-cell:nth-child(3) {
+    color: var(--success-color);
 }
 
-.mercury-theme #top-loss-trades .table-cell:nth-child(3) {
-    color: var(--mc-danger);
+#top-loss-trades .table-cell:nth-child(3) {
+    color: var(--danger-color);
 }
 
 /* --- View All Button --- */
@@ -1165,22 +898,12 @@ h3 {
 
 .view-all-btn {
     text-align: center;
-    padding: 8px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent-color);
+    color: var(--text-muted);
     cursor: pointer;
-    background-color: rgba(0, 240, 255, 0.02);
-    border-top: 1px solid var(--border-color);
-    transition: background-color 0.2s;
-}
-
-.mercury-theme .view-all-btn {
-    color: var(--mc-text-muted);
     background-color: transparent;
-    border-top: 1px solid var(--mc-border);
+    border-top: 1px solid var(--border-color);
     text-transform: none;
+    padding: 8px;
 }
 
 .view-all-btn:hover {
@@ -1202,16 +925,8 @@ h3 {
     border-radius: 4px;
 }
 
-.mercury-theme ::-webkit-scrollbar-thumb {
-    background: var(--mc-border);
-}
-
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-color);
-}
-
-.mercury-theme ::-webkit-scrollbar-thumb:hover {
-    background: var(--mc-border-hover);
+    background: var(--border-hover);
 }
 
 /* --- Loading State --- */
@@ -1224,21 +939,12 @@ body.loading-view {
     position: fixed;
     inset: 0;
     /* Use inset for cleaner code */
-    background: rgba(15, 23, 42, 0.9);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    background: rgba(16, 16, 20, 0.8);
     z-index: 50;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     color: var(--text-muted);
-}
-
-.mercury-theme .status-wrapper {
-    background: rgba(16, 16, 20, 0.8);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    color: var(--mc-text-muted);
 }
 
 body.loading-view .status-wrapper {
@@ -1347,6 +1053,11 @@ body.loading-view .status-wrapper {
         gap: 8px;
     }
 
+    .market-summary-wrapper {
+        grid-template-columns: 1fr;
+        /* 手機版改為單欄 */
+    }
+
     .gauge-label span {
         font-size: 9px;
     }
@@ -1384,28 +1095,18 @@ body.loading-view .status-wrapper {
 
 /* --- Footer --- */
 #footer {
-    text-align: center;
-    padding: 24px 0;
-    margin-top: 32px;
     border-top: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 12px;
-    font-family: var(--font-mono);
-}
-
-.mercury-theme #footer {
-    border-top: 1px solid var(--mc-border);
-    color: var(--mc-text-dim);
-    font-family: var(--mc-font-sans);
+    color: var(--text-dim);
+    font-family: var(--font-family);
     margin-top: 48px;
 }
 
 /* --- Tooltip --- */
 .tooltip {
     position: absolute;
-    background-color: var(--mc-card-bg);
-    color: var(--mc-text-main);
-    border: 1px solid var(--mc-border);
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 12px;
@@ -1443,9 +1144,9 @@ body.loading-view .status-wrapper {
 
 /* --- 表格行懸停效果 (Refactored) --- */
 /* 1. 設定目標區塊的 table-body 為 flex 容器，以啟用 gap */
-.mercury-theme #current-holdings .table-body,
-.mercury-theme #sold-stocks .table-body,
-.mercury-theme #today-suggestions .table-body {
+#current-holdings .table-body,
+#sold-stocks .table-body,
+#today-suggestions .table-body {
     display: flex;
     flex-direction: column;
     gap: 0px;
@@ -1453,29 +1154,20 @@ body.loading-view .status-wrapper {
 }
 
 /* 2. 設定目標區塊的 table-row 預設樣式 */
-.mercury-theme #current-holdings .table-row,
-.mercury-theme #sold-stocks .table-row,
-.mercury-theme #today-suggestions .table-row {
+#current-holdings .table-row,
+#sold-stocks .table-row,
+#today-suggestions .table-row {
     position: relative;
     transition: all 0.2s ease-out;
     border: 1px solid transparent;
-    border-bottom-color: var(--mc-border);
+    border-bottom-color: var(--border-color);
     border-radius: 0px;
 }
 
 /* 3. 統一定義懸停時的浮動卡片效果 */
-.mercury-theme #current-holdings .table-row:hover,
-.mercury-theme #sold-stocks .table-row:hover,
-.mercury-theme #today-suggestions .table-row:hover {
-    background-color: var(--mc-card-bg);
-    border: 1px solid var(--mc-border-hover);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
 /* 移除 #today-buy 內表格行的底線 */
-.mercury-theme #today-suggestions .table-row,
-.mercury-theme #today-suggestions .table-header {
+#today-suggestions .table-row,
+#today-suggestions .table-header {
     border-color: transparent;
 }
 
