@@ -847,7 +847,7 @@ p {
     left: 0;
     z-index: 1;
     /* 載入剛生成的賽博龐克台北 101 背景圖 */
-    background: url('img/hero.jpg') center center / cover no-repeat;
+    background: url('../img/hero.jpg') center center / cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
