@@ -5,9 +5,12 @@
 
 :root {}
 
-html, body {
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    background: #0F0A23;
+html,
+body {
+    background-color: #050508;
+    font-family: 'Orbitron', 'Noto Sans TC', 'Roboto', Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
 }
 
 h3 {
@@ -55,7 +58,7 @@ p {
 
 .page {
     position: relative;
-    margin-top: 100vh;
+    margin-top: 600px;
     color: #FFF;
     line-height: 150%;
     font-size: 14px;
@@ -110,8 +113,10 @@ p {
     text-align: center;
     color: #FFF;
     z-index: 1;
-    overflow: hidden; /* 確保影片不溢出 */
-    background: #0F0A23; /* 影片載入前的底色 */
+    overflow: hidden;
+    /* 確保影片不溢出 */
+    background: #0F0A23;
+    /* 影片載入前的底色 */
 }
 
 /* 共用樣式：確保影片完全覆蓋背景且不變形 */
@@ -121,7 +126,9 @@ p {
     left: 50%;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 關鍵：確保影片像 background-size: cover 一樣滿版 */
+    -o-object-fit: cover;
+    object-fit: cover;
+    /* 關鍵：確保影片像 background-size: cover 一樣滿版 */
     transform: translate(-50%, -50%);
     z-index: 0;
 }
@@ -134,10 +141,13 @@ p {
 /* 當視窗小於等於 768px 時 */
 @media (max-width: 768px) {
     #kv-pc {
-        display: none; /* 隱藏電腦版 */
+        display: none;
+        /* 隱藏電腦版 */
     }
+
     #kv-mobile {
-        display: block; /* 顯示手機版 */
+        display: block;
+        /* 顯示手機版 */
     }
 }
 
@@ -689,7 +699,7 @@ p {
     content: "";
     position: absolute;
     inset: 0;
-    z-index:4;
+    z-index: 4;
 }
 
 .header {
@@ -719,6 +729,7 @@ p {
     aspect-ratio: 1/1;
     border-radius: 10px;
     background: rgba(255, 255, 255, .2);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
@@ -730,6 +741,7 @@ p {
     height: 50%;
     aspect-ratio: 1/1;
     background: #FFF;
+    -webkit-mask: url(../img/close.svg) no-repeat center / cover;
     mask: url(../img/close.svg) no-repeat center / cover;
 }
 
@@ -756,19 +768,17 @@ p {
 
 .page {
     /* 增加一個漸層遮罩，讓內容從影片中「浮現」出來 */
-    background: linear-gradient(
-        to bottom, 
-        rgba(15, 10, 35, 0) 0%, 
-        rgba(15, 10, 35, 0.8) 5vh, 
-        rgba(15, 10, 35, 1) 15vh
-    );
+    background: linear-gradient(to bottom,
+            rgba(15, 10, 35, 0) 0%,
+            rgba(15, 10, 35, 0.8) 5vh,
+            rgba(15, 10, 35, 1) 15vh);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* 定義初始狀態 */
-.intro .headline, 
+.intro .headline,
 .intro .card-box li,
 .services li {
     opacity: 0;
@@ -783,9 +793,17 @@ p {
 }
 
 /* 延遲進場，增加層次感 */
-.intro .card-box li:nth-child(2) { transition-delay: 0.1s; }
-.intro .card-box li:nth-child(3) { transition-delay: 0.2s; }
-.intro .card-box li:nth-child(4) { transition-delay: 0.3s; }
+.intro .card-box li:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.intro .card-box li:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.intro .card-box li:nth-child(4) {
+    transition-delay: 0.3s;
+}
 
 .works li i {
     position: relative;
@@ -805,7 +823,8 @@ p {
 }
 
 .works li a:hover h4 {
-    color: #00CED1; /* 懸停時標題變色，取代下劃線會更現代 */
+    color: #00CED1;
+    /* 懸停時標題變色，取代下劃線會更現代 */
     text-decoration: none;
 }
 
@@ -818,4 +837,447 @@ p {
 
 /*css end*/
 
+/* 1980x600 Hero 容器 */
+.hero-wrapper {
+    width: 100%;
+    height: 600px;
+    /* 將高度固定為 600px */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    /* 載入剛生成的賽博龐克台北 101 背景圖 */
+    background: url('../hero.png') center center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background-position 0.1s ease-out;
+    visibility: hidden;
+    /* 預設隱藏，由動畫顯示 */
+    -webkit-animation: showContent 1.5s 1.2s forwards;
+    animation: showContent 1.5s 1.2s forwards;
+    /* 延遲顯示內容 */
+}
 
+/* 底部漸層，用來融合背景圖與 body */
+.hero-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    /* 漸層高度為容器的 30% */
+    background: linear-gradient(to top, #050508 10%, transparent);
+    z-index: 1;
+}
+
+/* 電視開機效果 */
+.tv-on-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #050508;
+    z-index: 10;
+    -webkit-animation: tvOn 1.5s forwards;
+    animation: tvOn 1.5s forwards;
+}
+
+@-webkit-keyframes tvOn {
+    40% {
+        background: linear-gradient(to bottom, #050508 0%, #050508 49.5%, #fff 49.5%, #fff 50.5%, #050508 50.5%, #050508 100%);
+    }
+
+    60%,
+    99% {
+        transform: scaleY(200);
+        /* 放大製造閃爍感 */
+    }
+
+    100% {
+        transform: scaleY(200);
+        display: none;
+    }
+}
+
+@keyframes tvOn {
+    40% {
+        background: linear-gradient(to bottom, #050508 0%, #050508 49.5%, #fff 49.5%, #fff 50.5%, #050508 50.5%, #050508 100%);
+    }
+
+    60%,
+    99% {
+        transform: scaleY(200);
+        /* 放大製造閃爍感 */
+    }
+
+    100% {
+        transform: scaleY(200);
+        display: none;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes showContent {
+    to {
+        visibility: visible;
+    }
+}
+
+@keyframes showContent {
+    to {
+        visibility: visible;
+    }
+}
+
+/* CRT 掃描線濾鏡 */
+.hero-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg,
+            rgba(255, 0, 0, 0.03),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.03));
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+    z-index: 2;
+    -webkit-animation: scanline 8s linear infinite;
+    animation: scanline 8s linear infinite;
+}
+
+@-webkit-keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* 賽博龐克主標題 */
+.cyber-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    text-transform: uppercase;
+    position: relative;
+    color: #ffffff;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        2px 2px 0px #ff0055,
+        -2px -2px 0px #00f3ff;
+    letter-spacing: 2px;
+    z-index: 3;
+    -webkit-animation: flicker 8s infinite alternate;
+    animation: flicker 8s infinite alternate;
+}
+
+/* 打字游標 */
+.cyber-title::after {
+    content: '_';
+    position: absolute;
+    right: -0.4em;
+    -webkit-animation: blink 1s infinite;
+    animation: blink 1s infinite;
+    color: #00f3ff;
+}
+
+.cyber-title span {
+    color: #00f3ff;
+    text-shadow: 0 0 15px #00f3ff, 0 0 30px #00f3ff;
+    -webkit-animation: neon-pulse 4s ease-in-out infinite alternate;
+    animation: neon-pulse 4s ease-in-out infinite alternate;
+}
+
+/* 游標閃爍 */
+@-webkit-keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 霓虹呼吸效果 */
+@-webkit-keyframes neon-pulse {
+    from {
+        text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+    }
+
+    to {
+        text-shadow: 0 0 20px #00f3ff, 0 0 40px #00f3ff;
+    }
+}
+
+@keyframes neon-pulse {
+    from {
+        text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+    }
+
+    to {
+        text-shadow: 0 0 20px #00f3ff, 0 0 40px #00f3ff;
+    }
+}
+
+/* 整體隨機閃爍 */
+@-webkit-keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 0.99;
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.8),
+            2px 2px 0px #ff0055,
+            -2px -2px 0px #00f3ff;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.5;
+        text-shadow: none;
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 0.99;
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.8),
+            2px 2px 0px #ff0055,
+            -2px -2px 0px #00f3ff;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.5;
+        text-shadow: none;
+    }
+}
+
+/* 右下角 HUD 經緯度數據 */
+.hud-coords {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 0.75rem;
+    color: rgba(0, 243, 255, 0.7);
+    letter-spacing: 2px;
+    z-index: 3;
+    font-family: monospace;
+    text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
+}
+
+/* 響應式設計：針對手機等小螢幕裝置 */
+@media (max-width: 768px) {
+
+    .cyber-title {
+        font-size: 2.2rem;
+        /* 縮小主標題字體 */
+        line-height: 1.2;
+    }
+
+    .hud-coords {
+        font-size: 0.65rem;
+        /* 縮小 HUD 字體 */
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        /* 將 HUD 置中於底部 */
+        width: 100%;
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+/* 飛行船 */
+.flying-ship {
+    /* 根據要求移除飛行船 */
+    display: none;
+}
+
+/* 流星雨效果 */
+#meteorShower {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* 隱藏超出容器的流星 */
+    pointer-events: none;
+    z-index: 1;
+}
+
+.meteor {
+    position: absolute;
+    /* 更新起始位置 */
+    top: -5%;
+    left: var(--meteor-start-left);
+    width: 2px;
+    height: 2px;
+    background: var(--meteor-core-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--meteor-core-color), 0 0 20px var(--meteor-glow-color);
+    opacity: 0;
+    -webkit-animation: meteor-fall var(--meteor-duration) linear var(--meteor-delay);
+    animation: meteor-fall var(--meteor-duration) linear var(--meteor-delay);
+    /* 使用 JS 計算出的動態角度 */
+    transform: rotate(var(--meteor-angle));
+}
+
+.meteor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    /* 將尾巴定位到流星本體的「後方」 */
+    left: -100px;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--meteor-core-color));
+}
+
+@-webkit-keyframes meteor-fall {
+    0% {
+        transform: translate(0, 0) rotate(var(--meteor-angle));
+        opacity: 1;
+    }
+
+    100% {
+        /* 使用 JS 計算出的動態位移 (X, Y) 和角度 */
+        transform: translate(var(--meteor-translate-x), var(--meteor-translate-y)) rotate(var(--meteor-angle));
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall {
+    0% {
+        transform: translate(0, 0) rotate(var(--meteor-angle));
+        opacity: 1;
+    }
+
+    100% {
+        /* 使用 JS 計算出的動態位移 (X, Y) 和角度 */
+        transform: translate(var(--meteor-translate-x), var(--meteor-translate-y)) rotate(var(--meteor-angle));
+        opacity: 0;
+    }
+}
+
+
+/* 101 大樓燈光效果 */
+.building-lights {
+    position: absolute;
+    left: 50%;
+    top: 23%;
+    transform: translateX(-50%);
+    width: 64px;
+    /* 將寬度固定為 64px */
+    height: 60%;
+    /* 根據背景圖中 101 的高度微調 */
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    /* 讓子元素由下往上排列 */
+    justify-content: space-around;
+    align-items: center;
+    pointer-events: none;
+}
+
+.light-block {
+    width: 90%;
+    height: 2%;
+    /* 每個區塊的高度 */
+    background: linear-gradient(90deg, #ff0055, #00f3ff);
+    box-shadow: 0 0 8px #ff0055, 0 0 16px #00f3ff;
+    border-radius: 4px;
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+    /* 使用變數 --i 來計算 animation-delay */
+    -webkit-animation: light-pulse 6s linear infinite;
+    animation: light-pulse 6s linear infinite;
+    -webkit-animation-delay: calc(var(--i) * 0.05s);
+    animation-delay: calc(var(--i) * 0.05s);
+}
+
+@-webkit-keyframes light-pulse {
+
+    /* 每個區塊只在動畫週期的前 2.8% 時間內顯示 */
+    0% {
+        opacity: .5;
+    }
+
+    1.67% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes light-pulse {
+
+    /* 每個區塊只在動畫週期的前 2.8% 時間內顯示 */
+    /* 每個區塊只在動畫週期的前 1.67% (0.1s/6s) 時間內顯示 */
+    0% {
+        opacity: .5;
+    }
+
+    1.67% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
