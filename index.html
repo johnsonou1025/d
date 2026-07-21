@@ -8,6 +8,11 @@
     <meta name="description"
         content="我是 JoinJO，擁有 UI 設計與視覺前端工程的雙重專業。擅長從產品規劃、視覺設計到高品質代碼實現，曾主導多個成功網站專案，致力於將複雜邏輯轉化為直覺、流暢的數位體驗。">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <!-- Google tag (gtag.js) -->
@@ -20,14 +25,15 @@
 </script>
 
 <body>
-    <div class="particles">
-        <video autoplay loop muted playsinline id="kv-pc" class="kv-video">
-            <source src="img/kv.mp4" type="video/mp4">
-        </video>
-        <video autoplay loop muted playsinline id="kv-mobile" class="kv-video">
-            <source src="img/kv-mobile.mp4" type="video/mp4">
-        </video>
-        <div class="headline">JOINJO STUDIO</div>
+    <div class="hero-wrapper" id="heroWrapper">
+        <div class="tv-on-effect"></div>
+        <div id="meteorShower"></div>
+        <div class="flying-ship" aria-hidden="true"></div>
+        <div class="building-lights" id="buildingLights"></div>
+        <h1 id="typewriter-title" class="cyber-title"></h1>
+        <div class="hud-coords" id="hudCoords">
+            LAT: 25.044046° N // LON: 121.560074° E | STATUS: ONLINE
+        </div>
     </div>
     <div class="page">
         <!-- <div class="section">
@@ -232,6 +238,7 @@
     <!-- <script src="js/particle.js"></script> -->
     <script src="js/fullpage.min.js"></script>
     <script src="js/customer.js"></script>
+    <script src="js/hero.js"></script>
 </body>
 
 
