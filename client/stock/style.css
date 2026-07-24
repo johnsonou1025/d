@@ -199,9 +199,8 @@ p {
 .market-summary-wrapper {
     display: grid;
     /* 桌面版固定為 2:1 欄位 */
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-    /* 增加卡片間距 */
+    grid-template-columns: 3fr 1fr;
+    gap: 12px;
 }
 
 .market-summary-wrapper h3 {
@@ -889,6 +888,15 @@ h3 {
 
 #top-loss-trades .table-cell:nth-child(3) {
     color: var(--danger-color);
+}
+
+/* 美金匯率卡片內容置中 */
+#usdtwd-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 /* --- View All Button --- */

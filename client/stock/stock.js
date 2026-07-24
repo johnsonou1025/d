@@ -391,11 +391,6 @@ $(async function () {
             .sort((a, b) => b.sellCount - a.sellCount || b.totalProfit - a.totalProfit) // 降冪 (結算次數最高在前，若相同則獲利最高在前)
             .slice(0, 5);
 
-        const negativeTrades = repeatedTrades
-            .filter(t => t.totalProfit < 0)
-            .sort((a, b) => b.sellCount - a.sellCount || a.totalProfit - b.totalProfit) // 降冪 (結算次數最高在前，若相同則虧損最多在前)
-            .slice(0, 5);
-
         const renderRepeatedTable = (selector, trades, isProfit) => {
             const $table = $(selector);
             $table.find('.table-body').empty();
@@ -416,7 +411,6 @@ $(async function () {
         };
 
         renderRepeatedTable('#top-profit-trades .data-table', positiveTrades, true);
-        renderRepeatedTable('#top-loss-trades .data-table', negativeTrades, false);
 
         /**
          * 今日數據
@@ -430,16 +424,27 @@ $(async function () {
             return filtered[filtered.length - 1].time;
         };
 
-        // 取得兩個不同的日期
-        const lastSellDate = getLastDateByState(dailyTrades, "sell");
-        const lastBuyDate = getLastDateByState(dailyTrades, "buy");
-
+        // 取得今天的日期字串 (YYYY-MM-DD)
+        const getTodayString = () => {
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = String(today.getMonth() + 1).padStart(2, '0');
+            const d = String(today.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        };
         // --- 渲染賣出表格 ---
         const renderSellTable = (selector, trades, targetDate) => {
             const $table = $(selector);
             $table.find('.table-body').empty();
 
-            trades.filter(t => t.time === targetDate && t.state === 'sell').forEach(item => {
+            const filteredTrades = trades.filter(t => t.time === targetDate && t.state === 'sell');
+
+            if (filteredTrades.length === 0) {
+                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無建議賣出股票</div></div>');
+                return;
+            }
+
+            filteredTrades.forEach(item => {
                 const $tr = $('<div class="table-row"/>');
                 $('<div class="table-cell"/>').text(item.time).appendTo($tr);
                 $('<div class="table-cell"/>').text(item.sheetName).appendTo($tr);
@@ -454,7 +459,14 @@ $(async function () {
             const $table = $(selector);
             $table.find('.table-body').empty();
 
-            trades.filter(t => t.time === targetDate && t.state === 'buy').forEach(item => {
+            const filteredTrades = trades.filter(t => t.time === targetDate && t.state === 'buy');
+
+            if (filteredTrades.length === 0) {
+                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無建議買進股票</div></div>');
+                return;
+            }
+
+            filteredTrades.forEach(item => {
                 const $tr = $('<div class="table-row"/>');
                 $('<div class="table-cell"/>').text(item.time).appendTo($tr);
                 $('<div class="table-cell"/>').text(item.sheetName).appendTo($tr);
@@ -462,7 +474,6 @@ $(async function () {
                 $table.find('.table-body').append($tr);
             });
         };
-
         // --- 渲染強勢類股推薦表格 ---
         const renderStrongTable = (selector, strongData) => {
             const $table = $(selector);
@@ -486,8 +497,8 @@ $(async function () {
         };
 
         // --- 執行渲染 ---
-        if (lastSellDate) renderSellTable('#today-sell .data-table', dailyTrades, lastSellDate);
-        if (lastBuyDate) renderBuyTable('#today-buy .data-table', dailyTrades, lastBuyDate);
+        renderSellTable('#today-sell .data-table', dailyTrades, getTodayString());
+        renderBuyTable('#today-buy .data-table', dailyTrades, getTodayString());
         // 從 API 回傳的 strongSectors 欄位抓取資料
         const strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
         renderStrongTable('#today-strong .data-table', strongStocks);
