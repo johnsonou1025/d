@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globalpay - 全球服務 一站掌控</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #070608;
+            --bg-card: rgba(22, 18, 17, 0.65);
+            --gold-primary: #d4a359;
+            --gold-light: #f7d59b;
+            --gold-gradient: linear-gradient(135deg, #f7d59b 0%, #c49348 100%);
+            --text-light: #ffffff;
+            --text-muted: #C5A880;
+            --border-gold: rgba(212, 163, 89, 0.25);
+            --border-gold-glow: rgba(212, 163, 89, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 80% 15%, rgba(196, 147, 72, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 20% 50%, rgba(196, 147, 72, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 85%, rgba(196, 147, 72, 0.08) 0%, transparent 60%);
+        }
+
+        .container {
+            position: relative;
+        }
+
+        /* 初始背景隱藏且模糊，待 .hero-stage-mock 動畫完成後模糊淡入顯示約 1.2 秒 */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url(img2/hero.png) no-repeat center top 40px / 1680px auto;
+            opacity: 0;
+            filter: blur(16px);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, filter;
+        }
+
+        .container.bg-visible::before {
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        .mx-width {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- 1. Header --- */
+        .site-header {
+            position: relative;
+            padding: 24px 0 16px 0;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(229, 195, 120, .8);
+            z-index: 1;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .brand-logo img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-logo .logo-icon {
+            color: var(--gold-primary);
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        /* --- 2. Hero 區塊 --- */
+        .hero-section {
+            min-height: 580px;
+            padding: 40px 0;
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        .hero-left-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        /* .hero-left-content 內容元件初始隱藏，待右側舞台位移完成後啟動淡入 */
+        .hero-left-content>* {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        /* 觸發 .content-in 時由下往上一個接一個淡入 */
+        .hero-left-content.content-in>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-left-content.content-in>*:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .hero-left-content.content-in>*:nth-child(2) {
+            transition-delay: 0.22s;
+        }
+
+        .hero-left-content.content-in>*:nth-child(3) {
+            transition-delay: 0.40s;
+        }
+
+        .hero-left-content.content-in>*:nth-child(n+4) {
+            transition-delay: 0.58s;
+        }
+
+        .hero-title {
+            font-size: 89px;
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: 2px;
+            background-image: linear-gradient(180deg, #FFFFFF, #F5E1A4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 440px;
+        }
+
+        .hero-action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-consult-gold {
+            width: fit-content;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(93.15deg, rgba(28, 25, 23, 0.8) -0.49%, rgba(15, 13, 11, 0.7) 50.22%, rgba(5, 4, 3, 0.9) 100.93%), linear-gradient(180deg, rgba(255, 248, 231, 0) 0%, rgba(245, 225, 164, 0.5) 50%, rgba(212, 175, 55, 0.7) 75.01%, #7A5C1E 100.01%);
+            border: 1px solid rgba(255, 253, 245, 0.5);
+            box-shadow: 0px 0px 20px rgba(212, 175, 55, 0.3), inset 0px -2px 4px rgba(0, 0, 0, 0.6), inset 0px 1.5px 2px rgba(255, 245, 220, 0.35);
+            border-radius: 100px;
+            color: #E5C378;
+            border-top: 1px solid #E5C378;
+            border-bottom: 1px solid #E5C378;
+        }
+
+        .btn-consult-gold:hover {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 25px rgba(212, 163, 89, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .features-check-line {
+            display: flex;
+            gap: 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .check-node {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .check-node i {
+            color: var(--gold-primary);
+            font-size: 14px;
+        }
+
+        .hero-stage-mock-2 {
+            position: relative;
+            min-height: 420px;
+            display: none;
+        }
+
+        .hero-stage-mock-2 img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Hero 3D 視覺面板：一開始在中間位置動畫，結束後位移至右邊原本位置 */
+        .hero-stage-mock {
+            position: relative;
+            min-height: 420px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            filter: blur(8px);
+            perspective: 1000px;
+            will-change: transform, opacity;
+        }
+
+        /* 經 JS 精確計算視窗中間偏移量並動態注入 keyframe 後，加入 .stage-enter 開始中間進場動畫 */
+        .hero-stage-mock.stage-enter {
+            animation: heroStageEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* 動畫完成後位移至右邊原本位置 */
+        .hero-stage-mock.stage-shifted {
+            transform: translate3d(0, 0, 0) scale(1) !important;
+            opacity: 1 !important;
+        }
+
+        /* 等到 .hero-left-content 動畫結束停留 1 秒後，模糊淡出至隱藏 */
+        .hero-stage-mock.stage-fadeout,
+        .hero-stage-mock.stage-shifted.stage-fadeout {
+            opacity: 0 !important;
+            transform: translate3d(0, 14px, 0) scale(0.97) !important;
+            filter: blur(16px) !important;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            pointer-events: none;
+        }
+
+        /* 全息看板面板模擬 */
+        .hologram-dashboard {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(30, 24, 22, 0.7) 0%, rgba(15, 12, 14, 0.8) 100%);
+            border: 1px solid rgba(212, 163, 89, 0.35);
+            border-radius: 12px;
+            padding: 18px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 163, 89, 0.08);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: hologramFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+        }
+
+        @keyframes hologramFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dash-top-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            border-bottom: 1px solid rgba(212, 163, 89, 0.2);
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+
+        .dash-metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .dash-metric-item .lbl {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .dash-metric-item .val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold-light);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dash-metric-item .val.green {
+            color: #00e676;
+        }
+
+        .dash-map-area {
+            position: relative;
+            height: 180px;
+            border-radius: 8px;
+            background: radial-gradient(circle at center, rgba(212, 163, 89, 0.12) 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* 頂部斜角掃描光束（與點點同步從左上向右下掃過） */
+        .dash-map-area::before {
+            content: "";
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: linear-gradient(135deg, transparent 42%, rgba(212, 163, 89, 0.15) 48%, rgba(255, 235, 185, 0.38) 50%, rgba(212, 163, 89, 0.15) 52%, transparent 58%);
+            transform: translate(-50%, -50%);
+            animation: mapScanBeam 3.2s cubic-bezier(0.25, 0.8, 0.25, 1) 0.3s forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes mapScanBeam {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%);
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(25%, 25%);
+            }
+        }
+
+        /* 背景點點圖：從左上往右下增加擴散效果 + 緩慢浮動 */
+        .dash-map-mock {
+            width: 80%;
+            height: 100%;
+            background-image: radial-gradient(rgba(212, 163, 89, 0.45) 1.2px, transparent 1.2px);
+            background-size: 12px 12px;
+            opacity: 0;
+            -webkit-mask-image: linear-gradient(135deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.6) 48%, transparent 54%, transparent 100%);
+            mask-image: linear-gradient(135deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.6) 48%, transparent 54%, transparent 100%);
+            -webkit-mask-size: 320% 320%;
+            mask-size: 320% 320%;
+            -webkit-mask-position: 100% 100%;
+            mask-position: 100% 100%;
+            animation: mapDotsExpand 3.2s cubic-bezier(0.25, 0.8, 0.25, 1) 0.3s forwards,
+                mapDotsDrift 20s linear 3.5s infinite;
+        }
+
+        @keyframes mapDotsExpand {
+            0% {
+                opacity: 0;
+                -webkit-mask-position: 100% 100%;
+                mask-position: 100% 100%;
+                background-position: 0 0;
+            }
+
+            15% {
+                opacity: 0.85;
+            }
+
+            100% {
+                opacity: 0.85;
+                -webkit-mask-position: 0% 0%;
+                mask-position: 0% 0%;
+                background-position: 12px 12px;
+            }
+        }
+
+        @keyframes mapDotsDrift {
+            0% {
+                background-position: 12px 12px;
+            }
+
+            100% {
+                background-position: 60px 60px;
+            }
+        }
+
+        /* 全球節點呼吸亮點 */
+        .map-pulse-node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00e676;
+            box-shadow: 0 0 8px #00e676;
+            opacity: 0;
+            transform: scale(0);
+            z-index: 3;
+            pointer-events: none;
+            animation: nodeEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                nodePing 2.5s ease-out infinite;
+        }
+
+        @keyframes nodeEntrance {
+            to {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes nodePing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 230, 118, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 230, 118, 0);
+            }
+        }
+
+        /* 實體 POS 終端機模擬：進場 + 緩慢 3D 浮動 */
+        .pos-terminal-mock {
+            position: absolute;
+            left: 20px;
+            bottom: -20px;
+            width: 170px;
+            height: 160px;
+            background: linear-gradient(145deg, #2b2729 0%, #151316 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            transform: perspective(600px) rotateX(20deg) rotateY(-15deg);
+            box-shadow: -15px 20px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(212, 163, 89, 0.15);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            gap: 6px;
+            opacity: 0;
+            animation: posEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards,
+                posFloat 5.5s ease-in-out 1.5s infinite alternate;
+        }
+
+        @keyframes posEntrance {
+            0% {
+                opacity: 0;
+                transform: perspective(600px) rotateX(20deg) rotateY(-15deg) translateY(35px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: perspective(600px) rotateX(20deg) rotateY(-15deg) translateY(0) scale(1);
+            }
+        }
+
+        @keyframes posFloat {
+            0% {
+                transform: perspective(600px) rotateX(20deg) rotateY(-15deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(600px) rotateX(21deg) rotateY(-14deg) translateY(-6px);
+            }
+        }
+
+        .pos-screen {
+            flex: 1;
+            background: #0f131a;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 135, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .pos-keypad-mock {
+            height: 45px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .pos-key {
+            background: #252225;
+            border-radius: 3px;
+        }
+
+        /* 右側懸浮多幣種卡片組：階梯式進場 + 輕微浮動 */
+        .floating-currencies {
+            position: absolute;
+            right: -15px;
+            bottom: 10px;
+            display: flex;
+            gap: 6px;
+            z-index: 3;
+        }
+
+        .currency-chip {
+            background: rgba(22, 18, 17, 0.85);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            animation: chipEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                chipFloat 4.5s ease-in-out infinite alternate;
+        }
+
+        .currency-chip:nth-child(1) {
+            animation-delay: 0.5s, 1.4s;
+        }
+
+        .currency-chip:nth-child(2) {
+            animation-delay: 0.65s, 1.6s;
+        }
+
+        .currency-chip:nth-child(3) {
+            animation-delay: 0.8s, 1.8s;
+        }
+
+        @keyframes chipEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes chipFloat {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .currency-symbol-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-light);
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .currency-code {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .currency-vol {
+            font-size: 8px;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* --- 3. 四格數據指標列 --- */
+        .metrics-grid-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .metric-card-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 40px;
+            gap: 12px;
+            background: url(img2/hologram-bg.png) no-repeat center center / cover, linear-gradient(119.5deg, rgba(229, 195, 120, 0.3) -1.38%, rgba(0, 0, 0, 0) 49.08%), linear-gradient(298.94deg, rgba(31, 26, 20, 0.765) 0.07%, rgba(13, 11, 17, 0.81) 17.77%);
+            box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.75), -4px 6px 24px rgba(229, 152, 36, 0.25), inset 0px 1px 0.5px rgba(255, 255, 255, 0.1), inset 2px -1px 3px rgba(245, 166, 35, 0.2);
+            border-radius: 16px;
+        }
+
+        .metric-card-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            /* 邊框厚度 */
+            background: linear-gradient(135deg, #E5C378, #5A3816, #1E1812, #766540);
+
+            /* 遮罩裁切技術：掏空中間，只保留邊框 */
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .metric-value-huge {
+            color: #E5C378;
+            font-size: 32px;
+            font-weight: 800;
+
+        }
+
+        .metric-label-desc {
+            font-size: 16px;
+            color: #C5A880;
+            letter-spacing: 0.3px;
+        }
+
+        /* --- 4. 品牌願景核心定位 --- */
+        .brand-vision-section {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            align-items: center;
+            gap: 50px;
+            margin: 80px 0;
+            background: url(img2/brand-bg.png) no-repeat 250% center / auto 100%;
+        }
+
+        .vision-visual-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 480px;
+        }
+
+        .vision-visual-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transform: translateY(-50px);
+            filter: blur(8px);
+            transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform, filter;
+        }
+
+        /* 滾動至視窗中間時由上往下淡入 */
+        .vision-visual-wrapper img.vision-img-in,
+        .brand-vision-section.vision-active .vision-visual-wrapper img {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+        }
+
+        .vision-card-glass {
+            position: relative;
+            width: 220px;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(45, 36, 30, 0.7) 0%, rgba(18, 14, 13, 0.8) 100%);
+            border: 1.5px solid var(--gold-primary);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 163, 89, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform: rotate(-10deg);
+        }
+
+        .card-chip-element {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #e3ba7d 0%, #a47633 100%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-visa-mark {
+            font-size: 18px;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--gold-light);
+            align-self: flex-end;
+            letter-spacing: 1px;
+        }
+
+        .vision-phone-silhouette {
+            position: absolute;
+            left: 20px;
+            bottom: -20px;
+            width: 140px;
+            height: 220px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(145deg, rgba(30, 24, 25, 0.9) 0%, rgba(10, 8, 10, 0.95) 100%);
+            transform: rotate(15deg);
+            z-index: -1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+        }
+
+        .vision-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .vision-heading {
+            font-size: 48px;
+            font-weight: 900;
+            color: #E5C378;
+            letter-spacing: 1px;
+        }
+
+        .vision-paragraph {
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* --- 5. 五大核心能力 --- */
+        .capabilities-section {
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .capabilities-main-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #E5C378;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        /* 上三下二佈局 */
+        .cap-grid-top-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .cap-grid-bottom-two {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .cap-node-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            transform: translateY(40px);
+            filter: blur(6px);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform, filter;
+        }
+
+        /* 滾動至視窗中間時一個接一個由下往上淡入 */
+        .capabilities-section.cap-active .cap-node-item,
+        .cap-node-item.cap-in {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+        }
+
+        /* 5 個核心能力節點依序階梯延遲 */
+        .capabilities-section.cap-active .cap-grid-top-three .cap-node-item:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .capabilities-section.cap-active .cap-grid-top-three .cap-node-item:nth-child(2) {
+            transition-delay: 0.28s;
+        }
+
+        .capabilities-section.cap-active .cap-grid-top-three .cap-node-item:nth-child(3) {
+            transition-delay: 0.46s;
+        }
+
+        .capabilities-section.cap-active .cap-grid-bottom-two .cap-node-item:nth-child(1) {
+            transition-delay: 0.64s;
+        }
+
+        .capabilities-section.cap-active .cap-grid-bottom-two .cap-node-item:nth-child(2) {
+            transition-delay: 0.82s;
+        }
+
+        /* 奢華黑金 3D 圖示展示底盤 */
+        .cap-icon-display-frame {
+            position: relative;
+            height: 256px;
+            width: 256px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .cap-icon-display-frame i {
+            position: absolute;
+            inset: 0;
+            background: url(img2/bubble.png) no-repeat center / contain;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        .cap-icon-display-frame:hover i {
+            opacity: 1;
+        }
+
+        .cap-label-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* --- 6. Footer --- */
+        .site-footer {
+            position: relative;
+            padding: 30px 0 40px 0;
+            text-align: center;
+        }
+
+        .site-footer:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(13, 11, 17, 0) 0%, #E5C378 50%, rgba(13, 11, 17, 0) 100%);
+        }
+
+        .copyright-text {
+            font-size: 18px;
+            color: #E5C378;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- RWD 響應式優化 --- */
+        @media (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+
+            .hero-desc {
+                margin: 0 auto;
+            }
+
+            .hero-action-group {
+                align-items: center;
+            }
+
+            .features-check-line {
+                justify-content: center;
+            }
+
+            .brand-vision-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 38px;
+            }
+
+            .metrics-grid-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cap-grid-top-three {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .cap-grid-bottom-two {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- 1. 頂部 Header -->
+        <header class="site-header">
+            <div class="brand-logo mx-width">
+                <img src="img2/logo.png" alt="">
+            </div>
+        </header>
+        <div class="mx-width">
+
+            <!-- 2. Hero 核心首屏 -->
+            <section class="hero-section">
+
+                <div class="hero-left-content">
+                    <h1 class="hero-title">
+                        全球服務<br>一站掌控
+                    </h1>
+                    <p class="hero-desc">
+                        支援 100+ 種支付方式，全面連接銀行卡、信用卡、行動支付與電子錢包。
+                    </p>
+
+                    <div class="hero-action-group">
+                        <a href="#" class="btn-consult-gold">
+                            <span>立即諮詢</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <div class="features-check-line">
+                            <div class="check-node">
+                                <i class="fa-regular fa-circle-check"></i>
+                                <span>極速結算</span>
+                            </div>
+                            <div class="check-node">
+                                <i class="fa-regular fa-circle-check"></i>
+                                <span>全球監控</span>
+                            </div>
+                            <div class="check-node">
+                                <i class="fa-regular fa-circle-check"></i>
+                                <span>24/7 在線</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側 3D 面板與 POS 機視覺舞台 -->
+                <div class="hero-stage-mock">
+                    <!-- 數據看板浮動面板 -->
+                    <div class="hologram-dashboard">
+                        <div class="dash-top-metrics">
+                            <div class="dash-metric-item">
+                                <span class="lbl">TOTAL VOL</span>
+                                <span class="val">$45,218,900</span>
+                            </div>
+                            <div class="dash-metric-item">
+                                <span class="lbl">7D VOL</span>
+                                <span class="val">$12,410,200</span>
+                            </div>
+                            <div class="dash-metric-item">
+                                <span class="lbl">GROWTH</span>
+                                <span class="val green">+18.4%</span>
+                            </div>
+                            <div class="dash-metric-item">
+                                <span class="lbl">MARKETS</span>
+                                <span class="val">145+</span>
+                            </div>
+                        </div>
+
+                        <div class="dash-map-area">
+                            <div class="dash-map-mock"></div>
+                            <div class="map-pulse-node" style="top: 35%; left: 32%; animation-delay: 1.1s, 1.7s;"></div>
+                            <div class="map-pulse-node" style="top: 58%; left: 44%; animation-delay: 1.5s, 2.1s;"></div>
+                            <div class="map-pulse-node" style="top: 28%; left: 65%; animation-delay: 1.9s, 2.5s;"></div>
+                            <div class="map-pulse-node" style="top: 52%; left: 78%; animation-delay: 2.3s, 2.9s;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 實體 POS 終端機模擬 -->
+                    <div class="pos-terminal-mock">
+                        <div class="pos-screen">
+                            <span>$140.39</span>
+                        </div>
+                        <div class="pos-keypad-mock">
+                            <div class="pos-key"></div>
+                            <div class="pos-key"></div>
+                            <div class="pos-key"></div>
+                            <div class="pos-key"></div>
+                            <div class="pos-key"></div>
+                            <div class="pos-key"></div>
+                        </div>
+                    </div>
+
+                    <!-- 懸浮幣種清單 -->
+                    <div class="floating-currencies">
+                        <div class="currency-chip">
+                            <div class="currency-symbol-circle">$</div>
+                            <span class="currency-code">USD $</span>
+                            <span class="currency-vol">$1.2M</span>
+                        </div>
+                        <div class="currency-chip">
+                            <div class="currency-symbol-circle">€</div>
+                            <span class="currency-code">EUR €</span>
+                            <span class="currency-vol">450K</span>
+                        </div>
+                        <div class="currency-chip">
+                            <div class="currency-symbol-circle">¥</div>
+                            <span class="currency-code">JPY ¥</span>
+                            <span class="currency-vol">¥15M</span>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 3. 四格數據指標列 -->
+            <div class="metrics-grid-bar">
+                <div class="metric-card-box">
+                    <span class="metric-value-huge">1,000+</span>
+                    <span class="metric-label-desc">企業客戶</span>
+                </div>
+                <div class="metric-card-box">
+                    <span class="metric-value-huge">200+</span>
+                    <span class="metric-label-desc">覆蓋國家</span>
+                </div>
+                <div class="metric-card-box">
+                    <span class="metric-value-huge">100+</span>
+                    <span class="metric-label-desc">支付方式</span>
+                </div>
+                <div class="metric-card-box">
+                    <span class="metric-value-huge">24/7</span>
+                    <span class="metric-label-desc">客服在線</span>
+                </div>
+            </div>
+
+            <!-- 4. 品牌願景核心定位 -->
+            <section class="brand-vision-section">
+                <div class="vision-visual-wrapper">
+                    <img src="img2/brand-1.png" alt="">
+                </div>
+
+                <div class="vision-text-group">
+                    <h2 class="vision-heading">品牌願景核心定位</h2>
+                    <p class="vision-paragraph">
+                        致力於成為全球企業最值得信賴的夥伴。深耕東南亞、南亞、東北亞及拉丁美洲，整合全球五大洲的金融資源，為高增長型企業構建穩健可靠的基礎設施。
+                    </p>
+                </div>
+            </section>
+
+            <!-- 5. 五大核心能力 -->
+            <section class="capabilities-section">
+                <h2 class="capabilities-main-title">五大核心能力</h2>
+
+                <!-- 上三排 -->
+                <div class="cap-grid-top-three">
+                    <div class="cap-node-item">
+                        <div class="cap-icon-display-frame" style="background-image: url(img2/core-1.png);">
+                            <i></i>
+                        </div>
+                        <span class="cap-label-name">自動化處理</span>
+                    </div>
+
+                    <div class="cap-node-item">
+                        <div class="cap-icon-display-frame" style="background-image: url(img2/core-2.png);">
+
+                            <i></i>
+                        </div>
+                        <span class="cap-label-name">安全穩定</span>
+                    </div>
+
+                    <div class="cap-node-item">
+                        <div class="cap-icon-display-frame" style="background-image: url(img2/core-3.png);">
+
+                            <i></i>
+                        </div>
+                        <span class="cap-label-name">即時數據</span>
+                    </div>
+                </div>
+
+                <!-- 下二排 -->
+                <div class="cap-grid-bottom-two">
+                    <div class="cap-node-item">
+                        <div class="cap-icon-display-frame" style="background-image: url(img2/core-4.png);">
+
+                            <i></i>
+                        </div>
+                        <span class="cap-label-name">領先技術</span>
+                    </div>
+
+                    <div class="cap-node-item">
+                        <div class="cap-icon-display-frame" style="background-image: url(img2/core-5.png);">
+
+                            <i></i>
+                        </div>
+                        <span class="cap-label-name">風險控制</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Footer -->
+            <footer class="site-footer">
+                <p class="copyright-text">© 2016 Globalpay. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 平滑緩動函數 (easeOutQuart)：數字由快漸緩，質感流暢
+            const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
+
+            // 解析各類數字文字格式（包含前綴符號、逗號千分位、小數點、百分比與 24/7 等格式）
+            function parseNumberData(str) {
+                str = str.trim();
+
+                // 針對「24/7」等雙數字比率特殊處理
+                if (str.includes('/')) {
+                    const parts = str.split('/');
+                    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+                        return {
+                            type: 'ratio',
+                            start1: 0,
+                            end1: parseFloat(parts[0]),
+                            start2: 0,
+                            end2: parseFloat(parts[1])
+                        };
+                    }
+                }
+
+                // 匹配前綴、數值本體（含千分號與小數點）、後綴
+                const match = str.match(/^([^\d\-+.]*)([-+]?[\d,.]+)([^\d]*)$/);
+                if (!match) return null;
+
+                const prefix = match[1];
+                const numStr = match[2];
+                const suffix = match[3];
+
+                const hasCommas = numStr.includes(',');
+                const cleanNumStr = numStr.replace(/,/g, '');
+                const target = parseFloat(cleanNumStr);
+                if (isNaN(target)) return null;
+
+                const decimalParts = cleanNumStr.split('.');
+                const decimals = decimalParts.length > 1 ? decimalParts[1].length : 0;
+
+                return {
+                    type: 'standard',
+                    prefix: prefix,
+                    target: target,
+                    decimals: decimals,
+                    hasCommas: hasCommas,
+                    suffix: suffix
+                };
+            }
+
+            // 根據動畫進度格式化輸出字串
+            function formatValue(progress, data) {
+                if (data.type === 'ratio') {
+                    const current1 = Math.round(data.start1 + (data.end1 - data.start1) * progress);
+                    const current2 = Math.round(data.start2 + (data.end2 - data.start2) * progress);
+                    return `${current1}/${current2}`;
+                }
+
+                const currentVal = data.target * progress;
+                let formatted;
+                if (data.decimals > 0) {
+                    formatted = currentVal.toFixed(data.decimals);
+                } else {
+                    formatted = Math.round(currentVal).toString();
+                }
+
+                if (data.hasCommas) {
+                    const parts = formatted.split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    formatted = parts.join('.');
+                }
+
+                return `${data.prefix}${formatted}${data.suffix}`;
+            }
+
+            // 動態跑號核心執行函數
+            function animateNumber(el, duration = 1800, delay = 0) {
+                if (!el || el.dataset.animated === 'true') return;
+                el.dataset.animated = 'true';
+
+                const originalText = el.textContent.trim();
+                const data = parseNumberData(originalText);
+                if (!data) return;
+
+                // 起始設定為 0 狀態
+                el.textContent = formatValue(0, data);
+
+                setTimeout(() => {
+                    let startTime = null;
+
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const elapsed = timestamp - startTime;
+                        const t = Math.min(elapsed / duration, 1);
+                        const progress = easeOutQuart(t);
+
+                        el.textContent = formatValue(progress, data);
+
+                        if (t < 1) {
+                            requestAnimationFrame(step);
+                        } else {
+                            // 動畫結束確保數值精準無誤
+                            el.textContent = originalText;
+                        }
+                    }
+
+                    requestAnimationFrame(step);
+                }, delay);
+            }
+
+            // 1. Hero 區塊數據（全息看板面板、POS 機屏幕、幣種金額）
+            const heroNumberElements = document.querySelectorAll(
+                '.hero-stage-mock .dash-metric-item .val, ' +
+                '.hero-stage-mock .pos-screen span, ' +
+                '.hero-stage-mock .currency-vol'
+            );
+
+            heroNumberElements.forEach((el, index) => {
+                // 數字在 1.1 秒內完成跑號，確保在停留 1 秒期間清楚展示最終數值
+                animateNumber(el, 1100, 250 + index * 50);
+            });
+
+            // 2. 四格數據指標列 (1,000+ 企業客戶、200+ 覆蓋國家、100+ 支付方式、24/7 客服在線)
+            const gridMetrics = document.querySelectorAll('.metrics-grid-bar .metric-value-huge');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            gridMetrics.forEach((el, i) => {
+                                animateNumber(el, 2000, 200 + i * 120);
+                            });
+                            obs.disconnect();
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                const metricsBar = document.querySelector('.metrics-grid-bar');
+                if (metricsBar) observer.observe(metricsBar);
+            } else {
+                gridMetrics.forEach((el, i) => {
+                    animateNumber(el, 2000, 400 + i * 120);
+                });
+            }
+
+            // 3. Hero 序列動態協調：
+            //   (1) .hero-stage-mock 一開始在中間位置進場並執行數字與點點動畫
+            //   (2) 動畫結束後平滑位移至右邊原本位置
+            //   (3) 這時 .hero-left-content 動畫開始展開
+            //   (4) 等到 .hero-left-content 動畫結束後停留 1 秒
+            //   (5) .hero-stage-mock 開始淡出，同時 .container.bg-visible::before 淡入
+            const heroSection = document.querySelector('.hero-section');
+            const heroStage = document.querySelector('.hero-stage-mock');
+            const heroLeft = document.querySelector('.hero-left-content');
+            const container = document.querySelector('.container');
+
+            let currentStageOffset = 0;
+
+            // 精準計算螢幕與版面水平正中央偏移量（保證不受任何當前 transform 影響）
+            function computeCenterOffset() {
+                if (!heroStage || !heroSection) return 0;
+                const prevTransform = heroStage.style.transform;
+                heroStage.style.transform = 'none';
+
+                const heroRect = heroSection.getBoundingClientRect();
+                const stageRect = heroStage.getBoundingClientRect();
+                heroStage.style.transform = prevTransform;
+
+                const secCenter = heroRect.left + heroRect.width / 2;
+                const stageCenter = stageRect.left + stageRect.width / 2;
+                return Math.round(secCenter - stageCenter);
+            }
+
+            // 動態注入實體數值 keyframes，徹底根除不同瀏覽器對 keyframe 中 CSS 變數的相容性解析問題
+            function updateStageEntranceKeyframes(offset) {
+                let styleTag = document.getElementById('hero-stage-dynamic-keyframes');
+                if (!styleTag) {
+                    styleTag = document.createElement('style');
+                    styleTag.id = 'hero-stage-dynamic-keyframes';
+                    document.head.appendChild(styleTag);
+                }
+                styleTag.textContent = `
+                    @keyframes heroStageEntrance {
+                        0% {
+                            opacity: 0;
+                            transform: translate3d(${offset}px, 28px, 0) scale(0.96);
+                            filter: blur(8px);
+                        }
+                        100% {
+                            opacity: 1;
+                            transform: translate3d(${offset}px, 0, 0) scale(1);
+                            filter: blur(0px);
+                        }
+                    }
+                `;
+            }
+
+            // 初始化：計算水平置中偏移量 -> 注入實體數值 keyframe -> 啟動 .stage-enter 動畫
+            function initStageCenterAnimation() {
+                if (!heroStage) return;
+                currentStageOffset = computeCenterOffset();
+                updateStageEntranceKeyframes(currentStageOffset);
+                document.documentElement.style.setProperty('--stage-offset-x', `${currentStageOffset}px`);
+                heroStage.style.setProperty('--stage-offset-x', `${currentStageOffset}px`);
+
+                void heroStage.offsetWidth; // 強制重繪
+                heroStage.classList.add('stage-enter');
+            }
+
+            initStageCenterAnimation();
+
+            window.addEventListener('resize', () => {
+                if (heroStage && !heroStage.classList.contains('stage-shifted') && !heroStage.classList.contains('stage-fadeout')) {
+                    currentStageOffset = computeCenterOffset();
+                    updateStageEntranceKeyframes(currentStageOffset);
+                    document.documentElement.style.setProperty('--stage-offset-x', `${currentStageOffset}px`);
+                    heroStage.style.setProperty('--stage-offset-x', `${currentStageOffset}px`);
+                }
+            }, { passive: true });
+
+            let shiftStarted = false;
+            function startShiftToRight() {
+                if (!heroStage || shiftStarted) return;
+                shiftStarted = true;
+
+                // 1. 先將元素當前在中間的狀態鎖定為 inline style，避免脫離 animation 時瞬間跳動
+                heroStage.style.transform = `translate3d(${currentStageOffset}px, 0, 0) scale(1)`;
+                heroStage.style.opacity = '1';
+                heroStage.style.filter = 'blur(0px)';
+                heroStage.classList.remove('stage-enter');
+
+                // 2. 強制重繪觸發瀏覽器繪製起始幀
+                void heroStage.offsetWidth;
+
+                // 3. 啟動平滑位移至右側原本位置 (translate3d(0, 0, 0))
+                heroStage.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
+                heroStage.style.transform = 'translate3d(0, 0, 0) scale(1)';
+                heroStage.classList.add('stage-shifted');
+
+                // 4. 位移約 0.6 秒接近右側定位時，啟動左側內容由下往上展開
+                setTimeout(() => {
+                    startLeftContentAnimation();
+                }, 600);
+            }
+
+            let leftStarted = false;
+            function startLeftContentAnimation() {
+                if (!heroLeft || leftStarted) return;
+                leftStarted = true;
+                heroLeft.classList.add('content-in');
+
+                // .hero-left-content 子元素展開約需 1.45s，完成後停留 1 秒觸發淡出與背景淡入
+                const leftAnimDuration = 1450;
+                const holdDuration = 1000;
+
+                setTimeout(() => {
+                    triggerFinalCrossFade();
+                }, leftAnimDuration + holdDuration);
+            }
+
+            let fadeoutStarted = false;
+            function triggerFinalCrossFade() {
+                if (fadeoutStarted) return;
+                fadeoutStarted = true;
+
+                if (heroStage) {
+                    heroStage.style.transition = 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+                    heroStage.style.opacity = '0';
+                    heroStage.style.transform = 'translate3d(0, 14px, 0) scale(0.97)';
+                    heroStage.style.filter = 'blur(16px)';
+                    heroStage.style.pointerEvents = 'none';
+                    heroStage.classList.add('stage-fadeout');
+                }
+                if (container) {
+                    container.classList.add('bg-visible');
+                }
+            }
+
+            if (heroStage) {
+                // 監聽中間進場動畫結束
+                heroStage.addEventListener('animationend', (e) => {
+                    if (e.target === heroStage && e.animationName === 'heroStageEntrance') {
+                        startShiftToRight();
+                    }
+                });
+                // 備援計時器：1.2 秒後自動啟動位移
+                setTimeout(startShiftToRight, 1200);
+            } else {
+                startShiftToRight();
+            }
+
+            // 4. 滾動監聽：當 brand-vision-section 最上緣到達視窗中間時，.vision-visual-wrapper img 由上往下淡入
+            const visionSection = document.querySelector('.brand-vision-section');
+            const visionImg = document.querySelector('.vision-visual-wrapper img');
+
+            function triggerVisionImage() {
+                if (!visionImg || visionImg.classList.contains('vision-img-in')) return;
+                visionImg.classList.add('vision-img-in');
+                if (visionSection) visionSection.classList.add('vision-active');
+            }
+
+            function checkVisionScroll() {
+                if (!visionSection || !visionImg || visionImg.classList.contains('vision-img-in')) return;
+                const rect = visionSection.getBoundingClientRect();
+                // 最上緣到達視窗中間線 (rect.top <= window.innerHeight * 0.5)
+                if (rect.top <= window.innerHeight * 0.5) {
+                    triggerVisionImage();
+                    window.removeEventListener('scroll', checkVisionScroll);
+                }
+            }
+
+            if ('IntersectionObserver' in window && visionSection) {
+                // 底部邊界縮減 50%，精確對齊視窗垂直中央線
+                const visionObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            triggerVisionImage();
+                            obs.disconnect();
+                            window.removeEventListener('scroll', checkVisionScroll);
+                        }
+                    });
+                }, { rootMargin: '0px 0px -50% 0px', threshold: 0 });
+
+                visionObserver.observe(visionSection);
+            }
+
+            window.addEventListener('scroll', checkVisionScroll, { passive: true });
+            checkVisionScroll();
+
+            // 5. 滾動監聽：當 .capabilities-section 最上緣到達視窗中間時，.cap-node-item 一個接一個由下往上淡入
+            const capSection = document.querySelector('.capabilities-section');
+
+            function triggerCapabilities() {
+                if (!capSection || capSection.classList.contains('cap-active')) return;
+                capSection.classList.add('cap-active');
+            }
+
+            function checkCapScroll() {
+                if (!capSection || capSection.classList.contains('cap-active')) return;
+                const rect = capSection.getBoundingClientRect();
+                // 最上緣到達視窗中間線 (rect.top <= window.innerHeight * 0.5)
+                if (rect.top <= window.innerHeight * 0.5) {
+                    triggerCapabilities();
+                    window.removeEventListener('scroll', checkCapScroll);
+                }
+            }
+
+            if ('IntersectionObserver' in window && capSection) {
+                // 底部邊界縮減 50%，精確對齊視窗垂直中央線
+                const capObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            triggerCapabilities();
+                            obs.disconnect();
+                            window.removeEventListener('scroll', checkCapScroll);
+                        }
+                    });
+                }, { rootMargin: '0px 0px -50% 0px', threshold: 0 });
+
+                capObserver.observe(capSection);
+            }
+
+            window.addEventListener('scroll', checkCapScroll, { passive: true });
+            checkCapScroll();
+
+            // 6. .cap-icon-display-frame 在滑鼠 hover 時不規則微小移動，滑鼠移出後平滑回到原點
+            const capFrames = document.querySelectorAll('.cap-icon-display-frame');
+
+            capFrames.forEach((frame, idx) => {
+                let animId = null;
+                let startTime = null;
+                let isHovered = false;
+
+                // 每個圖標賦予互不相同的相位種子，產生各自獨立的隨機漂浮軌跡
+                const phaseX = idx * 1.73 + 1.2;
+                const phaseY = idx * 2.31 + 0.8;
+                const phaseR = idx * 1.47 + 2.1;
+
+                let targetBiasX = 0;
+                let targetBiasY = 0;
+                let currentBiasX = 0;
+                let currentBiasY = 0;
+
+                function floatLoop(now) {
+                    if (!isHovered) return;
+                    if (!startTime) startTime = now;
+                    const elapsed = (now - startTime) / 1000;
+
+                    // 多頻率正弦/餘弦波疊加，形成無規律的有機漂浮軌跡 (不規則微小移動 ±3.5px ~ 4.5px)
+                    const driftX = Math.sin(elapsed * 2.2 + phaseX) * 3.2 + Math.cos(elapsed * 3.6 + phaseX) * 1.5;
+                    const driftY = Math.cos(elapsed * 1.9 + phaseY) * 3.8 + Math.sin(elapsed * 2.8 + phaseY) * 1.4;
+                    const rot = Math.sin(elapsed * 1.4 + phaseR) * 1.3;
+
+                    // 平滑追隨滑鼠在元件內的微幅相對位置
+                    currentBiasX += (targetBiasX - currentBiasX) * 0.08;
+                    currentBiasY += (targetBiasY - currentBiasY) * 0.08;
+
+                    const totalX = (driftX + currentBiasX).toFixed(2);
+                    const totalY = (driftY + currentBiasY).toFixed(2);
+                    const totalRot = rot.toFixed(2);
+
+                    frame.style.transform = `translate3d(${totalX}px, ${totalY}px, 0) rotate(${totalRot}deg)`;
+
+                    animId = requestAnimationFrame(floatLoop);
+                }
+
+                frame.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    startTime = null;
+                    frame.style.transition = 'none';
+                    animId = requestAnimationFrame(floatLoop);
+                });
+
+                frame.addEventListener('mousemove', (e) => {
+                    const rect = frame.getBoundingClientRect();
+                    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+                    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+                    targetBiasX = relX * 5; // 微幅位移 ±2.5px
+                    targetBiasY = relY * 5;
+                });
+
+                frame.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                    if (animId) cancelAnimationFrame(animId);
+                    targetBiasX = 0;
+                    targetBiasY = 0;
+                    currentBiasX = 0;
+                    currentBiasY = 0;
+
+                    // 滑鼠移出後平滑緩動回到原點
+                    frame.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    frame.style.transform = 'translate3d(0px, 0px, 0px) rotate(0deg)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
