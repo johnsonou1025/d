@@ -381,6 +381,10 @@
             background-image: radial-gradient(ellipse at 100% 0%, rgba(255, 159, 10, 0.14) 0%, transparent 70%);
         }
 
+        .game-card.theme-cyan {
+            background-image: radial-gradient(ellipse at 100% 0%, rgba(0, 210, 255, 0.16) 0%, transparent 70%);
+        }
+
         /* 蘋果標準 Squircle App Icon */
         .squircle-icon {
             width: 62px;
@@ -420,6 +424,10 @@
 
         .icon-chat {
             background: linear-gradient(145deg, #FF9F0A, #FFD60A);
+        }
+
+        .icon-linerush {
+            background: linear-gradient(145deg, #00d2ff, #ff3366);
         }
 
         /* 遊戲卡片資訊層級 */
@@ -631,7 +639,7 @@
         <section>
             <div class="section-header">
                 <h2 class="section-title">遊戲庫清單</h2>
-                <span class="section-count" id="game-count">4 款遊戲</span>
+                <span class="section-count" id="game-count">5 款遊戲</span>
             </div>
 
             <div class="game-list" id="game-list">
@@ -725,7 +733,29 @@
                     </div>
                 </a>
 
-                <!-- 遊戲 5: Finger Bomb -->
+                <!-- 遊戲 5: Line Rush -->
+                <a href="line-rush.html" class="game-card theme-cyan" data-category="duel">
+                    <div class="squircle-icon icon-linerush">
+                        <img src="img/line-rush.jpeg" alt="對線衝鋒" loading="lazy">
+                    </div>
+                    <div class="card-info">
+                        <div class="game-title">對線衝鋒</div>
+                        <div class="game-subtitle">Line Rush • 雙人極速推線對決</div>
+                        <div class="game-meta-tags">
+                            <span class="meta-tag">同機雙人</span>
+                            <span class="meta-tag">推線對決</span>
+                        </div>
+                    </div>
+                    <div class="card-trailing">
+                        <span class="play-pill">PLAY</span>
+                        <svg class="chevron-icon" viewBox="0 0 8 13" fill="none">
+                            <path d="M1.5 1.5L6.5 6.5L1.5 11.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- 遊戲 6: Finger Bomb -->
                 <a href="bomb_password.html" class="game-card theme-amber" data-category="party">
                     <div class="squircle-icon icon-bomb" style="background: linear-gradient(145deg, #ff9f0a, #ff3b30);">
                         <img src="img/bomb_password.jpeg" alt="指尖炸彈" loading="lazy">

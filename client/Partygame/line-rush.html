@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#07090e">
+    <title>Line Rush 對線衝鋒 - 雙人同屏極速對戰</title>
+
+    <!-- 全域整合字型樣式表 -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --p1-blue: #00d2ff;
+            --p1-blue-glow: rgba(0, 210, 255, 0.45);
+            --p1-blue-dark: #0077b6;
+            --p2-red: #ff3366;
+            --p2-red-glow: rgba(255, 51, 102, 0.45);
+            --p2-red-dark: #b80033;
+            --energy-yellow: #ffd166;
+            --energy-glow: rgba(255, 209, 102, 0.45);
+            --gold-accent: #ffd166;
+            --card-glass: rgba(20, 24, 36, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --sidebar-w: 105px;
+        }
+
+        * {
+            box-sizing: border-box;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-main);
+            touch-action: none;
+        }
+
+        /* 主遊戲畫布 */
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           1. 遊戲右側專屬控制欄 (Right In-Game Sidebar)
+           將雙方血量、回能、返回首頁移至右側獨立邊欄，確保中間戰場毫無遮擋
+           ========================================================================== */
+        #ingame-sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: var(--sidebar-w);
+            height: 100%;
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: max(env(safe-area-inset-top, 10px), 10px) 8px max(env(safe-area-inset-bottom, 10px), 10px);
+            background: rgba(12, 15, 24, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid var(--border-glass);
+            box-shadow: -8px 0 24px rgba(0, 0, 0, 0.55);
+            pointer-events: auto;
+        }
+
+        /* 上方與下方：雙方狀態卡片 (血量 + 能量) */
+        .sidebar-team-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* 上方玩家 (紅方 P2 - 旋轉 180 度便於對向玩家閱讀) */
+        .sidebar-team-box.p2 {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-team-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sidebar-hp-num {
+            font-family: var(--font-numeric);
+            font-size: 2.1rem;
+            font-weight: 900;
+            line-height: 1.05;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sidebar-team-box.p2 .sidebar-hp-num {
+            color: var(--p2-red);
+            text-shadow: 0 0 14px var(--p2-red-glow);
+        }
+
+        .sidebar-team-box.p1 .sidebar-hp-num {
+            color: var(--p1-blue);
+            text-shadow: 0 0 14px var(--p1-blue-glow);
+        }
+
+        /* 血量條與能量條 */
+        .bar-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bar-wrap {
+            width: 100%;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-wrap.energy-wrap {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.08s linear;
+        }
+
+        .bar-hp-p2 {
+            background: linear-gradient(90deg, #b80033 0%, var(--p2-red) 100%);
+            box-shadow: 0 0 8px var(--p2-red-glow);
+        }
+
+        .bar-hp-p1 {
+            background: linear-gradient(90deg, #0077b6 0%, var(--p1-blue) 100%);
+            box-shadow: 0 0 8px var(--p1-blue-glow);
+        }
+
+        .bar-energy {
+            background: linear-gradient(90deg, #f59e0b, var(--energy-yellow));
+            box-shadow: 0 0 6px var(--energy-glow);
+        }
+
+        /* 中央群組：標題、倒數計時與返回首頁按鈕 (旋轉 90 度橫置) */
+        .sidebar-center-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: max-content;
+            white-space: nowrap;
+            transform: rotate(90deg);
+            transform-origin: center center;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        /* 返回首頁按鈕：風格與 .sidebar-title 一致 */
+        .sidebar-back-action {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 1;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: none;
+            transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .sidebar-back-action:hover {
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .sidebar-back-action:active {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
+            transform: scale(0.95);
+        }
+
+        .sidebar-back-action svg {
+            width: 11px;
+            height: 11px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        /* ==========================================================================
+           2. Line Rush 首頁大廳浮層 (橫向雙欄佈局優化)
+           ========================================================================== */
+        #lobby-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: max(env(safe-area-inset-top, 14px), 14px) max(env(safe-area-inset-right, 24px), 24px) max(env(safe-area-inset-bottom, 14px), 14px) max(env(safe-area-inset-left, 24px), 24px);
+            background: radial-gradient(circle at 50% 25%, rgba(22, 28, 44, 0.96) 0%, rgba(7, 9, 14, 0.98) 100%);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            transition: opacity 0.3s ease;
+        }
+
+        /* 頂部導航 */
+        .lobby-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-pill-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-pill-link:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .lobby-mode-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        /* 橫向雙欄佈局格點 */
+        .lobby-grid {
+            width: 100%;
+            max-width: 860px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* 左欄：視覺品牌與陣營對決 */
+        .lobby-col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .game-badge-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.2), rgba(0, 210, 255, 0.2));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 210, 255, 0.2), 0 0 16px rgba(255, 51, 102, 0.2);
+        }
+
+        .lobby-title {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            margin: 0;
+            background: linear-gradient(180deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .lobby-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 3px 0 0 0;
+        }
+
+        /* 規則卡片 */
+        .rules-card {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 0.8rem;
+            line-height: 1.45;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .rules-card-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--gold-accent);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .camps-preview-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .camp-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .camp-badge-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .camp-badge-dot.red {
+            background: var(--p2-red);
+            box-shadow: 0 0 8px var(--p2-red);
+        }
+
+        .camp-badge-dot.blue {
+            background: var(--p1-blue);
+            box-shadow: 0 0 8px var(--p1-blue);
+        }
+
+        .camp-vs-divider {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 右欄：血量選擇與開始按鈕 */
+        .lobby-col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .selector-box {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            padding: 12px 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .selector-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .opt-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 2px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .opt-btn:active {
+            transform: scale(0.94);
+        }
+
+        .opt-btn.active {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 119, 182, 0.35));
+            border-color: var(--p1-blue);
+            color: #ffffff;
+            box-shadow: 0 0 14px rgba(0, 210, 255, 0.35);
+        }
+
+        .opt-btn-val {
+            font-family: var(--font-numeric);
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .opt-btn-sub {
+            font-size: 0.65rem;
+            opacity: 0.7;
+            margin-top: 1px;
+        }
+
+        .btn-start-action {
+            width: 100%;
+            background: linear-gradient(135deg, #00d2ff 0%, #0066cc 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            padding: 14px 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(0, 210, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s;
+        }
+
+        .btn-start-action:active {
+            transform: scale(0.97);
+            box-shadow: 0 3px 12px rgba(0, 210, 255, 0.3);
+        }
+
+        /* ==========================================================================
+           3. 結算畫面浮層 (橫向/直向通用自適應優化)
+           ========================================================================== */
+        #gameover-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 30;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(7, 9, 14, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            text-align: center;
+        }
+
+        .gameover-card {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 18px 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .gameover-result-sec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .trophy-badge {
+            font-size: 2.8rem;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 0 14px rgba(255, 209, 102, 0.4));
+        }
+
+        .result-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin: 0 0 2px 0;
+        }
+
+        .result-subtitle {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .final-score-board {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .final-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .team-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .team-points {
+            font-family: var(--font-numeric);
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .final-team.p2 .team-points {
+            color: var(--p2-red);
+            text-shadow: 0 0 12px var(--p2-red-glow);
+        }
+
+        .final-team.p1 .team-points {
+            color: var(--p1-blue);
+            text-shadow: 0 0 12px var(--p1-blue-glow);
+        }
+
+        .final-score-colon {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .gameover-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-rematch-action {
+            background: linear-gradient(135deg, #00d2ff, #0066cc);
+            border: none;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 210, 255, 0.35);
+            transition: transform 0.15s;
+        }
+
+        .btn-rematch-action:active {
+            transform: scale(0.97);
+        }
+
+        .btn-to-lobby-action {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-to-lobby-action:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .link-to-hub-btn {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.78rem;
+            text-decoration: none;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .link-to-hub-btn:hover {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 處罰展示區樣式 (輸家懲罰) */
+        .dare-settlement-box {
+            grid-column: 1 / -1;
+            width: 100%;
+            background: linear-gradient(145deg, rgba(255, 59, 48, 0.12) 0%, rgba(255, 149, 0, 0.08) 100%);
+            border: 1px dashed rgba(255, 69, 58, 0.45);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 16px rgba(255, 59, 48, 0.1);
+        }
+
+        .dare-settlement-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .dare-badge-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #ff453a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dare-setting-link {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.15s;
+        }
+
+        .dare-setting-link:active {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(0.95);
+        }
+
+        .dare-settlement-content {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+            text-align: left;
+            word-break: break-word;
+            padding: 0 8px;
+        }
+
+        .btn-dare-action {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.18) 0%, rgba(255, 149, 0, 0.25) 100%);
+            border: 1px solid rgba(255, 214, 10, 0.5);
+            color: #ffd60a;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(255, 214, 10, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-dare-action:active {
+            transform: scale(0.96);
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.3) 0%, rgba(255, 149, 0, 0.4) 100%);
+        }
+
+        @media (max-width: 640px) {
+            .gameover-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .dare-settlement-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .dare-settlement-content {
+                text-align: center;
+            }
+
+            .lobby-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 遊戲主畫布 (0 ~ 戰場寬度，右側預留邊欄空間) -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- 1. 遊戲右側專屬控制欄 (Right In-Game Sidebar) -->
+    <div id="ingame-sidebar">
+        <!-- 上方：紅方 (P2) 狀態卡片 (旋轉 180 度面向玩家 2) -->
+        <div class="sidebar-team-box p2">
+            <div class="sidebar-team-badge">🔴 紅方 P2</div>
+            <div class="sidebar-hp-num" id="sidebar-hp-p2">100</div>
+            <div class="bar-container">
+                <div class="bar-wrap">
+                    <div class="bar-fill bar-hp-p2" id="sidebar-hp-bar-p2" style="width: 100%;"></div>
+                </div>
+                <div class="bar-wrap energy-wrap">
+                    <div class="bar-fill bar-energy" id="sidebar-en-bar-p2" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中央控制群組 (旋轉 90 度橫置面側) -->
+        <div class="sidebar-center-group">
+            <button id="btn-ingame-back" class="sidebar-back-action" title="返回首頁">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span>首頁</span>
+            </button>
+            <span class="sidebar-title">LINE RUSH</span>
+        </div>
+
+        <!-- 下方：藍方 (P1) 狀態卡片 (面向玩家 1) -->
+        <div class="sidebar-team-box p1">
+            <div class="sidebar-team-badge">🔵 藍方 P1</div>
+            <div class="sidebar-hp-num" id="sidebar-hp-p1">100</div>
+            <div class="bar-container">
+                <div class="bar-wrap">
+                    <div class="bar-fill bar-hp-p1" id="sidebar-hp-bar-p1" style="width: 100%;"></div>
+                </div>
+                <div class="bar-wrap energy-wrap">
+                    <div class="bar-fill bar-energy" id="sidebar-en-bar-p1" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 首頁大廳浮層 (Lobby Overlay) -->
+    <div id="lobby-overlay">
+        <div class="lobby-top-bar">
+            <a href="index.html" class="nav-pill-link" title="返回 Party Hub 大廳">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+                <span>Party Hub</span>
+            </a>
+            <div class="lobby-mode-badge">2P LANE BATTLE · 雙人對線衝鋒</div>
+        </div>
+
+        <div class="lobby-grid">
+            <!-- 左欄：視覺品牌與陣營對決 -->
+            <div class="lobby-col-left">
+                <div class="brand-row">
+                    <div class="game-badge-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"
+                                fill="rgba(0, 210, 255, 0.4)" stroke="#00d2ff" stroke-width="2" />
+                            <path d="M12 7v10M8 12l4-4 4 4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="lobby-title">Line Rush</h1>
+                        <p class="lobby-subtitle">對線衝鋒 · 雙人極速推線對決</p>
+                    </div>
+                </div>
+
+                <div class="rules-card">
+                    <div class="rules-card-title">遊戲規則 RULES</div>
+                    點擊己方半場派出衝鋒兵，相撞互抵消！衝破敵陣抵達底線即可重創敵方基地，率先摧毀敵方血量奪得勝利！
+                </div>
+
+                <div class="camps-preview-card">
+                    <div class="camp-item">
+                        <div class="camp-badge-dot red"></div>
+                        <span>🔴 玩家 2 (上方紅隊)</span>
+                    </div>
+                    <div class="camp-vs-divider">VS</div>
+                    <div class="camp-item">
+                        <div class="camp-badge-dot blue"></div>
+                        <span>🔵 玩家 1 (下方藍隊)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右欄：生命設定與開始按鈕 -->
+            <div class="lobby-col-right">
+                <div class="selector-box">
+                    <div class="selector-header">設定基地生命 BASE HP</div>
+                    <div class="opt-btn-grid" id="hp-selector-grid">
+                        <button class="opt-btn" onclick="selectBaseHp(50, this)">
+                            <span class="opt-btn-val">50</span>
+                            <span class="opt-btn-sub">極速戰</span>
+                        </button>
+                        <button class="opt-btn active" onclick="selectBaseHp(100, this)">
+                            <span class="opt-btn-val">100</span>
+                            <span class="opt-btn-sub">標準局</span>
+                        </button>
+                        <button class="opt-btn" onclick="selectBaseHp(150, this)">
+                            <span class="opt-btn-val">150</span>
+                            <span class="opt-btn-sub">激戰</span>
+                        </button>
+                        <button class="opt-btn" onclick="selectBaseHp(200, this)">
+                            <span class="opt-btn-val">200</span>
+                            <span class="opt-btn-sub">持久戰</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="btn-start-game" class="btn-start-action">
+                    <span>開始對決 START</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div style="height: 10px;"></div>
+    </div>
+
+    <!-- 3. 遊戲結算浮層 (Game Over Overlay) -->
+    <div id="gameover-overlay">
+        <div class="gameover-card">
+            <!-- 左區：勝負標題 -->
+            <div class="gameover-result-sec">
+                <div class="trophy-badge" id="settlement-trophy">🏆</div>
+                <h2 class="result-title" id="settlement-title">藍方獲勝！</h2>
+                <p class="result-subtitle" id="settlement-subtitle">精彩絕倫的激戰對決</p>
+            </div>
+
+            <!-- 中區：比分看板 -->
+            <div class="final-score-board">
+                <div class="final-team p2">
+                    <span class="team-name">紅方 P2</span>
+                    <span class="team-points" id="final-hp-p2">0</span>
+                </div>
+                <div class="final-score-colon">:</div>
+                <div class="final-team p1">
+                    <span class="team-name">藍方 P1</span>
+                    <span class="team-points" id="final-hp-p1">0</span>
+                </div>
+            </div>
+
+            <!-- 右區：動作按鈕 -->
+            <div class="gameover-actions">
+                <button id="btn-rematch" class="btn-rematch-action">再玩一局 REMATCH</button>
+                <button id="btn-gameover-to-lobby" class="btn-to-lobby-action">返回 Line Rush 首頁</button>
+                <a href="index.html" class="link-to-hub-btn">返回 Party Hub 大廳</a>
+            </div>
+
+            <!-- 底區：輸家處罰展示區 (橫向展開) -->
+            <div class="dare-settlement-box" id="dare-settlement-box">
+                <div class="dare-settlement-header">
+                    <span class="dare-badge-tag">⚡ 輸家處罰 PENALTY</span>
+                    <a href="dares.html" class="dare-setting-link" title="前往設定處罰項目">自訂處罰 ⚙️</a>
+                </div>
+                <div class="dare-settlement-content" id="settlement-dare-text">
+                    正在隨機抽取處罰...
+                </div>
+                <button class="btn-dare-action" id="btn-reroll-dare" onclick="triggerDareReroll()">
+                    <span>🎲 抽取處罰</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 處罰模組與遊戲程式腳本 -->
+    <script src="dares.js"></script>
+    <script>
+        // ==========================================
+        // 1. Web Audio 音效合成器 (免 UI 開關，靜默自啟)
+        // ==========================================
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freqStart, freqEnd, type, duration, vol = 0.2) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+                if (freqEnd && freqEnd !== freqStart) {
+                    osc.frequency.exponentialRampToValueAtTime(Math.max(10, freqEnd), audioCtx.currentTime + duration);
+                }
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (err) { }
+        }
+
+        const soundEffects = {
+            spawnP1() { playTone(520, 780, 'sine', 0.08, 0.22); },
+            spawnP2() { playTone(440, 660, 'sine', 0.08, 0.22); },
+            clash() { playTone(300, 100, 'triangle', 0.06, 0.16); },
+            baseDamage() {
+                playTone(160, 60, 'sawtooth', 0.2, 0.28);
+            },
+            tap() { playTone(600, 900, 'sine', 0.08, 0.2); },
+            finish() {
+                playTone(523, 659, 'triangle', 0.2, 0.3);
+                setTimeout(() => playTone(659, 1046, 'triangle', 0.45, 0.35), 200);
+            }
+        };
+
+        // ==========================================
+        // 2. 畫布與戰場尺寸設定
+        // ==========================================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let W = window.innerWidth;
+        let H = window.innerHeight;
+        const SIDEBAR_W = 105;
+        let rinkW = W - SIDEBAR_W;
+
+        function resizeRink() {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            rinkW = W - SIDEBAR_W;
+            canvas.width = W;
+            canvas.height = H;
+        }
+        window.addEventListener('resize', resizeRink);
+        resizeRink();
+
+        // ==========================================
+        // 3. 遊戲狀態與參數
+        // ==========================================
+        let chosenBaseHp = 100;
+        const DAMAGE = 10;
+        const SOLDIER_RADIUS = 15;
+        const SOLDIER_SPEED = 5.6;
+        const SPAWN_COST = 20; // 能量消耗
+        const ENERGY_REGEN = 0.45; // 每影格回能速度
+
+        let p1 = { hp: 100, energy: 100 };
+        let p2 = { hp: 100, energy: 100 };
+        let soldiers = [];
+        let particles = [];
+        let gameState = 'lobby'; // 'lobby' | 'playing' | 'ended'
+
+        const ingameSidebar = document.getElementById('ingame-sidebar');
+        const lobbyOverlay = document.getElementById('lobby-overlay');
+        const gameoverOverlay = document.getElementById('gameover-overlay');
+
+        // 基地血量選項切換
+        function selectBaseHp(val, btn) {
+            chosenBaseHp = val;
+            document.querySelectorAll('#hp-selector-grid .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            soundEffects.tap();
+        }
+
+        // ==========================================
+        // 4. 士兵與粒子類別
+        // ==========================================
+        class Soldier {
+            constructor(x, team) {
+                this.x = Math.max(SOLDIER_RADIUS + 6, Math.min(rinkW - SOLDIER_RADIUS - 6, x));
+                this.team = team; // 1: 藍方 (下往上), 2: 紅方 (上往下)
+                this.radius = SOLDIER_RADIUS;
+                this.y = team === 1 ? H - 24 : 24;
+                this.vy = team === 1 ? -SOLDIER_SPEED : SOLDIER_SPEED;
+                this.alive = true;
+                this.pulse = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.y += this.vy;
+                this.pulse += 0.1;
+            }
+
+            draw() {
+                ctx.save();
+                const isBlue = this.team === 1;
+                const primaryColor = isBlue ? '#00d2ff' : '#ff3366';
+                const darkColor = isBlue ? '#0077b6' : '#b80033';
+                const glowColor = isBlue ? 'rgba(0, 210, 255, 0.6)' : 'rgba(255, 51, 102, 0.6)';
+
+                // 外發光光暈
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 14;
+
+                // 外部球體漸層
+                let grad = ctx.createRadialGradient(this.x - 3, this.y - 3, 2, this.x, this.y, this.radius);
+                grad.addColorStop(0, '#ffffff');
+                grad.addColorStop(0.35, primaryColor);
+                grad.addColorStop(1, darkColor);
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                // 外框發光環
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.stroke();
+
+                // 內部能量核心 (帶微呼吸動畫)
+                ctx.shadowBlur = 0;
+                const innerRadius = this.radius * (0.35 + Math.sin(this.pulse) * 0.05);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, innerRadius, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                // 前進方向箭頭標記
+                ctx.beginPath();
+                const dirY = isBlue ? -1 : 1;
+                ctx.moveTo(this.x, this.y + dirY * (this.radius * 0.55));
+                ctx.lineTo(this.x - 3.5, this.y + dirY * (this.radius * 0.2));
+                ctx.lineTo(this.x + 3.5, this.y + dirY * (this.radius * 0.2));
+                ctx.closePath();
+                ctx.fillStyle = primaryColor;
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 4.5 + 1.8;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1.0;
+                this.decay = Math.random() * 0.04 + 0.025;
+                this.size = Math.random() * 3 + 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vx *= 0.96;
+                this.vy *= 0.96;
+                this.life -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y, isBaseHit = false) {
+            const count = isBaseHit ? 24 : 14;
+            for (let i = 0; i < count; i++) {
+                const color = i % 2 === 0 ? '#00d2ff' : '#ff3366';
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        // ==========================================
+        // 5. 遊戲流程控制
+        // ==========================================
+        function startMatch() {
+            initAudio();
+            gameState = 'playing';
+
+            p1.hp = chosenBaseHp;
+            p1.energy = 100;
+            p2.hp = chosenBaseHp;
+            p2.energy = 100;
+            soldiers = [];
+            particles = [];
+
+            updateHud();
+
+            lobbyOverlay.style.display = 'none';
+            gameoverOverlay.style.display = 'none';
+            ingameSidebar.style.display = 'flex';
+        }
+
+        function updateHud() {
+            // 更新右側邊欄
+            document.getElementById('sidebar-hp-p1').textContent = Math.max(0, p1.hp);
+            document.getElementById('sidebar-hp-p2').textContent = Math.max(0, p2.hp);
+
+            const p1HpPercent = Math.max(0, (p1.hp / chosenBaseHp) * 100);
+            const p2HpPercent = Math.max(0, (p2.hp / chosenBaseHp) * 100);
+            document.getElementById('sidebar-hp-bar-p1').style.width = p1HpPercent + '%';
+            document.getElementById('sidebar-hp-bar-p2').style.width = p2HpPercent + '%';
+
+            document.getElementById('sidebar-en-bar-p1').style.width = p1.energy + '%';
+            document.getElementById('sidebar-en-bar-p2').style.width = p2.energy + '%';
+        }
+
+        function endMatch() {
+            gameState = 'ended';
+            soundEffects.finish();
+
+            ingameSidebar.style.display = 'none';
+            applyRandomDare();
+            gameoverOverlay.style.display = 'flex';
+
+            document.getElementById('final-hp-p1').textContent = Math.max(0, p1.hp);
+            document.getElementById('final-hp-p2').textContent = Math.max(0, p2.hp);
+
+            const titleEl = document.getElementById('settlement-title');
+            const subEl = document.getElementById('settlement-subtitle');
+            const trophyEl = document.getElementById('settlement-trophy');
+
+            if (p1.hp > 0 && p2.hp <= 0) {
+                trophyEl.textContent = '🏆';
+                titleEl.textContent = '玩家 1 (藍方) 獲勝！';
+                titleEl.style.color = '#00d2ff';
+                subEl.textContent = `以剩餘生命 ${p1.hp} HP 擊破敵方陣地`;
+            } else if (p2.hp > 0 && p1.hp <= 0) {
+                trophyEl.textContent = '🏆';
+                titleEl.textContent = '玩家 2 (紅方) 獲勝！';
+                titleEl.style.color = '#ff3366';
+                subEl.textContent = `以剩餘生命 ${p2.hp} HP 擊破敵方陣地`;
+            } else {
+                trophyEl.textContent = '🤝';
+                titleEl.textContent = '雙方平手！';
+                titleEl.style.color = '#ffd166';
+                subEl.textContent = `基地同時被攻破，勢均力敵！`;
+            }
+        }
+
+        function returnToLobby() {
+            gameState = 'lobby';
+            soldiers = [];
+            particles = [];
+
+            ingameSidebar.style.display = 'none';
+            gameoverOverlay.style.display = 'none';
+            lobbyOverlay.style.display = 'flex';
+        }
+
+        // 處罰設定整合 (dares.js)
+        function applyRandomDare() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+            if (typeof getRandomDare === 'function') {
+                dareEl.innerText = getRandomDare();
+            } else {
+                dareEl.innerText = '喝一杯特調飲料或伏地挺身 10 下！';
+            }
+        }
+
+        function triggerDareReroll() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+
+            if (navigator.vibrate) navigator.vibrate(30);
+            soundEffects.tap();
+
+            dareEl.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            dareEl.style.transform = 'scale(0.92)';
+            dareEl.style.opacity = '0.4';
+
+            setTimeout(() => {
+                applyRandomDare();
+                dareEl.style.transform = 'scale(1)';
+                dareEl.style.opacity = '1';
+            }, 150);
+        }
+
+        // 按鈕點擊綁定
+        document.getElementById('btn-start-game').addEventListener('click', startMatch);
+        document.getElementById('btn-rematch').addEventListener('click', startMatch);
+        document.getElementById('btn-ingame-back').addEventListener('click', returnToLobby);
+        document.getElementById('btn-gameover-to-lobby').addEventListener('click', returnToLobby);
+
+        // ==========================================
+        // 6. 觸控輸入處理 (多點觸控 + 側邊欄防誤觸)
+        // ==========================================
+        function isInteractive(target) {
+            return target.closest && target.closest('#lobby-overlay, #gameover-overlay, #ingame-sidebar, button, a');
+        }
+
+        window.addEventListener('touchstart', (e) => {
+            if (gameState !== 'playing') return;
+            if (isInteractive(e.target)) return;
+            e.preventDefault();
+
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                const x = touch.clientX;
+                const y = touch.clientY;
+
+                // 若觸碰在右側邊欄區域內，不派兵
+                if (x > rinkW) continue;
+
+                // 下半場 (玩家 1 藍方)
+                if (y > H / 2) {
+                    if (p1.energy >= SPAWN_COST) {
+                        p1.energy -= SPAWN_COST;
+                        soldiers.push(new Soldier(x, 1));
+                        soundEffects.spawnP1();
+                    }
+                }
+                // 上半場 (玩家 2 紅方)
+                else {
+                    if (p2.energy >= SPAWN_COST) {
+                        p2.energy -= SPAWN_COST;
+                        soldiers.push(new Soldier(x, 2));
+                        soundEffects.spawnP2();
+                    }
+                }
+            }
+        }, { passive: false });
+
+        // 電腦滑鼠點擊支援 (方便桌面測試與遊玩)
+        window.addEventListener('mousedown', (e) => {
+            if (gameState !== 'playing') return;
+            if (isInteractive(e.target)) return;
+            const x = e.clientX;
+            const y = e.clientY;
+            if (x > rinkW) return;
+
+            if (y > H / 2) {
+                if (p1.energy >= SPAWN_COST) {
+                    p1.energy -= SPAWN_COST;
+                    soldiers.push(new Soldier(x, 1));
+                    soundEffects.spawnP1();
+                }
+            } else {
+                if (p2.energy >= SPAWN_COST) {
+                    p2.energy -= SPAWN_COST;
+                    soldiers.push(new Soldier(x, 2));
+                    soundEffects.spawnP2();
+                }
+            }
+        });
+
+        // ==========================================
+        // 7. 畫面更新與物理碰撞
+        // ==========================================
+        function update() {
+            if (gameState !== 'playing') return;
+
+            // 能量回充
+            p1.energy = Math.min(100, p1.energy + ENERGY_REGEN);
+            p2.energy = Math.min(100, p2.energy + ENERGY_REGEN);
+
+            updateHud();
+
+            // 士兵推進
+            soldiers.forEach(s => s.update());
+
+            // 碰撞判定：藍兵與紅兵相撞互相抵消
+            const team1 = soldiers.filter(s => s.alive && s.team === 1);
+            const team2 = soldiers.filter(s => s.alive && s.team === 2);
+
+            for (let s1 of team1) {
+                for (let s2 of team2) {
+                    if (!s1.alive || !s2.alive) continue;
+
+                    const dx = s1.x - s2.x;
+                    const dy = s1.y - s2.y;
+                    const dist = Math.hypot(dx, dy);
+
+                    if (dist <= s1.radius + s2.radius) {
+                        s1.alive = false;
+                        s2.alive = false;
+                        createExplosion((s1.x + s2.x) / 2, (s1.y + s2.y) / 2);
+                        soundEffects.clash();
+                    }
+                }
+            }
+
+            // 到達底線與扣血判定
+            for (let s of soldiers) {
+                if (!s.alive) continue;
+
+                // 藍方到達上方底線 (紅方基地受創)
+                if (s.team === 1 && s.y - s.radius <= 0) {
+                    s.alive = false;
+                    p2.hp = Math.max(0, p2.hp - DAMAGE);
+                    createExplosion(s.x, 0, true);
+                    soundEffects.baseDamage();
+                    if (navigator.vibrate) navigator.vibrate(60);
+
+                    if (p2.hp <= 0) {
+                        endMatch();
+                        return;
+                    }
+                }
+                // 紅方到達下方底線 (藍方基地受創)
+                else if (s.team === 2 && s.y + s.radius >= H) {
+                    s.alive = false;
+                    p1.hp = Math.max(0, p1.hp - DAMAGE);
+                    createExplosion(s.x, H, true);
+                    soundEffects.baseDamage();
+                    if (navigator.vibrate) navigator.vibrate(60);
+
+                    if (p1.hp <= 0) {
+                        endMatch();
+                        return;
+                    }
+                }
+            }
+
+            // 移除陣亡士兵與粒子
+            soldiers = soldiers.filter(s => s.alive);
+            particles.forEach(p => p.update());
+            particles = particles.filter(p => p.life > 0);
+        }
+
+        // ==========================================
+        // 8. 畫布渲染引擎
+        // ==========================================
+        function render() {
+            // 背景深黑清空
+            ctx.fillStyle = '#07090e';
+            ctx.fillRect(0, 0, W, H);
+
+            // 戰場主體 (0 ~ rinkW)
+            ctx.fillStyle = '#0a0d15';
+            ctx.fillRect(0, 0, rinkW, H);
+
+            // 戰場中央環境微光
+            ctx.save();
+            let gradCenter = ctx.createRadialGradient(rinkW / 2, H / 2, 20, rinkW / 2, H / 2, Math.max(rinkW, H) * 0.6);
+            gradCenter.addColorStop(0, 'rgba(0, 180, 255, 0.05)');
+            gradCenter.addColorStop(0.5, 'rgba(255, 51, 102, 0.03)');
+            gradCenter.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
+            ctx.fillStyle = gradCenter;
+            ctx.fillRect(0, 0, rinkW, H);
+            ctx.restore();
+
+            // 戰場格線
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+            ctx.lineWidth = 1;
+            const step = 45;
+            for (let x = 0; x < rinkW; x += step) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, H);
+                ctx.stroke();
+            }
+
+            // 上下雙方基地防線光條
+            ctx.fillStyle = 'rgba(255, 51, 102, 0.3)';
+            ctx.fillRect(0, 0, rinkW, 8);
+            ctx.fillStyle = 'rgba(0, 210, 255, 0.3)';
+            ctx.fillRect(0, H - 8, rinkW, 8);
+
+            // 中央分界虛線
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([8, 8]);
+            ctx.beginPath();
+            ctx.moveTo(0, H / 2);
+            ctx.lineTo(rinkW, H / 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // 中央對峙光環
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(rinkW / 2, H / 2, 60, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // 繪製士兵
+            soldiers.forEach(s => s.draw());
+
+            // 繪製粒子
+            particles.forEach(p => p.draw());
+
+            // 邊界線 (區隔戰場與右側邊欄)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(rinkW, 0);
+            ctx.lineTo(rinkW, H);
+            ctx.stroke();
+        }
+
+        // ==========================================
+        // 9. 主遊戲迴圈
+        // ==========================================
+        function gameLoop() {
+            update();
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+
+</html>
