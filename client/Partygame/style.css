@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Party Game 全域字型與排版整合樣式表 (style.css)
+   整合字型：Noto Sans / 思源黑體、微軟正黑體、微軟雅黑、蘋方、冬青黑體、Roboto / DIN / Montserrat
+   ========================================================================== */
+
+/* 1. 導入 Google Fonts 高清字型（Montserrat, Noto Sans TC 思源黑體, Roboto） */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap');
+
+/* 2. 定義全域字型變數 (支援多種相容命名) */
+:root {
+    /* 完整通用字型族群（跨 Windows、macOS、iOS、Android 與 Web） */
+    --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Montserrat", "DIN Alternate", "DIN", "Roboto", "Noto Sans TC", "Noto Sans", "Source Han Sans TC", "Source Han Sans SC", "思源黑體", "PingFang TC", "PingFang SC", "蘋方-繁", "Hiragino Sans GB", "Hiragino Kaku Gothic ProN", "冬青黑體", "Microsoft JhengHei", "微軟正黑體", "Microsoft YaHei", "微軟雅黑", system-ui, sans-serif;
+
+    /* 英文與標題強調字型（優先使用幾何美感字型） */
+    --font-display: "SF Pro Display", "Montserrat", "DIN Alternate", "DIN", "Roboto", var(--font-main);
+
+    /* 數字與計時器字型（支援等寬數字渲染） */
+    --font-numeric: "SF Pro Display", "Montserrat", "DIN Alternate", "DIN", "Roboto", var(--font-main);
+
+    /* 向下相容各頁面引用的 CSS 變數名稱 */
+    --font-family: var(--font-main);
+    --font-stack: var(--font-main);
+}
+
+/* 3. 全站字型平滑化與預設渲染 */
+html,
+body {
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 確保所有按鈕、輸入框皆繼承正確字型 */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 4. 排版與清晰度通用輔助工具類 */
+.tabular-nums {
+    font-variant-numeric: tabular-nums;
+}
+
+/* 修正外框描邊侵蝕中文字問題（將外框置於文字底層） */
+.paint-order-stroke {
+    paint-order: stroke fill;
+}
+
+.font-display {
+    font-family: var(--font-display);
+}
+
+.font-numeric {
+    font-family: var(--font-numeric);
+    font-variant-numeric: tabular-nums;
+}

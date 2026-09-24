@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#07090e">
+    <title>Echo Boom - 終極密碼聲控炸彈</title>
+
+    <!-- 全域整合字型樣式表 -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --accent-gold: #ffd166;
+            --neon-red: #ff3366;
+            --neon-red-glow: rgba(255, 51, 102, 0.45);
+            --neon-blue: #00d2ff;
+            --neon-blue-glow: rgba(0, 210, 255, 0.4);
+            --neon-green: #30d158;
+            --neon-green-glow: rgba(48, 209, 88, 0.4);
+            --neon-amber: #ff9f0a;
+            --card-glass: rgba(18, 22, 34, 0.88);
+            --border-glass: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            background: radial-gradient(circle at 50% 30%, rgba(26, 32, 50, 0.95) 0%, rgba(7, 9, 14, 0.99) 100%);
+            color: #ffffff;
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 爆炸震動效果 */
+        .mega-shake-active {
+            animation: mega-shake 0.08s infinite alternate;
+        }
+
+        @keyframes mega-shake {
+            0% {
+                transform: translate(-6px, -4px) rotate(-1deg);
+            }
+
+            25% {
+                transform: translate(5px, 6px) rotate(1.5deg);
+            }
+
+            50% {
+                transform: translate(-4px, 5px) rotate(-0.5deg);
+            }
+
+            75% {
+                transform: translate(6px, -5px) rotate(1deg);
+            }
+
+            100% {
+                transform: translate(-3px, 2px) rotate(0deg);
+            }
+        }
+
+        /* 爆炸覆蓋層 */
+        .boom-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #ff0055 10%, #7a001e 80%, #1a0007 100%);
+            z-index: 180;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease-out;
+        }
+
+        .boom-overlay.boom-active {
+            opacity: 0.92;
+        }
+
+        .boom-overlay.boom-fade-out {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        /* 炸彈掉落特效 */
+        #bomb-visual {
+            position: fixed;
+            top: -160px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8rem;
+            z-index: 190;
+            pointer-events: none;
+            display: none;
+            filter: drop-shadow(0 10px 25px rgba(255, 51, 102, 0.8));
+        }
+
+        @keyframes bomb-sequence {
+            0% {
+                top: -160px;
+                transform: translateX(-50%) scale(0.4);
+                opacity: 0.8;
+            }
+
+            22% {
+                top: 40%;
+                transform: translateX(-50%) scale(1.1);
+                opacity: 1;
+            }
+
+            30% {
+                top: 38%;
+                transform: translateX(-50%) scale(1);
+            }
+
+            60% {
+                top: 38%;
+                transform: translateX(-50%) scale(1.08);
+                filter: drop-shadow(0 0 25px #ff3366);
+            }
+
+            85% {
+                top: 38%;
+                transform: translateX(-50%) scale(1.4);
+                filter: drop-shadow(0 0 45px #ff0033);
+            }
+
+            100% {
+                top: 38%;
+                transform: translateX(-50%) scale(3.5);
+                opacity: 0;
+                filter: drop-shadow(0 0 80px #ffffff);
+            }
+        }
+
+        /* ==========================================================================
+           1. 頂部狀態欄 (In-Game Top Bar)
+           ========================================================================== */
+        .top-bar {
+            width: 100%;
+            height: 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            padding-top: max(env(safe-area-inset-top, 8px), 8px);
+            z-index: 20;
+        }
+
+        .btn-hud-home {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-hud-home:active {
+            transform: scale(0.93);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-hud-home svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
+        }
+
+        .game-badge-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 51, 102, 0.12);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: #ff6699;
+        }
+
+        .guess-counter-badge {
+            font-family: var(--font-numeric);
+            font-size: 0.85rem;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 5px 12px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.85);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ==========================================================================
+           2. 中央遊戲主舞台 (Main Stage)
+           ========================================================================== */
+        .stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        /* 呼吸發光核心 */
+        .circle-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .circle-pulse-ring {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 51, 102, 0.25);
+            animation: radar-rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes radar-rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .number-circle {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(28, 34, 52, 0.92) 0%, rgba(14, 18, 28, 0.95) 100%);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(255, 51, 102, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .range-label {
+            font-size: 0.72rem;
+            font-family: var(--font-display);
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .range-text {
+            font-size: 2.35rem;
+            font-family: var(--font-numeric);
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            line-height: 1;
+        }
+
+        .range-subhint {
+            font-size: 0.7rem;
+            color: var(--neon-amber);
+            font-weight: 700;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 狀態提示膠囊 */
+        .status-popup {
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 24px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            font-size: 1.1rem;
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-popup.listening {
+            background: rgba(255, 51, 102, 0.18);
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+            box-shadow: 0 0 24px var(--neon-red-glow);
+            animation: pulse-glow 1s infinite alternate;
+        }
+
+        .status-popup.safe {
+            background: rgba(48, 209, 88, 0.15);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green-glow);
+        }
+
+        .status-popup.invalid {
+            background: rgba(255, 159, 10, 0.15);
+            border-color: var(--neon-amber);
+            color: var(--neon-amber);
+        }
+
+        @keyframes pulse-glow {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.04);
+            }
+        }
+
+        /* ==========================================================================
+           3. 底部操作區 (Footer Action Dock)
+           ========================================================================== */
+        .footer {
+            width: 100%;
+            padding-bottom: max(env(safe-area-inset-bottom, 28px), 28px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+            z-index: 20;
+        }
+
+        .btn-side {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.78rem;
+            font-family: var(--font-main);
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-side svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .btn-side:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* 主語音大圓按鈕 */
+        .main-talk-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff3366 0%, #cc0044 100%);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px var(--neon-red-glow), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .main-talk-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .main-talk-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 4px 15px var(--neon-red-glow);
+        }
+
+        .main-talk-btn.listening {
+            background: linear-gradient(135deg, #ff0044 0%, #99002a 100%);
+            border-color: #ffffff;
+            animation: pulse-mic 1s infinite alternate;
+        }
+
+        @keyframes pulse-mic {
+            from {
+                box-shadow: 0 0 15px var(--neon-red-glow);
+            }
+
+            to {
+                box-shadow: 0 0 35px rgba(255, 51, 102, 0.85);
+            }
+        }
+
+        /* ==========================================================================
+           4. 鍵盤輸入抽屜 (Input Drawer)
+           ========================================================================== */
+        .drawer {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: rgba(18, 22, 34, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 28px 28px 0 0;
+            padding: 30px 20px max(env(safe-area-inset-bottom, 30px), 30px);
+            transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 120;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .drawer.active {
+            bottom: 0;
+        }
+
+        .drawer-handle {
+            width: 36px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.25);
+            margin-bottom: 20px;
+        }
+
+        .drawer-title {
+            font-size: 0.85rem;
+            font-family: var(--font-display);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .drawer-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            color: #ffffff;
+            font-family: var(--font-numeric);
+            font-weight: 900;
+            font-size: 2.8rem;
+            text-align: center;
+            outline: none;
+            padding: 8px 0;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+            font-variant-numeric: tabular-nums;
+            transition: border-color 0.2s;
+        }
+
+        .drawer-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 16px var(--neon-blue-glow), inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-submit-num {
+            width: 68px;
+            height: 68px;
+            background: linear-gradient(135deg, var(--neon-green) 0%, #009944 100%);
+            border: none;
+            border-radius: 18px;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 16px var(--neon-green-glow);
+            transition: transform 0.1s;
+        }
+
+        .btn-submit-num:active {
+            transform: scale(0.93);
+        }
+
+        .btn-close-drawer {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 18px;
+            padding: 8px 20px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           5. 首頁大廳浮層 (Lobby Overlay)
+           ========================================================================== */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 20%, rgba(26, 32, 50, 0.96) 0%, rgba(7, 9, 14, 0.99) 100%);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: max(env(safe-area-inset-top, 20px), 20px) 24px max(env(safe-area-inset-bottom, 24px), 24px) 24px;
+        }
+
+        .lobby-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-pill-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-pill-link:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .lobby-tag-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .lobby-center-content {
+            width: 100%;
+            max-width: 440px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .game-badge-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.2) 0%, rgba(255, 159, 10, 0.2) 100%);
+            border: 2px solid rgba(255, 51, 102, 0.35);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px var(--neon-red-glow);
+        }
+
+        .game-badge-icon svg {
+            width: 38px;
+            height: 38px;
+            fill: #ff3366;
+        }
+
+        .lobby-title {
+            font-family: var(--font-display);
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 0;
+            background: linear-gradient(180deg, #ffffff 40%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .lobby-subtitle {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* 遊戲說明卡片 */
+        .rules-card {
+            width: 100%;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .rules-card-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        /* 難度/範圍選擇器 */
+        .range-picker-box {
+            width: 100%;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .picker-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 10px 4px;
+            color: rgba(255, 255, 255, 0.75);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .opt-btn:active {
+            transform: scale(0.94);
+        }
+
+        .opt-btn.active {
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.25), rgba(255, 102, 0, 0.35));
+            border-color: var(--neon-red);
+            color: #ffffff;
+            box-shadow: 0 0 16px var(--neon-red-glow);
+        }
+
+        .opt-btn .opt-title {
+            font-family: var(--font-numeric);
+            font-size: 0.95rem;
+            font-weight: 900;
+        }
+
+        .opt-btn .opt-desc {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        .opt-btn.active .opt-desc {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 開始按鈕 */
+        .btn-start-action {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #ff3366 0%, #ff5e3a 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            padding: 16px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 28px var(--neon-red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s;
+        }
+
+        .btn-start-action:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 14px var(--neon-red-glow);
+        }
+
+        /* ==========================================================================
+           6. 結算畫面浮層 (Game Over Overlay)
+           ========================================================================== */
+        #gameover-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(7, 9, 14, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            text-align: center;
+        }
+
+        .gameover-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 26px;
+            padding: 28px 24px;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trophy-badge {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 18px rgba(255, 51, 102, 0.6));
+            animation: bounce-trophy 1.2s infinite alternate ease-in-out;
+        }
+
+        @keyframes bounce-trophy {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-6px);
+            }
+        }
+
+        .result-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .result-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .final-stat-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 18px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: var(--font-numeric);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .gameover-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-rematch {
+            width: 100%;
+            background: linear-gradient(135deg, #ff3366 0%, #ff5e3a 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            padding: 14px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 18px var(--neon-red-glow);
+            transition: transform 0.1s;
+        }
+
+        .btn-rematch:active {
+            transform: scale(0.96);
+        }
+
+        .btn-back-lobby {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-back-lobby:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* 處罰展示區樣式 (輸家懲罰) */
+        .dare-settlement-box {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(255, 59, 48, 0.12) 0%, rgba(255, 149, 0, 0.08) 100%);
+            border: 1px dashed rgba(255, 69, 58, 0.45);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 20px rgba(255, 59, 48, 0.12);
+        }
+
+        .dare-settlement-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .dare-badge-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #ff453a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dare-setting-link {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.15s;
+        }
+
+        .dare-setting-link:active {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(0.95);
+        }
+
+        .dare-settlement-content {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.4;
+            text-align: center;
+            word-break: break-word;
+            padding: 4px 6px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-dare-action {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.18) 0%, rgba(255, 149, 0, 0.25) 100%);
+            border: 1px solid rgba(255, 214, 10, 0.5);
+            color: #ffd60a;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 13px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 214, 10, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .btn-dare-action:active {
+            transform: scale(0.96);
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.3) 0%, rgba(255, 149, 0, 0.4) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 爆炸紅色覆蓋層 -->
+    <div id="boom-overlay" class="boom-overlay"></div>
+
+    <!-- 炸彈視覺特效 (掉落與蓄力膨脹) -->
+    <div id="bomb-visual">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path fill="#ff3366"
+                d="M11.5 22q-2.325 0-4.137-1.288T5.1 18.15l1.4-1.425q1.15 1.8 2.988 2.763T13.5 20q.55 0 1.075-.113t1.025-.337l-1.425-1.425q-.35.125-.725.175T12.5 18q-2.3 0-3.9-1.6T7 12.5q0-1.05.388-2.013t1.087-1.737L7.05 7.325Q6.025 8.55 5.513 9.988T5 11.5q0 3.125 2.188 5.313T12.5 19q.775 0 1.525-.175t1.425-.525l1.425 1.425q-1.1 1.025-2.537 1.638T11.5 22m8.8-8.8q0-1.5-1.012-2.713T16.5 9.25l-1.4 1.4q.95.5 1.525 1.438T17.2 14q0 .55-.112 1.075t-.338 1.025l1.425 1.425q1.025-1.1 1.638-2.537T20.3 13.2m-3.925-6.5L15.65 6L14 4.35l.725-.725q.875-.875 2.088-1.2T19.5 2q1.45 0 2.475 1.025T23 5.5q0 1.175-.325 2.388t-1.2 2.087zM19.5 7q.625 0 1.063-.437T21 5.5q0-.625-.437-1.062T19.5 4q-.625 0-1.062.438T18 5.5q0 .625.438 1.063T19.5 7M12.5 17q1.875 0 3.188-1.312T17 12.5q0-1.875-1.312-3.187T12.5 8q-1.875 0-3.187 1.313T8 12.5q0 1.875 1.313 3.188T12.5 17">
+            </path>
+        </svg>
+    </div>
+
+    <!-- 頂部 HUD -->
+    <div class="top-bar">
+        <a href="javascript:void(0)" onclick="quitToLobby()" class="btn-hud-home">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+            </svg>
+            大廳
+        </a>
+        <div class="game-badge-header">
+            <span>💣</span>
+            <span>VOICE BOMB</span>
+        </div>
+        <div class="guess-counter-badge" id="guess-counter">GUESS: 0</div>
+    </div>
+
+    <!-- 中央遊戲舞台 -->
+    <div class="stage">
+        <div class="circle-wrapper">
+            <div class="circle-pulse-ring"></div>
+            <div class="number-circle" id="circle">
+                <p class="range-label">SAFE RANGE</p>
+                <h1 class="range-text" id="range-display">1 ~ 100</h1>
+                <p class="range-subhint" id="range-subhint">輪流猜測安全密碼</p>
+            </div>
+        </div>
+
+        <div id="status-msg" class="status-popup">
+            <span id="status-icon">🎯</span>
+            <span id="status-text">READY</span>
+        </div>
+    </div>
+
+    <!-- 底部操作列 -->
+    <div class="footer">
+        <button class="btn-side" id="open-type" title="鍵盤手動輸入">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z">
+                </path>
+            </svg>
+            <span>鍵盤</span>
+        </button>
+
+        <button class="main-talk-btn" id="talk-btn">
+            <svg id="mic-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z">
+                </path>
+            </svg>
+            <span id="talk-text">點擊說話</span>
+        </button>
+
+        <button class="btn-side" id="reset-btn" title="重新一局">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z">
+                </path>
+            </svg>
+            <span>重置</span>
+        </button>
+    </div>
+
+    <!-- 手機鍵盤輸入抽屜 -->
+    <div class="drawer" id="input-drawer">
+        <div class="drawer-handle"></div>
+        <p class="drawer-title">KEYPAD GUESS · 輸入數字</p>
+        <div class="input-row">
+            <input type="number" class="drawer-input" id="num-input" pattern="\d*" placeholder="0" inputmode="numeric">
+            <button class="btn-submit-num" id="submit-num">OK</button>
+        </div>
+        <button class="btn-close-drawer" id="close-drawer">取消 CANCEL</button>
+    </div>
+
+    <!-- 首頁大廳浮層 (Lobby Overlay) -->
+    <div id="overlay">
+        <div class="lobby-top-bar">
+            <a href="index.html" class="nav-pill-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                </svg>
+                Party Hub
+            </a>
+            <div class="lobby-tag-badge">VOICE & KEYPAD</div>
+        </div>
+
+        <div class="lobby-center-content">
+            <div class="game-badge-icon">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M11.5 22q-2.325 0-4.137-1.288T5.1 18.15l1.4-1.425q1.15 1.8 2.988 2.763T13.5 20q.55 0 1.075-.113t1.025-.337l-1.425-1.425q-.35.125-.725.175T12.5 18q-2.3 0-3.9-1.6T7 12.5q0-1.05.388-2.013t1.087-1.737L7.05 7.325Q6.025 8.55 5.513 9.988T5 11.5q0 3.125 2.188 5.313T12.5 19q.775 0 1.525-.175t1.425-.525l1.425 1.425q-1.1 1.025-2.537 1.638T11.5 22m8.8-8.8q0-1.5-1.012-2.713T16.5 9.25l-1.4 1.4q.95.5 1.525 1.438T17.2 14q0 .55-.112 1.075t-.338 1.025l1.425 1.425q1.025-1.1 1.638-2.537T20.3 13.2m-3.925-6.5L15.65 6L14 4.35l.725-.725q.875-.875 2.088-1.2T19.5 2q1.45 0 2.475 1.025T23 5.5q0 1.175-.325 2.388t-1.2 2.087zM19.5 7q.625 0 1.063-.437T21 5.5q0-.625-.437-1.062T19.5 4q-.625 0-1.062.438T18 5.5q0 .625.438 1.063T19.5 7M12.5 17q1.875 0 3.188-1.312T17 12.5q0-1.875-1.312-3.187T12.5 8q-1.875 0-3.187 1.313T8 12.5q0 1.875 1.313 3.188T12.5 17">
+                    </path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="lobby-title">Echo Boom</h1>
+                <p class="lobby-subtitle">終極密碼 · 聲控炸彈版</p>
+            </div>
+
+            <!-- 規則 -->
+            <div class="rules-card">
+                <div class="rules-card-title">遊戲規則 RULES</div>
+                系統會隨機產生一個在範圍內的「終極密碼」。玩家輪流按下中央麥克風說出數字（或鍵盤輸入），範圍會不斷收窄，喊中炸彈者引爆出局！
+            </div>
+
+            <!-- 範圍選擇 -->
+            <div class="range-picker-box">
+                <div class="picker-header">設定數字上限 MAX RANGE</div>
+                <div class="btn-grid" id="range-picker-grid">
+                    <button class="opt-btn" onclick="selectRangeMax(50, this)">
+                        <span class="opt-title">1 ~ 50</span>
+                        <span class="opt-desc">極速</span>
+                    </button>
+                    <button class="opt-btn active" onclick="selectRangeMax(100, this)">
+                        <span class="opt-title">1 ~ 100</span>
+                        <span class="opt-desc">經典</span>
+                    </button>
+                    <button class="opt-btn" onclick="selectRangeMax(200, this)">
+                        <span class="opt-title">1 ~ 200</span>
+                        <span class="opt-desc">專家</span>
+                    </button>
+                    <button class="opt-btn" onclick="selectRangeMax(500, this)">
+                        <span class="opt-title">1 ~ 500</span>
+                        <span class="opt-desc">馬拉松</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-start-action" onclick="startGameFromLobby()">
+            開始遊戲 START
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- 結算畫面浮層 (Game Over Overlay) -->
+    <div id="gameover-overlay">
+        <div class="gameover-card">
+            <div class="trophy-badge">💥</div>
+            <div>
+                <h2 class="result-title">BOOM!! 密碼引爆</h2>
+                <p class="result-subtitle">終極密碼被不幸觸發了！</p>
+            </div>
+
+            <div class="final-stat-box">
+                <div class="stat-item">
+                    <span class="stat-label">終極密碼 TARGET</span>
+                    <span class="stat-value" id="stat-target" style="color: #ff3366;">--</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">總猜測次數 GUESSES</span>
+                    <span class="stat-value" id="stat-guesses">--</span>
+                </div>
+            </div>
+
+            <!-- 輸家處罰展示區 -->
+            <div class="dare-settlement-box" id="dare-settlement-box">
+                <div class="dare-settlement-header">
+                    <span class="dare-badge-tag">⚡ 輸家處罰 PENALTY</span>
+                    <a href="dares.html" class="dare-setting-link" title="前往設定處罰項目">自訂處罰 ⚙️</a>
+                </div>
+                <div class="dare-settlement-content" id="settlement-dare-text">
+                    正在隨機抽取處罰...
+                </div>
+            </div>
+
+            <div class="gameover-actions">
+                <button class="btn-dare-action" id="btn-reroll-dare" onclick="triggerDareReroll()">
+                    <span>🎲 抽取處罰 / 換一個</span>
+                </button>
+                <button class="btn-rematch" onclick="rematchGame()">
+                    再玩一局 PLAY AGAIN
+                </button>
+                <button class="btn-back-lobby" onclick="quitToLobby()">
+                    返回遊戲大廳 LOBBY
+                </button>
+                <a href="index.html" class="link-to-hub-btn"
+                    style="text-decoration:none; color:rgba(255,255,255,0.6); font-size:0.82rem; font-weight:700; padding:8px; border-radius:12px; background:rgba(255,255,255,0.04); display:block; text-align:center;">返回
+                    Party Hub 大廳</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="dares.js"></script>
+    <script>
+        let chosenMax = 100;
+        let min = 1, max = 100, target = 50;
+        let guessCount = 0;
+        let isGameOver = false;
+
+        const talkBtn = document.getElementById('talk-btn');
+        const talkText = document.getElementById('talk-text');
+        const statusMsg = document.getElementById('status-msg');
+        const statusText = document.getElementById('status-text');
+        const statusIcon = document.getElementById('status-icon');
+        const rangeDisplay = document.getElementById('range-display');
+        const guessCounterUI = document.getElementById('guess-counter');
+        const drawer = document.getElementById('input-drawer');
+        const numInput = document.getElementById('num-input');
+        const overlay = document.getElementById('overlay');
+        const gameoverOverlay = document.getElementById('gameover-overlay');
+        const bombVisual = document.getElementById('bomb-visual');
+        const boomOverlay = document.getElementById('boom-overlay');
+
+        function selectRangeMax(val, btn) {
+            chosenMax = val;
+            document.querySelectorAll('#range-picker-grid .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function startGameFromLobby() {
+            overlay.style.display = 'none';
+            gameoverOverlay.style.display = 'none';
+            initGame();
+        }
+
+        function quitToLobby() {
+            isGameOver = true;
+            stopTalk();
+            gameoverOverlay.style.display = 'none';
+            overlay.style.display = 'flex';
+        }
+
+        function rematchGame() {
+            gameoverOverlay.style.display = 'none';
+            initGame();
+        }
+
+        function initGame() {
+            min = 1;
+            max = chosenMax;
+            // 隨機選定終極密碼 (避開首尾邊界)
+            target = Math.floor(Math.random() * (max - min - 1)) + min + 1;
+            guessCount = 0;
+            isGameOver = false;
+
+            // 重置炸彈與畫面震動特效
+            bombVisual.style.display = 'none';
+            bombVisual.style.animation = 'none';
+            document.body.classList.remove('mega-shake-active');
+            boomOverlay.classList.remove('boom-active', 'boom-fade-out');
+
+            // 重置 UI
+            rangeDisplay.innerText = `${min} ~ ${max}`;
+            guessCounterUI.innerText = `GUESS: ${guessCount}`;
+            setStatus("READY", "🎯", "");
+            talkText.innerText = "點擊說話";
+            talkBtn.classList.remove('listening');
+            isListening = false;
+
+            speak("遊戲開始，請猜一個數字");
+        }
+
+        function setStatus(text, icon, cls) {
+            statusText.innerText = text;
+            statusIcon.innerText = icon;
+            statusMsg.className = "status-popup " + (cls || "");
+        }
+
+        // --- 語音辨識 ---
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        if (SpeechRec) {
+            recognition = new SpeechRec();
+            recognition.lang = 'zh-TW';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+        }
+
+        let isListening = false;
+        let listenTimer = null;
+        let judgeTimer = null;
+
+        const toggleTalk = (e) => {
+            if (isGameOver) return;
+            if (e) e.preventDefault();
+
+            if (isListening) {
+                stopTalk();
+            } else {
+                startTalk();
+            }
+        };
+
+        const startTalk = () => {
+            if (isGameOver) return;
+            if (!recognition) {
+                setStatus("語音不支援", "⚠️", "invalid");
+                setTimeout(resetStatus, 1500);
+                return;
+            }
+
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            isListening = true;
+            setStatus("LISTENING...", "🎙️", "listening");
+            talkText.innerText = "停止收音";
+            talkBtn.classList.add('listening');
+
+            if (listenTimer) clearTimeout(listenTimer);
+            if (judgeTimer) clearTimeout(judgeTimer);
+
+            // 10秒沒說話自動關閉
+            listenTimer = setTimeout(() => {
+                if (isListening) stopTalk();
+            }, 10000);
+
+            try {
+                recognition.start();
+            } catch (err) {
+                console.log("Recognition start catch:", err);
+            }
+        };
+
+        const stopTalk = () => {
+            if (!isListening) return;
+
+            isListening = false;
+            talkText.innerText = "點擊說話";
+            talkBtn.classList.remove('listening');
+
+            if (!isGameOver) {
+                setStatus("JUDGING...", "⏳", "");
+            }
+
+            if (listenTimer) clearTimeout(listenTimer);
+            if (judgeTimer) clearTimeout(judgeTimer);
+
+            judgeTimer = setTimeout(() => {
+                if (statusText.innerText === "JUDGING...") {
+                    resetStatus();
+                }
+            }, 2000);
+
+            try {
+                if (recognition) recognition.stop();
+            } catch (err) { }
+        };
+
+        if (recognition) {
+            // 辨識成功
+            recognition.onresult = (e) => {
+                if (judgeTimer) clearTimeout(judgeTimer);
+
+                isListening = false;
+                talkText.innerText = "點擊說話";
+                talkBtn.classList.remove('listening');
+
+                const transcript = e.results[0][0].transcript;
+                const match = transcript.match(/\d+/);
+                if (match) {
+                    handleGuess(parseInt(match[0], 10));
+                } else {
+                    setStatus("聽不清楚", "❓", "invalid");
+                    setTimeout(resetStatus, 1500);
+                }
+            };
+
+            // 辨識出錯
+            recognition.onerror = (e) => {
+                if (judgeTimer) clearTimeout(judgeTimer);
+
+                isListening = false;
+                talkText.innerText = "點擊說話";
+                talkBtn.classList.remove('listening');
+
+                if (e.error === 'no-speech') {
+                    setStatus("沒有聲音", "🔇", "invalid");
+                    setTimeout(resetStatus, 1200);
+                } else {
+                    resetStatus();
+                }
+            };
+
+            recognition.onend = () => {
+                if (isListening) {
+                    isListening = false;
+                    talkText.innerText = "點擊說話";
+                    talkBtn.classList.remove('listening');
+                    resetStatus();
+                }
+            };
+        }
+
+        function resetStatus() {
+            if (isGameOver) return;
+            setStatus("READY", "🎯", "");
+            if (judgeTimer) clearTimeout(judgeTimer);
+            if (listenTimer) clearTimeout(listenTimer);
+        }
+
+        talkBtn.addEventListener('click', toggleTalk);
+
+        // --- 介面控制 ---
+        document.getElementById('open-type').onclick = () => {
+            if (!isGameOver) {
+                drawer.classList.add('active');
+                setTimeout(() => numInput.focus(), 100);
+            }
+        };
+
+        document.getElementById('close-drawer').onclick = () => {
+            drawer.classList.remove('active');
+            numInput.blur();
+        };
+
+        document.getElementById('reset-btn').onclick = initGame;
+
+        // --- 核心猜測判斷 ---
+        function handleGuess(num) {
+            if (isGameOver) return;
+
+            if (num <= min || num >= max || isNaN(num)) {
+                setStatus(`無效範圍 (${min}~${max})`, "⚠️", "invalid");
+                if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
+                setTimeout(resetStatus, 1800);
+                return;
+            }
+
+            guessCount++;
+            guessCounterUI.innerText = `GUESS: ${guessCount}`;
+
+            if (num === target) {
+                isGameOver = true;
+                stopTalk();
+
+                // 啟動炸彈動畫
+                bombVisual.style.display = 'block';
+                bombVisual.style.animation = 'bomb-sequence 2.8s forwards';
+
+                setStatus("💥 DANGER!! BOOM!", "💣", "listening");
+                talkText.innerText = "💥 BOOM";
+
+                // 1.4秒後開始劇烈震動
+                setTimeout(() => {
+                    document.body.classList.add('mega-shake-active');
+                    if (navigator.vibrate) navigator.vibrate([60, 60, 60, 60, 60]);
+                }, 1400);
+
+                // 2.8秒後大爆炸瞬間
+                setTimeout(() => {
+                    document.body.classList.remove('mega-shake-active');
+                    boomOverlay.classList.add('boom-active');
+                    if (navigator.vibrate) navigator.vibrate(800);
+                    speak(num + "，爆炸了！");
+
+                    // 0.4 秒後開始淡出爆炸紅光
+                    setTimeout(() => {
+                        boomOverlay.classList.remove('boom-active');
+                        boomOverlay.classList.add('boom-fade-out');
+                    }, 400);
+
+                    // 1.5 秒後跳出 Game Over 結算彈窗
+                    setTimeout(() => {
+                        document.getElementById('stat-target').innerText = target;
+                        document.getElementById('stat-guesses').innerText = guessCount;
+                        applyRandomDare();
+                        gameoverOverlay.style.display = 'flex';
+                    }, 1500);
+
+                }, 2800);
+            } else {
+                if (num < target) {
+                    min = num;
+                } else {
+                    max = num;
+                }
+
+                rangeDisplay.innerText = `${min} ~ ${max}`;
+                setStatus(`安全 SAFE: ${num}`, "🛡️", "safe");
+                speak(`安全，${num}`);
+
+                const circle = document.getElementById('circle');
+                circle.style.transform = "scale(1.1)";
+                setTimeout(() => circle.style.transform = "scale(1)", 200);
+
+                setTimeout(resetStatus, 1600);
+            }
+        }
+
+        function speak(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 1.05;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // 鍵盤輸入送出處理
+        function confirmInput() {
+            const val = parseInt(numInput.value, 10);
+            if (!isNaN(val)) {
+                handleGuess(val);
+                drawer.classList.remove('active');
+                numInput.value = '';
+                numInput.blur();
+            } else {
+                if (navigator.vibrate) navigator.vibrate(20);
+            }
+        }
+
+        document.getElementById('submit-num').onclick = confirmInput;
+
+        numInput.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                confirmInput();
+            }
+        };
+
+        numInput.addEventListener('keypress', (e) => {
+            if (e.which === 13) {
+                confirmInput();
+            }
+        });
+
+        // 處罰設定整合
+        function applyRandomDare() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+            if (typeof getRandomDare === 'function') {
+                dareEl.innerText = getRandomDare();
+            } else {
+                dareEl.innerText = '喝一杯特調飲料或伏地挺身 10 下！';
+            }
+        }
+
+        function triggerDareReroll() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+
+            if (navigator.vibrate) navigator.vibrate(30);
+
+            // 播放清脆骰子音效
+            try {
+                const AudioClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioClass) {
+                    const ctx = new AudioClass();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.08);
+                }
+            } catch (e) { }
+
+            dareEl.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            dareEl.style.transform = 'scale(0.92)';
+            dareEl.style.opacity = '0.4';
+
+            setTimeout(() => {
+                applyRandomDare();
+                dareEl.style.transform = 'scale(1)';
+                dareEl.style.opacity = '1';
+            }, 150);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#07090e">
+    <title>Air Hockey 雙人對戰桌上冰球</title>
+
+    <!-- 全域整合字型樣式表 -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --p1-blue: #00d2ff;
+            --p1-blue-glow: rgba(0, 210, 255, 0.45);
+            --p1-blue-dark: #0077b6;
+            --p2-red: #ff3366;
+            --p2-red-glow: rgba(255, 51, 102, 0.45);
+            --p2-red-dark: #b80033;
+            --gold-accent: #ffd166;
+            --card-glass: rgba(20, 24, 36, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --sidebar-w: 105px;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-main);
+            touch-action: none;
+        }
+
+        /* 遊戲主畫布 */
+        #game {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           1. 遊戲右側專屬控制欄 (Right In-Game Sidebar)
+           將返回首頁、比分、倒數秒數移至右側獨立邊欄，確保中間球場毫無遮擋
+           ========================================================================== */
+        #ingame-sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: var(--sidebar-w);
+            height: 100%;
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: max(env(safe-area-inset-top, 10px), 10px) 8px max(env(safe-area-inset-bottom, 10px), 10px);
+            background: rgba(12, 15, 24, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid var(--border-glass);
+            box-shadow: -8px 0 24px rgba(0, 0, 0, 0.55);
+            pointer-events: auto;
+        }
+
+        /* 上方與下方：雙方比分卡片 */
+        .sidebar-team-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-team-box.p2 {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-team-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+        }
+
+        .sidebar-score-num {
+            font-family: var(--font-numeric);
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.05;
+        }
+
+        .sidebar-team-box.p2 .sidebar-score-num {
+            color: var(--p2-red);
+            text-shadow: 0 0 14px var(--p2-red-glow);
+        }
+
+        .sidebar-team-box.p1 .sidebar-score-num {
+            color: var(--p1-blue);
+            text-shadow: 0 0 14px var(--p1-blue-glow);
+        }
+
+        /* 中央群組：標題、倒數計時與返回首頁按鈕 */
+        .sidebar-center-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: max-content;
+            white-space: nowrap;
+            transform: rotate(90deg);
+            transform-origin: center center;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        /* 倒數計時膠囊 */
+        .sidebar-timer-box {
+            background: rgba(255, 209, 102, 0.1);
+            border: 1px solid rgba(255, 209, 102, 0.28);
+            border-radius: 12px;
+            padding: 4px 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
+        }
+
+        .timer-tag {
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: rgba(255, 209, 102, 0.7);
+        }
+
+        .timer-num {
+            font-family: var(--font-numeric);
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--gold-accent);
+            line-height: 1;
+        }
+
+        .sidebar-timer-box.urgent {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: rgba(255, 59, 48, 0.6);
+            animation: pulse-urgent 0.8s infinite alternate;
+        }
+
+        .sidebar-timer-box.urgent .timer-num {
+            color: #ff453a;
+        }
+
+        @keyframes pulse-urgent {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.06);
+                box-shadow: 0 0 12px rgba(255, 59, 48, 0.5);
+            }
+        }
+
+        /* 返回 Air Hockey 首頁按鈕：風格與效果和 .sidebar-title 一致 */
+        .sidebar-back-action {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            line-height: 1;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: none;
+            transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .sidebar-back-action:hover {
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .sidebar-back-action:active {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(0, 210, 255, 0.8);
+            transform: scale(0.95);
+        }
+
+        .sidebar-back-action svg {
+            width: 11px;
+            height: 11px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        /* ==========================================================================
+           2. Air Hockey 首頁大廳浮層 (橫向佈局優化)
+           ========================================================================== */
+        #lobby-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: max(env(safe-area-inset-top, 14px), 14px) max(env(safe-area-inset-right, 24px), 24px) max(env(safe-area-inset-bottom, 14px), 14px) max(env(safe-area-inset-left, 24px), 24px);
+            background: radial-gradient(circle at 50% 25%, rgba(22, 28, 44, 0.96) 0%, rgba(7, 9, 14, 0.98) 100%);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            transition: opacity 0.3s ease;
+        }
+
+        /* 頂部導航 */
+        .lobby-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-pill-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-pill-link:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .lobby-mode-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        /* 橫向雙欄佈局格點 */
+        .lobby-grid {
+            width: 100%;
+            max-width: 860px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* 左欄：視覺品牌與陣營對決 */
+        .lobby-col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .game-badge-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.2), rgba(0, 210, 255, 0.2));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 210, 255, 0.2), 0 0 16px rgba(255, 51, 102, 0.2);
+        }
+
+        .lobby-title {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            margin: 0;
+            background: linear-gradient(180deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .lobby-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 3px 0 0 0;
+        }
+
+        .camps-preview-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .camp-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .camp-badge-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .camp-badge-dot.red {
+            background: var(--p2-red);
+            box-shadow: 0 0 8px var(--p2-red);
+        }
+
+        .camp-badge-dot.blue {
+            background: var(--p1-blue);
+            box-shadow: 0 0 8px var(--p1-blue);
+        }
+
+        .camp-vs-divider {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 右欄：時間選擇與開始按鈕 */
+        .lobby-col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .selector-box {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            padding: 12px 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .selector-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .time-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .time-opt-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px 2px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .time-opt-btn:active {
+            transform: scale(0.94);
+        }
+
+        .time-opt-btn.active {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 119, 182, 0.35));
+            border-color: var(--p1-blue);
+            color: #ffffff;
+            box-shadow: 0 0 14px rgba(0, 210, 255, 0.35);
+        }
+
+        .time-btn-val {
+            font-family: var(--font-numeric);
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .time-btn-sub {
+            font-size: 0.65rem;
+            opacity: 0.7;
+            margin-top: 1px;
+        }
+
+        .btn-start-action {
+            width: 100%;
+            background: linear-gradient(135deg, #00d2ff 0%, #0066cc 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            padding: 14px 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(0, 210, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s;
+        }
+
+        .btn-start-action:active {
+            transform: scale(0.97);
+            box-shadow: 0 3px 12px rgba(0, 210, 255, 0.3);
+        }
+
+        /* ==========================================================================
+           3. 結算畫面浮層 (橫向佈局優化)
+           ========================================================================== */
+        #gameover-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 30;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(7, 9, 14, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            text-align: center;
+        }
+
+        .gameover-card {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 20px 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .gameover-result-sec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .trophy-badge {
+            font-size: 2.8rem;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 0 14px rgba(255, 209, 102, 0.4));
+        }
+
+        .result-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin: 0 0 2px 0;
+        }
+
+        .result-subtitle {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .final-score-board {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .final-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .team-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .team-points {
+            font-family: var(--font-numeric);
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .final-team.p2 .team-points {
+            color: var(--p2-red);
+            text-shadow: 0 0 12px var(--p2-red-glow);
+        }
+
+        .final-team.p1 .team-points {
+            color: var(--p1-blue);
+            text-shadow: 0 0 12px var(--p1-blue-glow);
+        }
+
+        .final-score-colon {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .gameover-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-rematch-action {
+            background: linear-gradient(135deg, #00d2ff, #0066cc);
+            border: none;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 210, 255, 0.35);
+            transition: transform 0.15s;
+        }
+
+        .btn-rematch-action:active {
+            transform: scale(0.97);
+        }
+
+        .btn-to-lobby-action {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-to-lobby-action:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .link-to-hub-btn {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.78rem;
+            text-decoration: none;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .link-to-hub-btn:hover {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 處罰展示區樣式 (輸家懲罰 - 橫向版面優化) */
+        .dare-settlement-box {
+            grid-column: 1 / -1;
+            width: 100%;
+            background: linear-gradient(145deg, rgba(255, 59, 48, 0.12) 0%, rgba(255, 149, 0, 0.08) 100%);
+            border: 1px dashed rgba(255, 69, 58, 0.45);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 16px rgba(255, 59, 48, 0.1);
+        }
+
+        .dare-settlement-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .dare-badge-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #ff453a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dare-setting-link {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.15s;
+        }
+
+        .dare-setting-link:active {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(0.95);
+        }
+
+        .dare-settlement-content {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+            text-align: left;
+            word-break: break-word;
+            padding: 0 8px;
+        }
+
+        .btn-dare-action {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.18) 0%, rgba(255, 149, 0, 0.25) 100%);
+            border: 1px solid rgba(255, 214, 10, 0.5);
+            color: #ffd60a;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(255, 214, 10, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-dare-action:active {
+            transform: scale(0.96);
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.3) 0%, rgba(255, 149, 0, 0.4) 100%);
+        }
+
+        @media (max-width: 640px) {
+            .dare-settlement-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .dare-settlement-content {
+                text-align: center;
+            }
+        }
+
+        /* 進球特效橫幅 */
+        #goal-banner {
+            position: absolute;
+            top: 50%;
+            left: calc((100% - var(--sidebar-w)) / 2);
+            transform: translate(-50%, -50%) scale(0.6);
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 20px #ff3366, 0 0 40px #00d2ff;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 15;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #goal-banner.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        /* 針對窄直向螢幕的彈性降級相容 */
+        @media screen and (orientation: portrait) {
+            .lobby-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .gameover-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 遊戲物理畫布 -->
+    <canvas id="game"></canvas>
+
+    <!-- 進球動畫橫幅 (位於球場正中央，不含右側控制欄) -->
+    <div id="goal-banner">GOAL!</div>
+
+    <!-- 1. 遊戲右側專屬控制欄 (In-Game Sidebar) -->
+    <aside id="ingame-sidebar">
+        <!-- 上方：🔴 玩家 2 比分 -->
+        <div class="sidebar-team-box p2">
+            <span class="sidebar-team-badge">🔴 P2</span>
+            <span class="sidebar-score-num" id="hud-score-p2">0</span>
+        </div>
+
+        <!-- 中央群組：標題、倒數秒數、返回首頁 -->
+        <div class="sidebar-center-group">
+            <div class="sidebar-title">AIR HOCKEY</div>
+            <div class="sidebar-timer-box" id="hud-timer-box">
+                <span class="timer-tag">TIME</span>
+                <span class="timer-num" id="hud-timer">60s</span>
+            </div>
+            <!-- 返回 Air Hockey 首頁按鈕 -->
+            <button id="btn-ingame-back" class="sidebar-back-action" title="結束本局並返回 Air Hockey 首頁">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+                <span>首頁</span>
+            </button>
+        </div>
+
+        <!-- 下方：🔵 玩家 1 比分 -->
+        <div class="sidebar-team-box p1">
+            <span class="sidebar-score-num" id="hud-score-p1">0</span>
+            <span class="sidebar-team-badge">🔵 P1</span>
+        </div>
+    </aside>
+
+    <!-- 2. Air Hockey 首頁大廳浮層 (橫向佈局優化) -->
+    <div id="lobby-overlay">
+        <!-- 頂部列：返回 Party Hub -->
+        <div class="lobby-top-bar">
+            <a href="index.html" class="nav-pill-link" title="返回 Party Hub 遊戲大廳">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+                Party Hub
+            </a>
+            <div class="lobby-mode-badge">橫向雙人同屏對戰</div>
+        </div>
+
+        <!-- 橫向雙欄主區塊 -->
+        <div class="lobby-grid">
+            <!-- 左欄：標題視覺與對戰陣營說明 -->
+            <div class="lobby-col-left">
+                <div class="brand-row">
+                    <div class="game-badge-icon">
+                        <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" stroke="rgba(255,255,255,0.4)" stroke-width="2.5"
+                                stroke-dasharray="4 3" />
+                            <line x1="4" y1="24" x2="44" y2="24" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+                            <circle cx="24" cy="24" r="7" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                            <circle cx="24" cy="12" r="6" fill="#ff3366" />
+                            <circle cx="24" cy="36" r="6" fill="#00d2ff" />
+                            <circle cx="24" cy="24" r="3.5" fill="#ffffff" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="lobby-title">AIR HOCKEY</h1>
+                        <p class="lobby-subtitle">雙人桌上冰球極速對戰</p>
+                    </div>
+                </div>
+
+                <div class="camps-preview-card">
+                    <div class="camp-item">
+                        <div class="camp-badge-dot red"></div>
+                        <span>玩家 2 (上方半場)</span>
+                    </div>
+                    <div class="camp-vs-divider">VS</div>
+                    <div class="camp-item">
+                        <span>玩家 1 (下方半場)</span>
+                        <div class="camp-badge-dot blue"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右欄：遊戲時間選擇按鈕與開始對決 -->
+            <div class="lobby-col-right">
+                <div class="selector-box">
+                    <div class="selector-header">
+                        <span>⏱️ 遊戲時間 MATCH DURATION</span>
+                    </div>
+                    <div class="time-btn-grid" id="time-selector-grid">
+                        <button class="time-opt-btn" data-time="30">
+                            <span class="time-btn-val">30</span>
+                            <span class="time-btn-sub">閃電戰</span>
+                        </button>
+                        <button class="time-opt-btn active" data-time="60">
+                            <span class="time-btn-val">60</span>
+                            <span class="time-btn-sub">標準賽</span>
+                        </button>
+                        <button class="time-opt-btn" data-time="120">
+                            <span class="time-btn-val">120</span>
+                            <span class="time-btn-sub">熱血戰</span>
+                        </button>
+                        <button class="time-opt-btn" data-time="180">
+                            <span class="time-btn-val">180</span>
+                            <span class="time-btn-sub">耐力賽</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="btn-start-game" class="btn-start-action">
+                    <span>開始對決 START</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div style="height: 10px;"></div>
+    </div>
+
+    <!-- 3. 遊戲結算浮層 (Game Over) -->
+    <div id="gameover-overlay">
+        <div class="gameover-card">
+            <!-- 左區：勝負標題 -->
+            <div class="gameover-result-sec">
+                <div class="trophy-badge" id="settlement-trophy">🏆</div>
+                <h2 class="result-title" id="settlement-title">藍方獲勝！</h2>
+                <p class="result-subtitle" id="settlement-subtitle">精彩絕倫的激戰對決</p>
+            </div>
+
+            <!-- 中區：比分看板 -->
+            <div class="final-score-board">
+                <div class="final-team p2">
+                    <span class="team-name">🔴 玩家 2</span>
+                    <span class="team-points" id="final-score-p2">0</span>
+                </div>
+                <div class="final-score-colon">:</div>
+                <div class="final-team p1">
+                    <span class="team-name">🔵 玩家 1</span>
+                    <span class="team-points" id="final-score-p1">0</span>
+                </div>
+            </div>
+
+            <!-- 右區：動作按鈕 -->
+            <div class="gameover-actions">
+                <button id="btn-rematch" class="btn-rematch-action">再玩一局 REMATCH</button>
+                <button id="btn-gameover-to-lobby" class="btn-to-lobby-action">返回 Air Hockey 首頁</button>
+                <a href="index.html" class="link-to-hub-btn">返回 Party Hub 大廳</a>
+            </div>
+
+            <!-- 底區：輸家處罰展示區 (橫向展開) -->
+            <div class="dare-settlement-box" id="dare-settlement-box">
+                <div class="dare-settlement-header">
+                    <span class="dare-badge-tag">⚡ 輸家處罰 PENALTY</span>
+                    <a href="dares.html" class="dare-setting-link" title="前往設定處罰項目">自訂處罰 ⚙️</a>
+                </div>
+                <div class="dare-settlement-content" id="settlement-dare-text">
+                    正在隨機抽取處罰...
+                </div>
+                <button class="btn-dare-action" id="btn-reroll-dare" onclick="triggerDareReroll()">
+                    <span>🎲 抽取處罰</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dares.js"></script>
+    <script>
+        // ==========================================
+        // 1. Web Audio 音效合成器 (免 UI 開關，靜默自啟)
+        // ==========================================
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freqStart, freqEnd, type, duration, vol = 0.2) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+                if (freqEnd && freqEnd !== freqStart) {
+                    osc.frequency.exponentialRampToValueAtTime(Math.max(10, freqEnd), audioCtx.currentTime + duration);
+                }
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (err) { }
+        }
+
+        const soundEffects = {
+            paddleHit() { playTone(560, 200, 'sine', 0.08, 0.25); },
+            wallBounce() { playTone(300, 140, 'triangle', 0.05, 0.15); },
+            goal() {
+                playTone(440, 880, 'sine', 0.18, 0.3);
+                setTimeout(() => playTone(660, 1320, 'sine', 0.25, 0.35), 120);
+            },
+            tick() { playTone(880, 880, 'sine', 0.04, 0.18); },
+            tap() { playTone(600, 900, 'sine', 0.08, 0.2); },
+            finish() {
+                playTone(523, 659, 'triangle', 0.2, 0.3);
+                setTimeout(() => playTone(659, 1046, 'triangle', 0.45, 0.35), 200);
+            }
+        };
+
+        // ==========================================
+        // 2. 畫布與橫向球場尺寸設定
+        // ==========================================
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+
+        let W = window.innerWidth;
+        let H = window.innerHeight;
+        let SIDEBAR_W = 105;
+        let rinkW = W - SIDEBAR_W;
+        let rinkH = H;
+
+        let PADDLE_RADIUS = 35;
+        let PUCK_RADIUS = 20;
+        let GOAL_WIDTH = 200;
+
+        function resizeRink() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+
+            // 依螢幕自適應右側邊欄寬度（橫向通常為 95~115px）
+            SIDEBAR_W = Math.min(115, Math.max(90, Math.floor(W * 0.13)));
+            document.documentElement.style.setProperty('--sidebar-w', `${SIDEBAR_W}px`);
+
+            rinkW = W - SIDEBAR_W;
+            rinkH = H;
+
+            PADDLE_RADIUS = Math.min(36, Math.max(26, rinkH * 0.16));
+            PUCK_RADIUS = Math.min(20, Math.max(15, rinkH * 0.09));
+            GOAL_WIDTH = Math.min(260, Math.max(160, rinkW * 0.42));
+
+            clampPaddles();
+        }
+        window.addEventListener('resize', resizeRink);
+
+        // ==========================================
+        // 3. 遊戲狀態與計時器管理
+        // ==========================================
+        let gameState = 'lobby'; // 'lobby' | 'playing' | 'ended'
+        let selectedDuration = 60; // 預設 60s
+        let timeLeft = 60;
+        let timerInterval = null;
+        let score = { p1: 0, p2: 0 };
+
+        // 冰球與雙方推盤
+        let p1 = { x: 0, y: 0, touchId: null, vx: 0, vy: 0 }; // 下方玩家 (藍)
+        let p2 = { x: 0, y: 0, touchId: null, vx: 0, vy: 0 }; // 上方玩家 (紅)
+        let puck = { x: 0, y: 0, vx: 0, vy: 0, trail: [] };
+
+        // 進球粒子系統
+        let particles = [];
+
+        function clampPaddles() {
+            p1.x = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, p1.x));
+            p1.y = Math.max(rinkH / 2 + PADDLE_RADIUS + 8, Math.min(rinkH - PADDLE_RADIUS, p1.y));
+
+            p2.x = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, p2.x));
+            p2.y = Math.min(rinkH / 2 - PADDLE_RADIUS - 8, Math.max(PADDLE_RADIUS, p2.y));
+        }
+
+        function resetPositions() {
+            p1.x = rinkW / 2;
+            p1.y = rinkH - Math.max(65, rinkH * 0.18);
+            p1.vx = 0; p1.vy = 0; p1.touchId = null;
+
+            p2.x = rinkW / 2;
+            p2.y = Math.max(65, rinkH * 0.18);
+            p2.vx = 0; p2.vy = 0; p2.touchId = null;
+
+            resetPuck();
+        }
+
+        function resetPuck(towardsWinner = null) {
+            puck.x = rinkW / 2;
+            puck.y = rinkH / 2;
+            puck.trail = [];
+
+            if (towardsWinner === 'p1') {
+                puck.vx = (Math.random() - 0.5) * 4;
+                puck.vy = -3.5;
+            } else if (towardsWinner === 'p2') {
+                puck.vx = (Math.random() - 0.5) * 4;
+                puck.vy = 3.5;
+            } else {
+                puck.vx = 0;
+                puck.vy = 0;
+            }
+        }
+
+        // ==========================================
+        // 4. 時間選擇與模式切換
+        // ==========================================
+        const timeGrid = document.getElementById('time-selector-grid');
+        timeGrid.querySelectorAll('.time-opt-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                initAudio();
+                timeGrid.querySelectorAll('.time-opt-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedDuration = parseInt(btn.getAttribute('data-time'), 10) || 60;
+                soundEffects.tick();
+            });
+        });
+
+        const lobbyOverlay = document.getElementById('lobby-overlay');
+        const ingameSidebar = document.getElementById('ingame-sidebar');
+        const gameoverOverlay = document.getElementById('gameover-overlay');
+        const hudTimer = document.getElementById('hud-timer');
+        const hudTimerBox = document.getElementById('hud-timer-box');
+        const hudScoreP1 = document.getElementById('hud-score-p1');
+        const hudScoreP2 = document.getElementById('hud-score-p2');
+        const goalBanner = document.getElementById('goal-banner');
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            if (m > 0) {
+                return `${m}:${s < 10 ? '0' : ''}${s}`;
+            }
+            return `${s}s`;
+        }
+
+        function updateHudDisplay() {
+            hudScoreP1.textContent = score.p1;
+            hudScoreP2.textContent = score.p2;
+            hudTimer.textContent = formatTime(timeLeft);
+
+            if (timeLeft <= 10 && timeLeft > 0) {
+                hudTimerBox.classList.add('urgent');
+            } else {
+                hudTimerBox.classList.remove('urgent');
+            }
+        }
+
+        function startMatch() {
+            initAudio();
+            gameState = 'playing';
+            score.p1 = 0;
+            score.p2 = 0;
+            timeLeft = selectedDuration;
+
+            resizeRink();
+            resetPositions();
+            updateHudDisplay();
+
+            lobbyOverlay.style.display = 'none';
+            gameoverOverlay.style.display = 'none';
+            ingameSidebar.style.display = 'flex';
+
+            soundEffects.tick();
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (gameState !== 'playing') return;
+                timeLeft--;
+                updateHudDisplay();
+
+                if (timeLeft <= 5 && timeLeft > 0) {
+                    soundEffects.tick();
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endMatch();
+                }
+            }, 1000);
+        }
+
+        function endMatch() {
+            gameState = 'ended';
+            soundEffects.finish();
+
+            ingameSidebar.style.display = 'none';
+            applyRandomDare();
+            gameoverOverlay.style.display = 'flex';
+
+            document.getElementById('final-score-p1').textContent = score.p1;
+            document.getElementById('final-score-p2').textContent = score.p2;
+
+            const titleEl = document.getElementById('settlement-title');
+            const subEl = document.getElementById('settlement-subtitle');
+            const trophyEl = document.getElementById('settlement-trophy');
+
+            if (score.p1 > score.p2) {
+                trophyEl.textContent = '🏆';
+                titleEl.textContent = '玩家 1 (藍方) 獲勝！';
+                titleEl.style.color = '#00d2ff';
+                subEl.textContent = `以 ${score.p1} : ${score.p2} 贏得對決`;
+            } else if (score.p2 > score.p1) {
+                trophyEl.textContent = '🏆';
+                titleEl.textContent = '玩家 2 (紅方) 獲勝！';
+                titleEl.style.color = '#ff3366';
+                subEl.textContent = `以 ${score.p2} : ${score.p1} 贏得對決`;
+            } else {
+                trophyEl.textContent = '🤝';
+                titleEl.textContent = '雙方平手！';
+                titleEl.style.color = '#ffd166';
+                subEl.textContent = `最終比數 ${score.p1} : ${score.p2} 難分勝負`;
+            }
+        }
+
+        // 處罰設定整合
+        function applyRandomDare() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+            if (typeof getRandomDare === 'function') {
+                dareEl.innerText = getRandomDare();
+            } else {
+                dareEl.innerText = '喝一杯特調飲料或伏地挺身 10 下！';
+            }
+        }
+
+        function triggerDareReroll() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+
+            if (navigator.vibrate) navigator.vibrate(30);
+            if (soundEffects && soundEffects.tap) soundEffects.tap();
+
+            dareEl.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            dareEl.style.transform = 'scale(0.92)';
+            dareEl.style.opacity = '0.4';
+
+            setTimeout(() => {
+                applyRandomDare();
+                dareEl.style.transform = 'scale(1)';
+                dareEl.style.opacity = '1';
+            }, 150);
+        }
+
+        function returnToLobby() {
+            if (timerInterval) clearInterval(timerInterval);
+            gameState = 'lobby';
+            resetPositions();
+
+            ingameSidebar.style.display = 'none';
+            gameoverOverlay.style.display = 'none';
+            lobbyOverlay.style.display = 'flex';
+        }
+
+        // 按鈕點擊綁定
+        document.getElementById('btn-start-game').addEventListener('click', startMatch);
+        document.getElementById('btn-rematch').addEventListener('click', startMatch);
+        document.getElementById('btn-ingame-back').addEventListener('click', returnToLobby);
+        document.getElementById('btn-gameover-to-lobby').addEventListener('click', returnToLobby);
+
+        // ==========================================
+        // 5. 觸控與滑鼠操控處理 (多點觸控)
+        // ==========================================
+        function isInteractive(target) {
+            return target.closest && target.closest('#lobby-overlay, #gameover-overlay, #ingame-sidebar, button, a');
+        }
+
+        window.addEventListener('touchstart', (e) => {
+            if (gameState !== 'playing') return;
+            if (isInteractive(e.target)) return;
+            e.preventDefault();
+
+            for (let t of e.changedTouches) {
+                // 若觸控在右側邊欄範圍內，不觸發球場推盤
+                if (t.clientX > rinkW) continue;
+
+                if (t.clientY > rinkH / 2 && p1.touchId === null) {
+                    p1.touchId = t.identifier;
+                    p1.x = t.clientX;
+                    p1.y = Math.max(rinkH / 2 + PADDLE_RADIUS + 8, t.clientY);
+                } else if (t.clientY < rinkH / 2 && p2.touchId === null) {
+                    p2.touchId = t.identifier;
+                    p2.x = t.clientX;
+                    p2.y = Math.min(rinkH / 2 - PADDLE_RADIUS - 8, t.clientY);
+                }
+            }
+        }, { passive: false });
+
+        window.addEventListener('touchmove', (e) => {
+            if (gameState !== 'playing') return;
+            if (isInteractive(e.target)) return;
+            e.preventDefault();
+
+            for (let t of e.changedTouches) {
+                if (t.identifier === p1.touchId) {
+                    let targetY = Math.max(rinkH / 2 + PADDLE_RADIUS + 8, Math.min(rinkH - PADDLE_RADIUS, t.clientY));
+                    let targetX = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, t.clientX));
+                    p1.vx = (targetX - p1.x) * 0.9;
+                    p1.vy = (targetY - p1.y) * 0.9;
+                    p1.x = targetX;
+                    p1.y = targetY;
+                } else if (t.identifier === p2.touchId) {
+                    let targetY = Math.min(rinkH / 2 - PADDLE_RADIUS - 8, Math.max(PADDLE_RADIUS, t.clientY));
+                    let targetX = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, t.clientX));
+                    p2.vx = (targetX - p2.x) * 0.9;
+                    p2.vy = (targetY - p2.y) * 0.9;
+                    p2.x = targetX;
+                    p2.y = targetY;
+                }
+            }
+        }, { passive: false });
+
+        function endTouch(e) {
+            for (let t of e.changedTouches) {
+                if (t.identifier === p1.touchId) p1.touchId = null;
+                if (t.identifier === p2.touchId) p2.touchId = null;
+            }
+        }
+        window.addEventListener('touchend', endTouch);
+        window.addEventListener('touchcancel', endTouch);
+
+        // 電腦滑鼠拖曳操控支援 (方便桌面測試)
+        let isMouseDown = false;
+        window.addEventListener('mousedown', (e) => {
+            if (gameState !== 'playing' || isInteractive(e.target) || e.clientX > rinkW) return;
+            isMouseDown = true;
+            if (e.clientY > rinkH / 2) {
+                p1.x = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, e.clientX));
+                p1.y = Math.max(rinkH / 2 + PADDLE_RADIUS + 8, e.clientY);
+            } else {
+                p2.x = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, e.clientX));
+                p2.y = Math.min(rinkH / 2 - PADDLE_RADIUS - 8, e.clientY);
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isMouseDown || gameState !== 'playing') return;
+            if (e.clientY > rinkH / 2) {
+                let targetX = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, e.clientX));
+                let targetY = Math.max(rinkH / 2 + PADDLE_RADIUS + 8, Math.min(rinkH - PADDLE_RADIUS, e.clientY));
+                p1.vx = (targetX - p1.x) * 0.9;
+                p1.vy = (targetY - p1.y) * 0.9;
+                p1.x = targetX;
+                p1.y = targetY;
+            } else {
+                let targetX = Math.max(PADDLE_RADIUS, Math.min(rinkW - PADDLE_RADIUS, e.clientX));
+                let targetY = Math.min(rinkH / 2 - PADDLE_RADIUS - 8, Math.max(PADDLE_RADIUS, e.clientY));
+                p2.vx = (targetX - p2.x) * 0.9;
+                p2.vy = (targetY - p2.y) * 0.9;
+                p2.x = targetX;
+                p2.y = targetY;
+            }
+        });
+
+        window.addEventListener('mouseup', () => { isMouseDown = false; });
+
+        // ==========================================
+        // 6. 物理運動與球場碰撞更新
+        // ==========================================
+        function spawnGoalParticles(x, y, color) {
+            for (let i = 0; i < 30; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 8;
+                particles.push({
+                    x,
+                    y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    size: 3 + Math.random() * 5,
+                    color: color,
+                    alpha: 1
+                });
+            }
+        }
+
+        function triggerGoalCelebration(scorer) {
+            soundEffects.goal();
+            goalBanner.classList.add('show');
+            setTimeout(() => goalBanner.classList.remove('show'), 900);
+
+            let goalCenterX = (rinkW - GOAL_WIDTH) / 2 + GOAL_WIDTH / 2;
+            if (scorer === 'p1') {
+                spawnGoalParticles(goalCenterX, 20, '#00d2ff');
+            } else {
+                spawnGoalParticles(goalCenterX, rinkH - 20, '#ff3366');
+            }
+        }
+
+        function checkPaddleCollision(paddle) {
+            let dx = puck.x - paddle.x;
+            let dy = puck.y - paddle.y;
+            let dist = Math.hypot(dx, dy);
+            let minDist = PUCK_RADIUS + PADDLE_RADIUS;
+
+            if (dist < minDist) {
+                soundEffects.paddleHit();
+                let angle = Math.atan2(dy, dx);
+
+                puck.x = paddle.x + Math.cos(angle) * (minDist + 1);
+                puck.y = paddle.y + Math.sin(angle) * (minDist + 1);
+
+                let hitSpeed = 9 + Math.hypot(paddle.vx, paddle.vy) * 0.85;
+                hitSpeed = Math.min(26, hitSpeed);
+
+                puck.vx = Math.cos(angle) * hitSpeed;
+                puck.vy = Math.sin(angle) * hitSpeed;
+            }
+        }
+
+        function updatePhysics() {
+            puck.trail.push({ x: puck.x, y: puck.y });
+            if (puck.trail.length > 6) puck.trail.shift();
+
+            puck.x += puck.vx;
+            puck.y += puck.vy;
+            puck.vx *= 0.988;
+            puck.vy *= 0.988;
+
+            const maxSpeed = 30;
+            const currentSpeed = Math.hypot(puck.vx, puck.vy);
+            if (currentSpeed > maxSpeed) {
+                puck.vx = (puck.vx / currentSpeed) * maxSpeed;
+                puck.vy = (puck.vy / currentSpeed) * maxSpeed;
+            }
+
+            // 左右側牆壁碰撞 (球場左界 0, 右界 rinkW)
+            if (puck.x - PUCK_RADIUS < 0) {
+                puck.x = PUCK_RADIUS;
+                puck.vx = Math.abs(puck.vx) * 0.92;
+                soundEffects.wallBounce();
+            } else if (puck.x + PUCK_RADIUS > rinkW) {
+                puck.x = rinkW - PUCK_RADIUS;
+                puck.vx = -Math.abs(puck.vx) * 0.92;
+                soundEffects.wallBounce();
+            }
+
+            // 上下底線與球門判定
+            let goalLeft = (rinkW - GOAL_WIDTH) / 2;
+            let goalRight = (rinkW + GOAL_WIDTH) / 2;
+
+            // 上方底線 (P2 紅方球門)
+            if (puck.y - PUCK_RADIUS < 0) {
+                if (puck.x > goalLeft && puck.x < goalRight) {
+                    if (gameState === 'playing') {
+                        score.p1++;
+                        updateHudDisplay();
+                        triggerGoalCelebration('p1');
+                        resetPuck('p2');
+                    }
+                } else {
+                    puck.y = PUCK_RADIUS;
+                    puck.vy = Math.abs(puck.vy) * 0.92;
+                    soundEffects.wallBounce();
+                }
+            }
+            // 下方底線 (P1 藍方球門)
+            else if (puck.y + PUCK_RADIUS > rinkH) {
+                if (puck.x > goalLeft && puck.x < goalRight) {
+                    if (gameState === 'playing') {
+                        score.p2++;
+                        updateHudDisplay();
+                        triggerGoalCelebration('p2');
+                        resetPuck('p1');
+                    }
+                } else {
+                    puck.y = rinkH - PUCK_RADIUS;
+                    puck.vy = -Math.abs(puck.vy) * 0.92;
+                    soundEffects.wallBounce();
+                }
+            }
+
+            // 推盤碰撞判定
+            checkPaddleCollision(p1);
+            checkPaddleCollision(p2);
+
+            // 慣性衰減
+            p1.vx *= 0.2; p1.vy *= 0.2;
+            p2.vx *= 0.2; p2.vy *= 0.2;
+
+            // 粒子更新
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vx *= 0.95;
+                p.vy *= 0.95;
+                p.alpha -= 0.035;
+                if (p.alpha <= 0) particles.splice(i, 1);
+            }
+        }
+
+        // ==========================================
+        // 7. 畫面渲染引擎 (無遮擋球場 + 側邊欄境界線)
+        // ==========================================
+        function renderRink() {
+            // 背景清空
+            ctx.fillStyle = '#07090e';
+            ctx.fillRect(0, 0, W, H);
+
+            // 球場主體冰面 (0 ~ rinkW)
+            ctx.fillStyle = '#0a0d15';
+            ctx.fillRect(0, 0, rinkW, rinkH);
+
+            // 球場中央環境柔光
+            ctx.save();
+            let gradCenter = ctx.createRadialGradient(rinkW / 2, rinkH / 2, 20, rinkW / 2, rinkH / 2, Math.max(rinkW, rinkH) * 0.6);
+            gradCenter.addColorStop(0, 'rgba(0, 180, 255, 0.06)');
+            gradCenter.addColorStop(0.5, 'rgba(255, 51, 102, 0.03)');
+            gradCenter.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
+            ctx.fillStyle = gradCenter;
+            ctx.fillRect(0, 0, rinkW, rinkH);
+            ctx.restore();
+
+            // 球場中線與中圈
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            ctx.beginPath();
+            ctx.moveTo(0, rinkH / 2);
+            ctx.lineTo(rinkW, rinkH / 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(rinkW / 2, rinkH / 2, 70, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.arc(rinkW / 2, rinkH / 2, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 球門邊線與進球區
+            let goalLeft = (rinkW - GOAL_WIDTH) / 2;
+
+            // 上方球門 (P2 紅方)
+            ctx.fillStyle = 'rgba(255, 51, 102, 0.25)';
+            ctx.fillRect(goalLeft, 0, GOAL_WIDTH, 12);
+            ctx.fillStyle = '#ff3366';
+            ctx.fillRect(goalLeft, 0, GOAL_WIDTH, 5);
+
+            // 下方球門 (P1 藍方)
+            ctx.fillStyle = 'rgba(0, 210, 255, 0.25)';
+            ctx.fillRect(goalLeft, rinkH - 12, GOAL_WIDTH, 12);
+            ctx.fillStyle = '#00d2ff';
+            ctx.fillRect(goalLeft, rinkH - 5, GOAL_WIDTH, 5);
+
+            // 右側邊欄境界分割線
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+            ctx.beginPath();
+            ctx.moveTo(rinkW, 0);
+            ctx.lineTo(rinkW, rinkH);
+            ctx.stroke();
+
+            // 冰面半透明大字比分投影 (不擋球、雙向清晰)
+            ctx.save();
+            ctx.font = '900 68px -apple-system, SF Pro Display, Montserrat, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // P2 比分 (上方紅隊，180 度翻轉面向上方玩家)
+            ctx.save();
+            ctx.translate(rinkW / 2, rinkH / 4);
+            ctx.rotate(Math.PI);
+            ctx.fillStyle = 'rgba(255, 51, 102, 0.13)';
+            ctx.fillText(score.p2, 0, 0);
+            ctx.restore();
+
+            // P1 比分 (下方藍隊)
+            ctx.fillStyle = 'rgba(0, 210, 255, 0.13)';
+            ctx.fillText(score.p1, rinkW / 2, (rinkH * 3) / 4);
+            ctx.restore();
+
+            // 冰球殘影
+            if (puck.trail.length > 1) {
+                for (let i = 0; i < puck.trail.length; i++) {
+                    let t = puck.trail[i];
+                    let r = PUCK_RADIUS * (0.4 + (i / puck.trail.length) * 0.5);
+                    let alpha = (i / puck.trail.length) * 0.25;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(t.x, t.y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // 冰球主體 (白色發光碟)
+            ctx.save();
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
+            ctx.shadowBlur = 12;
+            let puckGrad = ctx.createRadialGradient(puck.x - 3, puck.y - 3, 2, puck.x, puck.y, PUCK_RADIUS);
+            puckGrad.addColorStop(0, '#ffffff');
+            puckGrad.addColorStop(0.8, '#e2e8f0');
+            puckGrad.addColorStop(1, '#94a3b8');
+            ctx.fillStyle = puckGrad;
+            ctx.beginPath();
+            ctx.arc(puck.x, puck.y, PUCK_RADIUS, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.stroke();
+            ctx.restore();
+
+            // 玩家 2 推盤 (上方紅色)
+            drawPaddle(p2.x, p2.y, PADDLE_RADIUS, '#ff3366', '#b80033', 'rgba(255, 51, 102, 0.55)');
+
+            // 玩家 1 推盤 (下方藍色)
+            drawPaddle(p1.x, p1.y, PADDLE_RADIUS, '#00d2ff', '#0077b6', 'rgba(0, 210, 255, 0.55)');
+
+            // 渲染進球慶祝粒子
+            for (let p of particles) {
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function drawPaddle(x, y, radius, primaryColor, darkColor, glowColor) {
+            ctx.save();
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 16;
+
+            let gradOuter = ctx.createRadialGradient(x - 5, y - 5, 4, x, y, radius);
+            gradOuter.addColorStop(0, '#ffffff');
+            gradOuter.addColorStop(0.3, primaryColor);
+            gradOuter.addColorStop(1, darkColor);
+            ctx.fillStyle = gradOuter;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.stroke();
+
+            ctx.shadowBlur = 0;
+            let knobRadius = radius * 0.52;
+            let gradInner = ctx.createRadialGradient(x - 3, y - 3, 2, x, y, knobRadius);
+            gradInner.addColorStop(0, '#ffffff');
+            gradInner.addColorStop(0.5, primaryColor);
+            gradInner.addColorStop(1, '#111827');
+            ctx.fillStyle = gradInner;
+            ctx.beginPath();
+            ctx.arc(x, y, knobRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // ==========================================
+        // 8. 主遊戲迴圈
+        // ==========================================
+        function gameLoop() {
+            updatePhysics();
+            renderRink();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 啟動初始化
+        resizeRink();
+        resetPositions();
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+
+</html>

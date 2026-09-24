@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#07090e">
+    <title>Dobble 哆寶 - Reaction King</title>
+
+    <!-- 全域整合字型樣式表 -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-dark: #05070a;
+            --red-team: #ff3366;
+            --red-team-dark: #b80033;
+            --red-team-glow: rgba(255, 51, 102, 0.45);
+            --blue-team: #00d2ff;
+            --blue-team-dark: #0077b6;
+            --blue-team-glow: rgba(0, 210, 255, 0.45);
+            --gold-accent: #ffd166;
+            --card-glass: rgba(16, 20, 32, 0.9);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --neon-green: #30d158;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        /* ==========================================================================
+           1. 橫屏與直屏容器自適應機制 (Portrait Lobby -> Landscape Game)
+           ========================================================================== */
+        #game-container {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            background: radial-gradient(circle at center, #0e1320 0%, #05070a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 進入遊戲模式 */
+        body.in-game #game-container {
+            display: flex;
+        }
+
+        /* 若玩家在遊戲中直持手機，自動將遊戲視圖旋轉 90 度橫置 */
+        @media screen and (orientation: portrait) {
+            body.in-game #game-container {
+                position: fixed;
+                top: 0;
+                left: 100vw;
+                width: 100vh;
+                width: 100dvh;
+                height: 100vw;
+                height: 100dvw;
+                transform: rotate(90deg);
+                transform-origin: left top;
+                z-index: 50;
+            }
+        }
+
+        /* 橫持手機時自然全屏顯示 */
+        @media screen and (orientation: landscape) {
+            body.in-game #game-container {
+                position: relative;
+                width: 100vw;
+                width: 100dvw;
+                height: 100vh;
+                height: 100dvh;
+                transform: none;
+                z-index: 50;
+            }
+        }
+
+        /* ==========================================================================
+           2. 直式首頁大廳 (Vertical Portrait Lobby Overlay)
+           ========================================================================== */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 20%, rgba(24, 30, 48, 0.98) 0%, rgba(5, 7, 10, 0.99) 100%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: max(env(safe-area-inset-top, 20px), 20px) 24px max(env(safe-area-inset-bottom, 24px), 24px) 24px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .lobby-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-pill-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 7px 14px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-pill-link:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .lobby-tag-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 直立大廳中央卡片容器 */
+        .lobby-vertical-content {
+            width: 100%;
+            max-width: 480px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+            padding: 10px 0;
+        }
+
+        .game-badge-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.2) 0%, rgba(0, 210, 255, 0.2) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px var(--blue-team-glow), 0 0 20px var(--red-team-glow);
+        }
+
+        .game-badge-icon svg {
+            width: 38px;
+            height: 38px;
+            fill: #ffffff;
+        }
+
+        .lobby-title {
+            font-family: var(--font-display);
+            font-size: 2.3rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            margin: 0;
+            background: linear-gradient(180deg, #ffffff 40%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .lobby-subtitle {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* 遊戲規則卡片 */
+        .rules-card {
+            width: 100%;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .rules-card-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--gold-accent);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        /* 雙陣營預覽卡 */
+        .camps-preview-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 18px;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .camp-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .camp-badge-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .camp-badge-dot.red {
+            background: var(--red-team);
+            box-shadow: 0 0 10px var(--red-team);
+        }
+
+        .camp-badge-dot.blue {
+            background: var(--blue-team);
+            box-shadow: 0 0 10px var(--blue-team);
+        }
+
+        .camp-vs-divider {
+            font-size: 0.78rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* 難度選擇區塊 */
+        .selector-box {
+            width: 100%;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .selector-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 10px 4px;
+            color: rgba(255, 255, 255, 0.75);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .opt-btn:active {
+            transform: scale(0.94);
+        }
+
+        .opt-btn.active {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), rgba(0, 119, 182, 0.35));
+            border-color: var(--blue-team);
+            color: #ffffff;
+            box-shadow: 0 0 16px var(--blue-team-glow);
+        }
+
+        .opt-btn .opt-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .opt-btn .opt-desc {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        .opt-btn.active .opt-desc {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* 橫放提示說明 */
+        .orientation-hint {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        /* 開始按鈕 */
+        .btn-start-action {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #00d2ff 0%, #0066cc 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            padding: 16px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 28px var(--blue-team-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s;
+        }
+
+        .btn-start-action:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 14px var(--blue-team-glow);
+        }
+
+        /* ==========================================================================
+           3. 橫屏遊戲中頂部 HUD (Landscape In-Game Top HUD)
+           ========================================================================== */
+        .top-bar {
+            height: 12vmin;
+            min-height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(180deg, rgba(5, 7, 10, 0.95) 0%, transparent 100%);
+        }
+
+        .btn-hud-home {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
+        }
+
+        .btn-hud-home:active {
+            transform: scale(0.93);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-hud-home svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
+        }
+
+        .score-box {
+            font-family: var(--font-numeric);
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+
+        .score-box.red {
+            color: var(--red-team);
+            text-shadow: 0 0 14px var(--red-team-glow);
+        }
+
+        .score-box.blue {
+            color: var(--blue-team);
+            text-shadow: 0 0 14px var(--blue-team-glow);
+        }
+
+        .round-info {
+            font-family: var(--font-numeric);
+            font-weight: 800;
+            font-size: 0.92rem;
+            letter-spacing: 1px;
+            color: var(--gold-accent);
+            background: rgba(255, 209, 102, 0.12);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            padding: 5px 18px;
+            border-radius: 999px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ==========================================================================
+           4. 主對決舞台 (Landscape Main Area - Deep Dark OLED)
+           ========================================================================== */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            height: calc(100% - 12vmin);
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2%;
+            position: relative;
+        }
+
+        /* 兩側搶答大按鈕 (帶朝向角度) */
+        .buzz-btn {
+            width: 16%;
+            height: 84%;
+            border-radius: 28px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 2.2rem;
+            font-family: var(--font-display);
+            font-weight: 900;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            gap: 8px;
+        }
+
+        .buzz-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .buzz-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, var(--red-team) 0%, var(--red-team-dark) 100%);
+            box-shadow: 0 8px 26px var(--red-team-glow), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            flex-direction: column;
+        }
+
+        .btn-red span {
+            transform: rotate(90deg);
+        }
+
+        .btn-blue {
+            background: linear-gradient(135deg, var(--blue-team) 0%, var(--blue-team-dark) 100%);
+            box-shadow: 0 8px 26px var(--blue-team-glow), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            flex-direction: column;
+        }
+
+        .btn-blue span {
+            transform: rotate(-90deg);
+        }
+
+        /* 中央雙卡舞台 (純黑深色主題卡片) */
+        .center-stage {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .countdown {
+            font-size: 10vmax;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+            position: absolute;
+            z-index: 5;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .cards-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cards-container.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 深色高對比暗夜哆寶卡牌 */
+        .card {
+            width: 25vmax;
+            height: 25vmax;
+            max-width: 290px;
+            max-height: 290px;
+            background: radial-gradient(circle at 35% 35%, #181d28 0%, #0d1017 100%);
+            border: 3px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(0, 210, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-icon {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+        }
+
+        /* ==========================================================================
+           5. 搶答頁面浮層 (Answer Overlay - Dark Glass)
+           ========================================================================== */
+        .answer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 10, 0.88);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .answer-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .answer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.35s ease;
+        }
+
+        .face-red {
+            transform: rotate(90deg);
+        }
+
+        .face-blue {
+            transform: rotate(-90deg);
+        }
+
+        .answer-header {
+            font-size: 1.6rem;
+            font-family: var(--font-display);
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .answer-board {
+            background: var(--card-glass);
+            padding: 18px;
+            border-radius: 28px;
+            display: grid;
+            gap: 12px;
+            border: 2px solid var(--border-glass);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8);
+            transition: border-color 0.3s;
+        }
+
+        .answer-board.turn-red {
+            border-color: var(--red-team);
+            box-shadow: 0 0 35px var(--red-team-glow);
+        }
+
+        .answer-board.turn-blue {
+            border-color: var(--blue-team);
+            box-shadow: 0 0 35px var(--blue-team-glow);
+        }
+
+        .grid-icon {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.1s;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .grid-icon:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-icon.disabled {
+            opacity: 0.18;
+            pointer-events: none;
+        }
+
+        .timer-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--neon-green), var(--gold-accent), var(--red-team));
+            border-radius: 999px;
+            transform-origin: left;
+            transition: transform 0.05s linear;
+        }
+
+        /* ==========================================================================
+           6. 直式結算畫面浮層 (Vertical Portrait Game Over Modal)
+           ========================================================================== */
+        #gameover-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 250;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: max(env(safe-area-inset-top, 24px), 24px) 20px max(env(safe-area-inset-bottom, 24px), 24px) 20px;
+            background: radial-gradient(circle at 50% 20%, rgba(24, 30, 48, 0.96) 0%, rgba(5, 7, 10, 0.99) 100%);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            text-align: center;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gameover-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 28px;
+            padding: 28px 22px;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: auto;
+        }
+
+        .gameover-result-sec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trophy-badge {
+            font-size: 3.5rem;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 16px rgba(255, 209, 102, 0.6));
+            animation: bounce-trophy 1.2s infinite alternate ease-in-out;
+        }
+
+        @keyframes bounce-trophy {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-6px);
+            }
+        }
+
+        .result-title {
+            font-size: 1.65rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .result-subtitle {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin: 0;
+        }
+
+        .final-score-board {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 20px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .final-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .team-name {
+            font-size: 0.82rem;
+            font-weight: 800;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+        }
+
+        .team-points {
+            font-family: var(--font-numeric);
+            font-size: 2.8rem;
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+        }
+
+        .final-team.red .team-points {
+            color: var(--red-team);
+            text-shadow: 0 0 16px var(--red-team-glow);
+        }
+
+        .final-team.blue .team-points {
+            color: var(--blue-team);
+            text-shadow: 0 0 16px var(--blue-team-glow);
+        }
+
+        .final-score-colon {
+            font-size: 2rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* 輸家處罰展示區樣式 */
+        .dare-settlement-box {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(255, 59, 48, 0.12) 0%, rgba(255, 149, 0, 0.08) 100%);
+            border: 1px dashed rgba(255, 69, 58, 0.45);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 20px rgba(255, 59, 48, 0.12);
+        }
+
+        .dare-settlement-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .dare-badge-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #ff453a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dare-setting-link {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.15s;
+        }
+
+        .dare-setting-link:active {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(0.95);
+        }
+
+        .dare-settlement-content {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.4;
+            text-align: center;
+            word-break: break-word;
+            padding: 4px 6px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 動作按鈕群組 */
+        .gameover-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-dare-action {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.18) 0%, rgba(255, 149, 0, 0.25) 100%);
+            border: 1px solid rgba(255, 214, 10, 0.5);
+            color: #ffd60a;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 13px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 214, 10, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .btn-dare-action:active {
+            transform: scale(0.96);
+            background: linear-gradient(135deg, rgba(255, 214, 10, 0.3) 0%, rgba(255, 149, 0, 0.4) 100%);
+        }
+
+        .btn-rematch-action {
+            width: 100%;
+            background: linear-gradient(135deg, #00d2ff 0%, #0077b6 100%);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            padding: 14px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(0, 210, 255, 0.35);
+            transition: transform 0.1s;
+        }
+
+        .btn-rematch-action:active {
+            transform: scale(0.96);
+        }
+
+        .btn-to-lobby-action {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-to-lobby-action:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .link-to-hub-btn {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 6px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            display: block;
+            text-align: center;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .link-to-hub-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1. 直式首頁大廳 (Vertical Portrait Lobby Overlay) -->
+    <div id="overlay">
+        <div class="lobby-top-bar">
+            <a href="index.html" class="nav-pill-link" title="返回 Party Hub 大廳">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                </svg>
+                Party Hub
+            </a>
+            <div class="lobby-tag-badge">雙人同屏極速對抗</div>
+        </div>
+
+        <div class="lobby-vertical-content">
+            <div class="game-badge-icon">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M11 21h-1l1-7H7.5q-.5 0-.75-.375T6.5 12.5q0-.35.15-.65t.35-.5l4-7q.35-.5.9-.625t1.1.025q.35.15.575.475t.125.825l-1 5h3.5q.5 0 .75.375t.25.875q0 .35-.15.65t-.35.5l-4 7q-.35.5-.9.625T11 21">
+                    </path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="lobby-title">DOBBLE</h1>
+                <p class="lobby-subtitle">Reaction King · 符號搶答對決</p>
+            </div>
+
+            <!-- 規則卡片 -->
+            <div class="rules-card">
+                <div class="rules-card-title">遊戲規則 RULES</div>
+                任意兩張卡片之間，永遠只有「一個」相同的圖案符號！率先找出並按下所屬隊伍的搶答鍵，在時限內選出正確符號即可奪得一分。
+            </div>
+
+            <!-- 陣營說明 -->
+            <div class="camps-preview-card">
+                <div class="camp-item">
+                    <div class="camp-badge-dot red"></div>
+                    <span>紅隊 (左側按鈕)</span>
+                </div>
+                <div class="camp-vs-divider">VS</div>
+                <div class="camp-item">
+                    <span>藍隊 (右側按鈕)</span>
+                    <div class="camp-badge-dot blue"></div>
+                </div>
+            </div>
+
+            <!-- 難度選擇 -->
+            <div class="selector-box">
+                <div class="selector-header">難度選擇 (每張卡片圖案數)</div>
+                <div class="btn-grid" id="diff-grid"></div>
+            </div>
+
+            <div class="orientation-hint">
+                <span>📱</span>
+                <span>進入遊戲後畫面將自動轉為橫式對決</span>
+            </div>
+        </div>
+
+        <button class="btn-start-action" onclick="initGame()">
+            <span>開始對決 START</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- 2. 橫向遊戲容器 (Landscape Game Container) -->
+    <div id="game-container">
+        <!-- 頂部 HUD -->
+        <div class="top-bar">
+            <a href="javascript:void(0)" onclick="quitToLobby()" class="btn-hud-home" title="返回遊戲首頁">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                </svg>
+                <span>首頁</span>
+            </a>
+            <div class="score-box red">
+                <span style="font-size: 1rem; font-weight: 800; opacity: 0.85;">RED</span>
+                <span id="score-red">0</span>
+            </div>
+            <div class="round-info" id="round-display">ROUND 1 / 10</div>
+            <div class="score-box blue">
+                <span id="score-blue">0</span>
+                <span style="font-size: 1rem; font-weight: 800; opacity: 0.85;">BLUE</span>
+            </div>
+        </div>
+
+        <!-- 主遊戲區 -->
+        <div class="main-area">
+            <button class="buzz-btn btn-red" id="btn-red" onclick="buzz('red')" disabled>
+                <span>搶</span><span>答</span>
+            </button>
+
+            <div class="center-stage">
+                <div class="countdown" id="countdown-text">READY</div>
+                <div class="cards-container" id="cards-container">
+                    <div class="card" id="card-a"></div>
+                    <div class="card" id="card-b"></div>
+                </div>
+            </div>
+
+            <button class="buzz-btn btn-blue" id="btn-blue" onclick="buzz('blue')" disabled>
+                <span>搶</span><span>答</span>
+            </button>
+        </div>
+
+        <!-- 答題頁面浮層 -->
+        <div class="answer-overlay" id="answer-overlay">
+            <div class="answer-content" id="answer-content">
+                <div class="answer-header" id="answer-header">RED TURN</div>
+                <div class="answer-board turn-red" id="answer-board"></div>
+                <div class="timer-container">
+                    <div class="timer-bar" id="timer-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 直式結算畫面浮層 (Game Over) -->
+    <div id="gameover-overlay">
+        <div class="gameover-card">
+            <div class="gameover-result-sec">
+                <div class="trophy-badge" id="settlement-trophy">🏆</div>
+                <h2 class="result-title" id="settlement-title">紅隊獲勝！</h2>
+                <p class="result-subtitle" id="settlement-subtitle">極速眼力與反應的巔峰對決</p>
+            </div>
+
+            <div class="final-score-board">
+                <div class="final-team red">
+                    <span class="team-name">🔴 紅隊</span>
+                    <span class="team-points" id="final-score-red">0</span>
+                </div>
+                <div class="final-score-colon">:</div>
+                <div class="final-team blue">
+                    <span class="team-name">🔵 藍隊</span>
+                    <span class="team-points" id="final-score-blue">0</span>
+                </div>
+            </div>
+
+            <!-- 輸家處罰展示區 -->
+            <div class="dare-settlement-box" id="dare-settlement-box">
+                <div class="dare-settlement-header">
+                    <span class="dare-badge-tag">⚡ 輸家處罰 PENALTY</span>
+                    <a href="dares.html" class="dare-setting-link" title="前往設定處罰項目">自訂處罰 ⚙️</a>
+                </div>
+                <div class="dare-settlement-content" id="settlement-dare-text">
+                    正在隨機抽取處罰...
+                </div>
+            </div>
+
+            <div class="gameover-actions">
+                <button class="btn-dare-action" id="btn-reroll-dare" onclick="triggerDareReroll()">
+                    <span>🎲 抽取處罰 / 換一個</span>
+                </button>
+                <button class="btn-rematch-action" onclick="initGame()">再玩一局 REMATCH</button>
+                <button class="btn-to-lobby-action" onclick="showLobby()">返回遊戲首頁</button>
+                <a href="index.html" class="link-to-hub-btn">返回 Party Hub 大廳</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="dares.js"></script>
+    <script>
+        // 圖示庫
+        const SYMBOLS = [
+            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🍍', '🥝', '🍅', '🥥', '🥑', '🍔', '🍟', '🍕', '🌭', '🍿', '🍩', '🍦', '🍭', '🍬',
+            '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐧', '🐦', '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜',
+            '✏️', '✒️', '🖋️', '🖊️', '🖌️', '🖍️', '📝', '💼', '📁', '📂', '📅', '📆', '📇', '📈', '📉', '📊', '📋', '📌', '📍', '📎', '📏', '📐', '✂️', '📓', '📔', '📒', '📕', '📗', '📘', '📙', '📚', '📖'
+        ];
+        const POSITIONS = [
+            { top: '50%', left: '50%' },
+            { top: '20%', left: '50%' },
+            { top: '30%', left: '78%' },
+            { top: '60%', left: '83%' },
+            { top: '82%', left: '60%' },
+            { top: '82%', left: '30%' },
+            { top: '55%', left: '17%' },
+            { top: '25%', left: '25%' },
+            { top: '38%', left: '38%' },
+            { top: '38%', left: '62%' },
+            { top: '62%', left: '50%' }
+        ];
+
+        let scores = { red: 0, blue: 0 };
+        let round = 1;
+        const MAX_ROUNDS = 10;
+
+        let currentMatch = null;
+        let currentUnion = [];
+        let gameState = 'init';
+        let currentTurn = null;
+        let hasPassed = false;
+
+        let answerTimerInterval;
+        let countdownInterval;
+        let transitionTimeout;
+        let timeLeft = 10000;
+
+        const DIFFICULTIES = [
+            { label: '簡單', count: 2 },
+            { label: '一般', count: 5 },
+            { label: '困難', count: 8 },
+            { label: '地獄', count: 11 }
+        ];
+        let symbolsCount = 5;
+
+        // DOM 元素
+        const btnRed = document.getElementById('btn-red');
+        const btnBlue = document.getElementById('btn-blue');
+        const scoreRedUI = document.getElementById('score-red');
+        const scoreBlueUI = document.getElementById('score-blue');
+        const roundDisplay = document.getElementById('round-display');
+        const countdownText = document.getElementById('countdown-text');
+        const cardsContainer = document.getElementById('cards-container');
+        const cardA = document.getElementById('card-a');
+        const cardB = document.getElementById('card-b');
+        const answerOverlay = document.getElementById('answer-overlay');
+        const answerContent = document.getElementById('answer-content');
+        const answerBoard = document.getElementById('answer-board');
+        const answerHeader = document.getElementById('answer-header');
+        const timerBar = document.getElementById('timer-bar');
+
+        // 音效模組
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioClass ? new AudioClass() : null;
+
+        function playTone(type) {
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'buzz') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'tap') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+            }
+        }
+
+        function shuffle(array) {
+            let curr = array.length, rand;
+            while (curr != 0) {
+                rand = Math.floor(Math.random() * curr);
+                curr--;
+                [array[curr], array[rand]] = [array[rand], array[curr]];
+            }
+            return array;
+        }
+
+        function showLobby() {
+            // 離開遊戲模式，恢復直式大廳
+            document.body.classList.remove('in-game');
+            document.getElementById('gameover-overlay').style.display = 'none';
+            document.getElementById('overlay').style.display = 'flex';
+            renderDifficultyButtons();
+        }
+
+        function renderDifficultyButtons() {
+            const grid = document.getElementById('diff-grid');
+            grid.innerHTML = '';
+            DIFFICULTIES.forEach((diff) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn' + (diff.count === symbolsCount ? ' active' : '');
+                btn.innerHTML = `<span class="opt-title">${diff.label}</span><span class="opt-desc">${diff.count} 圖案</span>`;
+                btn.onclick = function () {
+                    symbolsCount = diff.count;
+                    document.querySelectorAll('#diff-grid .opt-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function initGame() {
+            // 切換為橫向遊戲模式
+            document.body.classList.add('in-game');
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('gameover-overlay').style.display = 'none';
+
+            scores = { red: 0, blue: 0 };
+            round = 1;
+            updateScoreUI();
+            startRound();
+        }
+
+        function quitToLobby() {
+            clearInterval(countdownInterval);
+            clearInterval(answerTimerInterval);
+            clearTimeout(transitionTimeout);
+            gameState = 'init';
+            answerOverlay.classList.remove('active');
+            cardsContainer.classList.remove('active');
+            showLobby();
+        }
+
+        function updateScoreUI() {
+            scoreRedUI.innerText = scores.red;
+            scoreBlueUI.innerText = scores.blue;
+            roundDisplay.innerText = `ROUND ${round} / ${MAX_ROUNDS}`;
+        }
+
+        function startRound(isRetry = false) {
+            if (round > MAX_ROUNDS) {
+                endGame();
+                return;
+            }
+
+            gameState = 'countdown';
+            answerOverlay.classList.remove('active');
+            cardsContainer.classList.remove('active');
+            btnRed.disabled = true;
+            btnBlue.disabled = true;
+
+            let count = 3;
+            countdownText.innerText = isRetry ? "RETRY" : count;
+            countdownText.style.display = 'block';
+
+            countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownText.innerText = count;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownText.style.display = 'none';
+                    generateCards();
+                }
+            }, 800);
+        }
+
+        function generateCards() {
+            let pool = shuffle([...SYMBOLS]);
+            currentMatch = pool[0];
+            let neededOthers = 2 * (symbolsCount - 1);
+            let others = pool.slice(1, 1 + neededOthers);
+
+            let setA = shuffle([currentMatch, ...others.slice(0, symbolsCount - 1)]);
+            let setB = shuffle([currentMatch, ...others.slice(symbolsCount - 1, neededOthers)]);
+
+            currentUnion = shuffle([...setA, ...setB.filter(x => x !== currentMatch)]);
+
+            renderCard(cardA, setA);
+            renderCard(cardB, setB);
+
+            cardsContainer.classList.add('active');
+            gameState = 'playing';
+            btnRed.disabled = false;
+            btnBlue.disabled = false;
+        }
+
+        function renderCard(cardEl, symbols) {
+            cardEl.innerHTML = '';
+            const baseSize = 25 / symbolsCount + 1.5;
+            symbols.forEach((sym, index) => {
+                const pos = POSITIONS[index];
+                const icon = document.createElement('div');
+                icon.className = 'card-icon';
+                icon.innerText = sym;
+                const scale = (Math.random() * 0.4 + 0.85).toFixed(2);
+                const rotate = Math.floor(Math.random() * 360);
+                icon.style.top = pos.top;
+                icon.style.left = pos.left;
+                icon.style.transform = `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+                icon.style.fontSize = `${baseSize * scale}vmax`;
+                cardEl.appendChild(icon);
+            });
+        }
+
+        window.buzz = function (team) {
+            if (gameState !== 'playing') return;
+            playTone('buzz');
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            gameState = 'answering';
+            currentTurn = team;
+            hasPassed = false;
+            btnRed.disabled = true;
+            btnBlue.disabled = true;
+
+            setupAnswerBoard();
+            answerOverlay.classList.add('active');
+            startAnswerTimer();
+        };
+
+        function setupAnswerBoard() {
+            answerHeader.innerText = `${currentTurn.toUpperCase()} TURN`;
+            answerHeader.style.color = currentTurn === 'red' ? 'var(--red-team)' : 'var(--blue-team)';
+
+            answerBoard.className = `answer-board turn-${currentTurn}`;
+            answerBoard.style.pointerEvents = 'auto';
+            answerBoard.innerHTML = '';
+            answerContent.className = `answer-content face-${currentTurn}`;
+
+            let cols = 3;
+            let iconSize = '18vmin';
+            if (symbolsCount === 5) { cols = 3; iconSize = '16vmin'; }
+            else if (symbolsCount === 8) { cols = 3; iconSize = '14vmin'; }
+            else if (symbolsCount === 11) { cols = 3; iconSize = '11vmin'; }
+
+            answerBoard.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+            currentUnion.forEach(sym => {
+                const btn = document.createElement('div');
+                btn.className = 'grid-icon';
+                btn.style.width = iconSize;
+                btn.style.height = iconSize;
+                btn.style.fontSize = `calc(${iconSize} * 0.52)`;
+                btn.innerText = sym;
+                btn.onclick = () => handleAnswer(sym, btn);
+                answerBoard.appendChild(btn);
+            });
+        }
+
+        function startAnswerTimer() {
+            clearInterval(answerTimerInterval);
+            timeLeft = 10000;
+            timerBar.style.transform = `scaleX(1)`;
+
+            answerTimerInterval = setInterval(() => {
+                timeLeft -= 50;
+                let ratio = Math.max(0, timeLeft / 10000);
+                timerBar.style.transform = `scaleX(${ratio})`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(answerTimerInterval);
+                    handleWrong(null);
+                }
+            }, 50);
+        }
+
+        function handleAnswer(sym, btnElement) {
+            if (btnElement && btnElement.classList.contains('disabled')) return;
+            clearInterval(answerTimerInterval);
+
+            if (sym === currentMatch) {
+                gameState = 'transitioning';
+                playTone('correct');
+                scores[currentTurn]++;
+                if (btnElement) btnElement.style.background = 'var(--neon-green)';
+                answerBoard.style.pointerEvents = 'none';
+                transitionTimeout = setTimeout(() => {
+                    round++;
+                    updateScoreUI();
+                    startRound();
+                }, 1000);
+            } else {
+                handleWrong(btnElement);
+            }
+        }
+
+        function handleWrong(btnElement) {
+            playTone('wrong');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            if (btnElement) btnElement.classList.add('disabled');
+
+            if (!hasPassed) {
+                hasPassed = true;
+                currentTurn = currentTurn === 'red' ? 'blue' : 'red';
+                answerHeader.innerText = `${currentTurn.toUpperCase()} TURN`;
+                answerHeader.style.color = currentTurn === 'red' ? 'var(--red-team)' : 'var(--blue-team)';
+                answerBoard.className = `answer-board turn-${currentTurn}`;
+                answerContent.className = `answer-content face-${currentTurn}`;
+                startAnswerTimer();
+            } else {
+                gameState = 'transitioning';
+                answerHeader.innerText = "RESTART";
+                answerHeader.style.color = "white";
+                answerBoard.className = "answer-board";
+                answerBoard.style.pointerEvents = 'none';
+                transitionTimeout = setTimeout(() => {
+                    startRound(true);
+                }, 1000);
+            }
+        }
+
+        function endGame() {
+            gameState = 'ended';
+            // 遊戲結束恢復直式視圖排列
+            document.body.classList.remove('in-game');
+            answerOverlay.classList.remove('active');
+            cardsContainer.classList.remove('active');
+            countdownText.style.display = 'none';
+
+            document.getElementById('final-score-red').innerText = scores.red;
+            document.getElementById('final-score-blue').innerText = scores.blue;
+
+            const trophyEl = document.getElementById('settlement-trophy');
+            const titleEl = document.getElementById('settlement-title');
+            const subEl = document.getElementById('settlement-subtitle');
+
+            if (scores.red > scores.blue) {
+                trophyEl.innerText = '🏆';
+                titleEl.innerText = '紅隊獲勝！';
+                titleEl.style.color = 'var(--red-team)';
+                subEl.innerText = `以 ${scores.red} : ${scores.blue} 拿下反應力之王`;
+            } else if (scores.blue > scores.red) {
+                trophyEl.innerText = '🏆';
+                titleEl.innerText = '藍隊獲勝！';
+                titleEl.style.color = 'var(--blue-team)';
+                subEl.innerText = `以 ${scores.blue} : ${scores.red} 拿下反應力之王`;
+            } else {
+                trophyEl.innerText = '🤝';
+                titleEl.innerText = '雙方平手！';
+                titleEl.style.color = 'var(--gold-accent)';
+                subEl.innerText = `最終比數 ${scores.red} : ${scores.blue} 難分軒輊`;
+            }
+
+            applyRandomDare();
+            document.getElementById('gameover-overlay').style.display = 'flex';
+        }
+
+        // 處罰設定整合
+        function applyRandomDare() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+            if (typeof getRandomDare === 'function') {
+                dareEl.innerText = getRandomDare();
+            } else {
+                dareEl.innerText = '喝一杯特調飲料或伏地挺身 10 下！';
+            }
+        }
+
+        function triggerDareReroll() {
+            const dareEl = document.getElementById('settlement-dare-text');
+            if (!dareEl) return;
+
+            if (navigator.vibrate) navigator.vibrate(30);
+            playTone('tap');
+
+            dareEl.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            dareEl.style.transform = 'scale(0.92)';
+            dareEl.style.opacity = '0.4';
+
+            setTimeout(() => {
+                applyRandomDare();
+                dareEl.style.transform = 'scale(1)';
+                dareEl.style.opacity = '1';
+            }, 150);
+        }
+
+        document.body.addEventListener('click', () => {
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }, { once: true });
+
+        window.onload = showLobby;
+    </script>
+</body>
+
+</html>
