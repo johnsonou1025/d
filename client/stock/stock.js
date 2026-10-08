@@ -1,30 +1,142 @@
 const API = "https://script.google.com/macros/s/AKfycbwiH2P10Y0He-7WgFtBq_7xswWLWQHVJ8TVWWtaA4i9GGI7sda_cIB6C7wlDmLZfPgW1Q/exec";
+const CACHE_KEY = "JOINJO_STOCK_CACHE_V2";
+let lastFetchTimestamp = 0;
 
-$(async function () {
-    const $holdingsTable = $('#current-holdings .data-table');
+/**
+ * 檢查當前時間是否處於 14:15 ~ 14:30 的即時更新區間
+ */
+function isLiveUpdateWindow(date = new Date()) {
+    const h = date.getHours();
+    const m = date.getMinutes();
+    // 2:15 PM (14:15) ~ 2:30 PM (14:30)
+    return (h === 14 && m >= 15 && m <= 30);
+}
 
-    //執行載入動畫
-    const $status = $('p.results'); // 確保有這個元素顯示狀態
-    $('body').addClass('loading-view');
+/**
+ * 檢查快取資料是否仍然有效
+ * 1. 若當前處於 14:15 ~ 14:30 即時區間 -> 一律回傳 false (必須發送請求獲取最新數據)
+ * 2. 其它時段：
+ *    - 若現在已過今天 14:15 -> 最近一次更新時間點為「今天 14:15」
+ *    - 若現在尚未到今天 14:15 -> 最近一次更新時間點為「昨天 14:15」
+ *    - 如果快取時間 >= 最近一次 14:15 更新點 -> 有效！
+ */
+function isCacheValid(cacheObj) {
+    if (!cacheObj || !cacheObj.data || !cacheObj.timestamp) return false;
+
+    const now = new Date();
+    // 處於即時更新時段強制失效，以取得最新盤後數據
+    if (isLiveUpdateWindow(now)) {
+        return false;
+    }
+
+    const todayTarget = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 15, 0, 0);
+    let latestTargetTime;
+
+    if (now >= todayTarget) {
+        latestTargetTime = todayTarget;
+    } else {
+        latestTargetTime = new Date(todayTarget);
+        latestTargetTime.setDate(latestTargetTime.getDate() - 1);
+    }
+
+    return cacheObj.timestamp >= latestTargetTime.getTime();
+}
+
+function getCachedData() {
+    try {
+        const item = localStorage.getItem(CACHE_KEY);
+        return item ? JSON.parse(item) : null;
+    } catch (e) {
+        console.warn('[JOINJO] 讀取 localStorage 快取失敗:', e);
+        return null;
+    }
+}
+
+function setCachedData(rawData) {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            data: rawData,
+            timestamp: Date.now()
+        }));
+    } catch (e) {
+        console.warn('[JOINJO] 寫入 localStorage 快取失敗:', e);
+    }
+}
+
+/**
+ * 載入股票數據：優先使用快取，14:15~14:30 或快取過期時連線抓取
+ */
+async function loadStockData(forceRefresh = false) {
+    const $status = $('p.results');
+    const isLive = isLiveUpdateWindow();
+    const cached = getCachedData();
+
+    let rawData = null;
+    let isFromCache = false;
+    let dataTimestamp = Date.now();
+
+    // 判斷是否使用快取
+    if (!forceRefresh && !isLive && isCacheValid(cached)) {
+        rawData = cached.data;
+        isFromCache = true;
+        dataTimestamp = cached.timestamp;
+        console.log('⚡ [JOINJO] 命中本機快取，免發送 API 請求 (快取建立於: ' + new Date(cached.timestamp).toLocaleString() + ')');
+    } else {
+        $('body').addClass('loading-view');
+        $status.text(isLive ? '2:15 PM 盤後結算即時更新中…' : '資料載入中…');
+
+        try {
+            rawData = await $.getJSON(API);
+            if (!rawData || !rawData.ok) {
+                throw new Error((rawData && rawData.message) || '未知錯誤');
+            }
+            setCachedData(rawData);
+            lastFetchTimestamp = Date.now();
+            dataTimestamp = lastFetchTimestamp;
+            console.log('🌐 [JOINJO] 已自 API 獲取最新數據並寫入快取');
+        } catch (err) {
+            console.error('🌐 [JOINJO] API 請求失敗:', err);
+            // 異常容錯降級：若網路連線中斷但已有舊快取可用，改用舊快取避免頁面空白
+            if (cached && cached.data) {
+                console.warn('⚠️ [JOINJO] 網路請求失敗，改以舊快取數據降級呈現');
+                rawData = cached.data;
+                isFromCache = true;
+                dataTimestamp = cached.timestamp;
+            } else {
+                $status.text('錯誤：' + (err.message || '未知錯誤'));
+                return;
+            }
+        }
+    }
 
     try {
-        $status.text('資料載入中…');
-        const rawData = await $.getJSON(API);
-        if (!rawData.ok) { $status.text('錯誤：' + (rawData.message || '未知錯誤')); return; }
+        renderDashboard(rawData, isFromCache, dataTimestamp);
+    } catch (renderErr) {
+        console.error('渲染儀表板發生錯誤:', renderErr);
+        $status.text('渲染錯誤：' + renderErr.message);
+    }
+}
 
-        // 渲染市場指數看板
-        if (rawData.marketStatus && typeof renderMarketSummary === 'function') {
-            renderMarketSummary(rawData.marketStatus);
-        }
+/**
+ * 渲染全站儀表板數據
+ */
+function renderDashboard(rawData, isFromCache, dataTimestamp) {
+    const $holdingsTable = $('#current-holdings .data-table');
+    const $status = $('p.results');
 
-        // 渲染外部數據 (匯率、期貨)
-        if (typeof renderExternalData === 'function') {
-            renderExternalData();
-        }
+    // 渲染市場指數看板
+    if (rawData.marketStatus && typeof renderMarketSummary === 'function') {
+        renderMarketSummary(rawData.marketStatus);
+    }
 
-        // 將新版 API 的資料結構映射為原先程式預期的格式
-        // 由於新 API 的 dailyTrades 和 strongSectors 預設為倒序(最新在前)，在此反轉回正序以配合原程式的計算邏輯
-        const data = {
+    // 渲染外部數據 (匯率、期貨)
+    if (typeof renderExternalData === 'function') {
+        renderExternalData(!isFromCache);
+    }
+
+    // 將新版 API 的資料結構映射為原先程式預期的格式
+    // 由於新 API 的 dailyTrades 和 strongSectors 預設為倒序(最新在前)，在此反轉回正序以配合原程式的計算邏輯
+    const data = {
             todayHoldings: (rawData.todayHoldings || []).map(item => ({
                 sheetName: item.stockInfo || item.sheetName,
                 avgEntry: item.avgPrice || item.avgEntry,
@@ -78,6 +190,7 @@ $(async function () {
         todayHoldings.forEach(item => {
             const { sheetName, avgEntry, quantity, currentPrice, rate, firstEntryDate } = item;
             const numQty = Number(quantity) || 0;
+            const numShares = numQty * 1000; // 1張 = 1000股
             const numRate = parseFloat(rate) || 0;
             const numAvgEntry = parseFloat(avgEntry) || 0;
             const numCurrentPrice = parseFloat(currentPrice) || 0;
@@ -85,7 +198,7 @@ $(async function () {
             const $tr = $('<div class="table-row"/>').attr({
                 'data-price': currentPrice,
                 'data-rate': numRate,
-                'data-qty': numQty
+                'data-qty': numShares
             });
 
             if (!isNaN(numRate) && numRate < 0) { $tr.addClass('down'); }
@@ -106,17 +219,17 @@ $(async function () {
             }
             $daysCell.append($daysBadge).appendTo($tr);
 
-            // 進場均價與進場數量 (套用手機版隱藏 class)
+            // 進場均價與進場股數 (套用手機版隱藏 class)
             $('<div class="table-cell hide-on-mobile"/>').append(numAvgEntry).appendTo($tr);
-            $('<div class="table-cell hide-on-mobile"/>').append(numQty).appendTo($tr);
+            $('<div class="table-cell hide-on-mobile"/>').append(numShares.toLocaleString()).appendTo($tr);
 
             $('<div class="table-cell"/>').append(numCurrentPrice).appendTo($tr);
 
             // 針對報酬率獨立上色：若為負數則強制使用紅色
-            const $rateCell = $('<div class="table-cell"/>').append(numRate + '%');
-            if (numRate < 0) {
-                $rateCell.css('color', 'var(--danger-color)');
-            }
+            const $rateCell = $('<div class="table-cell"/>');
+            const ratePillClass = numRate < 0 ? 'rate-pill rate-down' : 'rate-pill rate-up';
+            const rateSign = numRate > 0 ? '+' : '';
+            $('<span/>').addClass(ratePillClass).text(rateSign + numRate + '%').appendTo($rateCell);
             $rateCell.appendTo($tr);
 
             $holdingsTable.find('.table-body').append($tr);
@@ -337,7 +450,13 @@ $(async function () {
                 $('<div class="table-cell"/>').text(time).appendTo($tr);
                 $('<div class="table-cell"/>').text(sheetName).appendTo($tr);
                 $('<div class="table-cell"/>').text(entryDisplay).appendTo($tr);
-                $('<div class="table-cell"/>').text(benefitDisplay).appendTo($tr);
+
+                const $soldRateCell = $('<div class="table-cell"/>');
+                const soldPillClass = numRate < 0 ? 'rate-pill rate-down' : 'rate-pill rate-up';
+                const soldSign = (numRate > 0 && Number(benefit) > 0) ? '+' : '';
+                const benefitText = `${soldSign}${Math.round(benefit).toLocaleString()} (${numRate}%)`;
+                $('<span/>').addClass(soldPillClass).text(benefitText).appendTo($soldRateCell);
+                $soldRateCell.appendTo($tr);
 
                 $soldTable.find('.table-body').append($tr);
             });
@@ -474,34 +593,158 @@ $(async function () {
                 $table.find('.table-body').append($tr);
             });
         };
-        // --- 渲染強勢類股推薦表格 ---
-        const renderStrongTable = (selector, strongData) => {
-            const $table = $(selector);
-            $table.find('.table-body').empty(); // 清空舊資料
+        // --- 渲染強勢類股推薦卡片 (Slot-Style Stock Grid - 橫向捲軸卡片) ---
+        const renderStrongCards = (containerSelector, strongData) => {
+            const $container = $(containerSelector);
+            $container.empty();
 
             if (!strongData || strongData.length === 0) {
-                $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無強勢類股推薦</div></div>');
+                $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#151C24] border border-white/10 rounded-2xl">今日無強勢類股推薦</div>');
                 return;
             }
 
             // 取得資料中最後一個日期（即最新推薦）
             const latestDate = strongData[strongData.length - 1].date;
+            const items = strongData.filter(item => item.date === latestDate);
 
-            strongData.filter(item => item.date === latestDate).forEach(item => {
-                const $tr = $('<div class="table-row"/>');
-                $('<div class="table-cell"/>').text(item.date).appendTo($tr);
-                $('<div class="table-cell"/>').text(item.sectorName).css('font-weight', '700').appendTo($tr);
-                $('<div class="table-cell"/>').text(item.strengthScore).appendTo($tr);
-                $table.find('.table-body').append($tr);
+            if (items.length === 0) {
+                $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#151C24] border border-white/10 rounded-2xl">今日無強勢類股推薦</div>');
+                return;
+            }
+
+            // 準備隨機不重複的背景圖池 (img/card-bg-1.jpg ~ img/card-bg-10.jpg)
+            const getShuffledBgList = (count) => {
+                const totalBgs = 10;
+                const result = [];
+                let pool = [];
+                for (let i = 0; i < count; i++) {
+                    if (pool.length === 0) {
+                        pool = Array.from({ length: totalBgs }, (_, idx) => `img/card-bg-${idx + 1}.jpg`);
+                        for (let j = pool.length - 1; j > 0; j--) {
+                            const k = Math.floor(Math.random() * (j + 1));
+                            [pool[j], pool[k]] = [pool[k], pool[j]];
+                        }
+                    }
+                    result.push(pool.pop());
+                }
+                return result;
+            };
+
+            const bgList = getShuffledBgList(items.length);
+
+            items.forEach((item, index) => {
+                const bgImage = bgList[index] || 'img/card-bg-1.jpg';
+                const rawName = (item.sectorName || '').trim();
+                const parts = rawName.split(/\s+/);
+                const stockName = parts[0] || '強勢指標';
+                const stockCode = parts.length > 1 ? parts.slice(1).join(' ') : '';
+                const scoreNum = parseFloat(item.strengthScore) || 0;
+                const scoreDisplay = !isNaN(scoreNum) ? scoreNum.toFixed(2) : (item.strengthScore || '-');
+
+                const $card = $(`
+                    <div class="strong-stock-card relative rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between transition-colors duration-200 hover:border-[#00E701] flex-shrink-0 cursor-pointer" 
+                         style="background: url('${bgImage}') top center / cover no-repeat;"
+                         data-stock="${stockName}" data-code="${stockCode}" title="點擊查看「${stockName}」情報">
+                      
+                      <!-- 上半部視覺留白區 (展現金牛晶片主視覺) -->
+                      <div class="h-24 sm:h-28 w-full"></div>
+
+                      <!-- 下半部純文字排版區 (純背景黑漸層，無模糊) -->
+                      <div class="p-3.5 sm:p-4 pt-5 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col items-center text-center">
+                        
+                        <!-- 1. 股票代碼：增加背景模糊，維持原本底色 -->
+                        <span class="inline-flex items-center text-[10px] sm:text-[11px] font-black font-mono px-2.5 py-0.5 rounded-md tracking-wider bg-amber-500/10 backdrop-blur-md text-[#FFB800] border border-amber-500/30 shadow-[0_0_8px_rgba(255,184,0,0.25)]"
+                              style="backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+                          ${stockCode || 'TW'}
+                        </span>
+
+                        <!-- 2. 股票名：置中，大字 Neon 綠呈現大氣感 -->
+                        <h3 class="text-2xl sm:text-3xl font-black text-[#00E701] drop-shadow-[0_0_16px_rgba(0,231,1,0.6)] tracking-wide my-1">
+                          ${stockName}
+                        </h3>
+
+                        <!-- 3. 股價：置中，移除日期，字體放大 -->
+                        <div class="text-base sm:text-lg font-mono font-bold text-slate-200 tracking-wider text-center mt-0.5">
+                          ${scoreDisplay}
+                        </div>
+
+                      </div>
+                    </div>
+                `);
+
+                $container.append($card);
             });
+        };
+        const renderStrongTable = (selector, strongData) => {
+            renderStrongCards('#today-strong-cards', strongData);
         };
 
         // --- 執行渲染 ---
         renderSellTable('#today-sell .data-table', dailyTrades, getTodayString());
         renderBuyTable('#today-buy .data-table', dailyTrades, getTodayString());
-        // 從 API 回傳的 strongSectors 欄位抓取資料
+        // 從 API 回傳的 strongSectors 欄位抓取資料渲染為卡片
         const strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
-        renderStrongTable('#today-strong .data-table', strongStocks);
+        renderStrongCards('#today-strong-cards', strongStocks);
+
+        // 綁定橫向捲軸左右按鈕
+        $('#today-strong-prev').off('click').on('click', function () {
+            const $scroll = $('.strong-cards-scroll');
+            $scroll.animate({ scrollLeft: $scroll.scrollLeft() - 220 }, 250);
+            if (window.sounds) window.sounds.playClick();
+        });
+        $('#today-strong-next').off('click').on('click', function () {
+            const $scroll = $('.strong-cards-scroll');
+            $scroll.animate({ scrollLeft: $scroll.scrollLeft() + 220 }, 250);
+            if (window.sounds) window.sounds.playClick();
+        });
+
+        // 支援滑鼠按住拖曳滑動
+        const scrollEl = document.querySelector('.strong-cards-scroll');
+        if (scrollEl) {
+            let isDown = false;
+            let startX;
+            let initialScrollLeft;
+            $(scrollEl).off('mousedown').on('mousedown', function (e) {
+                if ($(e.target).closest('button').length) return;
+                isDown = true;
+                $(this).css('cursor', 'grabbing');
+                startX = e.pageX - this.offsetLeft;
+                initialScrollLeft = this.scrollLeft;
+            });
+            $(window).off('mouseup.strongScroll').on('mouseup.strongScroll', function () {
+                if (isDown) {
+                    isDown = false;
+                    $('.strong-cards-scroll').css('cursor', '');
+                }
+            });
+            $(scrollEl).off('mousemove').on('mousemove', function (e) {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - this.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                this.scrollLeft = initialScrollLeft - walk;
+            });
+        }
+
+        // 點擊卡片快速搜尋個股
+        $(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function () {
+            const stockName = $(this).data('stock');
+            const stockCode = $(this).data('code');
+            const target = stockName || stockCode;
+
+            if (window.sounds) window.sounds.playWin();
+
+            if (target) {
+                $('#stock-search-input').val(target);
+                $('#stock-search-btn').trigger('click');
+                const $targetSection = $('#stock-search-input');
+                if ($targetSection.length) {
+                    $('html, body').animate({
+                        scrollTop: Math.max(0, $targetSection.offset().top - 120)
+                    }, 350);
+                }
+            }
+        });
 
 
         // --- 搜尋功能邏輯 ---
@@ -562,19 +805,49 @@ $(async function () {
             if (e.which === 13) { $('#stock-search-btn').click(); }
         });
 
-        //載入完成後動作
+        // 載入完成後動作
         $status.text('載入完成');
-        //顯示更新時間
+        // 顯示更新時間與快取狀態
         const $updateTime = $('.data-update-time');
-        $updateTime.text(getLastUpdateLabel());
+        $updateTime.html(getLastUpdateLabel(dataTimestamp, isFromCache));
+        $updateTime
+            .css('cursor', 'pointer')
+            .attr('title', '每日 14:15 ~ 14:30 自動即時更新；其餘時段啟用本機快取。\n點擊可手動強制重新連線更新數據。')
+            .off('click')
+            .on('click', function () {
+                console.log('🔄 [JOINJO] 使用者手動觸發強制更新');
+                loadStockData(true);
+            });
+
         setTimeout(() => {
             $('body').removeClass('loading-view');
-        }, 1000);
+        }, isFromCache ? 150 : 600);
+}
 
-    } catch (err) {
-        $status.text('請求失敗：' + err);
-        console.error(err);
-    }
+// --- 頁面初始化與排程定時監聽 ---
+$(async function () {
+    // 首次進入頁面載入數據 (自動判斷快取有效性)
+    await loadStockData(false);
+
+    // --- 背景即時更新排程 (14:15 PM ~ 14:30 PM 監聽) ---
+    setInterval(() => {
+        const now = new Date();
+        if (isLiveUpdateWindow(now)) {
+            // 處於 14:15 ~ 14:30 即時區間內，若距離上次拉取已超過 3 分鐘，自動重新抓取
+            if (Date.now() - lastFetchTimestamp >= 3 * 60 * 1000) {
+                console.log('⏰ [JOINJO] 進入 14:15 ~ 14:30 即時區間，排程自動抓取最新數據...');
+                loadStockData(true);
+            }
+        }
+    }, 60 * 1000);
+
+    // 當使用者從其他分頁切回本頁面時，若處於即時區間且超過 2 分鐘未更新，自動重抓
+    $(window).on('focus', function () {
+        if (isLiveUpdateWindow() && (Date.now() - lastFetchTimestamp >= 2 * 60 * 1000)) {
+            console.log('👀 [JOINJO] 視窗重新聚焦且處於即時更新時段，自動刷新數據...');
+            loadStockData(true);
+        }
+    });
 });
 
 // 排序功能 (點擊 header cell 觸發)
@@ -588,8 +861,8 @@ $(document).on('click', '#current-holdings .table-header .table-cell', function 
     $(this).addClass(isAsc ? 'sort-asc' : 'sort-desc');
 
     rows.sort((a, b) => {
-        let valA = $(a).children('.table-cell').eq(index).text().replace('%', '');
-        let valB = $(b).children('.table-cell').eq(index).text().replace('%', '');
+        let valA = $(a).children('.table-cell').eq(index).text().replace(/[%,\s]/g, '');
+        let valB = $(b).children('.table-cell').eq(index).text().replace(/[%,\s]/g, '');
         return isAsc ? (valA - valB || valA.localeCompare(valB)) : (valB - valA || valB.localeCompare(valA));
     });
     $table.find('.table-body').append(rows);
@@ -738,13 +1011,13 @@ $(function () {
 });
 
 
-// --- 工具函式：計算最後更新時間 (每天 14:15) ---
-function getLastUpdateLabel() {
+// --- 工具函式：計算最後更新時間與顯示標籤 ---
+function getLastUpdateLabel(timestamp, isFromCache) {
     const now = new Date();
     const updateTimeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 15, 0);
 
     let displayDate = new Date();
-    // 如果現在時間還沒到今天的 14:15，則顯示日期為昨天
+    // 如果現在時間還沒到今天的 14:15，則基準日期為昨天
     if (now < updateTimeToday) {
         displayDate.setDate(now.getDate() - 1);
     }
@@ -753,5 +1026,16 @@ function getLastUpdateLabel() {
     const m = String(displayDate.getMonth() + 1).padStart(2, '0');
     const d = String(displayDate.getDate()).padStart(2, '0');
 
-    return `最後更新：${y}-${m}-${d} 14:15`;
+    if (isLiveUpdateWindow(now)) {
+        const fetchDate = timestamp ? new Date(timestamp) : now;
+        const hh = String(fetchDate.getHours()).padStart(2, '0');
+        const mm = String(fetchDate.getMinutes()).padStart(2, '0');
+        return `即時數據：${y}-${m}-${d} ${hh}:${mm} <span style="color:#00E701; font-weight:800; text-shadow:0 0 8px rgba(0,231,1,0.6);">● LIVE</span>`;
+    }
+
+    const tag = isFromCache
+        ? `<span style="color:#38bdf8; font-weight:700;" title="自本機快取快速載入 (每日 14:15 ~ 14:30 自動即時更新)">[⚡已快取]</span>`
+        : `<span style="color:#00E701; font-weight:700;">[🟢已更新]</span>`;
+
+    return `最後更新：${y}-${m}-${d} 14:15 ${tag}`;
 }

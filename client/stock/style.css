@@ -1,20 +1,25 @@
-/* --- CSS Reset & Variables --- */
+/* ==========================================================================
+   JOINJO 股票數據平台 - Casino Online Betting Style System
+   Theme: Obsidian Black (#0A0F14) + Electric Neon Green (#00E701) + Cyber Gold (#FFB800) + Neon Red (#FF3366)
+   ========================================================================== */
+
 :root {
-    --bg-color: #171721;
-    --card-bg: #1e1e2a;
-    --bg-gradient: radial-gradient(at 0% 100%, hsla(220, 80%, 20%, 0.2) 0px, transparent 50%),
-        radial-gradient(at 98% 0%, hsla(280, 80%, 20%, 0.2) 0px, transparent 50%);
-    --border-color: #b4b7c81f;
-    --border-hover: #393940;
-    --text-main: #fcfcfc;
-    --text-muted: #848490;
-    --text-dim: #5f5f69;
-    --accent-color: #4c6ef5;
-    --accent-glow: rgba(76, 110, 245, 0.3);
-    --success-color: #22c55e;
-    --danger-color: #ef4444;
+    --bg-color: #0A0F14;
+    --bg-surface: #0D1117;
+    --card-bg: #151C24;
+    --card-hover: #1A232E;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(0, 231, 1, 0.35);
+    --border-gold: rgba(255, 184, 0, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --accent-color: #FFB800;
+    --accent-glow: rgba(255, 184, 0, 0.35);
+    --success-color: #00E701;
+    --danger-color: #FF3366;
     --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-mono: "Roboto Mono", "Fira Code", "Courier New", monospace;
+    --font-mono: "JetBrains Mono", "Roboto Mono", "Fira Code", monospace;
 }
 
 * {
@@ -23,1184 +28,1053 @@
 
 body {
     margin: 0;
-    padding: 12px;
+    padding: 0;
     font-family: var(--font-family);
     background-color: var(--bg-color);
-    background-image: var(--bg-gradient);
     color: var(--text-main);
-    background-attachment: fixed;
     line-height: 1.6;
     font-variant-numeric: tabular-nums;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
 }
 
-h1,
-h2,
-h3,
-h4,
-p {
-    margin: 0;
-}
-
-.container {
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
-/* --- Header --- */
-#header {
-    display: flex;
-    /* 保持 flex 佈局 */
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 24px;
-    /* 增加與下方內容的間距 */
-    padding-bottom: 16px;
-}
-
-#header h1 {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: normal;
-    text-shadow: none;
-    text-transform: none;
-    /* Mercury 風格不使用大寫 */
-    display: flex;
-    align-items: center;
-}
-
-#header p {
-    display: none;
-    /* 在 Mercury 風格中隱藏副標題，讓標題更簡潔 */
-}
-
-.version-badge {
-    color: var(--text-muted);
-    border: 1px solid var(--border-color);
-    background-color: var(--card-bg);
-    font-family: var(--font-mono);
-    font-weight: 500;
-    margin-left: 16px;
-}
-
-.data-update-time {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-/* Theme Toggle Button */
-.theme-toggle-btn {
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    border-radius: 8px;
-    /* 更大的圓角 */
-    padding: 8px;
-}
-
-.theme-toggle-btn:hover {
-    color: var(--text-main);
-    border-color: var(--border-hover);
-    background-color: var(--card-bg);
-}
-
-/* --- Search Section --- */
-#search-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: relative;
-    z-index: 20;
-    text-transform: none;
-    /* 避免繼承標題的大寫設定 */
-    letter-spacing: normal;
-    font-weight: normal;
-}
-
-.search-bar {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-#stock-search-input {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    font-family: var(--font-family);
-    font-size: 14px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 300px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-}
-
-#stock-search-input:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-#stock-search-btn {
-    background: var(--accent-color);
-    color: var(--text-main);
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 9px 16px;
-    /* 配合輸入框高度 */
-    border-radius: 8px;
-    text-transform: none;
-    letter-spacing: normal;
-    transition: background-color 0.2s;
-    white-space: nowrap;
-}
-
-#stock-search-btn:hover {
-    background-color: var(--accent-color);
-}
-
-#stock-search-result {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    margin-top: 12px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 16px;
-    font-size: 14px;
-    display: none;
-}
-
-/* --- Market Summary --- */
-#market-summary-section {
-    display: none;
-    /* 預設隱藏，等資料載入後由 JS 顯示 */
-}
-
-.market-summary-wrapper {
-    display: grid;
-    /* 桌面版固定為 2:1 欄位 */
-    grid-template-columns: 3fr 1fr;
-    gap: 12px;
-}
-
-.market-summary-wrapper h3 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    color: var(--text-main);
-    font-size: 14px;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-/* --- Market Summary Gauge --- */
-.market-gauge-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.market-gauge-labels {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.gauge-label {
-    display: flex;
-    flex-direction: column;
-}
-
-.gauge-label.left {
-    align-items: flex-start;
-}
-
-.gauge-label.center {
-    align-items: center;
-}
-
-.gauge-label.right {
-    align-items: flex-end;
-}
-
-.gauge-label span {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-}
-
-.gauge-label b {
-    font-size: 16px;
-    font-family: var(--font-mono);
-    color: var(--text-main);
-}
-
-.gauge-label.left b {
-    color: var(--success-color);
-}
-
-.gauge-label.right b {
-    color: var(--danger-color);
-}
-
-.gauge-label.center b {
-    font-size: 20px;
-    color: var(--accent-color);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-}
-
-.market-gauge-bar {
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, rgba(0, 255, 157, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 51, 102, 0.15) 100%);
-    border-radius: 4px;
-    position: relative;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* 左右兩側的白圓點 (前低 / 前高) */
-.market-gauge-bar::before,
-.market-gauge-bar::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background-color: #fff;
-    border-radius: 50%;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
-}
-
-.market-gauge-bar::before {
-    left: -4px;
-}
-
-.market-gauge-bar::after {
-    right: -4px;
-}
-
-.gauge-fill {
-    height: 100%;
-    /* 雷射拖尾漸層 */
-    background: linear-gradient(90deg, transparent 0%, rgba(0, 240, 255, 0.4) 100%);
-    width: 0%;
-    /* JS 動態控制 */
-    border-radius: 4px;
-    position: relative;
-    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* 帶有機械回彈的過場動畫 */
-    z-index: 2;
-    /* 確保今日藍點蓋過背景白點 */
-}
-
-/* 今日位置的藍圓點 */
-.gauge-fill::after {
-    content: '';
-    position: absolute;
-    right: -6px;
-    /* 稍微變大，微調置中 */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    background-color: var(--accent-color);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-color);
-    -webkit-animation: pulse-glow 2s infinite alternate;
-    animation: pulse-glow 2s infinite alternate;
-}
-
-/* --- 呼吸燈發光動畫 --- */
-@-webkit-keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
-        transform: translateY(-50%) scale(0.9);
-    }
-
-    100% {
-        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color), 0 0 30px rgba(0, 240, 255, 0.6);
-        transform: translateY(-50%) scale(1.2);
-    }
-}
-
-@keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
-        transform: translateY(-50%) scale(0.9);
-    }
-
-    100% {
-        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color), 0 0 30px rgba(0, 240, 255, 0.6);
-        transform: translateY(-50%) scale(1.2);
-    }
-}
-
-.operations-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-}
-
-.operation-group .group-title {
-    margin-top: 0;
-    margin-bottom: 8px;
-    color: var(--text-main);
-    font-size: 15px;
-}
-
-.countdown-timer {
-    font-size: 11px;
-    font-family: var(--font-mono);
-    font-weight: normal;
-    color: var(--text-muted);
-}
-
-.repeated-tables-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-}
-
-/* --- Summary Cards / Personal Operations --- */
-#summary-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
-
-#summary-cards-qty {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
-
-#summary-cards>.card,
-#summary-cards-qty>.card,
-#summary-cards-overall>.card {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-#summary-cards>.card,
-#summary-cards-qty>.card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#summary-cards>.card span,
-#summary-cards-qty>.card span,
-#summary-cards>.card h4,
-#summary-cards-qty>.card h4 {
-    font-size: 12px;
-    margin-bottom: 0;
-}
-
-/* --- Bar Chart Summary (New) --- */
-.bar-chart-summary {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    /* 增加內邊距，避免內容貼邊 */
-    gap: 16px;
-}
-
-.summary-total {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.summary-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-bottom: 12px;
-}
-
-.bar-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.bar-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.bar-labels .bar-value {
-    font-weight: 600;
-    font-family: var(--font-mono);
-    color: var(--text-main);
-}
-
-.bar-track {
-    width: 100%;
-    height: 6px;
-    background-color: var(--border-color);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.5s ease-out;
-}
-
-.bar-fill.profit {
-    background-color: var(--success-color);
-}
-
-.bar-fill.loss {
-    background-color: var(--danger-color);
-}
-
-/* --- Donut Chart in Overall Summary --- */
-#summary-cards-overall {
-    /* 移除舊的甜甜圈圖 flex 佈局，恢復為預設的塊級顯示 */
-    padding: 0;
-    /* 移除上下 padding，讓內容與卡片邊緣對齊 */
-}
-
-.donut-chart-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-
-.donut-chart {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: var(--border-color);
-    /* Fallback color */
-    flex-shrink: 0;
-}
-
-.donut-chart-center {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    right: 6px;
-    bottom: 6px;
-    background: var(--bg-color);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.chart-center-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-}
-
-.donut-chart-center h4 {
-    font-size: 16px;
-}
-
-.donut-chart-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 12px;
-    font-family: var(--font-mono);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.legend-color {
-    width: 10px;
-    height: 10px;
-    border-radius: 4px;
-}
-
-.legend-label {
-    color: var(--text-muted);
-    flex-grow: 1;
-}
-
-.legend-value {
-    font-weight: bold;
-    color: var(--text-main);
-}
-
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-radius: 12px;
-    /* 更大的圓角 */
-    padding: 16px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.2s, background-color 0.2s;
-}
-
-.card:hover {
-    border-color: var(--border-hover);
-    background-color: var(--card-bg);
-    /* Hover 時背景色不變 */
-}
-
-
-.card span {
-    display: flex;
-    gap: 4px;
-    color: var(--text-muted);
-    font-size: 12px;
-    text-transform: none;
-    letter-spacing: normal;
-}
-
-.card h4 {
-    font-family: var(--font-family);
-    font-size: 18px;
-    font-weight: 600;
-}
-
-/* --- Sections --- */
-.section-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--text-main);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 18px;
-    text-transform: none;
-    letter-spacing: normal;
-}
-
-.month-profit-loss {
-    text-transform: none;
-    letter-spacing: normal;
-    color: var(--text-muted);
-    font-size: 12px;
-}
-
-.month-profit-loss span {
-    color: var(--success-color);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    margin-left: 6px;
-}
-
-.title-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.period-select {
-    background-color: var(--card-bg);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-family: var(--font-family);
-    padding: 4px 8px;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.period-select:hover,
-.period-select:focus {
-    border-color: var(--accent-color);
-}
-
-/* --- Year Tabs --- */
-.year-tabs {
-    display: inline-flex;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 2px;
-}
-
-.year-tab {
-    background: transparent;
-    color: var(--text-muted);
-    border: 0;
-    padding: 4px 16px;
-    font-size: 13px;
-    font-family: var(--font-family);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    outline: none;
-    border-radius: 4px;
-}
-
-.year-tab.active {
-    background-color: #393940;
-    /* 使用更亮的灰色作為 active 狀態 */
-    color: var(--text-main);
-    font-weight: 600;
-}
-
-.year-tab:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* --- Mobile Tabs (手機版主內容切換) --- */
-.mobile-tabs {
-    display: none;
-    /* 預設在桌機版隱藏 */
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.mobile-tab {
-    flex: 1;
-    background: transparent;
-    color: var(--text-muted);
-    border: none;
-    padding: 10px 0;
-    font-size: 15px;
-    font-family: var(--font-family);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    outline: none;
-}
-
-.mobile-tab.active {
-    background-color: var(--accent-color);
-    color: #000;
-}
-
-.mobile-tab:hover:not(.active) {
-    color: var(--text-main);
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-h3 {
-    font-size: 15px;
-    margin: 16px 0 8px 0;
-    color: var(--text-main);
-}
-
-/* --- Data Tables (Div based) --- */
-.data-table {
-    background-color: transparent;
-    /* Let parent card handle background */
-    border: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.table-row,
-.table-header {
-    display: grid;
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.2s;
-}
-
-.table-row:last-child {
-    border-bottom: none;
-}
-
-.table-header {
-    background-color: transparent;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.table-row:hover {
-    background-color: var(--card-bg);
-    /* 與卡片背景色一致 */
-}
-
-#current-holdings .table-row,
-#sold-stocks .table-row,
-#today-suggestions .table-row {
-    position: relative;
-    transition: all 0.2s ease-out;
-    border-radius: 0px;
-}
-
-#current-holdings .table-row:hover,
-#sold-stocks .table-row:hover,
-#today-suggestions .table-row:hover {
-    background-color: #b4b7c814;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
-#current-holdings .table-body,
-#sold-stocks .table-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.table-cell {
-    padding: 12px 8px;
-    font-size: 13px;
-    font-family: var(--mc-font-mono);
-    display: flex;
-    align-items: center;
-}
-
-.table-header .table-cell {
-    color: var(--text-muted);
-    font-family: var(--font-family);
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: none;
-    gap: 4px;
-}
-
-#current-holdings .table-header .table-cell {
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.sort-icon {
-    width: 16px;
-    height: 16px;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-}
-
-.table-header .table-cell:hover .sort-icon {
-    opacity: 1;
-}
-
-/* --- Grid Columns Settings --- */
-#today-buy .table-row,
-#today-buy .table-header,
-#today-sell .table-row,
-#today-sell .table-header,
-#today-strong .table-row,
-#today-strong .table-header {
-    grid-template-columns: 1fr 1.5fr 1fr;
-}
-
-#current-holdings .table-row,
-#current-holdings .table-header {
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-#sold-stocks .table-row,
-#sold-stocks .table-header {
-    grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr;
-}
-
-#top-profit-trades .table-row,
-#top-profit-trades .table-header,
-#top-loss-trades .table-row,
-#top-loss-trades .table-header {
-    grid-template-columns: 1.5fr 1fr 1fr;
-}
-
-/* 特定數據欄位置右 */
-#today-buy .table-cell:nth-child(3),
-#today-sell .table-cell:nth-child(3),
-#today-strong .table-cell:nth-child(3),
-#current-holdings .table-cell:nth-child(2),
-#current-holdings .table-cell:nth-child(3),
-#current-holdings .table-cell:nth-child(4),
-#current-holdings .table-cell:nth-child(5),
-#current-holdings .table-cell:nth-child(6),
-#sold-stocks .table-cell:nth-child(3),
-/* 進場均價 */
-#sold-stocks .table-cell:nth-child(4),
-/* 獲利金額 */
-#top-profit-trades .table-cell:nth-child(2),
-#top-profit-trades .table-cell:nth-child(3),
-#top-loss-trades .table-cell:nth-child(2),
-#top-loss-trades .table-cell:nth-child(3) {
-    justify-content: flex-end;
-    text-align: right;
-}
-
-/* --- Dynamic Colors --- */
-.table-row .table-cell:last-child {
-    color: var(--success-color);
-    font-weight: 600;
-}
-
-.table-row.down .table-cell:last-child {
-    color: var(--danger-color);
-}
-
-/* Mercury Theme Specifics for table cells */
-#sold-stocks .table-cell:nth-child(4) {
-    color: var(--success-color);
-}
-
-#sold-stocks .table-row.down .table-cell:nth-child(4) {
-    color: var(--danger-color);
-}
-
-#top-profit-trades .table-cell:nth-child(3) {
-    color: var(--success-color);
-}
-
-#top-loss-trades .table-cell:nth-child(3) {
-    color: var(--danger-color);
-}
-
-/* 美金匯率卡片內容置中 */
-#usdtwd-card-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-/* --- View All Button --- */
-.table-row.hidden-row {
-    display: none !important;
-}
-
-.view-all-btn {
-    text-align: center;
-    color: var(--text-muted);
-    cursor: pointer;
-    background-color: transparent;
-    border-top: 1px solid var(--border-color);
-    text-transform: none;
-    padding: 8px;
-}
-
-.view-all-btn:hover {
-    background-color: rgba(0, 240, 255, 0.08);
-}
-
-/* --- Scrollbar styling for TradingView look --- */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #0A0F14;
 }
-
 ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
+    background: #1F2937;
+    border-radius: 9999px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--border-hover);
+    background: #00E701;
 }
 
-/* --- Loading State --- */
-body.loading-view {
-    overflow: hidden;
-}
-
+/* --- Loading View (Casino Loading Screen) --- */
 .status-wrapper {
-    display: none;
     position: fixed;
     inset: 0;
-    /* Use inset for cleaner code */
-    background: rgba(16, 16, 20, 0.8);
-    z-index: 50;
+    z-index: 99999;
+    background: #0A0F14;
+    display: none;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    color: var(--text-muted);
+    transition: opacity 0.4s ease-out;
 }
 
 body.loading-view .status-wrapper {
     display: flex;
 }
 
-/* --- Desktop View (> 768px) --- */
-@media (min-width: 769px) {
-
-    .today-tables-wrapper {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-    }
-
-    .today-tables-wrapper h3 {
-        margin-top: 0;
-    }
-
-    /* 強制強勢類股在桌機版時 4 個並排 */
-    #strong-sectors-section .market-summary-wrapper {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+body.loading-view > *:not(.status-wrapper) {
+    display: none !important;
 }
 
-/* --- Tablet View (對應 HTML 內 1024px 的隱藏邏輯) --- */
-@media (max-width: 1024px) {
-
-    #current-holdings .table-row,
-    #current-holdings .table-header {
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    }
+.status-wrapper .loading-icon {
+    width: 52px;
+    height: 52px;
+    color: #00E701;
+    filter: drop-shadow(0 0 16px rgba(0, 231, 1, 0.7));
+    animation: casinoPulse 1.5s infinite ease-in-out;
 }
 
-/* --- RWD --- */
-@media (max-width: 768px) {
-    .data-table {
-        overflow-x: auto;
-    }
-
-    .table-cell {
-        padding: 8px 6px;
-        font-size: 11px;
-    }
-
-    .operations-wrapper {
-        gap: 20px;
-        /* 手機版時稍微增加兩個策略區塊的上下間距 */
-    }
-
-    .table-header .table-cell {
-        font-size: 9px;
-    }
-
-    .section-title {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    #personal-operations-section .section-title {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    /* 手機版搜尋區塊滿版 */
-    #search-section {
-        position: relative;
-        top: auto;
-        right: auto;
-        width: 100%;
-        align-items: stretch;
-    }
-
-    #stock-search-input {
-        max-width: none;
-        flex: 1;
-        /* 讓輸入框自動填滿剩餘寬度 */
-    }
-
-    #stock-search-result {
-        width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    #header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .header-right {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .data-update-time {
-        text-align: left;
-    }
-
-    /* 手機版市場指數區塊改為垂直排列並置中 */
-    .market-summary-wrapper h3 {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .market-summary-wrapper {
-        grid-template-columns: 1fr;
-        /* 手機版改為單欄 */
-    }
-
-    .gauge-label span {
-        font-size: 9px;
-    }
-
-    .gauge-label b {
-        font-size: 14px;
-    }
-
-    .gauge-label.center b {
-        font-size: 18px;
-    }
-
-    #summary-cards,
-    #summary-cards-qty,
-    #summary-cards-overall {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* 手機版時讓第三張卡片 (IRR) 橫跨兩欄 */
-    #summary-cards>.card:last-child,
-    #summary-cards-qty>.card:last-child {
-        grid-column: 1 / -1;
-    }
+@keyframes casinoPulse {
+    0%, 100% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.08); opacity: 1; }
 }
 
-/* --- 極小螢幕手機版 --- */
-@media (max-width: 480px) {
-
-    #summary-cards,
-    #summary-cards-qty,
-    #summary-cards-overall {
-        grid-template-columns: 1fr;
-    }
+.status-wrapper p.results {
+    font-family: var(--font-mono);
+    color: #00E701;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 18px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 12px rgba(0, 231, 1, 0.5);
 }
 
-/* --- Footer --- */
-#footer {
-    border-top: 1px solid var(--border-color);
-    color: var(--text-dim);
-    font-family: var(--font-family);
-    margin-top: 48px;
-}
-
-/* --- Tooltip --- */
-.tooltip {
-    position: absolute;
+/* --- Common Card Styling --- */
+.card {
     background-color: var(--card-bg);
-    color: var(--text-main);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    line-height: 1.5;
-    max-width: 200px;
-    z-index: 100;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(5px);
-    transition: opacity 0.2s, transform 0.2s;
-    pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tooltip.visible {
-    opacity: 1;
-    visibility: visible;
+.card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* --- Header Live Status / Data Update Badge --- */
+.data-update-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #151C24;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #cbd5e1;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    user-select: none;
+    white-space: nowrap;
+}
+
+.data-update-time:hover {
+    border-color: rgba(0, 231, 1, 0.45);
+    background: #1A232E;
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(0, 231, 1, 0.18);
+    transform: translateY(-1px);
+}
+
+.data-update-time:active {
     transform: translateY(0);
 }
 
-/* Light theme tooltip styles */
-.light-theme .tooltip {
-    background: var(--card-bg);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border);
-    color: var(--text-main);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-}
-
-.indicator-item {
+/* --- Search Section & Popup Result --- */
+#search-section {
     position: relative;
-    cursor: help;
 }
 
-/* --- 表格行懸停效果 (Refactored) --- */
-/* 1. 設定目標區塊的 table-body 為 flex 容器，以啟用 gap */
-#current-holdings .table-body,
-#sold-stocks .table-body,
-#today-suggestions .table-body {
+#stock-search-result {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #151C24;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px 42px 16px 16px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 231, 1, 0.15);
+    font-size: 13px;
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    color: var(--text-main);
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-sizing: border-box;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#stock-search-result .search-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+#stock-search-result .search-close-btn:hover {
+    background: #FF3366;
+    border-color: #FF3366;
+    color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+}
+
+/* --- Tables & Lists (Casino Betting Slip Aesthetic) --- */
+.data-table {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.inner-table {
+    margin-top: 0;
+}
+
+.table-header {
+    display: grid !important;
+    width: 100%;
+    background-color: #0D1117;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94A3B8;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0;
+}
+
+.table-body {
     display: flex;
     flex-direction: column;
-    gap: 0px;
-    /* 增加行之間的間距 */
+    width: 100%;
 }
 
-/* 2. 設定目標區塊的 table-row 預設樣式 */
-#current-holdings .table-row,
-#sold-stocks .table-row,
-#today-suggestions .table-row {
-    position: relative;
-    transition: all 0.2s ease-out;
-    border: 1px solid transparent;
-    border-bottom-color: var(--border-color);
-    border-radius: 0px;
-}
-
-/* 3. 統一定義懸停時的浮動卡片效果 */
-/* 移除 #today-buy 內表格行的底線 */
-#today-suggestions .table-row,
-#today-suggestions .table-header {
-    border-color: transparent;
-}
-
-/* --- 持有天數顏色標記 --- */
-.holding-days-badge {
-    padding: 3px 8px;
-    border-radius: 6px;
+.table-row {
+    display: grid !important;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-    text-align: center;
-    min-width: 40px;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row:hover {
+    background-color: rgba(255, 255, 255, 0.035);
+}
+
+.table-cell {
+    padding: 12px 10px;
+    display: flex !important;
+    align-items: center;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #CBD5E1;
+}
+
+.table-header .table-cell {
+    padding: 11px 10px;
+    color: #94A3B8;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease;
+}
+
+.table-header .table-cell:hover {
+    color: #FFFFFF;
+}
+
+.sort-icon {
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.table-header .table-cell:hover .sort-icon {
+    opacity: 0.8;
+}
+
+.table-cell.sort-asc .sort-icon,
+.table-cell.sort-desc .sort-icon {
+    opacity: 1;
+    color: var(--success-color);
+}
+
+/* Specific Grid Columns for Current Holdings (Active Bets) */
+#current-holdings .table-header,
+#current-holdings .table-row:not(.hidden-row) {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) !important;
+}
+
+#current-holdings .table-cell:nth-child(1) {
+    font-family: var(--font-family);
+    font-weight: 700;
+    color: #FFFFFF;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#current-holdings .table-cell:nth-child(2),
+#current-holdings .table-cell:nth-child(3),
+#current-holdings .table-cell:nth-child(4),
+#current-holdings .table-cell:nth-child(5),
+#current-holdings .table-cell:nth-child(6) {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+#current-holdings .table-cell:nth-child(5) {
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+/* Specific Grid Columns for Sold Stocks (Settled Bets) */
+#sold-stocks .table-header,
+#sold-stocks .table-row:not(.hidden-row) {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1.4fr) minmax(0, 1.8fr) !important;
+}
+
+#sold-stocks .table-cell:nth-child(1) {
+    color: #94A3B8;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#sold-stocks .table-cell:nth-child(2) {
+    font-weight: 700;
+    color: #FFFFFF;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#sold-stocks .table-cell:nth-child(3),
+#sold-stocks .table-cell:nth-child(4) {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+#sold-stocks .table-cell:nth-child(3) {
+    color: #CBD5E1;
+}
+
+/* Casino Rate Pills (Capsules inside cells) */
+.rate-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.rate-pill.rate-up {
+    background: rgba(0, 231, 1, 0.12);
+    color: #00E701;
+    border: 1px solid rgba(0, 231, 1, 0.35);
+    box-shadow: 0 0 8px rgba(0, 231, 1, 0.15);
+}
+
+.rate-pill.rate-down {
+    background: rgba(255, 51, 102, 0.12);
+    color: #FF3366;
+    border: 1px solid rgba(255, 51, 102, 0.35);
+    box-shadow: 0 0 8px rgba(255, 51, 102, 0.15);
+}
+
+/* Specific Grid Columns for Today's Tables */
+#today-buy .table-header,
+#today-buy .table-row:not(.hidden-row),
+#today-sell .table-header,
+#today-sell .table-row:not(.hidden-row) {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr) !important;
+}
+
+#today-buy .table-cell,
+#today-sell .table-cell {
+    padding: 10px 10px;
+    font-size: 11px;
+}
+
+#today-buy .table-cell:nth-child(1),
+#today-sell .table-cell:nth-child(1) {
+    color: #94A3B8;
+}
+
+#today-buy .table-cell:nth-child(2),
+#today-sell .table-cell:nth-child(2) {
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+#today-buy .table-cell:last-child,
+#today-sell .table-cell:last-child {
+    justify-content: flex-end;
+    text-align: right;
+    font-weight: 800;
+    color: var(--success-color);
+}
+
+#today-sell .table-cell:last-child {
+    color: var(--accent-color);
+}
+
+/* Specific Grid Columns for Top Profit Trades */
+#top-profit-trades .table-header,
+#top-profit-trades .table-row:not(.hidden-row) {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.2fr) !important;
+}
+
+#top-profit-trades .table-cell {
+    padding: 9px 8px;
+    font-size: 11px;
+}
+
+#top-profit-trades .table-cell:nth-child(1) {
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+#top-profit-trades .table-cell:nth-child(2) {
+    justify-content: flex-end;
+    text-align: right;
+    color: #94A3B8;
+}
+
+#top-profit-trades .table-cell:nth-child(3) {
+    justify-content: flex-end;
+    text-align: right;
+    font-weight: 800;
+    color: #00E701;
+}
+
+/* Holding Days Badges */
+.holding-days-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .holding-days-short {
-    background-color: rgba(132, 132, 144, 0.15);
-    color: #c0c2ce;
+    background: rgba(0, 231, 1, 0.12);
+    color: #00E701;
+    border: 1px solid rgba(0, 231, 1, 0.3);
+    box-shadow: 0 0 8px rgba(0, 231, 1, 0.2);
 }
 
 .holding-days-medium {
-    background-color: rgba(76, 110, 245, 0.15);
-    color: #91a7ff;
+    background: rgba(255, 184, 0, 0.12);
+    color: #FFB800;
+    border: 1px solid rgba(255, 184, 0, 0.3);
 }
 
 .holding-days-long {
-    background-color: rgba(233, 179, 13, 0.15);
-    color: #f5d36b;
+    background: rgba(148, 163, 184, 0.12);
+    color: #94A3B8;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* View all button */
+.view-all-btn {
+    padding: 12px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #00E701;
+    background: rgba(0, 231, 1, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+
+.view-all-btn:hover {
+    background: rgba(0, 231, 1, 0.12);
+    box-shadow: inset 0 0 15px rgba(0, 231, 1, 0.15);
+}
+
+#sold-stocks .view-all-btn {
+    color: #FFB800;
+    background: rgba(255, 184, 0, 0.04);
+}
+
+#sold-stocks .view-all-btn:hover {
+    background: rgba(255, 184, 0, 0.12);
+    box-shadow: inset 0 0 15px rgba(255, 184, 0, 0.15);
+}
+
+.hidden-row,
+.table-row.hidden-row,
+#current-holdings .table-row.hidden-row,
+#sold-stocks .table-row.hidden-row {
+    display: none !important;
+}
+
+/* --- Operation Summary & Progress Tracks --- */
+.bar-chart-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.summary-total h4 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 900;
+    font-family: var(--font-mono);
+    color: #00E701;
+    text-shadow: 0 0 15px rgba(0, 231, 1, 0.4);
+}
+
+.summary-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.bar-labels .bar-value {
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.bar-track {
+    width: 100%;
+    height: 8px;
+    background: #0A0F14;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-fill.profit {
+    background: linear-gradient(90deg, #00E701, #22C55E);
+    box-shadow: 0 0 10px rgba(0, 231, 1, 0.6);
+}
+
+.bar-fill.loss {
+    background: linear-gradient(90deg, #FF3366, #EF4444);
+    box-shadow: 0 0 10px rgba(255, 51, 102, 0.6);
+}
+
+/* --- Year Tabs --- */
+.year-tabs {
+    display: flex;
+    gap: 4px;
+    background: #0D1117;
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.year-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.year-tab:hover {
+    color: #FFFFFF;
+}
+
+.year-tab.active {
+    background: rgba(0, 231, 1, 0.15);
+    color: #00E701;
+    border: 1px solid rgba(0, 231, 1, 0.4);
+    box-shadow: 0 0 10px rgba(0, 231, 1, 0.3);
+}
+
+/* --- Period Select & Month Profit/Loss --- */
+.title-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.period-select {
+    background: #0D1117;
+    color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    outline: none;
+    cursor: pointer;
+}
+
+.period-select:focus {
+    border-color: #00E701;
+}
+
+.month-profit-loss {
+    font-size: 13px;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.month-profit-loss span {
+    color: #00E701;
+    margin-left: 4px;
+    text-shadow: 0 0 10px rgba(0, 231, 1, 0.35);
+}
+
+/* --- Market Verdict & Gauge Card --- */
+#market-summary-grid {
+    height: 360px;
+}
+
+@media (max-width: 1023px) {
+    #market-summary-grid {
+        height: auto;
+        min-height: 360px;
+    }
+}
+
+.market-verdict-card {
+    background: linear-gradient(135deg, #151C24 0%, #111720 100%);
+    border: 1px solid rgba(0, 231, 1, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 231, 1, 0.1);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.market-verdict-body {
+    height: 100%;
+    min-height: 0;
+}
+
+.verdict-left-col {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+}
+
+#verdict-right-col,
+.verdict-right-col {
+    min-width: 0;
+    min-height: 0;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    height: calc(100% + 40px);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#verdict-right-col img,
+.verdict-right-col img {
+    object-position: bottom;
+}
+
+.verdict-kv-wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 230px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0A0F14;
+    position: relative;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.7);
+}
+
+.verdict-kv-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.verdict-kv-wrapper:hover img {
+    transform: scale(1.04);
+}
+
+.verdict-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.verdict-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.verdict-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.verdict-label {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    font-family: var(--font-mono);
+    color: #00E701;
+    text-shadow: 0 0 16px rgba(0, 231, 1, 0.5);
+}
+
+.verdict-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 22px;
+    padding-bottom: 2px;
+}
+
+.verdict-bars .bar {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.verdict-bars .bar-1 { width: 5px; height: 9px; }
+.verdict-bars .bar-2 { width: 7px; height: 13px; }
+.verdict-bars .bar-3 { width: 9px; height: 17px; }
+.verdict-bars .bar-4 { width: 11px; height: 22px; }
+
+.verdict-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.verdict-right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    width: 100%;
+}
+
+.indicators-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.indicators-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 10px;
+}
+
+.indicator-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    justify-content: flex-start;
+    transition: all 0.2s ease;
+}
+
+.indicator-item:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(21, 28, 36, 0.95);
+}
+
+.indicator-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+}
+
+.indicator-item .name {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.indicator-item .value {
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: auto;
+}
+
+/* Gauge Bar & Slider */
+.market-gauge-section {
+    width: 100%;
+}
+
+.market-gauge-track {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: #0D1117;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 1.5px;
+}
+
+.gauge-fill {
+    height: 100%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #22C55E 0%, #FFB800 65%, #00E701 100%);
+    box-shadow: 0 0 12px rgba(0, 231, 1, 0.4);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.gauge-pointer-pin {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #00E701;
+    box-shadow: 0 0 10px #00E701, 0 0 18px rgba(0, 231, 1, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.gauge-pointer-pin::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #00E701;
+}
+
+.market-gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.gauge-label span {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.gauge-label b {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.gauge-label.center b {
+    color: #00E701;
+    font-size: 16px;
+    text-shadow: 0 0 10px rgba(0, 231, 1, 0.5);
+}
+
+/* Currency Card */
+#usdtwd-card {
+    position: relative;
+    overflow: hidden;
+    background: #151C24;
+    border: 1px solid rgba(255, 184, 0, 0.25);
+    box-shadow: 0 10px 35px rgba(255, 184, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+#usdtwd-card:hover {
+    border-color: rgba(255, 184, 0, 0.45);
+    box-shadow: 0 10px 35px rgba(255, 184, 0, 0.15);
+}
+
+#usdtwd-card-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+}
+
+/* Today Suggestions Grid (Buy / Sell) */
+.today-tables-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* Strong Stocks Horizontal Scroll (隱藏滑動軸) */
+.strong-cards-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge */
+}
+
+.strong-cards-scroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* Strong Stock Card Sizing & Background (縮小 1/3 緊湊版型) */
+.strong-stock-card {
+    flex: 0 0 185px;
+    width: 185px;
+    background-image: url('img/card-bg.jpg');
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 640px) {
+    .strong-stock-card {
+        flex: 0 0 195px;
+        width: 195px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .strong-stock-card {
+        flex: 0 0 205px;
+        width: 205px;
+    }
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+
+    #current-holdings .table-row:not(.hidden-row),
+    #current-holdings .table-header {
+        display: grid !important;
+        width: 100%;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-cell {
+        padding: 9px 8px;
+        font-size: 11px;
+    }
+
+    .table-header .table-cell {
+        padding: 8px 8px;
+        font-size: 10px;
+    }
+
+    .rate-pill {
+        font-size: 10px;
+        padding: 2px 7px;
+    }
+
+    .today-tables-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .market-verdict-body {
+        grid-template-columns: 1fr;
+    }
+
+    .verdict-kv-wrapper {
+        min-height: 180px;
+    }
 }

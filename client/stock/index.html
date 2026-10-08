@@ -2,610 +2,784 @@
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#06090f">
-    <title>JOINJO 股票數據平台 v2.0</title>
-    <script src="jquery-3.7.0.min.js"></script>
-    <script src="stock.js"></script>
-    <script src="market-charts.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* === 佈局：將選單與主內容放在同一行 === */
-        .content-wrapper {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0F14">
+  <title>JOINJO 股票數據平台 - Casino Online Betting Edition</title>
 
-        #personal-operations-section {
-            width: 280px;
-            flex-shrink: 0;
-        }
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
 
-        .main-content {
-            flex: 1;
-            min-width: 0;
-            width: 100%;
-            /* 避免 flex item 溢出 */
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            position: relative;
-        }
-
-        /* 確保側邊欄內部的群組垂直排列 */
-        #personal-operations-section .operations-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        /* 為了側邊選單卡片排版，將原本是橫向的卡片群組改為直向堆疊 */
-        #summary-cards,
-        #summary-cards-qty {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* 覆寫行內可能存在的 grid-column 設定 */
-        .operation-group[style] {
-            grid-column: unset !important;
-        }
-
-        /* 響應式：小螢幕時改為垂直排列 */
-        @media (max-width: 1024px) {
-            .content-wrapper {
-                flex-direction: column;
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            casino: {
+              black: '#0A0F14',
+              surface: '#0D1117',
+              card: '#151C24',
+              cardHover: '#1A232E',
+              neonGreen: '#00E701',
+              neonGreenDark: '#00B801',
+              cyberGold: '#FFB800',
+              goldAmber: '#F59E0B',
+              neonRed: '#FF3366',
+              cyberCyan: '#00F0FF',
             }
-
-            #personal-operations-section {
-                width: 100%;
-            }
-
-            /* 平板/手機版時恢復為橫向網格排列 (交由 style.css 接手 RWD) */
-            #personal-operations-section .operations-wrapper,
-            #summary-cards,
-            #summary-cards-qty {
-                display: grid;
-            }
-
-            /* === 手機版 Tab 切換邏輯 === */
-            .mobile-tabs {
-                display: flex;
-            }
-
-            .content-wrapper.show-personal .main-content {
-                display: none !important;
-            }
-
-            .content-wrapper.show-main #personal-operations-section {
-                display: none !important;
-            }
-
-            /* 手機版隱藏指定欄位 */
-            .hide-on-mobile {
-                display: none !important;
-            }
+          },
+          boxShadow: {
+            'neon-green': '0 0 25px rgba(0, 231, 1, 0.45)',
+            'neon-gold': '0 0 25px rgba(255, 184, 0, 0.45)',
+            'neon-red': '0 0 20px rgba(255, 51, 102, 0.4)',
+          }
         }
+      }
+    }
+  </script>
 
-        /* === 市場多空判斷卡片 === */
-        .market-verdict-card {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
+  <!-- Stylesheets & Scripts -->
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery-3.7.0.min.js"></script>
+  <script src="stock.js"></script>
+  <script src="market-charts.js"></script>
 
-        .market-verdict-bottom {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            align-items: center;
-        }
+  <style>
+    /* Mobile tab logic */
+    @media (max-width: 1024px) {
+      .mobile-tabs {
+        display: flex;
+      }
 
-        .verdict-left {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+      .content-wrapper.show-personal .main-content {
+        display: none !important;
+      }
 
-        .verdict-title {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-muted);
-            font-size: 11px;
-        }
+      .content-wrapper.show-main #personal-operations-section {
+        display: none !important;
+      }
 
-        .verdict-main {
-            display: flex;
-            align-items: flex-end;
-            gap: 16px;
-        }
+      .hide-on-mobile {
+        display: none !important;
+      }
+    }
 
-        .verdict-label {
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .verdict-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            height: 20px;
-            padding-bottom: 2px;
-        }
-
-        .verdict-bars .bar {
-            background-color: var(--border-color);
-            /* 預設淡灰色 */
-            border-radius: 2px;
-            transition: background-color 0.3s;
-        }
-
-        .verdict-bars .bar-1 {
-            width: 4px;
-            height: 8px;
-        }
-
-        .verdict-bars .bar-2 {
-            width: 6px;
-            height: 12px;
-        }
-
-        .verdict-bars .bar-3 {
-            width: 8px;
-            height: 16px;
-        }
-
-        .verdict-bars .bar-4 {
-            width: 10px;
-            height: 20px;
-        }
-
-        .verdict-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .verdict-right {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            text-align: right;
-        }
-
-        .indicators-title {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .indicators-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 16px;
-        }
-
-        .indicator-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            justify-content: flex-end;
-        }
-
-        .indicator-text {
-            display: contents;
-            /* 讓子元素直接繼承父層的 flex 排列 */
-        }
-
-        .indicator-item .value {
-            font-size: 12px;
-        }
-
-        .indicator-item .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .indicator-item .name {
-            opacity: 0.7;
-            margin-right: 4px;
-        }
-
-        @media (max-width: 600px) {
-            .market-verdict-bottom {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .verdict-right {
-                width: 100%;
-                text-align: left;
-            }
-        }
-
-        /* Loading 動畫樣式 */
-        .status-wrapper .loading-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 16px;
-        }
-    </style>
+    @media (min-width: 1025px) {
+      .mobile-tabs {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 
-<body class="loading-view">
-    <div class="status-wrapper">
-        <svg class="loading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <circle cx="18" cy="12" r="0" fill="currentColor">
-                <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
-                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
-                    values="0;2;0;0" />
-            </circle>
-            <circle cx="12" cy="12" r="0" fill="currentColor">
-                <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
-                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
-                    values="0;2;0;0" />
-            </circle>
-            <circle cx="6" cy="12" r="0" fill="currentColor">
-                <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
-                    keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
-                    values="0;2;0;0" />
-            </circle>
-        </svg>
-        <p class="results">資料載入中…</p>
+<body class="loading-view bg-[#0A0F14] text-slate-100 selection:bg-[#00E701] selection:text-black">
+  <!-- =========================================================================
+         0. CASINO LOADING SCREEN (Smoothly fades when data loads)
+    ========================================================================= -->
+  <div class="status-wrapper">
+    <svg class="loading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2">
+      <circle cx="12" cy="12" r="10" stroke-opacity="0.2"></circle>
+      <path d="M12 2a10 10 0 0 1 10 10" stroke="#00E701" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s"
+          repeatCount="indefinite" />
+      </path>
+    </svg>
+    <p class="results">JOINJO 量化彩池數據庫連線中…</p>
+  </div>
+
+  <!-- =========================================================================
+         1. GLOBAL TOPBAR (Stake / Roobet Casino VIP Header)
+    ========================================================================= -->
+  <header id="header"
+    class="sticky top-0 z-50 h-16 bg-[#0D1117]/95 backdrop-blur-xl border-b border-white/10 px-4 lg:px-8 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
+    <!-- Left: Logo & Brand -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <div class="flex items-center gap-3 cursor-pointer group">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-700 p-[1.5px] shadow-[0_0_15px_rgba(255,184,0,0.35)] group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#0A0F14] rounded-[10px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#FFB800] drop-shadow-[0_0_8px_rgba(255,184,0,0.8)]"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <h1
+              class="text-xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 font-mono m-0 p-0 leading-none">
+              JOINJO
+            </h1>
+            <span
+              class="version-badge px-1.5 py-0.5 text-[9px] font-black rounded tracking-widest bg-[#00E701]/10 text-[#00E701] border border-[#00E701]/40 shadow-[0_0_10px_rgba(0,231,1,0.3)] leading-tight">
+              BET PRO v2.0
+            </span>
+          </div>
+          <p class="text-[10px] text-slate-400 font-medium m-0 mt-1 tracking-wide">量化高勝率彩池平台</p>
+        </div>
+      </div>
     </div>
 
-    <div class="container wrap">
-        <header id="header">
-            <div>
-                <h1>JOINJO 股票數據平台 <span class="version-badge">v2.0</span></h1>
-                <p>即時追蹤投資組合</p>
-            </div>
-            <div class="header-right">
-                <div class="data-update-time"></div>
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="切換主題">
-                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 14.975q1.225 0 2.1-.888t.875-2.112t-.875-2.1t-2.1-.875t-2.1.875t-.875 2.1t.875 2.113t2.1.887M12 17q-2.075 0-3.537-1.463T7 12t1.463-3.537T12 7t3.538 1.463T17 12t-1.462 3.538T12 17m-1-14v3h2V3zM3 13v-2h3v2zm15 0v-2h3v2zm-6 8v-3h2v3zm-5.85-9.75l-2.125-2.125l1.4-1.4l2.125 2.125zM17.6 7.8L15.475 5.7l1.4-1.4l2.125 2.125zM6.4 17.6l-1.4-1.4l2.125-2.125l1.4 1.4zM17.6 17.6l-2.125-2.125l1.4-1.4l2.125 2.125z" />
-                    </svg>
-                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        style="display: none;">
-                        <path fill="currentColor"
-                            d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21m0-2q2.2 0 3.95-1.212t2.4-3.088q-.65.1-1.35.1q-3.025 0-5.162-2.137T9.7 7.5q0-.7.1-1.35q-1.875.65-3.088 2.4T5 12q0 2.9 2.05 4.95T12 19" />
-                    </svg>
-                </button>
-            </div>
-        </header>
+    <!-- Center: Market Switch Chips & Search -->
+    <div class="hidden md:flex items-center gap-3.5 flex-1 max-w-2xl lg:max-w-3xl mx-6 lg:mx-10">
+      <!-- Market Pills -->
+      <div class="flex items-center p-1 bg-[#151C24] rounded-xl border border-white/10 shadow-inner flex-shrink-0">
+        <button type="button"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-[#00E701]/15 text-[#00E701] border border-[#00E701]/40 shadow-[0_0_10px_rgba(0,231,1,0.25)]">
+          <span class="w-2 h-2 rounded-full bg-[#00E701] animate-pulse shadow-[0_0_6px_#00E701]"></span>
+          台股現貨
+        </button>
+        <button type="button"
+          class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-white/5">
+          美股期貨
+          <span class="text-[9px] px-1 py-0.2 rounded bg-white/5 border border-white/10 text-slate-500 font-mono">SOON</span>
+        </button>
+      </div>
 
-        <div class="content-wrapper show-personal">
-            <!-- 手機版主內容切換標籤 -->
-            <div class="mobile-tabs">
-                <button class="mobile-tab active" data-target="personal">操作績效</button>
-                <button class="mobile-tab" data-target="main">市場動態</button>
-            </div>
+      <!-- Search Section -->
+      <div id="search-section" class="relative flex-1 group">
+        <div class="search-bar relative w-full flex items-center">
+          <svg
+            class="w-4 h-4 text-slate-500 group-focus-within:text-[#00E701] absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors pointer-events-none"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input type="text" id="stock-search-input" placeholder="搜尋股票代碼或名稱 (例: 2330 台積電、2408 南亞科)..."
+            class="w-full bg-[#151C24] text-xs text-white placeholder-slate-500 pl-10 pr-28 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-[#00E701]/60 focus:ring-2 focus:ring-[#00E701]/20 focus:bg-[#18212B] transition-all font-mono" />
+          <div class="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            <span class="hidden lg:inline-block text-[10px] text-slate-500 font-mono px-1.5 py-0.5 rounded bg-white/5 border border-white/10 pointer-events-none">↵ Enter</span>
+            <button id="stock-search-btn"
+              class="px-3 py-1.5 rounded-lg bg-[#00E701] text-black font-black text-xs hover:brightness-110 active:scale-95 transition-all shadow-[0_0_10px_rgba(0,231,1,0.35)] flex items-center gap-1">
+              搜尋
+            </button>
+          </div>
+        </div>
+        <div id="stock-search-result" style="display: none;"></div>
+      </div>
+    </div>
 
-            <!-- 個人操作績效 (與主內容同一行) -->
-            <div id="personal-operations-section">
-                <h2 class="section-title">
-                    操作績效
-                    <div id="operations-year-tabs" class="year-tabs">
-                        <button class="year-tab" data-year="2025">2025</button>
-                        <button class="year-tab active" data-year="2026">2026</button>
+    <!-- Right: Live Update Status Pill & Trader Profile -->
+    <div class="flex items-center gap-3 lg:gap-4 flex-shrink-0">
+      <!-- Live Sync / Data Update Status Pill -->
+      <div class="data-update-time hidden sm:inline-flex"
+        title="每日 14:15 ~ 14:30 自動即時更新；點擊可強制重新整理數據">
+        <span class="text-slate-400">載入中...</span>
+      </div>
+
+      <!-- User Profile / VIP Trader Avatar -->
+      <div class="flex items-center gap-2.5 pl-2 lg:pl-3 border-l border-white/10">
+        <div class="relative cursor-pointer group">
+          <div
+            class="w-9 h-9 rounded-full overflow-hidden bg-white shadow-[0_0_10px_rgba(255,255,255,0.2)] flex items-center justify-center group-hover:scale-105 transition-all">
+            <img src="img/Bull_mascot_profile_avatar_design.png" alt="Avatar"
+              class="w-full h-full object-cover rounded-full" />
+          </div>
+        </div>
+        <div class="hidden xl:flex flex-col text-left">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-bold text-white tracking-wide">VIP TRADER</span>
+            <span
+              class="px-1 py-0.2 text-[9px] font-black font-mono rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">PRO</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">實戰操盤帳戶</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+         2. THREE-COLUMN CASINO BETTING LAYOUT
+    ========================================================================= -->
+  <div class="container-fluid min-h-[calc(100vh-64px)] flex overflow-hidden">
+    <!-- Content Wrapper -->
+    <div class="content-wrapper show-personal flex-1 flex w-full">
+      <!-- 手機版主內容切換標籤 -->
+      <div class="mobile-tabs w-full bg-[#0D1117] border-b border-white/10 p-2 gap-2">
+        <button
+          class="mobile-tab active flex-1 py-2 text-xs font-bold rounded-lg bg-[#00E701]/20 text-[#00E701] border border-[#00E701]/40"
+          data-target="personal">操作績效</button>
+        <button
+          class="mobile-tab flex-1 py-2 text-xs font-bold rounded-lg bg-[#151C24] text-slate-400 border border-white/5"
+          data-target="main">市場動態</button>
+      </div>
+
+      <!-- =====================================================================
+                 LEFT SIDEBAR: 操作績效與戰情選單 (Personal Operations Section)
+            ===================================================================== -->
+      <div id="personal-operations-section"
+        class="w-72 lg:w-80 shrink-0 bg-[#0D1117] border-r border-white/10 flex flex-col justify-between p-4 space-y-4 overflow-y-auto">
+        <div class="operations-wrapper space-y-4">
+          <!-- Quick Casino Lobby Nav Links -->
+          <div class="space-y-1">
+            <div class="px-2 py-1 text-slate-500 text-[11px] font-bold uppercase tracking-wider">戰術大廳導航</div>
+            <a href="#market-summary-section"
+              class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-[#151C24] transition-all">
+              <span class="flex items-center gap-2"><span>🎰</span> 戰情大廳 (Lobby)</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#FFB800] text-black font-black">HOT</span>
+            </a>
+            <a href="#today-suggestions"
+              class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-[#151C24] transition-all">
+              <span class="flex items-center gap-2"><span>🔥</span> 飆股輪盤 (Hot Picks)</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#00E701] text-black font-black">98%</span>
+            </a>
+            <a href="#current-holdings"
+              class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-[#151C24] transition-all">
+              <span class="flex items-center gap-2"><span>⚔️</span> 進場中戰局 (Active Bets)</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-emerald-400 font-bold">即時</span>
+            </a>
+            <a href="#sold-stocks"
+              class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-[#151C24] transition-all">
+              <span class="flex items-center gap-2"><span>📜</span> 已結算彩池 (Settled)</span>
+            </a>
+          </div>
+
+          <!-- 操作績效標題與年份 Tab -->
+          <div class="pt-2 border-t border-white/10">
+            <h2 class="section-title">
+              <span>操作績效</span>
+              <div id="operations-year-tabs" class="year-tabs">
+                <button class="year-tab" data-year="2025">2025</button>
+                <button class="year-tab active" data-year="2026">2026</button>
+              </div>
+            </h2>
+          </div>
+
+          <!-- 全年總獲利與正負獲利分布 (連動 stock.js) -->
+          <div class="operation-group rounded-2xl bg-[#151C24] border border-white/10 p-3.5 space-y-2 shadow-xl">
+            <div id="summary-cards-overall">
+              <div class="bar-chart-summary">
+                <div class="summary-total flex items-baseline justify-between">
+                  <span class="chart-center-label text-xs text-slate-400 font-medium"><span
+                      class="ops-year-label">2026</span> 總獲利</span>
+                  <h4 id="overall-total-profit"
+                    class="text-xl sm:text-2xl font-black font-mono text-[#00E701] drop-shadow-[0_0_10px_rgba(0,231,1,0.4)] m-0">
+                    -</h4>
+                </div>
+                <div class="summary-bars pt-2">
+                  <div class="bar-item">
+                    <div class="bar-labels">
+                      <span>正獲利次數</span>
+                      <span class="bar-value" id="overall-profit-count">-</span>
                     </div>
+                    <div class="bar-track">
+                      <div class="bar-fill profit" id="profit-bar" style="width: 0%;"></div>
+                    </div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-labels">
+                      <span>負獲利次數</span>
+                      <span class="bar-value" id="overall-loss-count">-</span>
+                    </div>
+                    <div class="bar-track">
+                      <div class="bar-fill loss" id="loss-bar" style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 單筆定額操作 ( 2000NT ) -->
+          <div class="operation-group rounded-2xl bg-[#151C24] border border-white/10 p-3.5 space-y-2 shadow-xl">
+            <h3 class="group-title text-amber-400">⚡ 單筆定額操作 ( 2000NT )</h3>
+            <div id="summary-cards" class="space-y-2">
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">已出場操作金額</span>
+                <h4 id="sold-investment-amount" class="text-white font-mono font-bold m-0">-</h4>
+              </div>
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">總獲利 / 獲利率</span>
+                <h4 id="sell-month-profit-loss" class="text-[#00E701] font-mono font-black m-0">-</h4>
+              </div>
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">年化報酬率 (IRR)</span>
+                <h4 id="sell-month-irr" class="text-amber-400 font-mono font-black m-0">-</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 單筆定量操作 ( 20股 ) -->
+          <div class="operation-group rounded-2xl bg-[#151C24] border border-white/10 p-3.5 space-y-2 shadow-xl">
+            <h3 class="group-title text-cyan-400">💎 單筆定量操作 ( 20股 )</h3>
+            <div id="summary-cards-qty" class="space-y-2">
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">已出場操作金額</span>
+                <h4 id="sold-investment-amount-qty" class="text-white font-mono font-bold m-0">-</h4>
+              </div>
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">總獲利 / 獲利率</span>
+                <h4 id="sell-month-profit-loss-qty" class="text-[#00E701] font-mono font-black m-0">-</h4>
+              </div>
+              <div
+                class="bg-[#0D1117] p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+                <span class="text-slate-400">年化報酬率 (IRR)</span>
+                <h4 id="sell-month-irr-qty" class="text-cyan-400 font-mono font-black m-0">-</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- 重複交易排行 Top 5 -->
+          <div id="repeated-trades-section">
+            <div class="repeated-tables-wrapper">
+              <div id="top-profit-trades"
+                class="rounded-2xl bg-[#151C24] border border-white/10 overflow-hidden shadow-xl">
+                <div class="p-3 border-b border-white/10 flex items-center justify-between">
+                  <h3 class="text-xs font-bold text-[#FFB800] m-0 flex items-center gap-1.5">
+                    <span>🏆</span> 重覆進場獲利 Top5
+                  </h3>
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold">TOP
+                    5</span>
+                </div>
+                <div class="overflow-x-auto">
+                  <div class="data-table inner-table">
+                    <div class="table-header">
+                      <div class="table-cell">股票名稱</div>
+                      <div class="table-cell">結算次數</div>
+                      <div class="table-cell">總獲利</div>
+                    </div>
+                    <div class="table-body"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 側邊欄底部狀態 -->
+        <div
+          class="p-3 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span>FEED LATENCY</span>
+          <span class="text-[#00E701] font-bold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#00E701] animate-ping"></span> 18 ms
+          </span>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+                 CENTER MAIN CONTENT: 主戰情展演區
+            ===================================================================== -->
+      <main class="main-content flex-1 overflow-y-auto px-4 lg:px-7 py-6 space-y-6">
+
+
+        <!-- =====================================================================
+                     B. 市場指數 (近20天) - ROULETTE SENTIMENT
+                ===================================================================== -->
+        <div id="market-summary-section" class="space-y-4">
+          <h2 class="section-title">
+            <span>市場指數 (近20天) // ROULETTE SENTIMENT</span>
+          </h2>
+          <div id="market-summary-grid" class="market-summary-wrapper grid grid-cols-1 lg:grid-cols-12 gap-5 lg:h-[360px]">
+            <!-- 多空判斷與指針卡片 -->
+            <div class="lg:col-span-8 card market-verdict-card h-full">
+              <div class="market-verdict-body grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 items-stretch h-full min-h-0">
+                <!-- 左半邊：ROULETTE SENTIMENT // 多空雷達儀表 -->
+                <div class="verdict-left-col flex flex-col justify-between h-full min-h-0">
+                  <!-- 頂部標題與主控燈號膠囊 -->
+                  <div class="flex items-center justify-between gap-2 flex-wrap">
+                    <div class="flex items-center gap-2">
+                      <div class="w-2.5 h-2.5 rounded-full bg-[#00E701] animate-ping flex-shrink-0"></div>
+                      <span class="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+                        ROULETTE SENTIMENT // 多空雷達儀表
+                      </span>
+                    </div>
+                    <span id="verdict-label"
+                      class="px-2.5 py-0.5 rounded-full text-[10px] font-black font-mono tracking-wide bg-[#00E701]/15 text-[#00E701] border border-[#00E701]/40 shadow-[0_0_10px_rgba(0,231,1,0.25)] flex items-center gap-1">
+                      多頭主控燈號 🟢
+                    </span>
+                  </div>
+
+                  <!-- 主數據：加權指數大字 + 動能乖離標籤 + 研判說明 -->
+                  <div class="space-y-1">
+                    <div class="flex items-baseline gap-3 flex-wrap">
+                      <span id="taiex-today"
+                        class="text-2xl sm:text-3xl lg:text-4xl font-black font-mono text-white tracking-tight drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]">
+                        -
+                      </span>
+                      <span id="taiex-bias-badge"
+                        class="text-xs sm:text-sm font-mono font-bold text-[#00E701] flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                        安全動能
+                      </span>
+                    </div>
+                    <p id="verdict-desc" class="text-xs text-slate-400 font-sans line-clamp-1 m-0">
+                      -
+                    </p>
+                  </div>
+
+                  <!-- 4 項 API 指標訊號網格 -->
+                  <div class="indicators-grid grid grid-cols-2 gap-2">
+                    <div class="indicator-item" id="ind-ma" data-tooltip="判斷目前股價相對於短期(5MA)和長期(60MA)均線的位置。">
+                      <span class="dot"></span>
+                      <span class="name">均線位階:</span>
+                      <span class="value">-</span>
+                    </div>
+                    <div class="indicator-item" id="ind-bias" data-tooltip="衡量股價偏離短期均線(5MA)的程度。">
+                      <span class="dot"></span>
+                      <span class="name">短線乖離:</span>
+                      <span class="value">-</span>
+                    </div>
+                    <div class="indicator-item" id="ind-macd" data-tooltip="判斷快慢線的交叉情況與柱狀體增減趨勢。">
+                      <span class="dot"></span>
+                      <span class="name">MACD動能:</span>
+                      <span class="value">-</span>
+                    </div>
+                    <div class="indicator-item" id="ind-bb" data-tooltip="判斷股價是否站穩布林通道中軌(20MA)之上。">
+                      <span class="dot"></span>
+                      <span class="name">中軌趨勢:</span>
+                      <span class="value">-</span>
+                    </div>
+                  </div>
+
+                  <!-- 多空雷達儀表刻度滑軌 -->
+                  <div class="market-gauge-section space-y-1.5">
+                    <div class="flex justify-between items-center text-xs font-mono font-bold">
+                      <span class="text-slate-400 text-[11px]">支撐: <span id="taiex-low" class="text-white">-</span></span>
+                      <span id="taiex-pos-label" class="text-[#00E701] text-[11px]">● 當前位置</span>
+                      <span class="text-[#FF3366] text-[11px]">壓力: <span id="taiex-high" class="text-white">-</span></span>
+                    </div>
+
+                    <div class="market-gauge-track relative w-full h-2.5 bg-[#0D1117] rounded-full border border-white/10 p-0.5">
+                      <div class="gauge-fill h-full rounded-full relative" id="taiex-gauge" style="width: 0%;">
+                        <div class="gauge-pointer-pin"></div>
+                      </div>
+                    </div>
+
+                    <div class="flex justify-between text-[10px] font-mono text-slate-500">
+                      <span>超跌恐慌 (0)</span>
+                      <span>中性平衡 (50)</span>
+                      <span class="text-[#00E701] font-bold">極度亢奮 (100)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 右半邊：放置 img/kv.png (貼上下邊緣，無背景色，圖片置下) -->
+                <div id="verdict-right-col" class="verdict-right-col -my-5 h-[calc(100%+40px)] flex items-end justify-center min-h-0 overflow-hidden">
+                  <div class="w-full h-full relative flex items-end justify-center group pointer-events-none">
+                    <img src="img/kv.png" alt="JOINJO 量化戰情主圖"
+                      class="h-full w-full object-contain object-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 美金匯率卡片 (背景圖 usd-bg.jpg，位置 right bottom，hover 不放大) -->
+            <div id="usdtwd-card" class="lg:col-span-4 card relative overflow-hidden h-full p-5 lg:p-6 flex flex-col justify-start items-start text-left">
+              <!-- 背景圖 (usd-bg.jpg，位置 right bottom，hover 不放大) -->
+              <div class="absolute inset-0 bg-cover bg-no-repeat pointer-events-none"
+                style="background-image: url('img/usd-bg.jpg'); background-position: right bottom;"></div>
+
+              <!-- 左上角文字內容 (相對應 .market-verdict-body 格式) -->
+              <div id="usdtwd-card-content" class="relative z-10 w-full space-y-2">
+                <!-- 標題與即時標籤 -->
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping flex-shrink-0"></div>
+                    <span class="text-xs font-mono font-bold text-slate-400 tracking-wider uppercase">
+                      USD / TWD // 即時外匯
+                    </span>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black font-mono tracking-wide bg-amber-500/15 text-amber-400 border border-amber-500/40 shadow-[0_0_10px_rgba(255,184,0,0.25)] flex items-center gap-1">
+                    即時匯率 ⚡
+                  </span>
+                </div>
+
+                <!-- 匯率大字與貨幣標籤 -->
+                <div class="flex items-baseline gap-2.5 flex-wrap pt-1">
+                  <h4 id="usdtwd-rate"
+                    class="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-[#FFB800] tracking-tight drop-shadow-[0_0_16px_rgba(255,184,0,0.45)] m-0 leading-none">
+                    -
+                  </h4>
+                  <span class="text-xs font-mono font-bold text-amber-300/80 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    NTD
+                  </span>
+                </div>
+
+                <!-- 說明文字 -->
+                <p class="text-xs text-slate-400 font-sans leading-relaxed m-0">
+                  即時外匯流動性對照，避險資金動態參考
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================================
+                     C. 強勢類股推薦 (Slot-Style Stock Grid - Horizontal Scroll)
+                ===================================================================== -->
+        <div id="today-strong" class="space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h2 class="section-title !mb-0">
+              <span class="flex items-center gap-2">
+                <span>💎</span> 強勢類股推薦 // HOT SECTORS
+              </span>
+            </h2>
+            <div class="flex items-center gap-2 shrink-0">
+              <button id="today-strong-prev" type="button"
+                class="p-1.5 rounded-xl bg-[#151C24] hover:bg-[#1E2733] border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex items-center justify-center w-8 h-8"
+                title="向左捲動">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+              <button id="today-strong-next" type="button"
+                class="p-1.5 rounded-xl bg-[#151C24] hover:bg-[#1E2733] border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex items-center justify-center w-8 h-8"
+                title="向右捲動">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- 橫向卡片列表容器 (隱藏滑動軸) -->
+          <div class="strong-cards-scroll overflow-x-auto pb-1 pt-1 -mx-1 px-1">
+            <div id="today-strong-cards" class="flex gap-4 flex-nowrap min-w-full">
+              <!-- 由 JS renderStrongCards 動態生成卡片 -->
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================================
+                     D. 今日操作建議 (Hot Picks)
+                ===================================================================== -->
+        <div id="today-suggestions" class="space-y-4">
+          <h2 class="section-title">
+            <span>今日操作建議 // HOT PICKS</span>
+          </h2>
+          <div class="today-tables-wrapper">
+            <!-- 建議買進 -->
+            <div id="today-buy"
+              class="rounded-2xl bg-[#151C24] border border-emerald-500/30 overflow-hidden shadow-2xl hover:border-[#00E701] transition-all">
+              <div class="p-3.5 sm:p-4 border-b border-white/10 flex items-center justify-between">
+                <h3 class="text-xs sm:text-sm font-bold text-[#00E701] m-0 flex items-center gap-1.5">
+                  <span>🔥</span> 建議買進 (STRONG BUY)
+                </h3>
+                <span
+                  class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#00E701]/10 text-[#00E701] border border-[#00E701]/30 font-bold">高勝率</span>
+              </div>
+              <div class="overflow-x-auto">
+                <div class="data-table inner-table">
+                  <div class="table-header">
+                    <div class="table-cell">日期</div>
+                    <div class="table-cell">名稱</div>
+                    <div class="table-cell">買進價格</div>
+                  </div>
+                  <div class="table-body"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 建議賣出 -->
+            <div id="today-sell"
+              class="rounded-2xl bg-[#151C24] border border-amber-500/30 overflow-hidden shadow-2xl hover:border-amber-400 transition-all">
+              <div class="p-3.5 sm:p-4 border-b border-white/10 flex items-center justify-between">
+                <h3 class="text-xs sm:text-sm font-bold text-amber-400 m-0 flex items-center gap-1.5">
+                  <span>🎯</span> 建議賣出 (TAKE PROFIT)
+                </h3>
+                <span
+                  class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold">鎖利出場</span>
+              </div>
+              <div class="overflow-x-auto">
+                <div class="data-table inner-table">
+                  <div class="table-header">
+                    <div class="table-cell">日期</div>
+                    <div class="table-cell">名稱</div>
+                    <div class="table-cell">報酬率</div>
+                  </div>
+                  <div class="table-body"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================================
+                     D. 進場中股票 (Active Bets Table)
+                ===================================================================== -->
+        <div id="current-holdings" class="rounded-2xl bg-[#151C24] border border-white/10 overflow-hidden shadow-2xl">
+          <div class="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-2.5 rounded-xl bg-emerald-500/10 text-[#00E701] border border-emerald-500/20 flex items-center justify-center">
+                ⚔️
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-white flex items-center gap-2 m-0">
+                  進場中持倉戰績 (ACTIVE BETS)
+                  <span
+                    class="text-xs font-mono font-black px-2 py-0.5 rounded-full bg-[#00E701]/10 text-[#00E701] border border-[#00E701]/30">
+                    <span id="total-holding-count">持倉 <b class="text-[#00E701]">-</b> 檔全勝進行中</span>
+                  </span>
                 </h2>
-                <div class="operations-wrapper">
-
-                    <div class="operation-group" style="grid-column: 1 / -1;">
-                        <div id="summary-cards-overall" class="card">
-                            <div class="bar-chart-summary">
-                                <div class="summary-total">
-                                    <span class="chart-center-label"><span class="ops-year-label">2026</span> 總獲利</span>
-                                    <h4 id="overall-total-profit">-</h4>
-                                </div>
-                                <div class="summary-bars">
-                                    <div class="bar-item">
-                                        <div class="bar-labels">
-                                            <span>正獲利次數</span>
-                                            <span class="bar-value" id="overall-profit-count">-</span>
-                                        </div>
-                                        <div class="bar-track">
-                                            <div class="bar-fill profit" id="profit-bar" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar-labels">
-                                            <span>負獲利次數</span>
-                                            <span class="bar-value" id="overall-loss-count">-</span>
-                                        </div>
-                                        <div class="bar-track">
-                                            <div class="bar-fill loss" id="loss-bar" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="operation-group">
-                        <h3 class="group-title">單筆定額操作 ( 2000NT )</h3>
-                        <div id="summary-cards">
-                            <div class="card">
-                                <span>已出場操作金額</span>
-                                <h4 id="sold-investment-amount">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>總獲利金額 / 總獲利率</span>
-                                <h4 id="sell-month-profit-loss">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>年化報酬率 (IRR)</span>
-                                <h4 id="sell-month-irr">-</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="operation-group">
-                        <h3 class="group-title">單筆定量操作 ( 20股 )</h3>
-                        <div id="summary-cards-qty">
-                            <div class="card">
-                                <span>已出場操作金額</span>
-                                <h4 id="sold-investment-amount-qty">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>總獲利金額 / 總獲利率</span>
-                                <h4 id="sell-month-profit-loss-qty">-</h4>
-                            </div>
-                            <div class="card">
-                                <span>年化報酬率 (IRR)</span>
-                                <h4 id="sell-month-irr-qty">-</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 重複交易排行 -->
-                    <div id="repeated-trades-section">
-                        <div class="repeated-tables-wrapper">
-                            <div id="top-profit-trades" class="card">
-                                <h3 class="group-title">重覆進場獲利 Top5</h3>
-                                <div class="data-table inner-table">
-                                    <div class="table-header">
-                                        <div class="table-cell">股票名稱</div>
-                                        <div class="table-cell">結算次數</div>
-                                        <div class="table-cell">總獲利</div>
-                                    </div>
-                                    <div class="table-body"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <p class="text-xs text-slate-400 m-0 mt-0.5">即時盯盤與部位動態盈虧</p>
+              </div>
             </div>
+          </div>
 
-            <main class="main-content">
-                <!-- 搜尋區塊 -->
-                <div id="search-section">
-                    <div class="search-bar">
-                        <input type="text" id="stock-search-input" placeholder="輸入股票代碼或名稱搜尋...">
-                        <button id="stock-search-btn">搜尋</button>
-                    </div>
-                    <div id="stock-search-result"></div>
-                </div>
+          <div class="overflow-x-auto">
+            <div class="data-table inner-table w-full min-w-[580px]">
+              <div class="table-header">
+                <div class="table-cell">名稱<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+                <div class="table-cell">持有天數<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+                <div class="table-cell hide-on-mobile">進場均價<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+                <div class="table-cell hide-on-mobile">進場股數<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+                <div class="table-cell">目前價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+                <div class="table-cell">報酬率<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
+                  </svg></div>
+              </div>
+              <div class="table-body"></div>
+            </div>
+          </div>
+        </div>
 
-                <!-- 市場指數 (近20天) -->
-                <div id="market-summary-section">
-                    <h2 class="section-title">
-                        市場指數 (近20天)
-                    </h2>
-                    <div id="market-summary-grid" class="market-summary-wrapper">
-                        <div class="card market-verdict-card">
-                            <div class="market-verdict-bottom">
-                                <div class="verdict-left">
-                                    <div class="verdict-title">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                                        </svg>
-                                        <span>綜合多空研判結論</span>
-                                    </div>
-                                    <div class="verdict-main">
-                                        <div id="verdict-label" class="verdict-label">-</div>
-                                        <div class="verdict-bars" id="verdict-bars">
-                                            <div class="bar bar-1"></div>
-                                            <div class="bar bar-2"></div>
-                                            <div class="bar bar-3"></div>
-                                            <div class="bar bar-4"></div>
-                                        </div>
-                                    </div>
-                                    <div id="verdict-desc" class="verdict-desc">-</div>
-                                </div>
-                                <div class="verdict-right">
-                                    <div class="indicators-title">指標訊號</div>
-                                    <div class="indicators-grid">
-                                        <div class="indicator-item" id="ind-ma"
-                                            data-tooltip="判斷目前股價相對於短期(5MA)和長期(60MA)均線的位置。">
-                                            <span class="dot"></span>
-                                            <div class="indicator-text"><span class="name">均線位階</span><span
-                                                    class="value">-</span></div>
-                                        </div>
-                                        <div class="indicator-item" id="ind-bias"
-                                            data-tooltip="衡量股價偏離短期均線(5MA)的程度，判斷是否超買或超賣。">
-                                            <span class="dot"></span>
-                                            <div class="indicator-text"><span class="name">短線乖離</span><span
-                                                    class="value">-</span></div>
-                                        </div>
-                                        <div class="indicator-item" id="ind-macd"
-                                            data-tooltip="判斷快慢線(DIF/MACD)的交叉情況與柱狀體(OSC)的增減趨勢。">
-                                            <span class="dot"></span>
-                                            <div class="indicator-text"><span class="name">MACD動能</span><span
-                                                    class="value">-</span></div>
-                                        </div>
-                                        <div class="indicator-item" id="ind-bb"
-                                            data-tooltip="判斷股價是否站穩布林通道中軌(20MA)之上，以及通道的開合狀態。">
-                                            <span class="dot"></span>
-                                            <div class="indicator-text"><span class="name">中軌趨勢</span><span
-                                                    class="value">-</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- =====================================================================
+                     E. 已賣出股票 (Settled Bets Table)
+                ===================================================================== -->
+        <div id="sold-stocks" class="rounded-2xl bg-[#151C24] border border-white/10 overflow-hidden shadow-2xl">
+          <div
+            class="p-4 sm:p-5 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#FFB800]">
+                📜
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-white flex items-center gap-2 m-0">
+                  已結算彩池 (SETTLED BETS)
+                  <span
+                    class="text-xs font-mono font-black px-2 py-0.5 rounded-full bg-amber-500/10 text-[#FFB800] border border-amber-500/30">
+                    歷史結算
+                  </span>
+                </h2>
+                <p class="text-xs text-slate-400 m-0 mt-0.5">已結算交易紀錄與歷史獲利</p>
+              </div>
+            </div>
+            <div class="title-actions flex items-center gap-3">
+              <select id="sold-period-select"
+                class="period-select bg-[#0D1117] text-white border border-white/10 hover:border-amber-400/50 rounded-xl px-3 py-1.5 text-xs font-mono focus:border-amber-400 outline-none transition-all cursor-pointer"></select>
+              <div
+                class="month-profit-loss flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#0D1117] border border-white/5 text-xs text-slate-400 font-mono">
+                <span>累計損益:</span>
+                <span class="text-[#00E701] font-bold text-sm drop-shadow-[0_0_8px_rgba(0,231,1,0.4)]">-</span>
+              </div>
+            </div>
+          </div>
 
-                            <div class="market-gauge-section">
-                                <div class="market-gauge-wrapper">
-                                    <div class="market-gauge-bar">
-                                        <div class="gauge-fill" id="taiex-gauge"></div>
-                                    </div>
-                                    <div class="market-gauge-labels">
-                                        <div class="gauge-label left">
-                                            <span>前低 (支撐)</span>
-                                            <b id="taiex-low">-</b>
-                                        </div>
-                                        <div class="gauge-label center">
-                                            <span>今日加權指數</span>
-                                            <b id="taiex-today">-</b>
-                                        </div>
-                                        <div class="gauge-label right">
-                                            <span>前高 (壓力)</span>
-                                            <b id="taiex-high">-</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 美金匯率卡片 -->
-                        <div class="card">
-                            <div id="usdtwd-card-content" class="card-content">
-                                <span>美金兌台幣匯率</span>
-                                <h4 id="usdtwd-rate">-</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 今日操作建議 -->
-                <div id="today-suggestions">
-                    <h2 class="section-title">今日操作建議</h2>
-                    <div class="today-tables-wrapper">
-                        <div id="today-buy" class="card">
-                            <h3 class="group-title">建議買進</h3>
-                            <div class="data-table inner-table">
-                                <div class="table-header">
-                                    <div class="table-cell">日期</div>
-                                    <div class="table-cell">名稱</div>
-                                    <div class="table-cell">買進價格</div>
-                                </div>
-                                <div class="table-body"></div>
-                            </div>
-                        </div>
-
-                        <div id="today-sell" class="card">
-                            <h3 class="group-title">建議賣出</h3>
-                            <div class="data-table inner-table">
-                                <div class="table-header">
-                                    <div class="table-cell">日期</div>
-                                    <div class="table-cell">名稱</div>
-                                    <div class="table-cell">報酬率</div>
-                                </div>
-                                <div class="table-body"></div>
-                            </div>
-                        </div>
-
-                        <div id="today-strong" class="card">
-                            <h3 class="group-title">強勢類股推薦</h3>
-                            <div class="data-table inner-table">
-                                <div class="table-header">
-                                    <div class="table-cell">日期</div>
-                                    <div class="table-cell">名稱</div>
-                                    <div class="table-cell">買進價格</div>
-                                </div>
-                                <div class="table-body"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 進場中股票 -->
-                <div id="current-holdings">
-                    <h2 class="section-title">
-                        進場中股票
-                        <span id="total-holding-count"
-                            style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); font-weight: normal; letter-spacing: 0.05em; text-transform: uppercase;">持倉總數:
-                            <b style="color: var(--text-main); font-size: 16px; margin-left: 4px;">-</b></span>
-                    </h2>
-                    <div class="data-table inner-table">
-                        <div class="table-header">
-                            <div class="table-cell">名稱<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                            <div class="table-cell" style="justify-content: flex-end; text-align: right;">持有天數<svg
-                                    class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                            <div class="table-cell hide-on-mobile">進場均價<svg class="sort-icon"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                            <div class="table-cell hide-on-mobile">進場數量<svg class="sort-icon"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                            <div class="table-cell">目前價格<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                            <div class="table-cell">報酬率<svg class="sort-icon" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M12 5.83L15.17 9l1.41-1.41L12 3L7.41 7.59L8.83 9L12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15L12 18.17z" />
-                                </svg></div>
-                        </div>
-                        <div class="table-body"></div>
-                    </div>
-                </div>
-
-                <!-- 已賣出股票 -->
-                <div id="sold-stocks">
-                    <h2 class="section-title">
-                        已賣出股票
-                        <div class="title-actions">
-                            <select id="sold-period-select" class="period-select">
-                            </select>
-                            <div class="month-profit-loss">累計損益<span>-</span></div>
-                        </div>
-                    </h2>
-                    <div class="data-table inner-table">
-                        <div class="table-header">
-                            <div class="table-cell">賣出日期</div>
-                            <div class="table-cell">名稱</div>
-                            <div class="table-cell">進場均價(成本)</div>
-                            <div class="table-cell">獲利金額(報酬率)</div>
-                        </div>
-                        <div class="table-body"></div>
-                    </div>
-                </div>
-            </main>
+          <div class="overflow-x-auto">
+            <div class="data-table inner-table w-full min-w-[520px]">
+              <div class="table-header">
+                <div class="table-cell">賣出日期</div>
+                <div class="table-cell">名稱</div>
+                <div class="table-cell">進場均價(成本)</div>
+                <div class="table-cell">獲利金額(報酬率)</div>
+              </div>
+              <div class="table-body"></div>
+            </div>
+          </div>
         </div>
 
         <!-- Footer -->
-        <footer id="footer">
-            <p>&copy; 2026 JOINJO 數據平台. All rights reserved.</p>
+        <footer id="footer" class="text-center py-6 text-xs text-slate-500 font-mono border-t border-white/5">
+          <p>&copy; 2026 JOINJO 數據平台 - Casino Betting Edition. All rights reserved.</p>
         </footer>
+      </main>
+
     </div>
+  </div>
+
+  <!-- =========================================================================
+         SYNTHESIZER & REAL-TIME SYNC LOGIC
+    ========================================================================= -->
+  <script>
+    $(function () {
+      // --- 搜尋結果彈窗關閉按鈕與點擊外部關閉邏輯 ---
+      let isPrependingSearchClose = false;
+      const searchResultEl = document.getElementById('stock-search-result');
+      if (searchResultEl) {
+        const searchObserver = new MutationObserver(function () {
+          if (isPrependingSearchClose) return;
+          const $res = $('#stock-search-result');
+          if ($res.is(':visible') && $res.children().length > 0) {
+            if ($res.find('.search-close-btn').length === 0) {
+              isPrependingSearchClose = true;
+              $res.prepend('<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>');
+              isPrependingSearchClose = false;
+            }
+          }
+        });
+        searchObserver.observe(searchResultEl, { childList: true });
+      }
+
+      // 點擊搜尋按鈕後也主動檢查並添加關閉按鈕
+      $('#stock-search-btn').on('click', function () {
+        setTimeout(function () {
+          const $res = $('#stock-search-result');
+          if ($res.is(':visible') && $res.find('.search-close-btn').length === 0) {
+            $res.prepend('<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>');
+          }
+        }, 80);
+      });
+
+      // 點擊關閉按鈕
+      $(document).on('click', '.search-close-btn', function (e) {
+        e.stopPropagation();
+        $('#stock-search-result').hide();
+      });
+
+      // 點選搜尋框以外任何區域即消失
+      $(document).on('click', function (e) {
+        if (!$(e.target).closest('#search-section').length) {
+          $('#stock-search-result').hide();
+        }
+      });
+
+      // 按下 Esc 鍵關閉
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          $('#stock-search-result').hide();
+        }
+      });
+
+    });
+  </script>
 </body>
 
 </html>

@@ -36,19 +36,22 @@ window.renderMarketSummary = function (marketStatus) {
         return { type: 'neutral', color: 'var(--text-muted)' }; // 如果以上條件都不符合，回傳中立
     }
 
+    function formatNumber(numStr) {
+        if (!numStr || numStr === '-') return '-';
+        const n = parseFloat(String(numStr).replace(/,/g, ''));
+        if (isNaN(n)) return numStr;
+        return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     const indMa = parseSignal(marketStatus.maStatus, 'ma');
     const indBias = parseSignal(marketStatus.biasStatus, 'bias');
     const indMacd = parseSignal(marketStatus.macdStatus, 'macd');
     const indBb = parseSignal(marketStatus.bbTrendStatus, 'bb');
 
     function updateIndicator(id, data, text) {
-        // 移除 Emoji、括號及括號內文字，讓顯示更簡潔
         const cleanText = text ? text.replace(/^[\p{Emoji_Presentation}\s]+/u, '').replace(/\s*\(.*\)\s*$/, '').trim() : '-';
-        const nameText = $(`#${id} .name`).text();
-
-        $(`#${id} .dot`).css('background-color', data.color);
-        $(`#${id} .name`).text(nameText.replace(':', '') + ':');
-        $(`#${id} .value`).text(cleanText); // 填入 API 狀態文字
+        $(`#${id} .dot`).css({ 'background-color': data.color, 'color': data.color });
+        $(`#${id} .value`).text(cleanText);
     }
 
     updateIndicator('ind-ma', indMa, marketStatus.maStatus);
@@ -59,72 +62,112 @@ window.renderMarketSummary = function (marketStatus) {
     let bullCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bull').length;
     let bearCount = [indMa, indBias, indMacd, indBb].filter(i => i.type === 'bear').length;
 
+    // 2. 綜合研判燈號標籤與說明
     let verdictLabel = marketStatus.finalVerdict || '-';
-
-    // 自動配對建議說明 (作為預設值)
     let verdictDesc = "綜合各項技術指標狀態，建議保持觀望。";
     if (bullCount >= 3) verdictDesc = "技術面多頭訊號明確，建議持多觀察突破。";
     else if (bearCount >= 3) verdictDesc = "技術面空頭訊號強烈，建議保守應對、控管風險。";
     else if (bullCount > bearCount) verdictDesc = "技術面呈現震盪偏多，適合逢低佈局。";
     else if (bearCount > bullCount) verdictDesc = "技術面呈現震盪偏空，注意下檔支撐。";
 
-    // 解析 GAS 回傳的文字格式
     const bracketMatch = verdictLabel.match(/【(.*?)】/);
     if (bracketMatch) {
-        // 取出【】裡的文字作為標題，其餘作為說明
         verdictLabel = bracketMatch[1].trim();
-        verdictDesc = marketStatus.finalVerdict.replace(bracketMatch[0], '').trim() || verdictDesc;
+        verdictDesc = marketStatus.finalVerdict.replace(bracketMatch[0], '').replace(/^[\p{Emoji_Presentation}\s]+/u, '').trim() || verdictDesc;
     } else if (verdictLabel.includes('：') || verdictLabel.includes(':')) {
-        // 相容舊版冒號分隔邏輯
         let parts = verdictLabel.split(/：|:/);
-        verdictLabel = parts[0].trim();
+        verdictLabel = parts[0].replace(/^[\p{Emoji_Presentation}\s]+/u, '').trim();
         verdictDesc = parts[1].trim() || verdictDesc;
-    }
-
-    let mainColor = 'var(--text-muted)';
-    let strength = 2; // 預設訊號強度為 2 格
-    if (verdictLabel.includes('多') || verdictLabel.includes('強')) {
-        mainColor = 'var(--success-color)';
-        strength = bullCount || 3; // 依多頭指標數作為滿格數
-    } else if (verdictLabel.includes('空') || verdictLabel.includes('弱')) {
-        mainColor = 'var(--danger-color)';
-        strength = bearCount || 3; // 依空頭指標數作為滿格數
     } else {
-        mainColor = '#eab308'; // 中立狀態以偏黃顯示
-        strength = 2;
+        verdictDesc = marketStatus.finalVerdict ? marketStatus.finalVerdict.replace(/^[\p{Emoji_Presentation}\s]+/u, '').trim() : verdictDesc;
     }
 
-    strength = Math.max(1, Math.min(4, strength)); // 確保長條顯示在 1~4 之內
+    // 燈號標籤文字與樣式 (符合 Casino Bet Pro 視覺)
+    let badgeText = `${verdictLabel} 🟢`;
+    let badgeBg = 'rgba(0, 231, 1, 0.15)';
+    let badgeBorder = 'rgba(0, 231, 1, 0.4)';
+    let badgeColor = '#00E701';
 
-    $('#verdict-label').text(verdictLabel).css('color', mainColor);
+    if (verdictLabel.includes('多') || verdictLabel.includes('強')) {
+        badgeText = bullCount >= 3 ? '多頭主控燈號 🟢' : `${verdictLabel} 🟢`;
+        badgeBg = 'rgba(0, 231, 1, 0.15)';
+        badgeBorder = 'rgba(0, 231, 1, 0.4)';
+        badgeColor = '#00E701';
+    } else if (verdictLabel.includes('空') || verdictLabel.includes('弱')) {
+        badgeText = bearCount >= 3 ? '空頭防禦燈號 🔴' : `${verdictLabel} 🔴`;
+        badgeBg = 'rgba(255, 51, 102, 0.15)';
+        badgeBorder = 'rgba(255, 51, 102, 0.4)';
+        badgeColor = '#FF3366';
+    } else {
+        badgeText = `${verdictLabel} 🟡`;
+        badgeBg = 'rgba(234, 179, 8, 0.15)';
+        badgeBorder = 'rgba(234, 179, 8, 0.4)';
+        badgeColor = '#eab308';
+    }
+
+    $('#verdict-label')
+        .text(badgeText)
+        .css({
+            'background-color': badgeBg,
+            'border-color': badgeBorder,
+            'color': badgeColor
+        });
     $('#verdict-desc').text(verdictDesc);
 
-    $('#verdict-bars .bar').each(function (index) {
-        if (index < strength) {
-            $(this).css('background-color', mainColor);
-        } else {
-            $(this).css('background-color', ''); // 恢復為 CSS 預設的淺灰色
-        }
-    });
+    // 3. 今日加權指數大字與乖離動能標籤
+    const rawClose = marketStatus.closePrice || '-';
+    $('#taiex-today').text(formatNumber(rawClose));
 
-    // --- 2. 指數數值與進度條 ---
-    $('#taiex-today').text(marketStatus.closePrice || '-');
-    $('#taiex-high').text(marketStatus.high20D || '-');
-    $('#taiex-low').text(marketStatus.low20D || '-');
+    // 動能乖離率標籤 (從 biasStatus 取得，例如 "🟢 安全動能 (1.37%)")
+    let biasText = marketStatus.biasStatus ? marketStatus.biasStatus.replace(/^[\p{Emoji_Presentation}\s]+/u, '').trim() : '';
+    if (biasText) {
+        $('#taiex-bias-badge')
+            .text(biasText)
+            .css('color', indBias.color)
+            .css('border-color', indBias.color === 'var(--success-color)' ? 'rgba(0, 231, 1, 0.3)' : 'rgba(234, 179, 8, 0.3)')
+            .show();
+    } else {
+        $('#taiex-bias-badge').hide();
+    }
 
-    // 清理字串逗號並轉為數字，因 GAS 傳回的資料可能包含千分位逗號
+    // 4. 指數支撐壓力數值與雷達滑軌
+    $('#taiex-high').text(formatNumber(marketStatus.high20D));
+    $('#taiex-low').text(formatNumber(marketStatus.low20D));
+
     const closePrice = parseFloat(String(marketStatus.closePrice).replace(/,/g, ''));
     const high20D = parseFloat(String(marketStatus.high20D).replace(/,/g, ''));
     const low20D = parseFloat(String(marketStatus.low20D).replace(/,/g, ''));
 
-    // 計算進度條比例
     if (!isNaN(closePrice) && !isNaN(high20D) && !isNaN(low20D) && high20D > low20D) {
         let percentage = ((closePrice - low20D) / (high20D - low20D)) * 100;
-        // 限制在 0% ~ 100% 之間，避免超跌或突破時破版
         percentage = Math.max(0, Math.min(100, percentage));
+        const roundedPct = Math.round(percentage);
+
+        let posLabel = `● 當前位置 (${roundedPct}% 極度亢奮)`;
+        let posColor = '#00E701';
+
+        if (roundedPct >= 80) {
+            posLabel = `● 當前位置 (${roundedPct}% 極度亢奮)`;
+            posColor = '#00E701';
+        } else if (roundedPct >= 60) {
+            posLabel = `● 當前位置 (${roundedPct}% 多頭控盤)`;
+            posColor = '#00E701';
+        } else if (roundedPct >= 40) {
+            posLabel = `● 當前位置 (${roundedPct}% 中性震盪)`;
+            posColor = '#eab308';
+        } else if (roundedPct >= 20) {
+            posLabel = `● 當前位置 (${roundedPct}% 偏空回檔)`;
+            posColor = '#FF3366';
+        } else {
+            posLabel = `● 當前位置 (${roundedPct}% 超跌恐慌)`;
+            posColor = '#FF3366';
+        }
+
+        $('#taiex-pos-label').text(posLabel).css('color', posColor);
         $('#taiex-gauge').css('width', percentage + '%');
     } else {
         $('#taiex-gauge').css('width', '0%');
+        $('#taiex-pos-label').text('● 當前位置');
     }
 
     $('#market-summary-section').fadeIn(400);
@@ -133,17 +176,36 @@ window.renderMarketSummary = function (marketStatus) {
 /**
  * --- 渲染外部市場數據 (匯率、期貨) ---
  */
-window.renderExternalData = function () {
-    // 1. 取得美金兌台幣匯率
-    // 使用支援 CORS 的公開 API (open.er-api.com)
+window.renderExternalData = function (forceRefresh = false) {
+    const USD_CACHE_KEY = 'JOINJO_USDTWD_CACHE_V1';
+    if (!forceRefresh) {
+        try {
+            const cached = localStorage.getItem(USD_CACHE_KEY);
+            if (cached) {
+                const { rate, timestamp } = JSON.parse(cached);
+                // 匯率若在 2 小時內，直接使用快取數值
+                if (Date.now() - timestamp < 2 * 60 * 60 * 1000) {
+                    $('#usdtwd-rate').text(rate);
+                    return;
+                }
+            }
+        } catch (e) {}
+    }
+
+    // 1. 取得美金兌台幣匯率 (使用支援 CORS 的公開 API)
     $.getJSON('https://open.er-api.com/v6/latest/USD')
         .done(function (data) {
             if (data && data.rates && data.rates.TWD) {
                 const rate = parseFloat(data.rates.TWD).toFixed(3);
                 $('#usdtwd-rate').text(rate);
+                try {
+                    localStorage.setItem(USD_CACHE_KEY, JSON.stringify({ rate, timestamp: Date.now() }));
+                } catch (e) {}
             }
         })
         .fail(function () {
-            $('#usdtwd-rate').text('讀取失敗');
+            if (!$('#usdtwd-rate').text() || $('#usdtwd-rate').text() === '-') {
+                $('#usdtwd-rate').text('讀取失敗');
+            }
         });
 };
