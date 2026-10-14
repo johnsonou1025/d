@@ -1,5 +1,6 @@
 const API = "https://script.google.com/macros/s/AKfycbwiH2P10Y0He-7WgFtBq_7xswWLWQHVJ8TVWWtaA4i9GGI7sda_cIB6C7wlDmLZfPgW1Q/exec";
 const CACHE_KEY = "JOINJO_STOCK_CACHE_V2";
+const STRONG_SECTORS_CACHE_KEY = "JOINJO_STRONG_SECTORS_CACHE_V2";
 let lastFetchTimestamp = 0;
 
 /**
@@ -54,6 +55,27 @@ function getCachedData() {
 
 function setCachedData(rawData) {
     try {
+        const cached = getCachedData();
+        // 如果新拉取的資料中 strongSectors 為空，但舊快取或持久快取中有昨日推薦數據，則予以保留，避免在今日盤後更新前被覆蓋抹除
+        if (!rawData.strongSectors || rawData.strongSectors.length === 0) {
+            if (cached && cached.data && Array.isArray(cached.data.strongSectors) && cached.data.strongSectors.length > 0) {
+                rawData.strongSectors = cached.data.strongSectors;
+            } else {
+                try {
+                    const saved = localStorage.getItem(STRONG_SECTORS_CACHE_KEY);
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            rawData.strongSectors = parsed;
+                        }
+                    }
+                } catch (e) { }
+            }
+        } else if (rawData.strongSectors && rawData.strongSectors.length > 0) {
+            // 有最新推薦數據時，同步更新至獨立持久快取
+            localStorage.setItem(STRONG_SECTORS_CACHE_KEY, JSON.stringify(rawData.strongSectors));
+        }
+
         localStorage.setItem(CACHE_KEY, JSON.stringify({
             data: rawData,
             timestamp: Date.now()
@@ -107,6 +129,19 @@ async function loadStockData(forceRefresh = false) {
                 return;
             }
         }
+    }
+
+    // 若 rawData 中的 strongSectors 為空，嘗試自獨立持久快取恢復昨日數據
+    if (!rawData.strongSectors || rawData.strongSectors.length === 0) {
+        try {
+            const saved = localStorage.getItem(STRONG_SECTORS_CACHE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    rawData.strongSectors = parsed;
+                }
+            }
+        } catch (e) { }
     }
 
     try {
@@ -582,10 +617,10 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
 
     // --- 輔助函式：取得該 state 最後一筆的日期 ---
     const getLastDateByState = (trades, state) => {
-        const filtered = trades.filter(t => t.state === state);
+        const filtered = trades.filter(t => t.state === state && t.time);
         if (filtered.length === 0) return null;
-        // 假設 time 格式為 yyyy-MM-dd，直接比較字串即可
-        return filtered[filtered.length - 1].time;
+        // 取得該狀態最新的一筆日期 (以日期字串最大者或陣列末尾為準)
+        return filtered.reduce((latest, t) => (!latest || t.time > latest ? t.time : latest), filtered[filtered.length - 1].time);
     };
 
     // 取得今天的日期字串 (YYYY-MM-DD)
@@ -604,7 +639,8 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         const filteredTrades = trades.filter(t => t.time === targetDate && t.state === 'sell');
 
         if (filteredTrades.length === 0) {
-            $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無建議賣出股票</div></div>');
+            const emptyMsg = targetDate === getTodayString() ? '今日無建議賣出股票' : '無建議賣出股票';
+            $table.find('.table-body').append(`<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">${emptyMsg}</div></div>`);
             return;
         }
 
@@ -626,7 +662,8 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         const filteredTrades = trades.filter(t => t.time === targetDate && t.state === 'buy');
 
         if (filteredTrades.length === 0) {
-            $table.find('.table-body').append('<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">今日無建議買進股票</div></div>');
+            const emptyMsg = targetDate === getTodayString() ? '今日無建議買進股票' : '無建議買進股票';
+            $table.find('.table-body').append(`<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">${emptyMsg}</div></div>`);
             return;
         }
 
@@ -638,8 +675,8 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             $table.find('.table-body').append($tr);
         });
     };
-    // --- 渲染強勢類股推薦卡片 (Slot-Style Stock Grid - 橫向捲軸卡片) ---
-    const renderStrongCards = (containerSelector, strongData) => {
+    // --- 渲染強勢類股推薦卡片 (橫向捲軸卡片) ---
+    const renderStrongCards = (containerSelector, strongData, isTodayUpdated = false) => {
         const $container = $(containerSelector);
         $container.empty();
 
@@ -648,11 +685,30 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             return;
         }
 
-        // 取得資料中最後一個日期（即最新推薦）
-        const latestDate = strongData[strongData.length - 1].date;
-        const items = strongData.filter(item => item.date === latestDate);
+        const todayStr = getTodayString();
+        let targetDate = null;
 
-        if (items.length === 0) {
+        if (isTodayUpdated) {
+            // 今日最新數據已更新：以今日日期為準
+            targetDate = todayStr;
+        } else {
+            // 今日最新數據更新前：取得資料中最新一筆日期（即昨日收盤推薦股）
+            const dates = strongData.map(d => d.date).filter(Boolean);
+            if (dates.length > 0) {
+                targetDate = dates.reduce((max, d) => (d > max ? d : max), dates[0]);
+            } else {
+                targetDate = strongData[strongData.length - 1]?.date;
+            }
+        }
+
+        let items = targetDate ? strongData.filter(item => item.date === targetDate) : strongData;
+
+        // 若以目標日期篩選為空，但在今日更新前仍有可用的推薦數據，則保留呈現所有可用推薦
+        if ((!items || items.length === 0) && !isTodayUpdated && strongData.length > 0) {
+            items = strongData;
+        }
+
+        if (!items || items.length === 0) {
             $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#151C24] border border-white/10 rounded-2xl">今日無強勢類股推薦</div>');
             return;
         }
@@ -723,12 +779,41 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         renderStrongCards('#today-strong-cards', strongData);
     };
 
+    // --- 取得操作建議的目標日期 (在今天更新最新數據前，保留昨天的最新數據) ---
+    const todayStr = getTodayString();
+    const isTodayUpdated = dailyTrades.some(t => t.time === todayStr) ||
+        (typeof rawData !== 'undefined' && rawData && rawData.marketStatus && rawData.marketStatus.date === todayStr);
+
+    const buyTargetDate = isTodayUpdated
+        ? todayStr
+        : (getLastDateByState(dailyTrades, 'buy') || todayStr);
+
+    const sellTargetDate = isTodayUpdated
+        ? todayStr
+        : (getLastDateByState(dailyTrades, 'sell') || todayStr);
+
     // --- 執行渲染 ---
-    renderSellTable('#today-sell .data-table', dailyTrades, getTodayString());
-    renderBuyTable('#today-buy .data-table', dailyTrades, getTodayString());
+    renderSellTable('#today-sell .data-table', dailyTrades, sellTargetDate);
+    renderBuyTable('#today-buy .data-table', dailyTrades, buyTargetDate);
     // 從 API 回傳的 strongSectors 欄位抓取資料渲染為卡片
-    const strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
-    renderStrongCards('#today-strong-cards', strongStocks);
+    // 若今日數據尚未更新且為空，嘗試由持久快取取回昨日數據
+    let strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
+    if (strongStocks.length === 0 && !isTodayUpdated) {
+        try {
+            const saved = localStorage.getItem(STRONG_SECTORS_CACHE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    strongStocks = parsed.map(item => ({
+                        date: item.date,
+                        sectorName: item.sectorName,
+                        strengthScore: item.strengthScore
+                    })).reverse();
+                }
+            }
+        } catch (e) { }
+    }
+    renderStrongCards('#today-strong-cards', strongStocks, isTodayUpdated);
 
     // 綁定橫向捲軸左右按鈕
     $('#today-strong-prev').off('click').on('click', function () {
@@ -1025,22 +1110,7 @@ $(function () {
         }
     });
 
-    // 點擊側邊欄大廳導航連結時，若處於手機/平板版(寬度 <= 1024px)，自動切換至市場動態主頁並平滑滾動
-    $(document).on('click', '.lobby-nav-link', function (e) {
-        if (window.innerWidth <= 1024) {
-            e.preventDefault();
-            const targetHash = $(this).attr('href');
-            $('.mobile-tab[data-target="main"]').trigger('click');
-            setTimeout(function () {
-                const $targetSection = $(targetHash);
-                if ($targetSection.length) {
-                    $('html, body, .main-content').animate({
-                        scrollTop: Math.max(0, $targetSection.offset().top - 80)
-                    }, 350);
-                }
-            }, 50);
-        }
-    });
+
 
     // --- 加入手勢滑動 (Swipe) 切換 ---
     let touchStartX = 0;
@@ -1076,38 +1146,7 @@ $(function () {
     }
 });
 
-// --- Tooltip 功能 ---
-$(function () {
-    let $tooltip = $('<div class="tooltip"></div>');
-    $('body').append($tooltip);
 
-    $(document).on('mouseenter', '[data-tooltip]', function (e) {
-        const text = $(this).data('tooltip');
-        if (!text) return;
-
-        $tooltip.text(text).addClass('visible');
-
-        const targetRect = this.getBoundingClientRect();
-        const tooltipRect = $tooltip[0].getBoundingClientRect();
-
-        let top = targetRect.bottom + window.scrollY + 8; // 預設在下方
-        let left = targetRect.left + window.scrollX + (targetRect.width / 2) - (tooltipRect.width / 2);
-
-        // 避免 tooltip 超出視窗右邊界
-        if (left + tooltipRect.width > window.innerWidth) {
-            left = window.innerWidth - tooltipRect.width - 10;
-        }
-        // 避免 tooltip 超出視窗左邊界
-        if (left < 0) {
-            left = 10;
-        }
-
-        $tooltip.css({ top: top, left: left });
-
-    }).on('mouseleave', '[data-tooltip]', function () {
-        $tooltip.removeClass('visible');
-    });
-});
 
 
 // --- 工具函式：計算最後更新時間與顯示標籤 ---

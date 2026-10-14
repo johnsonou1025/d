@@ -1094,6 +1094,27 @@ body.loading-view > *:not(.status-wrapper) {
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     user-select: none;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+}
+
+.mobile-tab:not(.active) {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+}
+
+.mobile-tab:not(.active):hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.mobile-tab:not(.active) .tab-pulse-dot {
+    opacity: 0.25;
+    animation: none !important;
+    box-shadow: none !important;
 }
 
 .mobile-tab.active[data-target="main"] {
