@@ -2,6 +2,250 @@ const API = "https://script.google.com/macros/s/AKfycbwiH2P10Y0He-7WgFtBq_7xswWL
 const CACHE_KEY = "JOINJO_STOCK_CACHE_V2";
 const STRONG_SECTORS_CACHE_KEY = "JOINJO_STRONG_SECTORS_CACHE_V2";
 let lastFetchTimestamp = 0;
+let twGlobalStrongStocks = [];
+
+
+
+/**
+ * 準備隨機不重複的卡片背景圖 pool
+ */
+function getShuffledBgList(count) {
+    const totalBgs = 13;
+    const result = [];
+    let pool = [];
+    for (let i = 0; i < count; i++) {
+        if (pool.length === 0) {
+            pool = Array.from({ length: totalBgs }, (_, idx) => `img/card-bg-${idx + 1}.jpg`);
+            for (let j = pool.length - 1; j > 0; j--) {
+                const k = Math.floor(Math.random() * (j + 1));
+                [pool[j], pool[k]] = [pool[k], pool[j]];
+            }
+        }
+        result.push(pool.pop());
+    }
+    return result;
+}
+
+/**
+ * 格式化日期：去除年份，只保留月和日 (例如 2026-10-14 -> 10/14)
+ */
+function formatMonthDay(dateStr) {
+    if (!dateStr) return '';
+    const str = String(dateStr).trim();
+    const match = str.match(/(?:^\d{4}[-/.]\s*)?(\d{1,2})[-/.](\d{1,2})$/);
+    if (match) {
+        return `${match[1].padStart(2, '0')}/${match[2].padStart(2, '0')}`;
+    }
+    return str.replace(/^\d{4}[-/.]\s*/, '').replace(/[-.]/, '/');
+}
+
+/**
+ * 通用滑鼠拖曳橫向捲動綁定
+ */
+function enableHorizontalDrag(selector) {
+    const scrollEl = document.querySelector(selector);
+    if (!scrollEl) return;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const eventNamespace = selector.replace(/[^a-zA-Z0-9]/g, '');
+
+    $(scrollEl).off('mousedown').on('mousedown', function (e) {
+        if ($(e.target).closest('button').length) return;
+        isDown = true;
+        startX = e.pageX - scrollEl.offsetLeft;
+        scrollLeft = scrollEl.scrollLeft;
+        $(this).css({ 'cursor': 'grabbing', 'scroll-behavior': 'auto' });
+    });
+
+    $(window).off('mouseup.' + eventNamespace).on('mouseup.' + eventNamespace, function () {
+        if (isDown) {
+            isDown = false;
+            $(scrollEl).css({ 'cursor': '', 'scroll-behavior': '' });
+            updateCarouselButtons(scrollEl);
+        }
+    });
+
+    $(scrollEl).off('mousemove').on('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollEl.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        scrollEl.scrollLeft = scrollLeft - walk;
+    });
+}
+
+// 用於記錄每個輪播容器當前的動畫狀態與目標位置
+const carouselStateMap = new WeakMap();
+
+/**
+ * 取得輪播容器對應的前後控制按鈕
+ */
+function getCarouselButtons(scrollEl) {
+    if (!scrollEl) return { prev: null, next: null };
+    const id = scrollEl.id;
+    if (id === 'today-strong-scroll-wrapper') {
+        return {
+            prev: document.getElementById('today-strong-prev'),
+            next: document.getElementById('today-strong-next')
+        };
+    }
+    if (id === 'today-buy-scroll-wrapper') {
+        return {
+            prev: document.getElementById('today-buy-prev'),
+            next: document.getElementById('today-buy-next')
+        };
+    }
+    if (id === 'today-sell-scroll-wrapper') {
+        return {
+            prev: document.getElementById('today-sell-prev'),
+            next: document.getElementById('today-sell-next')
+        };
+    }
+    return { prev: null, next: null };
+}
+
+/**
+ * 更新輪播按鈕禁用狀態 (到頭禁用上一頁，到底禁用下一頁，嚴格防止無限循環)
+ */
+function updateCarouselButtons(scrollEl, customPos = null) {
+    if (!scrollEl) return;
+    const { prev, next } = getCarouselButtons(scrollEl);
+    if (!prev && !next) return;
+
+    // 若容器處於隱藏狀態 (例如 loading-view 期間，clientWidth 或 scrollWidth 為 0)，切勿誤判為無卡片而將 Next 按鈕鎖死
+    if (scrollEl.clientWidth === 0 || scrollEl.scrollWidth === 0) {
+        if (prev) {
+            prev.disabled = true;
+            prev.classList.add('is-disabled');
+        }
+        if (next) {
+            const cardCount = scrollEl.querySelectorAll('.strong-stock-card').length;
+            const canScroll = cardCount > 1;
+            next.disabled = !canScroll;
+            if (canScroll) {
+                next.classList.remove('is-disabled');
+            } else {
+                next.classList.add('is-disabled');
+            }
+        }
+        return;
+    }
+
+    const maxScroll = Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth);
+    const currentLeft = customPos !== null ? customPos : scrollEl.scrollLeft;
+
+    const isAtStart = currentLeft <= 4;
+    // 只有在真正可捲動且當前位置已接近末端時才禁用；若尚未能算出有效捲動範圍，不輕易禁用 Next
+    const isAtEnd = maxScroll > 0 ? (currentLeft >= maxScroll - 4) : false;
+
+    if (prev) {
+        prev.disabled = isAtStart;
+        if (isAtStart) {
+            prev.classList.add('is-disabled');
+        } else {
+            prev.classList.remove('is-disabled');
+        }
+    }
+
+    if (next) {
+        next.disabled = isAtEnd;
+        if (isAtEnd) {
+            next.classList.add('is-disabled');
+        } else {
+            next.classList.remove('is-disabled');
+        }
+    }
+}
+
+/**
+ * 廣告輪播般流暢的平滑滑動 (RAF + easeOutQuart 減速曲線，不循環翻頁)
+ * @param {string|HTMLElement} wrapperSelector - 滾動容器 selector 或元素
+ * @param {number} direction - -1 為上一頁 (向左)，1 為下一頁 (向右)
+ */
+function scrollCardCarousel(wrapperSelector, direction = 1) {
+    const scrollEl = typeof wrapperSelector === 'string' ? document.querySelector(wrapperSelector) : wrapperSelector;
+    if (!scrollEl) return;
+
+    let state = carouselStateMap.get(scrollEl);
+    if (!state) {
+        state = { targetLeft: scrollEl.scrollLeft, animId: null };
+        carouselStateMap.set(scrollEl, state);
+
+        // 綁定原生滾動事件，當手指滑動或拖曳時隨時同步按鈕狀態
+        scrollEl.addEventListener('scroll', () => {
+            if (!state.animId) {
+                updateCarouselButtons(scrollEl);
+            }
+        }, { passive: true });
+    }
+
+    const maxScroll = Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth);
+    if (maxScroll <= 0) {
+        updateCarouselButtons(scrollEl);
+        return;
+    }
+
+    // 動態取得單張卡片寬度 (含 gap)
+    const card = scrollEl.querySelector('.strong-stock-card');
+    const gap = 16;
+    const cardWidth = card ? (card.getBoundingClientRect().width + gap) : 210;
+
+    // 計算可視寬度內能容納幾張卡片，以「一頁」為單位翻動 (至少 1 張)
+    const visibleWidth = scrollEl.clientWidth || 800;
+    const cardsPerPage = Math.max(1, Math.floor(visibleWidth / cardWidth));
+    const pageSize = cardsPerPage * cardWidth;
+
+    // 連續點擊時以目標位置累加，否則以目前實際位置為準
+    const baseLeft = state.animId ? state.targetLeft : scrollEl.scrollLeft;
+    let newTarget = baseLeft + (direction * pageSize);
+
+    // 嚴格限制於 [0, maxScroll] 區間，徹底避免無限循環
+    newTarget = Math.max(0, Math.min(newTarget, maxScroll));
+    state.targetLeft = newTarget;
+
+    if (state.animId) {
+        cancelAnimationFrame(state.animId);
+        state.animId = null;
+    }
+
+    const startLeft = scrollEl.scrollLeft;
+    const distance = newTarget - startLeft;
+
+    if (Math.abs(distance) < 1) {
+        updateCarouselButtons(scrollEl, newTarget);
+        return;
+    }
+
+    // 520ms 廣告輪播級流暢滑動時間與 4 次方減速曲線 (easeOutQuart)
+    const duration = 520;
+    const startTime = performance.now();
+
+    function easeOutQuart(t) {
+        return 1 - Math.pow(1 - t, 4);
+    }
+
+    function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = easeOutQuart(progress);
+
+        scrollEl.scrollLeft = startLeft + (distance * ease);
+
+        if (progress < 1) {
+            state.animId = requestAnimationFrame(step);
+        } else {
+            scrollEl.scrollLeft = newTarget;
+            state.animId = null;
+            updateCarouselButtons(scrollEl);
+        }
+    }
+
+    state.animId = requestAnimationFrame(step);
+    // 點擊當下即提前更新按鈕狀態，避免到達邊界時連續無效觸發
+    updateCarouselButtons(scrollEl, newTarget);
+}
 
 /**
  * 檢查當前時間是否處於 14:15 ~ 14:30 的即時更新區間
@@ -675,8 +919,40 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             $table.find('.table-body').append($tr);
         });
     };
-    // --- 渲染強勢類股推薦卡片 (橫向捲軸卡片) ---
-    const renderStrongCards = (containerSelector, strongData, isTodayUpdated = false) => {
+    // --- 渲染強勢類股推薦卡片與區塊 (直接顯示近5天推薦) ---
+    const renderStrongSection = (strongStocks) => {
+        const $container = $('#today-strong-cards');
+        const $pill = $('#today-strong-date-pill');
+
+        if (!Array.isArray(strongStocks) || strongStocks.length === 0) {
+            $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#151C24] border border-white/10 rounded-2xl">今日無強勢類股推薦</div>');
+            if ($pill.length) $pill.text('無推薦資料');
+            return;
+        }
+
+        // 取得所有不同日期 (降冪排序，最新在前)
+        const distinctDates = [...new Set(strongStocks.map(s => s.date).filter(Boolean))].sort().reverse();
+        const recent5Dates = distinctDates.slice(0, 5);
+
+        // 將近 5 天的所有強勢推薦股全部放入，依最新日期排在最前 (同日依評分降冪排序)
+        const displayList = [...strongStocks]
+            .filter(s => s.date && recent5Dates.includes(s.date))
+            .sort((a, b) => {
+                if (b.date !== a.date) return b.date.localeCompare(a.date);
+                const scoreA = parseFloat(a.strengthScore) || 0;
+                const scoreB = parseFloat(b.strengthScore) || 0;
+                return scoreB - scoreA;
+            });
+
+        if ($pill.length) $pill.text(`近5日推薦: 共 ${displayList.length} 檔`);
+
+        renderStrongCards('#today-strong-cards', displayList);
+    };
+
+    /**
+     * 渲染強勢台股卡片 DOM (卡片上半部僅呈現月日時間標籤)
+     */
+    const renderStrongCards = (containerSelector, strongData) => {
         const $container = $(containerSelector);
         $container.empty();
 
@@ -685,95 +961,65 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             return;
         }
 
-        const todayStr = getTodayString();
-        let targetDate = null;
+        const bgList = getShuffledBgList(strongData.length);
 
-        if (isTodayUpdated) {
-            // 今日最新數據已更新：以今日日期為準
-            targetDate = todayStr;
-        } else {
-            // 今日最新數據更新前：取得資料中最新一筆日期（即昨日收盤推薦股）
-            const dates = strongData.map(d => d.date).filter(Boolean);
-            if (dates.length > 0) {
-                targetDate = dates.reduce((max, d) => (d > max ? d : max), dates[0]);
-            } else {
-                targetDate = strongData[strongData.length - 1]?.date;
-            }
-        }
-
-        let items = targetDate ? strongData.filter(item => item.date === targetDate) : strongData;
-
-        // 若以目標日期篩選為空，但在今日更新前仍有可用的推薦數據，則保留呈現所有可用推薦
-        if ((!items || items.length === 0) && !isTodayUpdated && strongData.length > 0) {
-            items = strongData;
-        }
-
-        if (!items || items.length === 0) {
-            $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#151C24] border border-white/10 rounded-2xl">今日無強勢類股推薦</div>');
-            return;
-        }
-
-        // 準備隨機不重複的背景圖池 (img/card-bg-1.jpg ~ img/card-bg-10.jpg)
-        const getShuffledBgList = (count) => {
-            const totalBgs = 10;
-            const result = [];
-            let pool = [];
-            for (let i = 0; i < count; i++) {
-                if (pool.length === 0) {
-                    pool = Array.from({ length: totalBgs }, (_, idx) => `img/card-bg-${idx + 1}.jpg`);
-                    for (let j = pool.length - 1; j > 0; j--) {
-                        const k = Math.floor(Math.random() * (j + 1));
-                        [pool[j], pool[k]] = [pool[k], pool[j]];
-                    }
-                }
-                result.push(pool.pop());
-            }
-            return result;
-        };
-
-        const bgList = getShuffledBgList(items.length);
-
-        items.forEach((item, index) => {
+        strongData.forEach((item, index) => {
             const bgImage = bgList[index] || 'img/card-bg-1.jpg';
             const rawName = (item.sectorName || '').trim();
             const parts = rawName.split(/\s+/);
-            const stockName = parts[0] || '強勢指標';
-            const stockCode = parts.length > 1 ? parts.slice(1).join(' ') : '';
-            const scoreNum = parseFloat(item.strengthScore) || 0;
-            const scoreDisplay = !isNaN(scoreNum) ? scoreNum.toFixed(2) : (item.strengthScore || '-');
+            let stockName = parts[0] || '強勢指標';
+            let stockCode = parts.length > 1 ? parts.slice(1).join(' ') : '';
+
+            if (/^\d{4,5}$/.test(stockName) && parts.length > 1) {
+                stockCode = parts[0];
+                stockName = parts.slice(1).join(' ');
+            }
+
+            const scoreNum = parseFloat(item.strengthScore);
+            const scoreDisplay = !isNaN(scoreNum) ? scoreNum.toFixed(2) : (item.strengthScore || item.closePrice || '-');
+            const date = item.date || '';
+            const shortDate = formatMonthDay(date);
+
+            const dateBadgeHtml = shortDate
+                ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-black/60 backdrop-blur-md text-slate-200 shadow-sm">${shortDate}</span>`
+                : '';
 
             const $card = $(`
-                    <div class="strong-stock-card relative rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between transition-colors duration-200 hover:border-[#00E701] flex-shrink-0 cursor-pointer" 
-                         style="background: url('${bgImage}') top center / cover no-repeat;"
-                         data-stock="${stockName}" data-code="${stockCode}" title="點擊查看「${stockName}」情報">
-                      
-                      <!-- 上半部視覺留白區 (展現金牛晶片主視覺) -->
-                      <div class="h-24 sm:h-28 w-full"></div>
+                <div class="strong-stock-card relative rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between transition-colors duration-200 hover:border-[#00E701] flex-shrink-0 cursor-pointer" 
+                     style="background: url('${bgImage}') top center / cover no-repeat;"
+                     data-stock="${stockName}" data-code="${stockCode}" data-symbol="${stockCode}" title="點擊查看「${stockName}${stockCode ? ' (' + stockCode + ')' : ''}」詳細情報">
+                  
+                  <!-- 上半部視覺區：頂部時間標籤 (時間靠左，僅保留月日，無外框線，佔卡面 1/4) -->
+                  <div class="strong-card-visual h-1/4 w-full flex items-start justify-start p-2.5">
+                    ${dateBadgeHtml}
+                  </div>
 
-                      <!-- 下半部純文字排版區 (整合至 style.css .strong-card-text) -->
-                      <div class="strong-card-text">
-                        
-                        <!-- 1. 股票代碼：使用 style.css .strong-code-badge 整合背景模糊樣式 -->
-                        <span class="strong-code-badge inline-flex items-center text-[10px] sm:text-[11px] font-black font-mono px-2.5 py-0.5 rounded-md tracking-wider bg-amber-500/10 backdrop-blur-md text-[#FFB800] border border-amber-500/30 shadow-[0_0_8px_rgba(255,184,0,0.25)]">
-                          ${stockCode || 'TW'}
-                        </span>
+                  <!-- 下半部純文字排版區 (佔卡面 3/4) -->
+                  <div class="strong-card-text h-3/4">
+                    <!-- 1. 股票代碼 (無時間標籤) -->
+                    <span class="strong-code-badge inline-flex items-center text-[10px] sm:text-[11px] font-black font-mono px-2.5 py-0.5 rounded-md tracking-wider bg-amber-500/10 backdrop-blur-md text-[#FFB800] border border-amber-500/30 shadow-[0_0_8px_rgba(255,184,0,0.25)]">
+                      ${stockCode || 'TW'}
+                    </span>
 
-                        <!-- 2. 股票名：置中，大字 Neon 綠呈現大氣感 -->
-                        <h3 class="text-2xl sm:text-3xl font-black text-[#00E701] drop-shadow-[0_0_16px_rgba(0,231,1,0.6)] tracking-wide my-1">
-                          ${stockName}
-                        </h3>
+                    <!-- 2. 股票名稱 -->
+                    <h3 class="text-lg sm:text-xl font-black text-[#00E701] drop-shadow-[0_0_16px_rgba(0,231,1,0.6)] tracking-wide my-1 truncate max-w-full px-1" title="${stockName}">
+                      ${stockName}
+                    </h3>
 
-                        <!-- 3. 股價：置中，移除日期，字體放大 -->
-                        <div class="text-base sm:text-lg font-mono font-bold text-slate-200 tracking-wider text-center mt-0.5">
-                          ${scoreDisplay}
-                        </div>
-
-                      </div>
+                    <!-- 3. 強度評分 / 股價 -->
+                    <div class="text-base sm:text-lg font-mono font-bold text-slate-100 tracking-wider text-center mt-0.5">
+                      ${scoreDisplay}
                     </div>
-                `);
+                  </div>
+                </div>
+            `);
 
             $container.append($card);
         });
+
+        setTimeout(() => {
+            updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
+        }, 50);
     };
     const renderStrongTable = (selector, strongData) => {
         renderStrongCards('#today-strong-cards', strongData);
@@ -795,6 +1041,7 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
     // --- 執行渲染 ---
     renderSellTable('#today-sell .data-table', dailyTrades, sellTargetDate);
     renderBuyTable('#today-buy .data-table', dailyTrades, buyTargetDate);
+
     // 從 API 回傳的 strongSectors 欄位抓取資料渲染為卡片
     // 若今日數據尚未更新且為空，嘗試由持久快取取回昨日數據
     let strongStocks = Array.isArray(data.strongSectors) ? data.strongSectors : [];
@@ -813,47 +1060,36 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             }
         } catch (e) { }
     }
-    renderStrongCards('#today-strong-cards', strongStocks, isTodayUpdated);
+    twGlobalStrongStocks = strongStocks;
+    renderStrongSection(twGlobalStrongStocks);
 
-    // 綁定橫向捲軸左右按鈕
+    // 綁定橫向捲軸左右按鈕 (廣告輪播級流暢滑動，不循環)
     $('#today-strong-prev').off('click').on('click', function () {
-        const $scroll = $('.strong-cards-scroll');
-        $scroll.animate({ scrollLeft: $scroll.scrollLeft() - 220 }, 250);
+        const scrollEl = document.getElementById('today-strong-scroll-wrapper');
+        if (scrollEl && scrollEl.scrollLeft > 4) {
+            $(this).prop('disabled', false).removeClass('is-disabled');
+        }
+        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
+        scrollCardCarousel('#today-strong-scroll-wrapper', -1);
         if (window.sounds) window.sounds.playClick();
     });
     $('#today-strong-next').off('click').on('click', function () {
-        const $scroll = $('.strong-cards-scroll');
-        $scroll.animate({ scrollLeft: $scroll.scrollLeft() + 220 }, 250);
+        const scrollEl = document.getElementById('today-strong-scroll-wrapper');
+        const maxScroll = scrollEl ? Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth) : 0;
+        // 若容器尚未滾動到真正的最末端，防呆解除按鈕誤鎖定
+        if (scrollEl && (maxScroll === 0 || scrollEl.scrollLeft < maxScroll - 4)) {
+            $(this).prop('disabled', false).removeClass('is-disabled');
+        }
+        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
+        scrollCardCarousel('#today-strong-scroll-wrapper', 1);
         if (window.sounds) window.sounds.playClick();
     });
 
+    // 初始更新按鈕狀態
+    updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
+
     // 支援滑鼠按住拖曳滑動
-    const scrollEl = document.querySelector('.strong-cards-scroll');
-    if (scrollEl) {
-        let isDown = false;
-        let startX;
-        let initialScrollLeft;
-        $(scrollEl).off('mousedown').on('mousedown', function (e) {
-            if ($(e.target).closest('button').length) return;
-            isDown = true;
-            $(this).css('cursor', 'grabbing');
-            startX = e.pageX - this.offsetLeft;
-            initialScrollLeft = this.scrollLeft;
-        });
-        $(window).off('mouseup.strongScroll').on('mouseup.strongScroll', function () {
-            if (isDown) {
-                isDown = false;
-                $('.strong-cards-scroll').css('cursor', '');
-            }
-        });
-        $(scrollEl).off('mousemove').on('mousemove', function (e) {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - this.offsetLeft;
-            const walk = (x - startX) * 1.5;
-            this.scrollLeft = initialScrollLeft - walk;
-        });
-    }
+    enableHorizontalDrag('#today-strong-scroll-wrapper');
 
     // --- 核心搜尋渲染函式 (同時服務桌面端與手機端) ---
     function executeStockSearch(keyword, $result) {
@@ -906,7 +1142,7 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         $result.html(resultHtml).show();
     }
 
-    // 點擊卡片快速搜尋個股 (桌面與手機版自適應)
+    // 點擊卡片快速搜尋個股 (全螢幕統一使用下滑搜尋列)
     $(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function () {
         const stockName = $(this).data('stock');
         const stockCode = $(this).data('code');
@@ -915,46 +1151,27 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         if (window.sounds) window.sounds.playWin();
 
         if (target) {
-            if (window.innerWidth < 768) {
-                $('#mobile-search-container').removeClass('hidden').slideDown(200);
-                $('#mobile-stock-search-input').val(target);
+            $('#mobile-search-container').removeClass('hidden').slideDown(200, function () {
+                $('#mobile-stock-search-input').val(target).focus();
                 executeStockSearch(target, $('#mobile-stock-search-result'));
-                $('html, body').animate({ scrollTop: 0 }, 300);
-            } else {
-                $('#stock-search-input').val(target);
-                executeStockSearch(target, $('#stock-search-result'));
-                const $targetSection = $('#stock-search-input');
-                if ($targetSection.length) {
-                    $('html, body').animate({
-                        scrollTop: Math.max(0, $targetSection.offset().top - 120)
-                    }, 350);
-                }
-            }
+            });
+            $('html, body').animate({ scrollTop: 0 }, 300);
         }
     });
 
-    // 桌面端搜尋按鈕與 Enter 鍵綁定
-    $('#stock-search-btn').off('click').on('click', function () {
-        const keyword = $('#stock-search-input').val().trim();
-        executeStockSearch(keyword, $('#stock-search-result'));
-    });
-
-    $('#stock-search-input').off('keypress').on('keypress', function (e) {
-        if (e.which === 13) { $('#stock-search-btn').click(); }
-    });
-
-    // 手機端搜尋按鈕與 Enter 鍵綁定
-    $('#mobile-stock-search-btn').off('click').on('click', function () {
-        const keyword = $('#mobile-stock-search-input').val().trim();
+    // 搜尋按鈕與 Enter 鍵綁定 (統一使用 mobile-stock-search)
+    $('#mobile-stock-search-btn, #stock-search-btn').off('click').on('click', function () {
+        const keyword = ($('#mobile-stock-search-input').val() || $('#stock-search-input').val() || '').trim();
         executeStockSearch(keyword, $('#mobile-stock-search-result'));
     });
 
-    $('#mobile-stock-search-input').off('keypress').on('keypress', function (e) {
+    $('#mobile-stock-search-input, #stock-search-input').off('keypress').on('keypress', function (e) {
         if (e.which === 13) { $('#mobile-stock-search-btn').click(); }
     });
 
-    // 手機端搜尋切換展開/收合
-    $('#mobile-search-toggle').off('click').on('click', function () {
+    // 搜尋切換展開/收合 (全螢幕通用)
+    $('#mobile-search-toggle').off('click').on('click', function (e) {
+        e.stopPropagation();
         const $container = $('#mobile-search-container');
         if ($container.hasClass('hidden')) {
             $container.removeClass('hidden').hide().slideDown(200, function () {
@@ -967,14 +1184,26 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         }
     });
 
+    // 點擊搜尋框外自動收合搜尋列
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('#mobile-search-toggle, #mobile-search-container').length) {
+            const $container = $('#mobile-search-container');
+            if (!$container.hasClass('hidden')) {
+                $container.slideUp(200, function () {
+                    $(this).addClass('hidden');
+                });
+            }
+        }
+    });
+
     // 載入完成後動作
     $status.text('載入完成');
-    // 顯示更新時間與快取狀態
+    // 顯示更新時間 (樣式統一簡化，縮小寬度，附帶重新整理 icon)
     const $updateTime = $('.data-update-time');
     $updateTime.html(getLastUpdateLabel(dataTimestamp, isFromCache));
     $updateTime
         .css('cursor', 'pointer')
-        .attr('title', '每日 14:15 ~ 14:30 自動即時更新；其餘時段啟用本機快取。\n點擊可手動強制重新連線更新數據。')
+        .attr('title', '台股每日 14:15 ~ 14:30 自動即時更新；點擊可強制重新連線載入數據。')
         .off('click')
         .on('click', function () {
             console.log('🔄 [JOINJO] 使用者手動觸發強制更新');
@@ -983,6 +1212,9 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
 
     setTimeout(() => {
         $('body').removeClass('loading-view');
+        setTimeout(() => {
+            updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
+        }, 50);
     }, isFromCache ? 150 : 600);
 }
 
@@ -1108,6 +1340,16 @@ $(function () {
             window.scrollTo({ top: 0, behavior: 'instant' });
             $('.main-content, #personal-operations-section').scrollTop(0);
         }
+
+        if (target !== 'personal') {
+            setTimeout(() => {
+                updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
+            }, 50);
+        }
+    });
+
+    $(window).on('resize', function () {
+        updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
     });
 
 
@@ -1160,20 +1402,25 @@ function getLastUpdateLabel(timestamp, isFromCache) {
         displayDate.setDate(now.getDate() - 1);
     }
 
-    const y = displayDate.getFullYear();
     const m = String(displayDate.getMonth() + 1).padStart(2, '0');
     const d = String(displayDate.getDate()).padStart(2, '0');
+    const isLive = isLiveUpdateWindow(now);
 
-    if (isLiveUpdateWindow(now)) {
-        const fetchDate = timestamp ? new Date(timestamp) : now;
-        const hh = String(fetchDate.getHours()).padStart(2, '0');
-        const mm = String(fetchDate.getMinutes()).padStart(2, '0');
-        return `即時數據：${y}-${m}-${d} ${hh}:${mm} <span style="color:#00E701; font-weight:800; text-shadow:0 0 8px rgba(0,231,1,0.6);">● LIVE</span>`;
-    }
+    const timeStr = isLive
+        ? `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+        : '14:15';
 
-    const tag = isFromCache
-        ? `<span style="color:#38bdf8; font-weight:700;" title="自本機快取快速載入 (每日 14:15 ~ 14:30 自動即時更新)">[⚡已快取]</span>`
-        : `<span style="color:#00E701; font-weight:700;">[🟢已更新]</span>`;
+    const dotHtml = isLive
+        ? '<span class="w-1.5 h-1.5 rounded-full bg-[#00E701] animate-ping flex-shrink-0"></span>'
+        : '<span class="w-1.5 h-1.5 rounded-full bg-[#00E701] flex-shrink-0"></span>';
 
-    return `最後更新：${y}-${m}-${d} 14:15 ${tag}`;
+    return `
+        <span class="inline-flex items-center gap-1.5 text-slate-300 font-mono text-xs">
+            ${dotHtml}
+            <span>台股: ${m}/${d} ${timeStr}</span>
+            <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+        </span>
+    `;
 }
