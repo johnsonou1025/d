@@ -172,14 +172,16 @@
         <path d="m21 21-4.3-4.3" />
       </svg>
       <input type="text" id="mobile-stock-search-input" placeholder="搜尋股票代碼或名稱 (例: 2330 台積電、2408 南亞科)..."
-        class="w-full bg-[#151C24] text-xs text-white placeholder-slate-500 pl-10 pr-24 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-[#00E701]/60 focus:ring-2 focus:ring-[#00E701]/20 font-mono" />
+        class="w-full bg-[#151C24] text-base sm:text-xs text-white placeholder-slate-500 pl-10 pr-24 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-[#00E701]/60 focus:ring-2 focus:ring-[#00E701]/20 font-mono" />
       <button id="mobile-stock-search-btn"
         class="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-[#00E701] text-black font-black text-xs hover:brightness-110 active:scale-95 transition-all shadow-[0_0_10px_rgba(0,231,1,0.35)]">
         搜尋
       </button>
     </div>
-    <div id="mobile-stock-search-result" class="max-w-2xl mx-auto"></div>
   </div>
+
+  <!-- Search Result Centered Popup Modal -->
+  <div id="mobile-stock-search-result"></div>
 
   <!-- =========================================================================
          2. MOBILE SEGMENTED CONTROL TABS (手機/平板切換分頁 - 獨立於 app-container 之外)
@@ -727,66 +729,6 @@
 
     </div>
   </div>
-
-  <!-- =========================================================================
-         SYNTHESIZER & REAL-TIME SYNC LOGIC
-    ========================================================================= -->
-  <script>
-    $(function () {
-      // --- 搜尋結果彈窗關閉按鈕與點擊外部關閉邏輯 ---
-      function setupCloseBtnObserver(elementId) {
-        let isPrepending = false;
-        const el = document.getElementById(elementId);
-        if (el) {
-          const obs = new MutationObserver(function () {
-            if (isPrepending) return;
-            const $res = $('#' + elementId);
-            if ($res.is(':visible') && $res.children().length > 0) {
-              if ($res.find('.search-close-btn').length === 0) {
-                isPrepending = true;
-                $res.prepend('<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>');
-                isPrepending = false;
-              }
-            }
-          });
-          obs.observe(el, { childList: true });
-        }
-      }
-      setupCloseBtnObserver('mobile-stock-search-result');
-
-      // 點擊搜尋按鈕後也主動檢查並添加關閉按鈕
-      $('#mobile-stock-search-btn').on('click', function () {
-        setTimeout(function () {
-          const $res = $('#mobile-stock-search-result');
-          if ($res.is(':visible') && $res.children().length > 0 && $res.find('.search-close-btn').length === 0) {
-            $res.prepend('<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>');
-          }
-        }, 80);
-      });
-
-      // 點擊關閉按鈕
-      $(document).on('click', '.search-close-btn', function (e) {
-        e.stopPropagation();
-        $('#mobile-stock-search-result').hide();
-      });
-
-      // 點選搜尋框以外任何區域即消失
-      $(document).on('click', function (e) {
-        if (!$(e.target).closest('#mobile-search-container, #mobile-search-toggle').length) {
-          $('#mobile-stock-search-result').hide();
-        }
-      });
-
-      // 按下 Esc 鍵關閉
-      $(document).on('keydown', function (e) {
-        if (e.key === 'Escape') {
-          $('#mobile-stock-search-result').hide();
-          $('#mobile-search-container').slideUp(200).addClass('hidden');
-        }
-      });
-
-    });
-  </script>
 </body>
 
 </html>

@@ -1062,14 +1062,15 @@ function renderSellCards(containerSelector, trades) {
 }
 
 /**
- * 美股即時搜尋 (整合 autoTradingDaily 交易日誌與 DailyStrongMomentum 強勢推薦)
+ * 美股即時搜尋 (整合 autoTradingDaily 交易日誌與 DailyStrongMomentum 強勢推薦，以視窗中央 Popup 呈現)
  */
 function executeUsStockSearch(keyword, $result) {
     if (!keyword) {
-        $result.addClass('hidden').hide().empty();
+        $result.hide().empty();
         return;
     }
 
+    const closeBtnHtml = '<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>';
     const kw = keyword.toLowerCase().trim();
 
     const tradeMatches = usGlobalTrades.filter(t =>
@@ -1087,17 +1088,18 @@ function executeUsStockSearch(keyword, $result) {
 
     if (tradeMatches.length === 0 && strongMatches.length === 0) {
         $result.html(`
-            <div class="p-3 text-xs text-slate-400">
+            ${closeBtnHtml}
+            <div class="text-xs text-slate-400">
                 <span class="text-amber-400 font-bold">美股搜尋：</span> 找不到與「<b class="text-white">${keyword}</b>」相關的交易或強勢推薦紀錄
             </div>
-        `).removeClass('hidden').show();
+        `).fadeIn(150);
         return;
     }
 
     // 按 symbol 分組
     const symbols = [...new Set([...tradeMatches.map(t => t.symbol), ...strongMatches.map(s => s.symbol)])];
 
-    let html = '<div class="p-3 text-xs space-y-3 max-h-80 overflow-y-auto">';
+    let html = `${closeBtnHtml}<div class="text-xs space-y-3">`;
     symbols.forEach(sym => {
         const tList = tradeMatches.filter(t => t.symbol === sym);
         const sList = strongMatches.filter(s => s.symbol === sym);
@@ -1164,28 +1166,39 @@ function executeUsStockSearch(keyword, $result) {
     });
 
     html += '</div>';
-    $result.html(html).removeClass('hidden').show();
+    $result.html(html).fadeIn(150);
 }
 
-// 點擊強勢卡片連動搜尋 (全螢幕統一使用下滑搜尋列)
-$(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function () {
+// 點擊強勢卡片彈出搜尋結果 (不捲動畫面、不聚焦輸入框，維持原視窗位置與比例)
+$(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function (e) {
+    e.stopPropagation();
     const symbol = $(this).data('symbol');
     const stockName = $(this).data('stock');
     const target = symbol || stockName;
+    const $result = $('#mobile-stock-search-result');
+
+    if ($result.is(':visible')) {
+        $result.fadeOut(150);
+        return;
+    }
 
     if (target) {
-        $('#mobile-search-container').removeClass('hidden').slideDown(200, function () {
-            $('#mobile-stock-search-input').val(target).focus();
-            executeUsStockSearch(target, $('#mobile-stock-search-result'));
-        });
-        $('html, body').animate({ scrollTop: 0 }, 300);
+        executeUsStockSearch(target, $result);
     }
 });
 
-// 搜尋按鈕與鍵盤 Enter 事件綁定 (統一使用 mobile-stock-search)
+// 點擊彈窗右上角關閉按鈕 (✕)
+$(document).off('click', '.search-close-btn').on('click', '.search-close-btn', function (e) {
+    e.stopPropagation();
+    $('#mobile-stock-search-result').fadeOut(150);
+});
+
+// 搜尋按鈕與鍵盤 Enter 事件綁定
 $(function () {
-    $('#mobile-stock-search-btn').off('click').on('click', function () {
+    $('#mobile-stock-search-btn').off('click').on('click', function (e) {
+        e.stopPropagation();
         const kw = ($('#mobile-stock-search-input').val() || '').trim();
+        $('#mobile-stock-search-input').blur();
         executeUsStockSearch(kw, $('#mobile-stock-search-result'));
     });
 
@@ -1208,15 +1221,27 @@ $(function () {
         }
     });
 
-    // 點擊搜尋框外自動收合搜尋列
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('#mobile-search-toggle, #mobile-search-container').length) {
+    // 點擊彈窗或搜尋框外部自動關閉
+    $(document).off('click.searchPopup').on('click.searchPopup', function (e) {
+        const $result = $('#mobile-stock-search-result');
+        if ($result.is(':visible') && !$(e.target).closest('#mobile-stock-search-result').length) {
+            $result.fadeOut(150);
+        }
+        if (!$(e.target).closest('#mobile-search-toggle, #mobile-search-container, #mobile-stock-search-result').length) {
             const $container = $('#mobile-search-container');
             if (!$container.hasClass('hidden')) {
                 $container.slideUp(200, function () {
                     $(this).addClass('hidden');
                 });
             }
+        }
+    });
+
+    // 按下 Esc 鍵關閉彈窗與搜尋列
+    $(document).off('keydown.searchPopup').on('keydown.searchPopup', function (e) {
+        if (e.key === 'Escape') {
+            $('#mobile-stock-search-result').fadeOut(150);
+            $('#mobile-search-container').slideUp(200).addClass('hidden');
         }
     });
 });

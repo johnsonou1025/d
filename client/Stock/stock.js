@@ -1061,12 +1061,14 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
     // 支援滑鼠按住拖曳滑動
     enableHorizontalDrag('#today-strong-scroll-wrapper');
 
-    // --- 核心搜尋渲染函式 (同時服務桌面端與手機端) ---
+    // --- 核心搜尋渲染函式 (以視窗中央 Popup 呈現) ---
     function executeStockSearch(keyword, $result) {
         if (!keyword) {
             $result.hide().empty();
             return;
         }
+
+        const closeBtnHtml = '<button type="button" class="search-close-btn" title="關閉搜尋結果">✕</button>';
 
         // 收集所有相關的股票名稱
         const holdingMatches = todayHoldings.filter(item => item.sheetName.includes(keyword));
@@ -1083,11 +1085,11 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
 
         // 如果完全沒找到
         if (holdingMatches.length === 0 && soldMatches.length === 0) {
-            $result.html(`<span style="color: var(--text-muted);">狀態：</span> 完全沒進場過 (找不到與「${keyword}」相關的紀錄)`).show();
+            $result.html(`${closeBtnHtml}<span style="color: var(--text-muted);">狀態：</span> 完全沒進場過 (找不到與「${keyword}」相關的紀錄)`).fadeIn(150);
             return;
         }
 
-        let resultHtml = '';
+        let resultHtml = closeBtnHtml;
 
         if (holdingMatches.length > 0) {
             const holdingDetails = holdingMatches.map(m => {
@@ -1109,27 +1111,38 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
             resultHtml += `<div><span style="color: var(--text-muted); font-weight: bold;">[目前已賣出]</span>${soldDetails}</div>`;
         }
 
-        $result.html(resultHtml).show();
+        $result.html(resultHtml).fadeIn(150);
     }
 
-    // 點擊卡片快速搜尋個股 (全螢幕統一使用下滑搜尋列)
-    $(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function () {
+    // 點擊卡片快速彈出搜尋結果 (不捲動畫面、不聚焦輸入框，維持原視窗位置與比例)
+    $(document).off('click', '.strong-stock-card').on('click', '.strong-stock-card', function (e) {
+        e.stopPropagation();
         const stockName = $(this).data('stock');
         const stockCode = $(this).data('code');
         const target = stockName || stockCode;
+        const $result = $('#mobile-stock-search-result');
+
+        if ($result.is(':visible')) {
+            $result.fadeOut(150);
+            return;
+        }
 
         if (target) {
-            $('#mobile-search-container').removeClass('hidden').slideDown(200, function () {
-                $('#mobile-stock-search-input').val(target).focus();
-                executeStockSearch(target, $('#mobile-stock-search-result'));
-            });
-            $('html, body').animate({ scrollTop: 0 }, 300);
+            executeStockSearch(target, $result);
         }
     });
 
-    // 搜尋按鈕與 Enter 鍵綁定 (統一使用 mobile-stock-search)
-    $('#mobile-stock-search-btn').off('click').on('click', function () {
+    // 點擊彈窗右上角關閉按鈕 (✕)
+    $(document).off('click', '.search-close-btn').on('click', '.search-close-btn', function (e) {
+        e.stopPropagation();
+        $('#mobile-stock-search-result').fadeOut(150);
+    });
+
+    // 搜尋按鈕與 Enter 鍵綁定
+    $('#mobile-stock-search-btn').off('click').on('click', function (e) {
+        e.stopPropagation();
         const keyword = ($('#mobile-stock-search-input').val() || '').trim();
+        $('#mobile-stock-search-input').blur();
         executeStockSearch(keyword, $('#mobile-stock-search-result'));
     });
 
@@ -1152,15 +1165,27 @@ function renderDashboard(rawData, isFromCache, dataTimestamp) {
         }
     });
 
-    // 點擊搜尋框外自動收合搜尋列
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('#mobile-search-toggle, #mobile-search-container').length) {
+    // 點擊彈窗或搜尋框外部自動關閉
+    $(document).off('click.searchPopup').on('click.searchPopup', function (e) {
+        const $result = $('#mobile-stock-search-result');
+        if ($result.is(':visible') && !$(e.target).closest('#mobile-stock-search-result').length) {
+            $result.fadeOut(150);
+        }
+        if (!$(e.target).closest('#mobile-search-toggle, #mobile-search-container, #mobile-stock-search-result').length) {
             const $container = $('#mobile-search-container');
             if (!$container.hasClass('hidden')) {
                 $container.slideUp(200, function () {
                     $(this).addClass('hidden');
                 });
             }
+        }
+    });
+
+    // 按下 Esc 鍵關閉彈窗與搜尋列
+    $(document).off('keydown.searchPopup').on('keydown.searchPopup', function (e) {
+        if (e.key === 'Escape') {
+            $('#mobile-stock-search-result').fadeOut(150);
+            $('#mobile-search-container').slideUp(200).addClass('hidden');
         }
     });
 
