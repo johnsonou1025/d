@@ -339,18 +339,6 @@ function getCarouselButtons(scrollEl) {
             next: document.getElementById('today-strong-next')
         };
     }
-    if (id === 'today-buy-scroll-wrapper') {
-        return {
-            prev: document.getElementById('today-buy-prev'),
-            next: document.getElementById('today-buy-next')
-        };
-    }
-    if (id === 'today-sell-scroll-wrapper') {
-        return {
-            prev: document.getElementById('today-sell-prev'),
-            next: document.getElementById('today-sell-next')
-        };
-    }
     return { prev: null, next: null };
 }
 
@@ -554,7 +542,7 @@ function processRawUsStrong(rawData, trades = []) {
 function processRawUsTrades(rawData) {
     if (!Array.isArray(rawData)) return [];
 
-    return rawData
+    const baseList = rawData
         .filter(row => row && row.date && row.symbol)
         .map(row => {
             const symbol = String(row.symbol || '').trim().toUpperCase();
@@ -563,8 +551,26 @@ function processRawUsTrades(rawData) {
             const stockName = meta.name || enName || symbol;
             const status = String(row.status || '').trim();
             let closePrice = String(row.closePrice || '').trim();
-            if (closePrice && !closePrice.startsWith('$') && !isNaN(parseFloat(closePrice.replace(/,/g, '')))) {
+            const closePriceNum = parseFloat(closePrice.replace(/[^0-9.-]/g, '')) || 0;
+            if (closePrice && !closePrice.startsWith('$') && !isNaN(closePriceNum)) {
                 closePrice = `$${closePrice}`;
+            }
+
+            const pnl = String(row.pnl || '').trim();
+            let rate = String(row.rate || '').trim();
+            let hasPercentInPnl = false;
+            let pnlVal = 0;
+
+            if (pnl) {
+                const rateMatch = pnl.match(/\(([+-]?\d+(?:\.\d+)?)%\)/);
+                if (rateMatch) {
+                    if (!rate) rate = rateMatch[1];
+                    hasPercentInPnl = true;
+                }
+                const valMatch = pnl.match(/^([+-]?\d+(?:,\d{3})*(?:\.\d+)?)/);
+                if (valMatch) {
+                    pnlVal = parseFloat(valMatch[1].replace(/,/g, '')) || 0;
+                }
             }
 
             let state = 'hold';
@@ -579,12 +585,88 @@ function processRawUsTrades(rawData) {
                 symbol: symbol,
                 enName: enName,
                 stockName: stockName,
+                displayName: (meta.name && meta.name !== symbol) ? `${symbol} ${meta.name}` : symbol,
                 fullName: meta.name ? `${meta.name} ${symbol}` : `${enName} ${symbol}`,
                 closePrice: closePrice,
+                closePriceNum: closePriceNum,
+                pnl: pnl,
+                pnlVal: pnlVal,
+                hasPercentInPnl: hasPercentInPnl,
+                rate: rate,
                 status: status,
-                state: state
+                state: state,
+                sharesSold: 0,
+                entryPrice: 0,
+                investedAmount: 0,
+                profitAmount: 0
             };
         });
+
+    // 依時間由舊到新推算「固定 2 股進場」下的每筆出場/減碼成本與獲利
+    // 進場 = 2 股；減碼50% = 賣出 1 股 (剩餘 1 股)；出場 = 賣出剩餘股數 (已減碼為 1 股，未減碼為 2 股)
+    const positionMap = new Map();
+    const chronological = [...baseList].reverse();
+
+    chronological.forEach(item => {
+        const sym = item.symbol;
+        const price = item.closePriceNum;
+
+        if (item.state === 'buy') {
+            positionMap.set(sym, { entryPrice: price, remainingShares: 2 });
+        } else if (item.state === 'sell') {
+            const isReduce = item.status.includes('減碼');
+            const pos = positionMap.get(sym);
+            let entryPrice = 0;
+            let sharesSold = isReduce ? 1 : 2;
+
+            if (pos && pos.entryPrice > 0) {
+                entryPrice = pos.entryPrice;
+                if (isReduce) {
+                    sharesSold = 1;
+                    pos.remainingShares = Math.max(1, pos.remainingShares - 1);
+                } else {
+                    sharesSold = pos.remainingShares || 2;
+                    positionMap.delete(sym);
+                }
+            } else {
+                const rateNum = parseFloat(item.rate);
+                if (item.hasPercentInPnl && !isNaN(rateNum) && (1 + rateNum / 100) > 0) {
+                    entryPrice = price / (1 + rateNum / 100);
+                    if (isReduce) {
+                        sharesSold = 1;
+                        positionMap.set(sym, { entryPrice: entryPrice, remainingShares: 1 });
+                    } else {
+                        const perShareDiff = price - entryPrice;
+                        if (Math.abs(perShareDiff) > 0.01 && Math.abs(item.pnlVal / perShareDiff) < 0.75) {
+                            sharesSold = 1;
+                        } else {
+                            sharesSold = 2;
+                        }
+                    }
+                } else {
+                    entryPrice = price - item.pnlVal;
+                    if (isReduce) {
+                        sharesSold = 1;
+                        positionMap.set(sym, { entryPrice: entryPrice, remainingShares: 1 });
+                    } else {
+                        sharesSold = 2;
+                    }
+                }
+            }
+
+            if (!item.rate && entryPrice > 0) {
+                const calcRate = ((price - entryPrice) / entryPrice) * 100;
+                item.rate = calcRate.toFixed(2);
+            }
+
+            item.sharesSold = sharesSold;
+            item.entryPrice = entryPrice;
+            item.investedAmount = entryPrice * sharesSold;
+            item.profitAmount = (price - entryPrice) * sharesSold;
+        }
+    });
+
+    return baseList;
 }
 
 /**
@@ -656,6 +738,47 @@ async function loadUsStockData(forceRefresh = false) {
 }
 
 /**
+ * 渲染美股操作績效 (#op-card-fixed-qty：固定 2 股進場，幣別 USD)
+ */
+function renderUsOperationsSummary(trades) {
+    let sumProfit = 0;
+    let sumAmount = 0;
+
+    const now = new Date();
+    const yInt = now.getFullYear();
+    const startDate = new Date(yInt, 0, 1, 0, 0, 0, 0);
+    const endDate = new Date(yInt, 11, 31, 23, 59, 59, 999);
+    const elapsedDays = Math.max(1, (now - startDate) / (1000 * 60 * 60 * 24));
+
+    trades.filter(item => {
+        if (item.state !== 'sell' || !item.date) return false;
+        const tradeDate = new Date(item.date);
+        return tradeDate >= startDate && tradeDate <= endDate;
+    }).forEach(item => {
+        sumProfit += (Number(item.profitAmount) || 0);
+        sumAmount += (Number(item.investedAmount) || 0);
+    });
+
+    const sumRate = sumAmount > 0 ? (sumProfit / sumAmount * 100) : 0;
+
+    $('#sold-investment-amount-qty').text('$' + Math.round(sumAmount).toLocaleString() + ' USD');
+
+    const $targetEl = $('#sell-month-profit-loss-qty');
+    const profitRounded = Math.round(sumProfit);
+    const profitFormatted = (profitRounded < 0 ? '-$' : '$') + Math.abs(profitRounded).toLocaleString();
+    $targetEl.text(profitFormatted + ' (' + Math.round(sumRate).toLocaleString() + '%)');
+    $targetEl.css('color', sumProfit >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+
+    let irr = 0;
+    if (sumAmount > 0 && elapsedDays > 0) {
+        irr = (Math.pow(1 + (sumProfit / sumAmount), 365 / elapsedDays) - 1) * 100;
+    }
+    $('#sell-month-irr-qty')
+        .text(irr.toFixed(2) + '%')
+        .css('color', irr >= 0 ? 'var(--success-color)' : 'var(--danger-color)');
+}
+
+/**
  * 渲染美股儀表板主邏輯
  */
 function renderUsDashboard(rawData, isFromCache, dataTimestamp) {
@@ -676,12 +799,26 @@ function renderUsDashboard(rawData, isFromCache, dataTimestamp) {
         return;
     }
 
+    // --- 0. 渲染左側操作績效 (#op-card-fixed-qty) ---
+    renderUsOperationsSummary(trades);
+
     // --- 1. 渲染強勢美股推薦卡片 (#today-strong) (直接載入近5日推薦) ---
     renderStrongSection(strongStocks);
 
-    // --- 2. 渲染操作建議卡片 (建議買進 & 建議賣出) (直接載入近5日數據) ---
-    renderBuyCards('#today-buy-cards', trades);
-    renderSellCards('#today-sell-cards', trades);
+    // --- 2. 渲染操作建議表格 (建議買進 & 建議賣出，與 index.html #today-suggestions 一致) ---
+    const todayStr = getTodayString();
+    const isTodayUpdated = trades.some(t => t.date === todayStr);
+
+    const buyTargetDate = isTodayUpdated
+        ? todayStr
+        : (getLastDateByState(trades, 'buy') || todayStr);
+
+    const sellTargetDate = isTodayUpdated
+        ? todayStr
+        : (getLastDateByState(trades, 'sell') || todayStr);
+
+    renderSellTable('#today-sell .data-table', trades, sellTargetDate);
+    renderBuyTable('#today-buy .data-table', trades, buyTargetDate);
 
     // --- 3. 橫向捲動按鈕綁定 (廣告輪播級流暢滑動，不循環) ---
     // 強勢股捲動
@@ -703,55 +840,13 @@ function renderUsDashboard(rawData, isFromCache, dataTimestamp) {
         scrollCardCarousel('#today-strong-scroll-wrapper', 1);
     });
 
-    // 建議買進捲動
-    $('#today-buy-prev').off('click').on('click', function () {
-        const scrollEl = document.getElementById('today-buy-scroll-wrapper');
-        if (scrollEl && scrollEl.scrollLeft > 4) {
-            $(this).prop('disabled', false).removeClass('is-disabled');
-        }
-        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
-        scrollCardCarousel('#today-buy-scroll-wrapper', -1);
-    });
-    $('#today-buy-next').off('click').on('click', function () {
-        const scrollEl = document.getElementById('today-buy-scroll-wrapper');
-        const maxScroll = scrollEl ? Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth) : 0;
-        if (scrollEl && (maxScroll === 0 || scrollEl.scrollLeft < maxScroll - 4)) {
-            $(this).prop('disabled', false).removeClass('is-disabled');
-        }
-        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
-        scrollCardCarousel('#today-buy-scroll-wrapper', 1);
-    });
-
-    // 建議賣出捲動
-    $('#today-sell-prev').off('click').on('click', function () {
-        const scrollEl = document.getElementById('today-sell-scroll-wrapper');
-        if (scrollEl && scrollEl.scrollLeft > 4) {
-            $(this).prop('disabled', false).removeClass('is-disabled');
-        }
-        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
-        scrollCardCarousel('#today-sell-scroll-wrapper', -1);
-    });
-    $('#today-sell-next').off('click').on('click', function () {
-        const scrollEl = document.getElementById('today-sell-scroll-wrapper');
-        const maxScroll = scrollEl ? Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth) : 0;
-        if (scrollEl && (maxScroll === 0 || scrollEl.scrollLeft < maxScroll - 4)) {
-            $(this).prop('disabled', false).removeClass('is-disabled');
-        }
-        if ($(this).prop('disabled') || $(this).hasClass('is-disabled')) return;
-        scrollCardCarousel('#today-sell-scroll-wrapper', 1);
-    });
-
-    // 初始更新三大區塊按鈕狀態
+    // 初始更新強勢股輪播按鈕狀態
     setTimeout(() => {
         updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
-        updateCarouselButtons(document.getElementById('today-buy-scroll-wrapper'));
-        updateCarouselButtons(document.getElementById('today-sell-scroll-wrapper'));
     }, 50);
 
-    // 啟用三區的滑鼠拖曳橫向捲動
+    // 啟用強勢股滑鼠拖曳橫向捲動
     enableHorizontalDrag('#today-strong-scroll-wrapper');
-    enableHorizontalDrag('#today-buy-scroll-wrapper');
-    enableHorizontalDrag('#today-sell-scroll-wrapper');
 
     // --- 4. 頂部狀態列更新 (樣式統一簡化，縮小寬度，附帶重新整理 icon) ---
     $status.text('載入完成');
@@ -789,16 +884,12 @@ function renderUsDashboard(rawData, isFromCache, dataTimestamp) {
         $('body').removeClass('loading-view');
         setTimeout(() => {
             updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
-            updateCarouselButtons(document.getElementById('today-buy-scroll-wrapper'));
-            updateCarouselButtons(document.getElementById('today-sell-scroll-wrapper'));
         }, 50);
     }, isFromCache ? 150 : 500);
 }
 
 $(window).on('resize', function () {
     updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
-    updateCarouselButtons(document.getElementById('today-buy-scroll-wrapper'));
-    updateCarouselButtons(document.getElementById('today-sell-scroll-wrapper'));
 });
 
 /**
@@ -894,170 +985,73 @@ function renderStrongCards(containerSelector, strongData) {
 }
 
 /**
- * 渲染建議買進卡片 (#today-buy-cards) (直接顯示近5日買進推薦)
+ * 取得該 state 最後一筆的日期
  */
-function renderBuyCards(containerSelector, trades) {
-    const $container = $(containerSelector);
-    $container.empty();
+function getLastDateByState(trades, state) {
+    const filtered = trades.filter(t => t.state === state && t.date);
+    if (filtered.length === 0) return null;
+    return filtered.reduce((latest, t) => (!latest || t.date > latest ? t.date : latest), filtered[filtered.length - 1].date);
+}
 
-    const buyTrades = trades.filter(t => t.state === 'buy');
+/**
+ * 取得今天的日期字串 (YYYY-MM-DD)
+ */
+function getTodayString() {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+}
 
-    if (!Array.isArray(buyTrades) || buyTrades.length === 0) {
-        $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#0D1117] border border-white/10 rounded-2xl">今日無建議買進股票</div>');
-        $('#today-buy-date-pill').text('無買進推薦');
+/**
+ * 渲染建議賣出表格 (#today-sell .data-table)
+ */
+function renderSellTable(selector, trades, targetDate) {
+    const $table = $(selector);
+    $table.find('.table-body').empty();
+
+    const filteredTrades = trades.filter(t => t.date === targetDate && t.state === 'sell');
+
+    if (filteredTrades.length === 0) {
+        const emptyMsg = targetDate === getTodayString() ? '今日無建議賣出股票' : '無建議賣出股票';
+        $table.find('.table-body').append(`<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">${emptyMsg}</div></div>`);
         return;
     }
 
-    // 取得所有不同日期 (降冪排序，最新在前)
-    const distinctDates = [...new Set(buyTrades.map(t => t.date).filter(Boolean))].sort().reverse();
-    const recent5Dates = distinctDates.slice(0, 5);
-
-    // 將近 5 天的所有買進推薦股全部放入，依最新日期排在最前 (同日依代碼排序)
-    const filtered = buyTrades
-        .filter(t => t.date && recent5Dates.includes(t.date))
-        .sort((a, b) => {
-            if (b.date !== a.date) return b.date.localeCompare(a.date);
-            return a.symbol.localeCompare(b.symbol);
-        });
-
-    $('#today-buy-date-pill').text(`近5日買進: 共 ${filtered.length} 檔`);
-
-    if (filtered.length === 0) {
-        $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#0D1117] border border-white/10 rounded-2xl">今日無建議買進股票</div>');
-        return;
-    }
-
-    const bgList = getShuffledBgList(filtered.length);
-
-    filtered.forEach((item, index) => {
-        const bgImage = bgList[index] || 'img/card-bg-1.jpg';
-        const symbol = item.symbol;
-        const enName = item.enName || getCompanyShortName(symbol);
-        const closePrice = item.closePrice || '-';
-        const date = item.date || '';
-        const shortDate = formatMonthDay(date);
-
-        const dateBadgeHtml = shortDate
-            ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-black/60 backdrop-blur-md text-slate-200 shadow-sm">${shortDate}</span>`
-            : '';
-
-        const $card = $(`
-            <div class="strong-stock-card relative rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between transition-colors duration-200 hover:border-[#00E701] flex-shrink-0 cursor-pointer" 
-                 style="background: url('${bgImage}') top center / cover no-repeat;"
-                 data-stock="${enName}" data-symbol="${symbol}" title="點擊查看「${enName} (${symbol})」詳細情報">
-              
-              <!-- 上半部視覺區：頂部時間標籤 (時間靠左，僅保留月日，無外框線，佔卡面 1/4) -->
-              <div class="strong-card-visual h-1/4 w-full flex items-start justify-start p-2.5">
-                ${dateBadgeHtml}
-              </div>
-
-              <!-- 下半部純文字排版區 (佔卡面 3/4) -->
-              <div class="strong-card-text h-3/4">
-                <!-- 1. 股票代碼 (移除原先的時間標籤) -->
-                <span class="strong-code-badge inline-flex items-center text-[10px] sm:text-[11px] font-black font-mono px-2.5 py-0.5 rounded-md tracking-wider bg-emerald-500/10 backdrop-blur-md text-[#00E701] border border-emerald-500/30 shadow-[0_0_8px_rgba(0,231,1,0.25)]">
-                  ${symbol}
-                </span>
-
-                <!-- 2. 股票名稱 (英文公司縮寫) -->
-                <h3 class="text-lg sm:text-xl font-black text-[#00E701] drop-shadow-[0_0_16px_rgba(0,231,1,0.6)] tracking-wide my-1 truncate max-w-full px-1" title="${enName}">
-                  ${enName}
-                </h3>
-
-                <!-- 3. 買進收盤價 -->
-                <div class="text-base sm:text-lg font-mono font-bold text-slate-100 tracking-wider text-center mt-0.5">
-                  ${closePrice}
-                </div>
-              </div>
-            </div>
-        `);
-
-        $container.append($card);
+    filteredTrades.forEach(item => {
+        const $tr = $('<div class="table-row"/>');
+        $('<div class="table-cell"/>').text(item.date).appendTo($tr);
+        $('<div class="table-cell"/>').text(item.displayName || item.symbol).appendTo($tr);
+        const numRate = parseFloat(item.rate);
+        const rateText = !isNaN(numRate) ? (numRate + '%') : (item.rate || item.pnl || '0%');
+        $('<div class="table-cell"/>').text(rateText).appendTo($tr);
+        $table.find('.table-body').append($tr);
     });
 }
 
 /**
- * 渲染建議賣出卡片 (#today-sell-cards) (直接顯示近5日出場推薦)
+ * 渲染建議買進表格 (#today-buy .data-table)
  */
-function renderSellCards(containerSelector, trades) {
-    const $container = $(containerSelector);
-    $container.empty();
+function renderBuyTable(selector, trades, targetDate) {
+    const $table = $(selector);
+    $table.find('.table-body').empty();
 
-    const sellTrades = trades.filter(t => t.state === 'sell');
+    const filteredTrades = trades.filter(t => t.date === targetDate && t.state === 'buy');
 
-    if (!Array.isArray(sellTrades) || sellTrades.length === 0) {
-        $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#0D1117] border border-white/10 rounded-2xl">今日無建議賣出股票</div>');
-        $('#today-sell-date-pill').text('無出場推薦');
+    if (filteredTrades.length === 0) {
+        const emptyMsg = targetDate === getTodayString() ? '今日無建議買進股票' : '無建議買進股票';
+        $table.find('.table-body').append(`<div class="table-row"><div class="table-cell" style="grid-column: 1 / -1; justify-content: center; color: var(--text-secondary);">${emptyMsg}</div></div>`);
         return;
     }
 
-    // 取得所有不同日期 (降冪排序，最新在前)
-    const distinctDates = [...new Set(sellTrades.map(t => t.date).filter(Boolean))].sort().reverse();
-    const recent5Dates = distinctDates.slice(0, 5);
-
-    // 將近 5 天的所有出場推薦股全部放入，依最新日期排在最前 (同日依代碼排序)
-    const filtered = sellTrades
-        .filter(t => t.date && recent5Dates.includes(t.date))
-        .sort((a, b) => {
-            if (b.date !== a.date) return b.date.localeCompare(a.date);
-            return a.symbol.localeCompare(b.symbol);
-        });
-
-    $('#today-sell-date-pill').text(`近5日出場: 共 ${filtered.length} 檔`);
-
-    if (filtered.length === 0) {
-        $container.html('<div class="w-full py-8 text-center text-slate-400 font-mono text-sm bg-[#0D1117] border border-white/10 rounded-2xl">今日無建議賣出股票</div>');
-        return;
-    }
-
-    const bgList = getShuffledBgList(filtered.length);
-
-    filtered.forEach((item, index) => {
-        const bgImage = bgList[index] || 'img/card-bg-1.jpg';
-        const symbol = item.symbol;
-        const enName = item.enName || getCompanyShortName(symbol);
-        const closePrice = item.closePrice || '-';
-        const isReduce = item.status.includes('減碼');
-        const date = item.date || '';
-        const shortDate = formatMonthDay(date);
-
-        const dateBadgeHtml = shortDate
-            ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-black/60 backdrop-blur-md text-slate-200 shadow-sm">${shortDate}</span>`
-            : '';
-
-        const nameColorClass = isReduce ? 'text-amber-400 drop-shadow-[0_0_16px_rgba(255,184,0,0.6)]' : 'text-rose-400 drop-shadow-[0_0_16px_rgba(244,63,94,0.6)]';
-        const hoverBorderClass = isReduce ? 'hover:border-amber-400' : 'hover:border-rose-400';
-
-        const $card = $(`
-            <div class="strong-stock-card relative rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between transition-colors duration-200 ${hoverBorderClass} flex-shrink-0 cursor-pointer" 
-                 style="background: url('${bgImage}') top center / cover no-repeat;"
-                 data-stock="${enName}" data-symbol="${symbol}" title="點擊查看「${enName} (${symbol})」詳細情報">
-              
-              <!-- 上半部視覺區：頂部時間標籤 (時間靠左，僅保留月日，無外框線，佔卡面 1/4) -->
-              <div class="strong-card-visual h-1/4 w-full flex items-start justify-start p-2.5">
-                ${dateBadgeHtml}
-              </div>
-
-              <!-- 下半部純文字排版區 (佔卡面 3/4) -->
-              <div class="strong-card-text h-3/4">
-                <!-- 1. 股票代碼 (移除原先的時間標籤) -->
-                <span class="strong-code-badge inline-flex items-center text-[10px] sm:text-[11px] font-black font-mono px-2.5 py-0.5 rounded-md tracking-wider bg-amber-500/10 backdrop-blur-md text-[#FFB800] border border-amber-500/30 shadow-[0_0_8px_rgba(255,184,0,0.25)]">
-                  ${symbol}
-                </span>
-
-                <!-- 2. 股票名稱 (英文公司縮寫) -->
-                <h3 class="text-lg sm:text-xl font-black ${nameColorClass} tracking-wide my-1 truncate max-w-full px-1" title="${enName}">
-                  ${enName}
-                </h3>
-
-                <!-- 3. 出場狀態與價格 -->
-                <div class="text-base sm:text-lg font-mono font-bold text-slate-100 tracking-wider text-center mt-0.5">
-                  ${closePrice}
-                </div>
-              </div>
-            </div>
-        `);
-
-        $container.append($card);
+    filteredTrades.forEach(item => {
+        const $tr = $('<div class="table-row"/>');
+        $('<div class="table-cell"/>').text(item.date).appendTo($tr);
+        $('<div class="table-cell"/>').text(item.displayName || item.symbol).appendTo($tr);
+        const cleanPrice = item.closePrice ? String(item.closePrice).replace(/^\$/, '') : '-';
+        $('<div class="table-cell"/>').text(cleanPrice).appendTo($tr);
+        $table.find('.table-body').append($tr);
     });
 }
 
@@ -1193,8 +1187,33 @@ $(document).off('click', '.search-close-btn').on('click', '.search-close-btn', f
     $('#mobile-stock-search-result').fadeOut(150);
 });
 
-// 搜尋按鈕與鍵盤 Enter 事件綁定
+// 搜尋按鈕、鍵盤事件與手機版分頁切換綁定
 $(function () {
+    // 手機版主內容 Tab 切換 (市場動態 / 操作績效)
+    $('.mobile-tab').on('click', function () {
+        if ($(this).hasClass('active')) return;
+        $('.mobile-tab').removeClass('active');
+        $(this).addClass('active');
+
+        const target = $(this).data('target');
+        if (target === 'personal') {
+            $('.content-wrapper').removeClass('show-main').addClass('show-personal');
+        } else {
+            $('.content-wrapper').removeClass('show-personal').addClass('show-main');
+        }
+
+        if (window.innerWidth <= 1024) {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            $('.main-content, #personal-operations-section').scrollTop(0);
+        }
+
+        if (target !== 'personal') {
+            setTimeout(() => {
+                updateCarouselButtons(document.getElementById('today-strong-scroll-wrapper'));
+            }, 50);
+        }
+    });
+
     $('#mobile-stock-search-btn').off('click').on('click', function (e) {
         e.stopPropagation();
         const kw = ($('#mobile-stock-search-input').val() || '').trim();
