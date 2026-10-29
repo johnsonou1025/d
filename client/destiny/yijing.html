@@ -18,8 +18,6 @@
             /* 宣紙與溫暖亞麻底色 */
             --paper-light: #FAF7F2;
             /* 浮起卡片純淨米白 */
-            --paper-warm: #EBE3D5;
-            /* 次級區塊暖沙色 */
             --ink-deep: #161816;
             /* 徽墨深黑 */
             --ink-charcoal: #2C3531;
@@ -28,11 +26,8 @@
             /* 碑拓淺灰 */
             --celadon: #3D5A58;
             /* 宋代汝窯天青 */
-            --celadon-light: #E6ECEB;
-            /* 淺天青底 */
             --cinnabar: #A8382B;
             /* 硃砂印泥紅 */
-            --cinnabar-hover: #8C2B20;
             --ochre-gold: #B8925A;
             /* 古銅鎏金 */
             --border-hairline: rgba(22, 24, 22, 0.12);
@@ -1038,12 +1033,6 @@
             grid-column: span 2;
         }
 
-        @media (max-width: 680px) {
-            .decision-quadrant.quadrant-full-span {
-                grid-column: span 1;
-            }
-        }
-
         /* 底部行旅羅盤與之卦膠囊列 */
         .itinerary-tags {
             display: grid;
@@ -1239,10 +1228,6 @@
             .spread-grid {
                 grid-template-columns: 1fr;
             }
-
-            .atlas-cards-strip {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 680px) {
@@ -1284,6 +1269,7 @@
                 grid-template-columns: 1fr;
             }
 
+            .decision-quadrant.quadrant-full-span,
             .atlas-card.atlas-full-span {
                 grid-column: span 1;
             }
@@ -1341,7 +1327,7 @@
     <!-- 2. 沉浸式山海雜誌畫報主視覺 -->
     <section class="hero-wrapper">
         <div class="hero-frame">
-            <div class="hero-bg-media" id="heroBgMedia"></div>
+            <div class="hero-bg-media"></div>
 
             <!-- 細線星宿羅盤幾何背景裝飾 -->
             <svg class="hero-astrolabe-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1482,7 +1468,7 @@
         </div>
 
         <!-- 推演結果雙跨頁 -->
-        <div id="resultPanel" class="result-panel">
+        <div class="result-panel">
             <div class="spread-grid">
 
                 <!-- 左頁：宋版碑帖六爻卦畫與核心數據 -->
@@ -1492,7 +1478,7 @@
                         <span>御</span><span>覽</span>
                     </div>
 
-                    <div class="dossier-kicker" id="hexagramPinyin">HEXAGRAM DOSSIER · SONG EDITION</div>
+                    <div class="dossier-kicker">HEXAGRAM DOSSIER · SONG EDITION</div>
                     <div class="dossier-hex-title" id="editorialHexHeadline">火水未濟</div>
                     <div class="hexagram-display" id="hexagramDesc">
                         主卦：火水未濟（上離 (火)、下坎 (水)）
@@ -1651,8 +1637,8 @@
         <section class="curated-atlas-section">
             <div class="section-divider">
                 <div class="section-divider-title">
-                    <h2 id="atlasSectionTitle">財富相貌與金錢引力 · 獨立深度專題</h2>
-                    <span id="atlasSectionSub">Extended Wealth Archetypes &amp; Monetary Dynamics</span>
+                    <h2>財富相貌與金錢引力 · 獨立深度專題</h2>
+                    <span>Extended Wealth Archetypes &amp; Monetary Dynamics</span>
                 </div>
                 <div class="section-formula-note" id="atlasSectionNote">
                     同步自 Google 試算表動態表頭：財富真實相貌 ／ 金錢動態關係
@@ -1711,7 +1697,6 @@
                 short: "乾",
                 nature: "天",
                 element: "金",
-                symbol: "☰",
                 lines: [1, 1, 1],
                 direction: "西北 乾宮",
                 enName: "Heaven · Alpine Peak",
@@ -1724,7 +1709,6 @@
                 short: "兌",
                 nature: "澤",
                 element: "金",
-                symbol: "☱",
                 lines: [1, 1, 0],
                 direction: "正西 兌宮",
                 enName: "Lake · Misty Wetland",
@@ -1737,7 +1721,6 @@
                 short: "離",
                 nature: "火",
                 element: "火",
-                symbol: "☲",
                 lines: [1, 0, 1],
                 direction: "正南 離宮",
                 enName: "Fire · Sunlit Canyon",
@@ -1750,7 +1733,6 @@
                 short: "震",
                 nature: "雷",
                 element: "木",
-                symbol: "☳",
                 lines: [1, 0, 0],
                 direction: "正東 震宮",
                 enName: "Thunder · Awakening Forest",
@@ -1763,7 +1745,6 @@
                 short: "巽",
                 nature: "風",
                 element: "木",
-                symbol: "☴",
                 lines: [0, 1, 1],
                 direction: "東南 巽宮",
                 enName: "Wind · Whispering Pines",
@@ -1776,7 +1757,6 @@
                 short: "坎",
                 nature: "水",
                 element: "水",
-                symbol: "☵",
                 lines: [0, 1, 0],
                 direction: "正北 坎宮",
                 enName: "Water · Deep Ravine",
@@ -1789,7 +1769,6 @@
                 short: "艮",
                 nature: "山",
                 element: "土",
-                symbol: "☶",
                 lines: [0, 0, 1],
                 direction: "東北 艮宮",
                 enName: "Mountain · Silent Sanctuary",
@@ -1802,7 +1781,6 @@
                 short: "坤",
                 nature: "地",
                 element: "土",
-                symbol: "☷",
                 lines: [0, 0, 0],
                 direction: "西南 坤宮",
                 enName: "Earth · Golden Terraces",
@@ -1838,7 +1816,7 @@
         const hexSheetCache = new Map();
         let activeFetchToken = 0;
 
-        // 精選名卦古籍旅宿判詞庫 (作為載入瞬間或離線時的預設典藏文案)
+        // 精選名卦古籍旅宿判詞庫 (作為離線時的預設典藏文案)
         const curatedJudgments = {
             "火風鼎": "「鼎，元吉，亨。」—— 木火相生，化生萬物。如宋代汝窯開窯之刻，萬象更新、器宇軒昂，最適合展開跨界合作與文化行旅。",
             "火水未濟": "「未濟，亨。小狐汔濟，濡其尾。」—— 火在上而水在下，萬事處於破曉前的醞釀期。此時不急於強渡關山，宜在旅途中留白養晦。",
@@ -1872,20 +1850,42 @@
             return 1;
         }
 
-        // 生成本地端備援決策文案（完全對應新版 GAS 回傳之 JSON Key 結構：5大核心主題 + 2大獨立專題）
-        function buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName) {
+        // 生成五大核心維度之本地端備援條目（供網路異常或雲端無回傳欄位時共用）
+        function getDefaultCorePillars(hexName, upperObj, lowerObj) {
+            return [
+                [
+                    "事業格局",
+                    `【${hexName}】外卦屬${upperObj.element}、內卦屬${lowerObj.element}。外境展現「${upperObj.landscape}」之氣度，宜順勢拓展核心版圖，以穩健節奏築起長遠事業護城河。`
+                ],
+                [
+                    "人生重大轉折與決策",
+                    `面對重大轉折宜審時度勢，外察「${upperObj.name}」之時機、內守「${lowerObj.name}」之定力，先求內在立場清明，再順勢推進關鍵決策。`
+                ],
+                [
+                    "職場與人際合夥",
+                    `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`
+                ],
+                [
+                    "自身狀態與潛能盲點",
+                    `切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區，養足底氣再行出擊。`
+                ],
+                [
+                    "財富格局",
+                    `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
+                ]
+            ];
+        }
+
+        // 生成離線備援完整資料物件
+        function buildLocalFallbackData(hexName, upperObj, lowerObj) {
             return {
                 id: `${upperObj.short}${lowerObj.short}`,
-                hexName: hexName,
+                hexName,
                 upper: upperObj.name,
                 lower: lowerObj.name,
                 coreMeaning: curatedJudgments[hexName] ||
                     `「${hexName}之象，外${upperObj.nature}而內${lowerObj.nature}。」—— 觀天之道，執天之行。當外境之${upperObj.landscape}遇見內在之${lowerObj.landscape}，萬物在動靜之間自有定數。`,
-                "事業格局": `外卦屬${upperObj.element}、內卦屬${lowerObj.element}。外境展現「${upperObj.landscape}」之氣度，宜順勢拓展核心版圖，以穩健節奏築起長遠事業護城河。`,
-                "人生重大轉折與決策": `本次推演第 ${lineRemainder} 爻發動，本卦「${hexName}」轉化為之卦「${changedHexName}」。面對重大轉折宜審時度勢，先求內在立場清明，再順勢推進關鍵決策。`,
-                "職場與人際合夥": `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`,
-                "自身狀態與潛能盲點": `留意第 ${lineRemainder} 爻動變所帶來的能量起伏。切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區。`,
-                "財富格局": `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順道而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
+                ...Object.fromEntries(getDefaultCorePillars(hexName, upperObj, lowerObj))
             };
         }
 
@@ -1909,7 +1909,7 @@
         function parseDynamicHeaderMeta(rawHeaderKey, index) {
             const cleanKey = String(rawHeaderKey).trim();
             // 若表頭帶有「主題一：事業格局」或「1. 事業格局」這類前綴，拆分為簡潔主標題，或保留原名
-            const displayTitle = cleanKey
+            const title = cleanKey
                 .replace(/^(主題[一二三四五六七八九十\d]+|\d+)[：:.\s·・、]*/, '')
                 .trim() || cleanKey;
 
@@ -1941,27 +1941,12 @@
                 enTag = "Expedition & Compass";
             }
 
-            // 兼容舊版若試算表回傳英文 key 的中文名稱轉換
-            const legacyKeyMap = {
-                career: "事業格局",
-                wealth: index === 0 ? "事業格局" : "財富格局",
-                decision: "人生重大轉折與決策",
-                partner: "職場與人際合夥",
-                blindspot: "自身狀態與潛能盲點"
-            };
-
-            const finalTitle = legacyKeyMap[cleanKey] || displayTitle;
-            if (finalTitle === "事業格局") {
-                enTag = "Career & Enterprise Horizon";
-            } else if (finalTitle === "財富格局") {
-                enTag = "Wealth & Asset Prosperity";
-            }
             const isHighlight = /盲點|警示|注意|blindspot/i.test(cleanKey);
 
             return {
                 roman: `${toRomanNumeral(index + 1)}.`,
                 enTag,
-                title: finalTitle,
+                title,
                 isHighlight
             };
         }
@@ -2060,37 +2045,10 @@
             );
 
             // 前 5 欄固定分流至 #dynamicDecisionGrid，第 6 個動態欄起（slice(5)）只要有標題就自動在 #atlasCardsStrip 建立 .atlas-card
-            const gridPool = rawDynamicEntries.slice(0, 5);
-            const atlasPool = rawDynamicEntries.slice(5);
-
-            // 智慧備援：若離線或雲端未傳回前 5 欄時，補齊 #dynamicDecisionGrid 基本維度
-            if (gridPool.length === 0) {
-                gridPool.push(
-                    [
-                        "事業格局",
-                        `【${displayHexName}】外卦屬${upperObj.element}、內卦屬${lowerObj.element}。外境展現「${upperObj.landscape}」之氣度，宜順勢拓展核心版圖，以穩健節奏築起長遠事業護城河。`
-                    ],
-                    [
-                        "人生重大轉折與決策",
-                        `面對重大轉折宜審時度勢，外察「${upperObj.name}」之時機、內守「${lowerObj.name}」之定力，先求內在立場清明，再順勢推進關鍵決策。`
-                    ],
-                    [
-                        "職場與人際合夥",
-                        `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`
-                    ],
-                    [
-                        "自身狀態與潛能盲點",
-                        `切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區，養足底氣再行出擊。`
-                    ],
-                    [
-                        "財富格局",
-                        `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
-                    ]
-                );
-            }
-
-            const primaryEntries = gridPool;
-            const extraAtlasEntries = atlasPool;
+            const primaryEntries = rawDynamicEntries.length > 0
+                ? rawDynamicEntries.slice(0, 5)
+                : getDefaultCorePillars(displayHexName, upperObj, lowerObj);
+            const extraAtlasEntries = rawDynamicEntries.slice(5);
 
             // 3. 更新上方 #dynamicDecisionGrid 標題與卡片內容
             const zhNums = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
@@ -2162,7 +2120,7 @@
         }
 
         // 異步串接 Google Sheet 資料庫 (支援 ?hex= 與 ?upper=&lower= 雙重比對)
-        async function fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName) {
+        async function fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj) {
             const currentToken = ++activeFetchToken;
             const cacheKey = `${upperObj.short}-${lowerObj.short}-${hexName}`;
 
@@ -2231,14 +2189,14 @@
                         hexSheetCache.set(cacheKey, retryJson.data);
                         renderDestinationSheetData(retryJson.data, upperObj, lowerObj, true);
                     } else {
-                        const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                        const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj);
                         renderDestinationSheetData(fallback, upperObj, lowerObj, false);
                     }
                 }
             } catch (err) {
                 console.warn("Google Sheet API 調閱失敗，切換至內建古籍備援：", err);
                 if (currentToken !== activeFetchToken) return;
-                const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj);
                 renderDestinationSheetData(fallback, upperObj, lowerObj, false);
             }
         }
@@ -2256,21 +2214,15 @@
             const upperSum = zodiac + month + day;
             const lowerSum = zodiac + month + day + time;
 
-            let upperRemainder = upperSum % 8;
-            if (upperRemainder === 0) upperRemainder = 8;
-
-            let lowerRemainder = lowerSum % 8;
-            if (lowerRemainder === 0) lowerRemainder = 8;
-
-            let lineRemainder = lowerSum % 6;
-            if (lineRemainder === 0) lineRemainder = 6;
+            const upperRemainder = (upperSum % 8) || 8;
+            const lowerRemainder = (lowerSum % 8) || 8;
+            const lineRemainder = (lowerSum % 6) || 6;
 
             const upperObj = trigrams[upperRemainder];
             const lowerObj = trigrams[lowerRemainder];
 
             // 組合鍵值查表
-            const key = `${upperRemainder}-${lowerRemainder}`;
-            const hexName = hexagramMap[key] || `${upperObj.name.split(' ')[0]}${lowerObj.name.split(' ')[0]}卦`;
+            const hexName = hexagramMap[`${upperRemainder}-${lowerRemainder}`] || `${upperObj.short}${lowerObj.short}卦`;
 
             // 1. 更新原有的 5 個核心 DOM 節點
             document.getElementById('upperTrigram').innerText = upperObj.name;
@@ -2333,26 +2285,15 @@
             document.getElementById('destRitualVal').innerText =
                 upperObj.ritual;
 
-            document.getElementById('resultPanel').style.display = 'block';
-
             // 6. 點擊 .btn-calc 後才呼叫 Google Sheet API 填寫數據並移動畫面至 .destination-column；
             //    未點擊前保留「正在自雲端「易經六十四卦資料庫」調閱卷宗...」初始狀態
             if (shouldScroll) {
-                fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj);
                 const destColEl = document.querySelector('.destination-column');
                 if (destColEl) {
                     destColEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }
-        }
-
-        // 點擊下方地景畫廊卡片時，快速帶入對應數值並滾動至結果區
-        function applyQuickPreset(month, day, zodiac, time) {
-            document.getElementById('lunarMonth').value = month;
-            document.getElementById('lunarDay').value = day;
-            document.getElementById('zodiac').value = zodiac;
-            document.getElementById('timeBranch').value = time;
-            calculateHexagram(true);
         }
 
         // 頂部導覽列「以當下歲時入卦」快捷功能
