@@ -8,21 +8,33 @@
     <!-- 引入極具人文雜誌感與古籍宋體質感的字體組合 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             /* 靈感來自 Aman Resorts (安縵) & Condé Nast Traveler 的大地亞麻與宋代汝窯青色票 */
-            --paper-bg: #F4EFE6;          /* 宣紙與溫暖亞麻底色 */
-            --paper-light: #FAF7F2;       /* 浮起卡片純淨米白 */
-            --paper-warm: #EBE3D5;        /* 次級區塊暖沙色 */
-            --ink-deep: #161816;          /* 徽墨深黑 */
-            --ink-charcoal: #2C3531;      /* 蒼松炭灰 */
-            --ink-muted: #6E6A63;         /* 碑拓淺灰 */
-            --celadon: #3D5A58;           /* 宋代汝窯天青 */
-            --celadon-light: #E6ECEB;     /* 淺天青底 */
-            --cinnabar: #A8382B;          /* 硃砂印泥紅 */
+            --paper-bg: #F4EFE6;
+            /* 宣紙與溫暖亞麻底色 */
+            --paper-light: #FAF7F2;
+            /* 浮起卡片純淨米白 */
+            --paper-warm: #EBE3D5;
+            /* 次級區塊暖沙色 */
+            --ink-deep: #161816;
+            /* 徽墨深黑 */
+            --ink-charcoal: #2C3531;
+            /* 蒼松炭灰 */
+            --ink-muted: #6E6A63;
+            /* 碑拓淺灰 */
+            --celadon: #3D5A58;
+            /* 宋代汝窯天青 */
+            --celadon-light: #E6ECEB;
+            /* 淺天青底 */
+            --cinnabar: #A8382B;
+            /* 硃砂印泥紅 */
             --cinnabar-hover: #8C2B20;
-            --ochre-gold: #B8925A;        /* 古銅鎏金 */
+            --ochre-gold: #B8925A;
+            /* 古銅鎏金 */
             --border-hairline: rgba(22, 24, 22, 0.12);
             --border-strong: rgba(22, 24, 22, 0.25);
 
@@ -176,7 +188,7 @@
         .hero-bg-media {
             position: absolute;
             inset: 0;
-            background-image: 
+            background-image:
                 linear-gradient(180deg, rgba(16, 22, 22, 0.45) 0%, rgba(16, 22, 22, 0.25) 45%, rgba(16, 22, 22, 0.78) 100%),
                 url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85');
             background-size: cover;
@@ -205,8 +217,13 @@
         }
 
         @keyframes slowRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .hero-top-row {
@@ -520,6 +537,7 @@
                 opacity: 0;
                 transform: translateY(18px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -614,7 +632,8 @@
 
         .yao-stack {
             display: flex;
-            flex-direction: column-reverse; /* 初爻在下，上爻在上 */
+            flex-direction: column-reverse;
+            /* 初爻在下，上爻在上 */
             gap: 14px;
         }
 
@@ -727,6 +746,7 @@
             border: 1px solid var(--border-strong);
             overflow: hidden;
             position: relative;
+            scroll-margin-top: 90px;
         }
 
         .destination-visual {
@@ -821,8 +841,17 @@
         }
 
         @keyframes pulseDot {
-            0%, 100% { opacity: 0.3; transform: scale(0.85); }
-            50% { opacity: 1; transform: scale(1.2); }
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.85);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
 
         .dest-caption-bottom {
@@ -1004,6 +1033,17 @@
             background: rgba(235, 227, 213, 0.32);
         }
 
+        /* 動態奇數欄位自動跨滿雙欄 (確保無論試算表擴充幾個主題皆不留空白缺角) */
+        .decision-quadrant.quadrant-full-span {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 680px) {
+            .decision-quadrant.quadrant-full-span {
+                grid-column: span 1;
+            }
+        }
+
         /* 底部行旅羅盤與之卦膠囊列 */
         .itinerary-tags {
             display: grid;
@@ -1034,7 +1074,8 @@
         }
 
         /* =========================================
-           5. 底部雜誌畫廊：八大先天八卦山海靈境誌 (Curated Landscapes)
+           5. 底部雜誌畫廊：獨立深度專題策展 (.atlas-cards-strip)
+              承接 #dynamicDecisionGrid 前五欄之後的所有擴充主題欄位
         ========================================= */
         .curated-atlas-section {
             margin-top: 88px;
@@ -1042,82 +1083,120 @@
 
         .atlas-cards-strip {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
         }
 
         .atlas-card {
             background: var(--paper-light);
-            border: 1px solid var(--border-hairline);
-            cursor: pointer;
-            transition: all 0.35s ease;
+            border: 1px solid var(--border-strong);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
         .atlas-card:hover {
             border-color: var(--ink-deep);
             transform: translateY(-4px);
-            box-shadow: 0 16px 36px rgba(22, 24, 22, 0.08);
+            box-shadow: 0 20px 44px rgba(22, 24, 22, 0.1);
+        }
+
+        /* 若底部專題為奇數張，最後一張自動橫跨雙欄 */
+        .atlas-card.atlas-full-span {
+            grid-column: span 2;
         }
 
         .atlas-card-thumb {
-            height: 190px;
+            height: 220px;
             overflow: hidden;
             position: relative;
+            background: #1C2221;
         }
 
         .atlas-card-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: saturate(0.75);
-            transition: transform 0.8s ease;
+            filter: saturate(0.78) contrast(1.05);
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .atlas-card:hover .atlas-card-thumb img {
-            transform: scale(1.07);
+            transform: scale(1.06);
+        }
+
+        .atlas-card-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(16, 20, 19, 0.35) 0%, transparent 50%, rgba(16, 20, 19, 0.68) 100%);
+            pointer-events: none;
         }
 
         .atlas-trigram-symbol {
             position: absolute;
-            top: 14px;
-            left: 14px;
-            background: rgba(244, 239, 230, 0.92);
+            top: 16px;
+            left: 18px;
+            z-index: 2;
+            background: rgba(244, 239, 230, 0.94);
             color: var(--ink-deep);
-            padding: 4px 10px;
-            font-size: 0.78rem;
+            border: 1px solid var(--border-strong);
+            padding: 5px 12px;
+            font-size: 0.74rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.14em;
+        }
+
+        .atlas-contrast-pill {
+            position: absolute;
+            bottom: 14px;
+            right: 18px;
+            z-index: 2;
+            background: rgba(22, 24, 22, 0.75);
+            backdrop-filter: blur(6px);
+            color: #E2C799;
+            border: 1px solid rgba(226, 199, 153, 0.35);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
         }
 
         .atlas-card-content {
-            padding: 20px 22px;
+            padding: 28px 32px 32px;
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border-top: 2px solid var(--cinnabar);
         }
 
         .atlas-card-en {
-            font-family: var(--font-serif-en);
-            font-style: italic;
-            font-size: 0.88rem;
-            color: var(--ink-muted);
-            margin-bottom: 4px;
+            font-family: var(--font-sans);
+            font-size: 0.66rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--celadon);
+            margin-bottom: 6px;
+            font-weight: 600;
         }
 
         .atlas-card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 1.28rem;
+            font-weight: 800;
+            color: var(--ink-deep);
+            margin-bottom: 14px;
             letter-spacing: 0.06em;
+            line-height: 1.35;
         }
 
         .atlas-card-desc {
-            font-size: 0.82rem;
-            color: var(--ink-muted);
-            line-height: 1.65;
+            font-size: 0.94rem;
+            color: var(--ink-charcoal);
+            line-height: 1.85;
+            text-align: justify;
+            white-space: pre-line;
         }
 
         /* 頁尾版權與古籍跋文 */
@@ -1147,16 +1226,20 @@
             .booking-concierge-bar {
                 grid-template-columns: 1fr 1fr;
             }
+
             .concierge-field {
                 border-bottom: 1px solid var(--border-hairline);
             }
+
             .btn-calc {
                 grid-column: span 2;
                 padding: 22px;
             }
+
             .spread-grid {
                 grid-template-columns: 1fr;
             }
+
             .atlas-cards-strip {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1166,47 +1249,62 @@
             .editorial-nav {
                 padding: 14px 20px;
             }
+
             .nav-meta-left {
                 display: none;
             }
+
             .hero-wrapper,
             .editorial-main {
                 padding-left: 20px;
                 padding-right: 20px;
             }
+
             .hero-frame {
                 height: auto;
                 min-height: 400px;
                 padding: 28px 24px 64px;
             }
+
             .hero-vertical-poem {
                 display: none;
             }
+
             .booking-concierge-bar {
                 grid-template-columns: 1fr;
             }
+
             .btn-calc {
                 grid-column: span 1;
             }
+
             .editorial-decision-grid,
             .itinerary-tags,
             .atlas-cards-strip {
                 grid-template-columns: 1fr;
             }
+
+            .atlas-card.atlas-full-span {
+                grid-column: span 1;
+            }
+
             .dest-caption-bottom {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
             }
+
             .archive-serial-badge {
                 border-left: none;
                 padding-left: 0;
                 font-size: 1.4rem;
             }
+
             .dossier-column,
             .destination-editorial-body {
                 padding: 26px 22px;
             }
+
             .editorial-footer {
                 flex-direction: column;
                 gap: 12px;
@@ -1247,13 +1345,13 @@
 
             <!-- 細線星宿羅盤幾何背景裝飾 -->
             <svg class="hero-astrolabe-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="200" cy="200" r="190" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="4 6"/>
-                <circle cx="200" cy="200" r="150" stroke="#FAF7F2" stroke-width="0.75"/>
-                <circle cx="200" cy="200" r="95" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="2 4"/>
-                <line x1="200" y1="0" x2="200" y2="400" stroke="#FAF7F2" stroke-width="0.5"/>
-                <line x1="0" y1="200" x2="400" y2="200" stroke="#FAF7F2" stroke-width="0.5"/>
-                <line x1="58" y1="58" x2="342" y2="342" stroke="#FAF7F2" stroke-width="0.5"/>
-                <line x1="342" y1="58" x2="58" y2="342" stroke="#FAF7F2" stroke-width="0.5"/>
+                <circle cx="200" cy="200" r="190" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="4 6" />
+                <circle cx="200" cy="200" r="150" stroke="#FAF7F2" stroke-width="0.75" />
+                <circle cx="200" cy="200" r="95" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="2 4" />
+                <line x1="200" y1="0" x2="200" y2="400" stroke="#FAF7F2" stroke-width="0.5" />
+                <line x1="0" y1="200" x2="400" y2="200" stroke="#FAF7F2" stroke-width="0.5" />
+                <line x1="58" y1="58" x2="342" y2="342" stroke="#FAF7F2" stroke-width="0.5" />
+                <line x1="342" y1="58" x2="58" y2="342" stroke="#FAF7F2" stroke-width="0.5" />
             </svg>
 
             <div class="hero-top-row">
@@ -1363,7 +1461,7 @@
             </div>
 
             <!-- 推演按鈕 -->
-            <button class="btn-calc" onclick="calculateHexagram()">
+            <button class="btn-calc" onclick="calculateHexagram(true)">
                 <span class="btn-calc-en">Cast Oracle</span>
                 <span class="btn-calc-zh">立即展卷推演 <span>→</span></span>
             </button>
@@ -1439,7 +1537,9 @@
                 <!-- 右頁：串接 Google Sheet「易經六十四卦決策資料庫」深度策展報導 -->
                 <div class="destination-column">
                     <div class="destination-visual">
-                        <img id="destImage" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85" alt="卦象自然靈境">
+                        <img id="destImage"
+                            src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85"
+                            alt="卦象自然靈境">
                         <div class="destination-visual-overlay">
                             <div class="dest-coords-bar">
                                 <span class="compass-pill" id="destCompass">SPIRITUAL COMPASS · 離南坎北</span>
@@ -1472,51 +1572,57 @@
                             </blockquote>
                         </div>
 
-                        <!-- 試算表四大決策主題 (2x2 Editorial Decision Matrix) -->
+                        <!-- 試算表動態決策主題矩陣 (Dynamic Editorial Decision Matrix) -->
                         <div class="decision-matrix-header">
-                            <h4>四大維度 · 歲時決策與行旅策展</h4>
-                            <span>Four Strategic Pillars from I-Ching Archive</span>
+                            <h4 id="dynamicMatrixTitle">五大維度 · 歲時決策與行旅策展</h4>
+                            <span id="dynamicMatrixSub">5 Core Strategic Pillars from Google Sheet</span>
                         </div>
 
-                        <div class="editorial-decision-grid">
-                            <!-- 主題一：wealth -->
+                        <div class="editorial-decision-grid" id="dynamicDecisionGrid">
+                            <!-- 預設五大核心維度結構 (尚未點擊 .btn-calc 前統一顯示調閱卷宗提示) -->
                             <article class="decision-quadrant">
                                 <div class="quadrant-top">
                                     <span class="quadrant-index">I.</span>
-                                    <span class="quadrant-en">Wealth &amp; Career Horizon</span>
+                                    <span class="quadrant-en">Career &amp; Enterprise Horizon</span>
                                 </div>
-                                <h5 class="quadrant-title">財富與事業格局</h5>
-                                <p class="quadrant-body" id="sheetWealthText">正在載入財富與事業格局解析...</p>
+                                <h5 class="quadrant-title">事業格局</h5>
+                                <p class="quadrant-body">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                             </article>
 
-                            <!-- 主題二：decision -->
                             <article class="decision-quadrant">
                                 <div class="quadrant-top">
                                     <span class="quadrant-index">II.</span>
                                     <span class="quadrant-en">Pivotal Life Decisions</span>
                                 </div>
                                 <h5 class="quadrant-title">人生重大轉折與決策</h5>
-                                <p class="quadrant-body" id="sheetDecisionText">正在載入重大轉折與決策建議...</p>
+                                <p class="quadrant-body">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                             </article>
 
-                            <!-- 主題三：partner -->
                             <article class="decision-quadrant">
                                 <div class="quadrant-top">
                                     <span class="quadrant-index">III.</span>
                                     <span class="quadrant-en">Alliances &amp; Fellowship</span>
                                 </div>
                                 <h5 class="quadrant-title">職場與人際合夥</h5>
-                                <p class="quadrant-body" id="sheetPartnerText">正在載入職場與人際合夥指南...</p>
+                                <p class="quadrant-body">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                             </article>
 
-                            <!-- 主題四：blindspot -->
                             <article class="decision-quadrant quadrant-blindspot">
                                 <div class="quadrant-top">
                                     <span class="quadrant-index">IV.</span>
                                     <span class="quadrant-en">Inner State &amp; Blindspots</span>
                                 </div>
                                 <h5 class="quadrant-title">自身狀態與潛能盲點</h5>
-                                <p class="quadrant-body" id="sheetBlindspotText">正在載入自身狀態與潛能盲點提醒...</p>
+                                <p class="quadrant-body">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
+                            </article>
+
+                            <article class="decision-quadrant quadrant-full-span">
+                                <div class="quadrant-top">
+                                    <span class="quadrant-index">V.</span>
+                                    <span class="quadrant-en">Wealth &amp; Asset Prosperity</span>
+                                </div>
+                                <h5 class="quadrant-title">財富格局</h5>
+                                <p class="quadrant-body">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                             </article>
                         </div>
 
@@ -1541,69 +1647,49 @@
             </div>
         </div>
 
-        <!-- 5. 先天八卦山海地景圖鑑 (點擊可快速體驗不同卦象風景) -->
+        <!-- 5. 獨立深度專題策展 (.atlas-cards-strip)：對應試算表最後新增之二欄財富與金錢專題 -->
         <section class="curated-atlas-section">
             <div class="section-divider">
                 <div class="section-divider-title">
-                    <h2>先天八宮 · 山海地景索引</h2>
-                    <span>The Eight Archetypal Landscapes of I-Ching</span>
+                    <h2 id="atlasSectionTitle">財富相貌與金錢引力 · 獨立深度專題</h2>
+                    <span id="atlasSectionSub">Extended Wealth Archetypes &amp; Monetary Dynamics</span>
                 </div>
-                <div class="section-formula-note">點擊任一地景卡，可即時預覽該卦象之山海輿圖</div>
+                <div class="section-formula-note" id="atlasSectionNote">
+                    同步自 Google 試算表動態表頭：財富真實相貌 ／ 金錢動態關係
+                </div>
             </div>
 
-            <div class="atlas-cards-strip">
-                <article class="atlas-card" onclick="applyQuickPreset(1, 1, 1, 1)">
+            <div class="atlas-cards-strip" id="atlasCardsStrip">
+                <!-- 獨立專題 01 -->
+                <article class="atlas-card">
                     <div class="atlas-card-thumb">
-                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="乾為天 高原雪峰">
-                        <span class="atlas-trigram-symbol">☰ 乾宮 · 天</span>
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85"
+                            alt="財富真實相貌">
+                        <span class="atlas-trigram-symbol">SPECIAL FEATURE · 專題一</span>
+                        <span class="atlas-contrast-pill">表面光鮮 vs 隱形富豪</span>
                     </div>
                     <div class="atlas-card-content">
                         <div>
-                            <div class="atlas-card-en">The Creative · Alpine Zenith</div>
-                            <h3 class="atlas-card-title">乾為天 · 崑崙雪嶺極境</h3>
-                            <p class="atlas-card-desc">雲海之上的蒼穹雪峰，剛健純粹，宜登高望遠、確立年度宏圖。</p>
+                            <div class="atlas-card-en">True Visage of Wealth · Archetype</div>
+                            <h3 class="atlas-card-title">財富真實相貌</h3>
+                            <p class="atlas-card-desc">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                         </div>
                     </div>
                 </article>
 
-                <article class="atlas-card" onclick="applyQuickPreset(2, 2, 2, 6)">
+                <!-- 獨立專題 02 -->
+                <article class="atlas-card">
                     <div class="atlas-card-thumb">
-                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=800&q=80" alt="坎為水 幽谷深潭">
-                        <span class="atlas-trigram-symbol">☵ 坎宮 · 水</span>
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85"
+                            alt="金錢動態關係">
+                        <span class="atlas-trigram-symbol">SPECIAL FEATURE · 專題二</span>
+                        <span class="atlas-contrast-pill">錢追著你跑 vs 你追著錢跑</span>
                     </div>
                     <div class="atlas-card-content">
                         <div>
-                            <div class="atlas-card-en">The Abysmal · Fjord &amp; Gorge</div>
-                            <h3 class="atlas-card-title">坎為水 · 蒼山峽谷深潭</h3>
-                            <p class="atlas-card-desc">水流而不盈，行險而不失其信。於幽靜峽谷聽泉，沉澱心緒、以柔克剛。</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="atlas-card" onclick="applyQuickPreset(3, 4, 8, 6)">
-                    <div class="atlas-card-thumb">
-                        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" alt="火風鼎 丹霞古林">
-                        <span class="atlas-trigram-symbol">☲ 離巽 · 火風鼎</span>
-                    </div>
-                    <div class="atlas-card-content">
-                        <div>
-                            <div class="atlas-card-en">The Cauldron · Cultural Alchemy</div>
-                            <h3 class="atlas-card-title">火風鼎 · 千年古窯與松林</h3>
-                            <p class="atlas-card-desc">木助火勢，煉器成鼎。適合走訪人文古鎮、茶山書院，吐故納新。</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="atlas-card" onclick="applyQuickPreset(2, 3, 2, 7)">
-                    <div class="atlas-card-thumb">
-                        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" alt="艮為山 雲霧山居">
-                        <span class="atlas-trigram-symbol">☶ 艮宮 · 山</span>
-                    </div>
-                    <div class="atlas-card-content">
-                        <div>
-                            <div class="atlas-card-en">Keeping Still · Cloud Monastery</div>
-                            <h3 class="atlas-card-title">艮為山 · 暮靄空山隱居</h3>
-                            <p class="atlas-card-desc">時止則止，時行則行。在雲霧繚繞的岩山古剎中，體悟止語與安定。</p>
+                            <div class="atlas-card-en">Monetary Gravity &amp; Flow · Dynamics</div>
+                            <h3 class="atlas-card-title">金錢動態關係</h3>
+                            <p class="atlas-card-desc">正在自雲端「易經六十四卦資料庫」調閱卷宗...</p>
                         </div>
                     </div>
                 </article>
@@ -1729,21 +1815,21 @@
         // 2. 完整六十四卦標準對照表 (上卦-下卦 -> 卦名與卦辭意境)
         const hexagramMap = {
             "1-1": "乾為天", "1-2": "天澤履", "1-3": "天火同人", "1-4": "天雷無妄",
-            "1-5": "天風姤", "1-6": "天水訟", "1-7": "天山遯",   "1-8": "天地否",
-            "2-1": "澤天夬", "2-2": "兌為澤", "2-3": "澤火革",   "2-4": "澤雷隨",
-            "2-5": "澤風大過","2-6": "澤水困", "2-7": "澤山咸",   "2-8": "澤地萃",
-            "3-1": "火天大有","3-2": "火澤睽", "3-3": "離為火",   "3-4": "火雷噬嗑",
-            "3-5": "火風鼎", "3-6": "火水未濟","3-7": "火山旅",   "3-8": "火地晉",
-            "4-1": "雷天大壯","4-2": "雷澤歸妹","4-3": "雷火豐",  "4-4": "震為雷",
+            "1-5": "天風姤", "1-6": "天水訟", "1-7": "天山遯", "1-8": "天地否",
+            "2-1": "澤天夬", "2-2": "兌為澤", "2-3": "澤火革", "2-4": "澤雷隨",
+            "2-5": "澤風大過", "2-6": "澤水困", "2-7": "澤山咸", "2-8": "澤地萃",
+            "3-1": "火天大有", "3-2": "火澤睽", "3-3": "離為火", "3-4": "火雷噬嗑",
+            "3-5": "火風鼎", "3-6": "火水未濟", "3-7": "火山旅", "3-8": "火地晉",
+            "4-1": "雷天大壯", "4-2": "雷澤歸妹", "4-3": "雷火豐", "4-4": "震為雷",
             "4-5": "雷風恆", "4-6": "雷水解", "4-7": "雷山小過", "4-8": "雷地豫",
-            "5-1": "風天小畜","5-2": "風澤中孚","5-3": "風火家人","5-4": "風雷益",
-            "5-5": "巽為風", "5-6": "風水渙", "5-7": "風山漸",   "5-8": "風地觀",
+            "5-1": "風天小畜", "5-2": "風澤中孚", "5-3": "風火家人", "5-4": "風雷益",
+            "5-5": "巽為風", "5-6": "風水渙", "5-7": "風山漸", "5-8": "風地觀",
             "6-1": "水天需", "6-2": "水澤節", "6-3": "水火既濟", "6-4": "水雷屯",
-            "6-5": "水風井", "6-6": "坎為水", "6-7": "水山蹇",   "6-8": "水地比",
-            "7-1": "山天大畜","7-2": "山澤損", "7-3": "山火賁",   "7-4": "山雷頤",
-            "7-5": "山風蠱", "7-6": "山水蒙", "7-7": "艮為山",   "7-8": "山地剝",
+            "6-5": "水風井", "6-6": "坎為水", "6-7": "水山蹇", "6-8": "水地比",
+            "7-1": "山天大畜", "7-2": "山澤損", "7-3": "山火賁", "7-4": "山雷頤",
+            "7-5": "山風蠱", "7-6": "山水蒙", "7-7": "艮為山", "7-8": "山地剝",
             "8-1": "地天泰", "8-2": "地澤臨", "8-3": "地火明夷", "8-4": "地雷復",
-            "8-5": "地風升", "8-6": "地水師", "8-7": "地山謙",   "8-8": "坤為地"
+            "8-5": "地風升", "8-6": "地水師", "8-7": "地山謙", "8-8": "坤為地"
         };
 
         // Google Apps Script 易經六十四卦決策資料庫 API 端點
@@ -1786,7 +1872,7 @@
             return 1;
         }
 
-        // 生成本地端備援決策文案（當網路延遲或試算表未命中時維持版面完整性）
+        // 生成本地端備援決策文案（完全對應新版 GAS 回傳之 JSON Key 結構：5大核心主題 + 2大獨立專題）
         function buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName) {
             return {
                 id: `${upperObj.short}${lowerObj.short}`,
@@ -1795,14 +1881,143 @@
                 lower: lowerObj.name,
                 coreMeaning: curatedJudgments[hexName] ||
                     `「${hexName}之象，外${upperObj.nature}而內${lowerObj.nature}。」—— 觀天之道，執天之行。當外境之${upperObj.landscape}遇見內在之${lowerObj.landscape}，萬物在動靜之間自有定數。`,
-                wealth: `外卦屬${upperObj.element}、內卦屬${lowerObj.element}。${upperObj.short}下${lowerObj.short}上之資源配置，宜順應「${upperObj.landscape}」之開闊氣度，穩健佈局中長期資產與核心事業護城河。`,
-                decision: `本次推演第 ${lineRemainder} 爻發動，本卦「${hexName}」轉化為之卦「${changedHexName}」。面對重大轉折宜審時度勢，先求內在立場清明，再順勢推進關鍵決策。`,
-                partner: `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`,
-                blindspot: `留意第 ${lineRemainder} 爻動變所帶來的能量起伏。切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區。`
+                "事業格局": `外卦屬${upperObj.element}、內卦屬${lowerObj.element}。外境展現「${upperObj.landscape}」之氣度，宜順勢拓展核心版圖，以穩健節奏築起長遠事業護城河。`,
+                "人生重大轉折與決策": `本次推演第 ${lineRemainder} 爻發動，本卦「${hexName}」轉化為之卦「${changedHexName}」。面對重大轉折宜審時度勢，先求內在立場清明，再順勢推進關鍵決策。`,
+                "職場與人際合夥": `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`,
+                "自身狀態與潛能盲點": `留意第 ${lineRemainder} 爻動變所帶來的能量起伏。切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區。`,
+                "財富格局": `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順道而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
             };
         }
 
-        // 將回傳的資料物件渲染至 .destination-column
+        // 羅馬數字轉換輔助 (I, II, III, IV, V, VI...)
+        function toRomanNumeral(num) {
+            const romanList = [
+                ["X", 10], ["IX", 9], ["V", 5], ["IV", 4], ["I", 1]
+            ];
+            let result = "";
+            let n = num;
+            for (const [roman, val] of romanList) {
+                while (n >= val) {
+                    result += roman;
+                    n -= val;
+                }
+            }
+            return result || String(num);
+        }
+
+        // 根據動態表頭名稱，智慧匹配國際旅遊/人文雜誌風英文副標與中文主標
+        function parseDynamicHeaderMeta(rawHeaderKey, index) {
+            const cleanKey = String(rawHeaderKey).trim();
+            // 若表頭帶有「主題一：事業格局」或「1. 事業格局」這類前綴，拆分為簡潔主標題，或保留原名
+            const displayTitle = cleanKey
+                .replace(/^(主題[一二三四五六七八九十\d]+|\d+)[：:.\s·・、]*/, '')
+                .trim() || cleanKey;
+
+            // 智慧關鍵字對應英文雜誌欄目名
+            let enTag = `Strategic Dimension ${String(index + 1).padStart(2, '0')}`;
+            if (/相貌|名車名錶|藍白拖|表面光鮮|隱形富豪/i.test(cleanKey)) {
+                enTag = "True Visage of Wealth · Archetype";
+            } else if (/動態關係|錢追著你跑|你追著錢跑/i.test(cleanKey)) {
+                enTag = "Monetary Gravity & Flow · Dynamics";
+            } else if (/財富|資產|財運|理財|wealth|asset/i.test(cleanKey) && !/事業/i.test(cleanKey)) {
+                enTag = "Wealth & Asset Prosperity";
+            } else if (/事業|職涯|功名|career|enterprise/i.test(cleanKey) && !/財富/i.test(cleanKey)) {
+                enTag = "Career & Enterprise Horizon";
+            } else if (/財富|事業|格局/i.test(cleanKey)) {
+                enTag = "Wealth & Career Horizon";
+            } else if (/轉折|決策|選擇|decision/i.test(cleanKey)) {
+                enTag = "Pivotal Life Decisions";
+            } else if (/職場|人際|合夥|貴人|partner/i.test(cleanKey)) {
+                enTag = "Alliances & Fellowship";
+            } else if (/盲點|自身|狀態|潛能|blindspot/i.test(cleanKey)) {
+                enTag = "Inner State & Blindspots";
+            } else if (/感情|姻緣|愛情|婚姻|關係|love/i.test(cleanKey)) {
+                enTag = "Emotional & Sacred Bonds";
+            } else if (/健康|養生|身心|療癒|health/i.test(cleanKey)) {
+                enTag = "Vitality & Mindful Wellbeing";
+            } else if (/流年|歲時|運勢|時機|timing/i.test(cleanKey)) {
+                enTag = "Temporal Cycles & Timing";
+            } else if (/出行|旅遊|方位|遠行|travel/i.test(cleanKey)) {
+                enTag = "Expedition & Compass";
+            }
+
+            // 兼容舊版若試算表回傳英文 key 的中文名稱轉換
+            const legacyKeyMap = {
+                career: "事業格局",
+                wealth: index === 0 ? "事業格局" : "財富格局",
+                decision: "人生重大轉折與決策",
+                partner: "職場與人際合夥",
+                blindspot: "自身狀態與潛能盲點"
+            };
+
+            const finalTitle = legacyKeyMap[cleanKey] || displayTitle;
+            if (finalTitle === "事業格局") {
+                enTag = "Career & Enterprise Horizon";
+            } else if (finalTitle === "財富格局") {
+                enTag = "Wealth & Asset Prosperity";
+            }
+            const isHighlight = /盲點|警示|注意|blindspot/i.test(cleanKey);
+
+            return {
+                roman: `${toRomanNumeral(index + 1)}.`,
+                enTag,
+                title: finalTitle,
+                isHighlight
+            };
+        }
+
+        // 解析底部 .atlas-cards-strip 獨立專題卡片之圖片、對比膠囊標籤與標題
+        const atlasFeaturePhotos = [
+            "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85"
+        ];
+
+        function parseAtlasFeatureMeta(rawHeaderKey, featureIndex, upperObj, lowerObj) {
+            const meta = parseDynamicHeaderMeta(rawHeaderKey, featureIndex + 4);
+            // 擷取括號內的對比副標，若試算表表頭為純標題「財富真實相貌」或「金錢動態關係」則自動配對專屬膠囊標籤
+            const bracketMatch = meta.title.match(/[（(]([^）)]+)[）)]/);
+            const cleanMainTitle = meta.title.replace(/\s*[（(][^）)]+[）)]\s*/g, '').trim() || meta.title;
+
+            let defaultPill = `${upperObj.short}${lowerObj.short} · 深度專題`;
+            if (/相貌|名車名錶|藍白拖|表面光鮮|隱形富豪/.test(meta.title)) {
+                defaultPill = "表面光鮮 vs 隱形富豪";
+            } else if (/動態關係|錢追著|你追著/.test(meta.title)) {
+                defaultPill = "錢追著你跑 vs 你追著錢跑";
+            }
+
+            const contrastPill = bracketMatch ? bracketMatch[1].trim() : defaultPill;
+
+            let photoUrl = atlasFeaturePhotos[featureIndex % atlasFeaturePhotos.length];
+            if (/相貌|名車名錶|藍白拖|隱形富豪/.test(meta.title)) {
+                photoUrl = atlasFeaturePhotos[0];
+            } else if (/動態關係|錢追著/.test(meta.title)) {
+                photoUrl = lowerObj.photo || atlasFeaturePhotos[1];
+            }
+
+            const zhNums = ["一", "二", "三", "四", "五", "六", "七", "八"];
+            const badgeNum = zhNums[featureIndex] || (featureIndex + 1);
+
+            return {
+                badgeLabel: `SPECIAL FEATURE · 專題${badgeNum}`,
+                contrastPill,
+                enTag: meta.enTag,
+                title: cleanMainTitle,
+                photoUrl
+            };
+        }
+
+        // HTML 跳脫處理（防止試算表內容含特殊符號破壞版面）
+        function escapeHtmlText(str) {
+            return String(str ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        // 將回傳的資料物件渲染至 .destination-column (#dynamicDecisionGrid) 與 .atlas-cards-strip (#atlasCardsStrip)
         function renderDestinationSheetData(sheetData, upperObj, lowerObj, isFromCloud) {
             const syncBadge = document.getElementById('sheetSyncBadge');
             const syncText = document.getElementById('sheetSyncText');
@@ -1819,7 +2034,7 @@
                 syncText.innerText = `LOCAL ARCHIVE · 內建古籍備援`;
             }
 
-            // 更新編號、標題與上下卦標記
+            // 1. 更新前 5 個固定基本欄位：id, hexName, upper, lower, coreMeaning
             const formattedId = sheetData.id
                 ? (isNaN(sheetData.id) ? `NO. ${sheetData.id}` : `NO. ${String(sheetData.id).padStart(2, '0')}`)
                 : `NO. --`;
@@ -1830,13 +2045,158 @@
                 `${displayHexName} · ${upperObj.landscape}`;
             document.getElementById('destSheetTrigrams').innerText =
                 `上卦：${sheetData.upper || upperObj.name} ｜ 下卦：${sheetData.lower || lowerObj.name}`;
+            document.getElementById('destCoreMeaning').innerText =
+                sheetData.coreMeaning || "暫無核心大義記載。";
 
-            // 更新五大資料庫欄位：coreMeaning, wealth, decision, partner, blindspot
-            document.getElementById('destCoreMeaning').innerText = sheetData.coreMeaning || "暫無核心大義記載。";
-            document.getElementById('sheetWealthText').innerText = sheetData.wealth || "暫無財富與事業格局記載。";
-            document.getElementById('sheetDecisionText').innerText = sheetData.decision || "暫無重大轉折與決策記載。";
-            document.getElementById('sheetPartnerText').innerText = sheetData.partner || "暫無職場與人際合夥記載。";
-            document.getElementById('sheetBlindspotText').innerText = sheetData.blindspot || "暫無自身狀態與潛能盲點記載。";
+            // 2. 動態擷取第 6 欄起的所有擴充主題欄位（排除前 5 個固定基本 key）
+            const fixedKeys = new Set(["id", "hexName", "upper", "lower", "coreMeaning"]);
+            const rawDynamicEntries = Object.entries(sheetData).filter(
+                ([key, val]) => !fixedKeys.has(key) && String(key).trim() !== "" && val !== null && val !== undefined && String(val).trim() !== ""
+            );
+
+            // 依據您的 JSON 結構明確分流：
+            // (A) 下方 .atlas-cards-strip 獨立專題：匹配「財富真實相貌（名車名錶 vs 藍白拖實力）」、「金錢動態關係（錢追著你跑 vs 你追著錢跑）」或第 5 項之後的新增主題
+            // (B) 上方 #dynamicDecisionGrid 核心矩陣：匹配「事業格局」、「人生重大轉折與決策」、「職場與人際合夥」、「自身狀態與潛能盲點」
+            const isAtlasFeatureKey = (k) => /相貌|名車名錶|藍白拖|表面光鮮|隱形富豪|動態關係|錢追著你跑|你追著錢跑/.test(String(k));
+
+            const gridPool = [];
+            const atlasPool = [];
+
+            rawDynamicEntries.forEach(([k, v]) => {
+                if (isAtlasFeatureKey(k)) {
+                    atlasPool.push([k, v]);
+                } else {
+                    gridPool.push([k, v]);
+                }
+            });
+
+            // 若總欄數超過 5 欄，將前 5 欄留在 #dynamicDecisionGrid，第 6 欄起全數移入 .atlas-cards-strip
+            if (gridPool.length > 5) {
+                const overflow = gridPool.splice(5);
+                atlasPool.push(...overflow);
+            }
+
+            // 紀錄雲端 GAS 是否有實際傳回第 6 欄以後的動態表頭資料
+            const hasCloudAtlasData = atlasPool.length > 0;
+
+            // 智慧備援：若試算表第一列 (rows[0]) 是合併標題且表頭位於第二列 (rows[1])，導致 GAS 未抓到動態表頭時，自動補齊 #dynamicDecisionGrid 五大核心主題
+            if (gridPool.length === 0) {
+                gridPool.push(
+                    [
+                        "事業格局",
+                        `【${displayHexName}】外卦屬${upperObj.element}、內卦屬${lowerObj.element}。外境展現「${upperObj.landscape}」之氣度，宜順勢拓展核心版圖，以穩健節奏築起長遠事業護城河。`
+                    ],
+                    [
+                        "人生重大轉折與決策",
+                        `面對重大轉折宜審時度勢，外察「${upperObj.name}」之時機、內守「${lowerObj.name}」之定力，先求內在立場清明，再順勢推進關鍵決策。`
+                    ],
+                    [
+                        "職場與人際合夥",
+                        `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`
+                    ],
+                    [
+                        "自身狀態與潛能盲點",
+                        `切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區，養足底氣再行出擊。`
+                    ],
+                    [
+                        "財富格局",
+                        `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
+                    ]
+                );
+            } else if (gridPool.length === 4) {
+                // 若試算表僅回傳前 4 欄核心維度，自動補齊第 5 欄「V. 財富格局」
+                gridPool.push([
+                    "財富格局",
+                    `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
+                ]);
+            }
+
+            // .atlas-card-desc 僅帶入 Google Sheet 取得的欄位數據，不放任何預設生成內容
+            const hasVisageFeature = atlasPool.some(([k]) => /相貌|名車名錶|藍白拖|表面光鮮|隱形富豪/.test(String(k)));
+            const hasGravityFeature = atlasPool.some(([k]) => /動態關係|錢追著你跑|你追著錢跑/.test(String(k)));
+
+            if (!hasVisageFeature) {
+                atlasPool.push(["財富真實相貌", ""]);
+            }
+            if (!hasGravityFeature) {
+                atlasPool.push(["金錢動態關係", ""]);
+            }
+
+            const primaryEntries = gridPool;
+            const extraAtlasEntries = atlasPool;
+
+            // 3. 更新上方 #dynamicDecisionGrid 標題與卡片內容
+            const zhNums = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+            const countNum = primaryEntries.length;
+            const countZh = countNum <= 10 ? zhNums[countNum] : countNum;
+            const matrixTitleEl = document.getElementById('dynamicMatrixTitle');
+            const matrixSubEl = document.getElementById('dynamicMatrixSub');
+            if (matrixTitleEl && countNum > 0) {
+                matrixTitleEl.innerText = `${countZh}大維度 · 歲時決策與行旅策展`;
+            }
+            if (matrixSubEl && countNum > 0) {
+                matrixSubEl.innerText = `${countNum} Core Strategic Pillars from Google Sheet`;
+            }
+
+            const gridContainer = document.getElementById('dynamicDecisionGrid');
+            const isOddPrimary = primaryEntries.length % 2 !== 0;
+            gridContainer.innerHTML = primaryEntries.map(([headerKey, cellValue], idx) => {
+                const meta = parseDynamicHeaderMeta(headerKey, idx);
+                const isLastAndOdd = isOddPrimary && idx === primaryEntries.length - 1;
+                const extraClasses = [
+                    meta.isHighlight ? "quadrant-blindspot" : "",
+                    isLastAndOdd ? "quadrant-full-span" : ""
+                ].filter(Boolean).join(" ");
+
+                return `
+                    <article class="decision-quadrant ${extraClasses}">
+                        <div class="quadrant-top">
+                            <span class="quadrant-index">${escapeHtmlText(meta.roman)}</span>
+                            <span class="quadrant-en">${escapeHtmlText(meta.enTag)}</span>
+                        </div>
+                        <h5 class="quadrant-title">${escapeHtmlText(meta.title)}</h5>
+                        <p class="quadrant-body">${escapeHtmlText(cellValue)}</p>
+                    </article>
+                `;
+            }).join('');
+
+            // 4. 根據當前卦象 id，將對應主題（「財富真實相貌」、「金錢動態關係」）的欄位內容渲染至 #atlasCardsStrip .atlas-card-desc
+            const atlasStripEl = document.getElementById('atlasCardsStrip');
+            const atlasNoteEl = document.getElementById('atlasSectionNote');
+            if (atlasNoteEl) {
+                atlasNoteEl.innerText = hasCloudAtlasData
+                    ? `已同步雲端試算表 ID #${sheetData.id || '--'}（${displayHexName}）之獨立專題欄位內容`
+                    : `當前對應 ID #${sheetData.id || '--'}（${displayHexName}）· 待 GAS 表頭指向 rows[1] 後即載入雲端儲存格原文`;
+            }
+
+            if (atlasStripEl && extraAtlasEntries.length > 0) {
+                const isOddAtlas = extraAtlasEntries.length % 2 !== 0;
+                atlasStripEl.innerHTML = extraAtlasEntries.map(([headerKey, cellValue], idx) => {
+                    const featureMeta = parseAtlasFeatureMeta(headerKey, idx, upperObj, lowerObj);
+                    const isLastAndOdd = isOddAtlas && idx === extraAtlasEntries.length - 1;
+                    // 直接取用試算表該 id 列對應此主題之儲存格內容
+                    const directSheetVal = sheetData[headerKey] !== undefined && String(sheetData[headerKey]).trim() !== ""
+                        ? sheetData[headerKey]
+                        : cellValue;
+
+                    return `
+                        <article class="atlas-card ${isLastAndOdd ? 'atlas-full-span' : ''}" data-hex-id="${escapeHtmlText(sheetData.id || '')}" data-theme="${escapeHtmlText(featureMeta.title)}">
+                            <div class="atlas-card-thumb">
+                                <img src="${escapeHtmlText(featureMeta.photoUrl)}" alt="${escapeHtmlText(featureMeta.title)}">
+                                <span class="atlas-trigram-symbol">${escapeHtmlText(featureMeta.badgeLabel)} · ${escapeHtmlText(formattedId)}</span>
+                                <span class="atlas-contrast-pill">${escapeHtmlText(featureMeta.contrastPill)}</span>
+                            </div>
+                            <div class="atlas-card-content">
+                                <div>
+                                    <div class="atlas-card-en">${escapeHtmlText(featureMeta.enTag)}</div>
+                                    <h3 class="atlas-card-title">${escapeHtmlText(featureMeta.title)}</h3>
+                                    <p class="atlas-card-desc">${escapeHtmlText(directSheetVal)}</p>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+            }
         }
 
         // 異步串接 Google Sheet 資料庫 (支援 ?hex= 與 ?upper=&lower= 雙重比對)
@@ -1855,10 +2215,15 @@
             }
 
             // 進入讀取狀態
+            const loadingMsg = '正在自雲端「易經六十四卦資料庫」調閱卷宗...';
             syncBadge.classList.remove('is-synced', 'is-fallback');
             syncBadge.classList.add('is-loading');
             syncText.innerText = `QUERYING GOOGLE SHEET · 調閱【${hexName}】卷宗...`;
             editorialBody.classList.add('is-fetching');
+            document.getElementById('destCoreMeaning').innerText = loadingMsg;
+            document.querySelectorAll('#dynamicDecisionGrid .quadrant-body, #atlasCardsStrip .atlas-card-desc').forEach(el => {
+                el.innerText = loadingMsg;
+            });
 
             try {
                 // 同時傳入 hex、upper、lower 以配合 GAS 的精準與組合搜尋邏輯
@@ -1870,6 +2235,7 @@
 
                 const response = await fetch(`${GAS_API_URL}?${queryParams.toString()}`, {
                     method: "GET",
+                    cache: "no-store",
                     headers: { "Accept": "application/json" }
                 });
 
@@ -1891,7 +2257,10 @@
                         upper: upperObj.short,
                         lower: lowerObj.short
                     });
-                    const retryRes = await fetch(`${GAS_API_URL}?${retryParams.toString()}`);
+                    const retryRes = await fetch(`${GAS_API_URL}?${retryParams.toString()}`, {
+                        method: "GET",
+                        cache: "no-store"
+                    });
                     const retryJson = await retryRes.json();
 
                     if (currentToken !== activeFetchToken) return;
@@ -1912,7 +2281,7 @@
             }
         }
 
-        function calculateHexagram() {
+        function calculateHexagram(shouldScroll = false) {
             const month = parseInt(document.getElementById('lunarMonth').value, 10) || 1;
             const day = parseInt(document.getElementById('lunarDay').value, 10) || 1;
             const zodiac = parseInt(document.getElementById('zodiac').value, 10) || 1;
@@ -2004,8 +2373,15 @@
 
             document.getElementById('resultPanel').style.display = 'block';
 
-            // 6. 呼叫 Google Sheet 易經六十四卦決策資料庫 API 填寫 .destination-column 內容
-            fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+            // 6. 點擊 .btn-calc 後才呼叫 Google Sheet API 填寫數據並移動畫面至 .destination-column；
+            //    未點擊前保留「正在自雲端「易經六十四卦資料庫」調閱卷宗...」初始狀態
+            if (shouldScroll) {
+                fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                const destColEl = document.querySelector('.destination-column');
+                if (destColEl) {
+                    destColEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         }
 
         // 點擊下方地景畫廊卡片時，快速帶入對應數值並滾動至結果區
@@ -2014,8 +2390,7 @@
             document.getElementById('lunarDay').value = day;
             document.getElementById('zodiac').value = zodiac;
             document.getElementById('timeBranch').value = time;
-            calculateHexagram();
-            document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            calculateHexagram(true);
         }
 
         // 頂部導覽列「以當下歲時入卦」快捷功能
@@ -2030,12 +2405,12 @@
             document.getElementById('lunarMonth').value = approxMonth;
             document.getElementById('lunarDay').value = approxDay;
             document.getElementById('timeBranch').value = branchIndex;
-            calculateHexagram();
+            calculateHexagram(true);
         }
 
-        // 頁面載入時即自動展卷推演一次，呈現完整雜誌版面
+        // 頁面載入時僅初始化左側六爻卦畫，數據區維持「正在自雲端「易經六十四卦資料庫」調閱卷宗...」直到點擊 .btn-calc
         window.addEventListener('DOMContentLoaded', () => {
-            calculateHexagram();
+            calculateHexagram(false);
         });
     </script>
 </body>
