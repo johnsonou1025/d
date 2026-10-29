@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大宋天機院 · 梅花易數與歲時輿圖 | Song Dynasty I-Ching Expedition</title>
+    <!-- 引入極具人文雜誌感與古籍宋體質感的字體組合 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 靈感來自 Aman Resorts (安縵) & Condé Nast Traveler 的大地亞麻與宋代汝窯青色票 */
+            --paper-bg: #F4EFE6;          /* 宣紙與溫暖亞麻底色 */
+            --paper-light: #FAF7F2;       /* 浮起卡片純淨米白 */
+            --paper-warm: #EBE3D5;        /* 次級區塊暖沙色 */
+            --ink-deep: #161816;          /* 徽墨深黑 */
+            --ink-charcoal: #2C3531;      /* 蒼松炭灰 */
+            --ink-muted: #6E6A63;         /* 碑拓淺灰 */
+            --celadon: #3D5A58;           /* 宋代汝窯天青 */
+            --celadon-light: #E6ECEB;     /* 淺天青底 */
+            --cinnabar: #A8382B;          /* 硃砂印泥紅 */
+            --cinnabar-hover: #8C2B20;
+            --ochre-gold: #B8925A;        /* 古銅鎏金 */
+            --border-hairline: rgba(22, 24, 22, 0.12);
+            --border-strong: rgba(22, 24, 22, 0.25);
+
+            --font-serif-zh: 'Noto Serif TC', 'Songti TC', serif;
+            --font-serif-en: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            color: var(--ink-deep);
+            font-family: var(--font-serif-zh);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* 細膩宣紙纖維噪點質感 (破除數位塑膠感) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+
+        /* =========================================
+           1. 頂部國際人文旅宿導覽列 (Editorial Top Bar)
+        ========================================= */
+        .editorial-nav {
+            border-bottom: 1px solid var(--border-hairline);
+            padding: 18px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(244, 239, 230, 0.88);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-meta-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+        }
+
+        .nav-coords {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--cinnabar);
+            display: inline-block;
+        }
+
+        .brand-masthead {
+            text-align: center;
+        }
+
+        .brand-masthead .en-sub {
+            font-family: var(--font-serif-en);
+            font-size: 0.75rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .brand-masthead .zh-main {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            color: var(--ink-deep);
+            padding-left: 0.35em;
+        }
+
+        .nav-meta-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .btn-quick-now {
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--ink-deep);
+            padding: 7px 14px;
+            font-family: var(--font-serif-zh);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-quick-now:hover {
+            background: var(--ink-deep);
+            color: var(--paper-light);
+        }
+
+        /* =========================================
+           2. 沉浸式山海畫報主視覺 (Editorial Hero Stage)
+        ========================================= */
+        .hero-wrapper {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 36px 48px 0;
+        }
+
+        .hero-frame {
+            position: relative;
+            height: 460px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid var(--border-strong);
+            background-color: #1D2424;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 56px;
+            color: #FAF7F2;
+        }
+
+        /* 融合北宋山水墨韻與高質感風景攝影圖層 */
+        .hero-bg-media {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(180deg, rgba(16, 22, 22, 0.45) 0%, rgba(16, 22, 22, 0.25) 45%, rgba(16, 22, 22, 0.78) 100%),
+                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85');
+            background-size: cover;
+            background-position: center 38%;
+            filter: saturate(0.65) contrast(1.05);
+            transform: scale(1.02);
+            transition: transform 8s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+        }
+
+        .hero-frame:hover .hero-bg-media {
+            transform: scale(1.06);
+        }
+
+        /* 羅盤星宿幾何水印線條 */
+        .hero-astrolabe-svg {
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 520px;
+            height: 520px;
+            opacity: 0.16;
+            z-index: 2;
+            pointer-events: none;
+            animation: slowRotate 120s linear infinite;
+        }
+
+        @keyframes slowRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-top-row {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(250, 247, 242, 0.2);
+            padding-bottom: 18px;
+        }
+
+        .issue-badge {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(250, 247, 242, 0.85);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .issue-badge::before {
+            content: "";
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--ochre-gold);
+        }
+
+        /* 傳統豎排詩籤引文 (Vertical Editorial Poetry) */
+        .hero-vertical-poem {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 0.82rem;
+            letter-spacing: 0.35em;
+            line-height: 2;
+            color: rgba(250, 247, 242, 0.85);
+            border-left: 1px solid rgba(250, 247, 242, 0.25);
+            padding-left: 14px;
+            max-height: 190px;
+            user-select: none;
+        }
+
+        .hero-bottom-row {
+            position: relative;
+            z-index: 3;
+            max-width: 780px;
+            padding-bottom: 36px;
+        }
+
+        .hero-en-kicker {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 1.35rem;
+            color: #E2C799;
+            margin-bottom: 8px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-headline {
+            font-size: clamp(2.1rem, 3.6vw, 3.25rem);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            line-height: 1.22;
+            margin-bottom: 14px;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-lead {
+            font-size: 0.95rem;
+            color: rgba(250, 247, 242, 0.86);
+            letter-spacing: 0.06em;
+            max-width: 600px;
+            font-weight: 400;
+        }
+
+        /* =========================================
+           3. 頂級旅遊網站招牌「橫向整合式搜尋/起卦艙」
+              (Aman / Airbnb Luxe / National Geographic 風格 Booking Bar)
+        ========================================= */
+        .booking-bar-section {
+            max-width: 1240px;
+            margin: -54px auto 0;
+            padding: 0 24px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .booking-concierge-bar {
+            background: var(--paper-light);
+            border: 1px solid var(--ink-deep);
+            box-shadow: 0 24px 60px rgba(22, 24, 22, 0.12);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.25fr 1.35fr auto;
+            align-items: stretch;
+        }
+
+        .concierge-field {
+            padding: 22px 26px;
+            border-right: 1px solid var(--border-hairline);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: background-color 0.2s ease;
+        }
+
+        .concierge-field:hover {
+            background-color: rgba(235, 227, 213, 0.45);
+        }
+
+        .field-top-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .field-step-num {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 0.85rem;
+            color: var(--cinnabar);
+            font-weight: 600;
+        }
+
+        .field-en-tag {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+        }
+
+        .field-label {
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .field-control-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        /* 去除傳統醜陋的瀏覽器預設外框，改用精品旅宿大字號排版輸入 */
+        .concierge-field input[type="number"],
+        .concierge-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid transparent;
+            color: var(--ink-deep);
+            font-family: var(--font-serif-zh);
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 4px 0;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .concierge-field input[type="number"] {
+            font-family: var(--font-serif-en);
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .concierge-field input[type="number"]:focus,
+        .concierge-field select:focus {
+            border-bottom-color: var(--cinnabar);
+        }
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-wrapper::after {
+            content: "▾";
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+        }
+
+        .unit-suffix {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            white-space: nowrap;
+        }
+
+        /* 起卦按鈕：如預訂私人旅宿般的儀式感 */
+        .btn-calc {
+            background-color: var(--ink-deep);
+            color: var(--paper-light);
+            border: none;
+            padding: 0 42px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 210px;
+        }
+
+        .btn-calc::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--cinnabar);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 0;
+        }
+
+        .btn-calc:hover::before {
+            transform: translateY(0);
+        }
+
+        .btn-calc-en {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-sans);
+            font-size: 0.64rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(250, 247, 242, 0.7);
+        }
+
+        .btn-calc-zh {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-serif-zh);
+            font-size: 1.08rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            padding-left: 0.18em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* =========================================
+           4. 推演結果：國家地理 × 安縵旅宿「靈境輿圖特輯」
+        ========================================= */
+        .editorial-main {
+            max-width: 1360px;
+            margin: 64px auto 96px;
+            padding: 0 48px;
+        }
+
+        /* 雜誌分欄標題線 */
+        .section-divider {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--ink-deep);
+            padding-bottom: 14px;
+            margin-bottom: 40px;
+        }
+
+        .section-divider-title {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+        }
+
+        .section-divider-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+        }
+
+        .section-divider-title span {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--ink-muted);
+        }
+
+        .section-formula-note {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.06em;
+        }
+
+        /* 結果面板：雜誌雙跨頁不對稱網格 (Asymmetric Editorial Spread) */
+        .result-panel {
+            display: block;
+            animation: editorialReveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes editorialReveal {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .spread-grid {
+            display: grid;
+            grid-template-columns: 5fr 7fr;
+            gap: 44px;
+            align-items: start;
+        }
+
+        /* 左頁：古法卦畫碑帖與四柱數據卡 (Monolith Dossier Card) */
+        .dossier-column {
+            background: var(--paper-light);
+            border: 1px solid var(--border-strong);
+            padding: 40px;
+            position: relative;
+        }
+
+        /* 角落硃砂篆刻印章 */
+        .cinnabar-seal {
+            position: absolute;
+            top: 36px;
+            right: 36px;
+            width: 54px;
+            height: 54px;
+            border: 2px solid var(--cinnabar);
+            color: var(--cinnabar);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            padding: 4px;
+            font-size: 0.78rem;
+            font-weight: 900;
+            line-height: 1;
+            text-align: center;
+            align-items: center;
+            transform: rotate(-3deg);
+            opacity: 0.88;
+            user-select: none;
+            background: rgba(168, 56, 43, 0.03);
+        }
+
+        .dossier-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--celadon);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .dossier-hex-title {
+            font-size: 2.35rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            color: var(--ink-deep);
+            margin-bottom: 6px;
+        }
+
+        .hexagram-display {
+            font-size: 0.92rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--border-hairline);
+            margin-bottom: 32px;
+        }
+
+        /* 動態六爻墨韻卦畫區 */
+        .hexagram-bars-stage {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-hairline);
+            padding: 32px 36px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .bars-stage-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 20px;
+        }
+
+        .yao-stack {
+            display: flex;
+            flex-direction: column-reverse; /* 初爻在下，上爻在上 */
+            gap: 14px;
+        }
+
+        .yao-row {
+            display: grid;
+            grid-template-columns: 52px 1fr 64px;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .yao-pos-label {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .yao-bar-graphic {
+            height: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 陽爻：完整徽墨長畫 */
+        .yao-yang {
+            width: 100%;
+            height: 100%;
+            background-color: var(--ink-deep);
+            border-radius: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 陰爻：中斷雙墨畫 */
+        .yao-yin {
+            width: 44%;
+            height: 100%;
+            background-color: var(--ink-deep);
+            border-radius: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 動爻高亮：硃砂點染 */
+        .yao-row.is-moving .yao-yang,
+        .yao-row.is-moving .yao-yin {
+            background-color: var(--cinnabar);
+        }
+
+        .yao-row.is-moving .yao-pos-label {
+            color: var(--cinnabar);
+            font-weight: 700;
+        }
+
+        .yao-moving-badge {
+            font-size: 0.75rem;
+            text-align: right;
+            color: var(--ink-muted);
+            font-family: var(--font-serif-zh);
+        }
+
+        .yao-row.is-moving .yao-moving-badge {
+            color: var(--cinnabar);
+            font-weight: 700;
+        }
+
+        /* 四格核心卦象指標 (保留原有4個ID，但採用旅遊雜誌規格表排版) */
+        .specs-table {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-top: 1px solid var(--border-strong);
+            border-left: 1px solid var(--border-strong);
+        }
+
+        .spec-cell {
+            padding: 18px 20px;
+            border-right: 1px solid var(--border-strong);
+            border-bottom: 1px solid var(--border-strong);
+            background: var(--paper-light);
+        }
+
+        .spec-cell .spec-en {
+            font-family: var(--font-sans);
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .spec-cell .label {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
+        }
+
+        .spec-cell .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ink-deep);
+            letter-spacing: 0.05em;
+        }
+
+        .spec-cell.highlight-cell .value {
+            color: var(--cinnabar);
+        }
+
+        /* 右頁：國家地理 × 安縵旅宿級「六十四卦決策檔案」深度策展報導 (Destination Feature Card) */
+        .destination-column {
+            background: var(--paper-light);
+            border: 1px solid var(--border-strong);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .destination-visual {
+            position: relative;
+            height: 310px;
+            overflow: hidden;
+            background: #1C2221;
+        }
+
+        .destination-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.82) contrast(1.04);
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .destination-column:hover .destination-visual img {
+            transform: scale(1.04);
+        }
+
+        .destination-visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(16, 20, 19, 0.45) 0%, rgba(16, 20, 19, 0.15) 45%, rgba(16, 20, 19, 0.88) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 26px 36px;
+            color: #FAF7F2;
+        }
+
+        .dest-coords-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .compass-pill {
+            background: rgba(22, 24, 22, 0.68);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(250, 247, 242, 0.28);
+            padding: 6px 14px;
+            color: #FAF7F2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 雲端試算表即時連線狀態徽章 */
+        .sync-status-pill {
+            background: rgba(22, 24, 22, 0.72);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(250, 247, 242, 0.25);
+            padding: 6px 13px;
+            color: #FAF7F2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-sans);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            transition: all 0.3s ease;
+        }
+
+        .sync-indicator {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ochre-gold);
+            display: inline-block;
+        }
+
+        .sync-status-pill.is-loading .sync-indicator {
+            background: #E2C799;
+            animation: pulseDot 1s infinite ease-in-out;
+        }
+
+        .sync-status-pill.is-synced .sync-indicator {
+            background: #52B788;
+            box-shadow: 0 0 8px rgba(82, 183, 136, 0.6);
+        }
+
+        .sync-status-pill.is-fallback .sync-indicator {
+            background: var(--cinnabar);
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 0.3; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .dest-caption-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .dest-caption-bottom span {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 1.08rem;
+            color: #E2C799;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .dest-caption-bottom h3 {
+            font-size: 1.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            line-height: 1.25;
+        }
+
+        .archive-serial-badge {
+            font-family: var(--font-serif-en);
+            font-size: 2.1rem;
+            font-style: italic;
+            line-height: 1;
+            color: rgba(250, 247, 242, 0.85);
+            border-left: 1px solid rgba(250, 247, 242, 0.3);
+            padding-left: 16px;
+            white-space: nowrap;
+        }
+
+        .destination-editorial-body {
+            padding: 36px 42px 42px;
+            transition: opacity 0.3s ease;
+        }
+
+        .destination-editorial-body.is-fetching {
+            opacity: 0.55;
+        }
+
+        /* 試算表核心欄：卦象核心大義 (coreMeaning) */
+        .core-meaning-banner {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-hairline);
+            border-left: 3px solid var(--cinnabar);
+            padding: 22px 26px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .core-meaning-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .core-meaning-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cinnabar);
+            font-weight: 700;
+        }
+
+        .core-meaning-trigrams {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+        }
+
+        .editorial-quote {
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: var(--ink-deep);
+            line-height: 1.8;
+            letter-spacing: 0.04em;
+            margin: 0;
+        }
+
+        /* 四大主題決策矩陣 (2x2 Editorial Decision Matrix) */
+        .decision-matrix-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px;
+        }
+
+        .decision-matrix-header h4 {
+            font-size: 0.88rem;
+            letter-spacing: 0.15em;
+            color: var(--ink-deep);
+            font-weight: 700;
+        }
+
+        .decision-matrix-header span {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--ink-muted);
+        }
+
+        .editorial-decision-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--border-strong);
+            border-left: 1px solid var(--border-strong);
+            margin-bottom: 30px;
+        }
+
+        .decision-quadrant {
+            padding: 24px 26px;
+            border-right: 1px solid var(--border-strong);
+            border-bottom: 1px solid var(--border-strong);
+            background: var(--paper-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: background-color 0.25s ease;
+            position: relative;
+        }
+
+        .decision-quadrant:hover {
+            background: rgba(244, 239, 230, 0.65);
+        }
+
+        .quadrant-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .quadrant-index {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--cinnabar);
+        }
+
+        .quadrant-en {
+            font-family: var(--font-sans);
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+        }
+
+        .quadrant-title {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--ink-deep);
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quadrant-body {
+            font-size: 0.9rem;
+            color: var(--ink-charcoal);
+            line-height: 1.82;
+            text-align: justify;
+            white-space: pre-line;
+        }
+
+        /* 盲點象限特別微調：凸顯警示與自省 */
+        .decision-quadrant.quadrant-blindspot {
+            background: rgba(235, 227, 213, 0.32);
+        }
+
+        /* 底部行旅羅盤與之卦膠囊列 */
+        .itinerary-tags {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .itinerary-tag-item {
+            background: var(--paper-bg);
+            padding: 14px 18px;
+            border-left: 2px solid var(--ink-deep);
+        }
+
+        .itinerary-tag-item .tag-kicker {
+            font-family: var(--font-sans);
+            font-size: 0.64rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .itinerary-tag-item .tag-val {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--ink-deep);
+        }
+
+        /* =========================================
+           5. 底部雜誌畫廊：八大先天八卦山海靈境誌 (Curated Landscapes)
+        ========================================= */
+        .curated-atlas-section {
+            margin-top: 88px;
+        }
+
+        .atlas-cards-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .atlas-card {
+            background: var(--paper-light);
+            border: 1px solid var(--border-hairline);
+            cursor: pointer;
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .atlas-card:hover {
+            border-color: var(--ink-deep);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(22, 24, 22, 0.08);
+        }
+
+        .atlas-card-thumb {
+            height: 190px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .atlas-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.75);
+            transition: transform 0.8s ease;
+        }
+
+        .atlas-card:hover .atlas-card-thumb img {
+            transform: scale(1.07);
+        }
+
+        .atlas-trigram-symbol {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(244, 239, 230, 0.92);
+            color: var(--ink-deep);
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .atlas-card-content {
+            padding: 20px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .atlas-card-en {
+            font-family: var(--font-serif-en);
+            font-style: italic;
+            font-size: 0.88rem;
+            color: var(--ink-muted);
+            margin-bottom: 4px;
+        }
+
+        .atlas-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.06em;
+        }
+
+        .atlas-card-desc {
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            line-height: 1.65;
+        }
+
+        /* 頁尾版權與古籍跋文 */
+        .editorial-footer {
+            border-top: 1px solid var(--border-strong);
+            padding: 40px 48px;
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+        }
+
+        .footer-en {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           響應式適配 (Responsive Breakpoints)
+        ========================================= */
+        @media (max-width: 1080px) {
+            .booking-concierge-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+            .concierge-field {
+                border-bottom: 1px solid var(--border-hairline);
+            }
+            .btn-calc {
+                grid-column: span 2;
+                padding: 22px;
+            }
+            .spread-grid {
+                grid-template-columns: 1fr;
+            }
+            .atlas-cards-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .editorial-nav {
+                padding: 14px 20px;
+            }
+            .nav-meta-left {
+                display: none;
+            }
+            .hero-wrapper,
+            .editorial-main {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .hero-frame {
+                height: auto;
+                min-height: 400px;
+                padding: 28px 24px 64px;
+            }
+            .hero-vertical-poem {
+                display: none;
+            }
+            .booking-concierge-bar {
+                grid-template-columns: 1fr;
+            }
+            .btn-calc {
+                grid-column: span 1;
+            }
+            .editorial-decision-grid,
+            .itinerary-tags,
+            .atlas-cards-strip {
+                grid-template-columns: 1fr;
+            }
+            .dest-caption-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .archive-serial-badge {
+                border-left: none;
+                padding-left: 0;
+                font-size: 1.4rem;
+            }
+            .dossier-column,
+            .destination-editorial-body {
+                padding: 26px 22px;
+            }
+            .editorial-footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. 國際精品旅宿級頂部導覽列 -->
+    <header class="editorial-nav">
+        <div class="nav-meta-left">
+            <span class="nav-coords">
+                <span class="live-dot"></span>
+                KAIFENG OBSERVATORY · 34°47'N 114°20'E
+            </span>
+            <span>SONG DYNASTY PLUM BLOSSOM NUMEROLOGY</span>
+        </div>
+
+        <div class="brand-masthead">
+            <span class="en-sub">Chronicles of Mountains &amp; Divination</span>
+            <div class="zh-main">大宋天機 · 歲時山海輿圖</div>
+        </div>
+
+        <div class="nav-meta-right">
+            <button type="button" class="btn-quick-now" onclick="fillCurrentLunarPreset()">
+                以當下歲時入卦
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. 沉浸式山海雜誌畫報主視覺 -->
+    <section class="hero-wrapper">
+        <div class="hero-frame">
+            <div class="hero-bg-media" id="heroBgMedia"></div>
+
+            <!-- 細線星宿羅盤幾何背景裝飾 -->
+            <svg class="hero-astrolabe-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="200" r="190" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="4 6"/>
+                <circle cx="200" cy="200" r="150" stroke="#FAF7F2" stroke-width="0.75"/>
+                <circle cx="200" cy="200" r="95" stroke="#FAF7F2" stroke-width="0.75" stroke-dasharray="2 4"/>
+                <line x1="200" y1="0" x2="200" y2="400" stroke="#FAF7F2" stroke-width="0.5"/>
+                <line x1="0" y1="200" x2="400" y2="200" stroke="#FAF7F2" stroke-width="0.5"/>
+                <line x1="58" y1="58" x2="342" y2="342" stroke="#FAF7F2" stroke-width="0.5"/>
+                <line x1="342" y1="58" x2="58" y2="342" stroke="#FAF7F2" stroke-width="0.5"/>
+            </svg>
+
+            <div class="hero-top-row">
+                <div class="issue-badge">
+                    ISSUE NO. 1077 · SHAO YONG’S CELESTIAL ATLAS
+                </div>
+                <div class="hero-vertical-poem">
+                    觀物洞玄機・山海入卦來
+                </div>
+            </div>
+
+            <div class="hero-bottom-row">
+                <div class="hero-en-kicker">The Art of Temporal Navigation &amp; Inner Sanctuary</div>
+                <h1 class="hero-headline">宋代古法 · 易經八字山海起卦盤</h1>
+                <p class="hero-lead">
+                    承襲北宋邵雍《梅花易數》先天起卦法，將您的誕辰歲時化為天地八方之山川水文，在動靜爻變之間，尋訪當下最適合安頓身心的靈境方位。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 頂級旅宿預訂艙風格：橫向四柱參數起卦台 -->
+    <section class="booking-bar-section" aria-label="梅花易數起卦參數艙">
+        <div class="booking-concierge-bar">
+            <!-- 欄位 01: 農曆月份 -->
+            <div class="concierge-field">
+                <div>
+                    <div class="field-top-meta">
+                        <span class="field-step-num">01</span>
+                        <span class="field-en-tag">Lunar Month</span>
+                    </div>
+                    <label class="field-label" for="lunarMonth">出生月份 (農曆)</label>
+                </div>
+                <div class="field-control-wrap">
+                    <input type="number" id="lunarMonth" min="1" max="12" value="3" placeholder="1-12">
+                    <span class="unit-suffix">月 (孟仲季)</span>
+                </div>
+            </div>
+
+            <!-- 欄位 02: 農曆日期 -->
+            <div class="concierge-field">
+                <div>
+                    <div class="field-top-meta">
+                        <span class="field-step-num">02</span>
+                        <span class="field-en-tag">Lunar Day</span>
+                    </div>
+                    <label class="field-label" for="lunarDay">出生日期 (農曆)</label>
+                </div>
+                <div class="field-control-wrap">
+                    <input type="number" id="lunarDay" min="1" max="30" value="15" placeholder="1-30">
+                    <span class="unit-suffix">日 (朔望弦)</span>
+                </div>
+            </div>
+
+            <!-- 欄位 03: 年支生肖 -->
+            <div class="concierge-field">
+                <div>
+                    <div class="field-top-meta">
+                        <span class="field-step-num">03</span>
+                        <span class="field-en-tag">Birth Year Branch</span>
+                    </div>
+                    <label class="field-label" for="zodiac">生肖歲星 (年支)</label>
+                </div>
+                <div class="select-wrapper">
+                    <select id="zodiac">
+                        <option value="1">鼠 · 子水 (數一)</option>
+                        <option value="2">牛 · 丑土 (數二)</option>
+                        <option value="3">虎 · 寅木 (數三)</option>
+                        <option value="4">兔 · 卯木 (數四)</option>
+                        <option value="5" selected>龍 · 辰土 (數五)</option>
+                        <option value="6">蛇 · 巳火 (數六)</option>
+                        <option value="7">馬 · 午火 (數七)</option>
+                        <option value="8">羊 · 未土 (數八)</option>
+                        <option value="9">猴 · 申金 (數九)</option>
+                        <option value="10">雞 · 酉金 (數十)</option>
+                        <option value="11">狗 · 戌土 (數十一)</option>
+                        <option value="12">豬 · 亥水 (數十二)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 欄位 04: 出生時辰 -->
+            <div class="concierge-field">
+                <div>
+                    <div class="field-top-meta">
+                        <span class="field-step-num">04</span>
+                        <span class="field-en-tag">Solar / Lunar Hour</span>
+                    </div>
+                    <label class="field-label" for="timeBranch">出生時辰 (更漏)</label>
+                </div>
+                <div class="select-wrapper">
+                    <select id="timeBranch">
+                        <option value="1">子時 · 夜半 (23:00-01:00)</option>
+                        <option value="2">丑時 · 雞鳴 (01:00-03:00)</option>
+                        <option value="3">寅時 · 平旦 (03:00-05:00)</option>
+                        <option value="4">卯時 · 日出 (05:00-07:00)</option>
+                        <option value="5">辰時 · 食時 (07:00-09:00)</option>
+                        <option value="6" selected>巳時 · 隅中 (09:00-11:00)</option>
+                        <option value="7">午時 · 日中 (11:00-13:00)</option>
+                        <option value="8">未時 · 日昳 (13:00-15:00)</option>
+                        <option value="9">申時 · 哺時 (15:00-17:00)</option>
+                        <option value="10">酉時 · 日入 (17:00-19:00)</option>
+                        <option value="11">戌時 · 黃昏 (19:00-21:00)</option>
+                        <option value="12">亥時 · 人定 (21:00-23:00)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 推演按鈕 -->
+            <button class="btn-calc" onclick="calculateHexagram()">
+                <span class="btn-calc-en">Cast Oracle</span>
+                <span class="btn-calc-zh">立即展卷推演 <span>→</span></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 4. 主內容區：雙跨頁輿圖推演結果 + 八卦風景目錄 -->
+    <main class="editorial-main">
+
+        <div class="section-divider">
+            <div class="section-divider-title">
+                <h2>歲時卦象 · 靈境行旅策展</h2>
+                <span>Divination Dossier &amp; Sanctuary Atlas</span>
+            </div>
+            <div class="section-formula-note" id="formulaTraceText">
+                古法公式：上卦=(年+月+日)÷8 ｜ 下卦=(年+月+日+時)÷8 ｜ 動爻=(總和)÷6
+            </div>
+        </div>
+
+        <!-- 推演結果雙跨頁 -->
+        <div id="resultPanel" class="result-panel">
+            <div class="spread-grid">
+
+                <!-- 左頁：宋版碑帖六爻卦畫與核心數據 -->
+                <div class="dossier-column">
+                    <div class="cinnabar-seal" title="天機御覽">
+                        <span>天</span><span>機</span>
+                        <span>御</span><span>覽</span>
+                    </div>
+
+                    <div class="dossier-kicker" id="hexagramPinyin">HEXAGRAM DOSSIER · SONG EDITION</div>
+                    <div class="dossier-hex-title" id="editorialHexHeadline">火水未濟</div>
+                    <div class="hexagram-display" id="hexagramDesc">
+                        主卦：火水未濟（上離 (火)、下坎 (水)）
+                    </div>
+
+                    <!-- 動態六爻墨條視覺 -->
+                    <div class="hexagram-bars-stage">
+                        <div class="bars-stage-header">
+                            <span>SIX-YAO INK MONOLITH (初爻至上爻)</span>
+                            <span id="tiYongRelationBadge">體用五行推演</span>
+                        </div>
+                        <div class="yao-stack" id="yaoStackContainer">
+                            <!-- 由 JS 動態渲染六爻陰陽與硃砂動爻 -->
+                        </div>
+                    </div>
+
+                    <!-- 原版四大核心欄位 (保留完整 ID 與資料結構) -->
+                    <div class="specs-table">
+                        <div class="spec-cell">
+                            <span class="spec-en">Upper Trigram · 外境</span>
+                            <div class="label">上卦 (外卦)</div>
+                            <div class="value" id="upperTrigram">離 (火)</div>
+                        </div>
+                        <div class="spec-cell">
+                            <span class="spec-en">Lower Trigram · 內心</span>
+                            <div class="label">下卦 (內卦)</div>
+                            <div class="value" id="lowerTrigram">坎 (水)</div>
+                        </div>
+                        <div class="spec-cell">
+                            <span class="spec-en">Primary Hexagram · 本卦</span>
+                            <div class="label">主卦名稱</div>
+                            <div class="value" id="mainHexagram">火水未濟</div>
+                        </div>
+                        <div class="spec-cell highlight-cell">
+                            <span class="spec-en">Transforming Line · 轉機</span>
+                            <div class="label">動爻位置</div>
+                            <div class="value" id="movingLine">第 6 爻動</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右頁：串接 Google Sheet「易經六十四卦決策資料庫」深度策展報導 -->
+                <div class="destination-column">
+                    <div class="destination-visual">
+                        <img id="destImage" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85" alt="卦象自然靈境">
+                        <div class="destination-visual-overlay">
+                            <div class="dest-coords-bar">
+                                <span class="compass-pill" id="destCompass">SPIRITUAL COMPASS · 離南坎北</span>
+                                <span class="sync-status-pill is-loading" id="sheetSyncBadge">
+                                    <span class="sync-indicator"></span>
+                                    <span id="sheetSyncText">SYNCING ARCHIVE...</span>
+                                </span>
+                            </div>
+                            <div class="dest-caption-bottom">
+                                <div>
+                                    <span id="destEnSubtitle">Where Dawn Mist Meets the Warm Canyon</span>
+                                    <h3 id="destLandscapeTitle">火水未濟 · 丹霞溫泉與深谷暗流之境</h3>
+                                </div>
+                                <div class="archive-serial-badge" id="destArchiveId" title="六十四卦典藏序號">
+                                    NO. 64
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-editorial-body" id="destEditorialBody">
+                        <!-- 試算表核心欄位 (coreMeaning)：卦象核心大義 -->
+                        <div class="core-meaning-banner">
+                            <div class="core-meaning-header">
+                                <span class="core-meaning-kicker">CORE ORACLE ESSENCE · 卦象核心大義</span>
+                                <span class="core-meaning-trigrams" id="destSheetTrigrams">上卦：離 ｜ 下卦：坎</span>
+                            </div>
+                            <blockquote class="editorial-quote" id="destCoreMeaning">
+                                正在自雲端「易經六十四卦資料庫」調閱卷宗...
+                            </blockquote>
+                        </div>
+
+                        <!-- 試算表四大決策主題 (2x2 Editorial Decision Matrix) -->
+                        <div class="decision-matrix-header">
+                            <h4>四大維度 · 歲時決策與行旅策展</h4>
+                            <span>Four Strategic Pillars from I-Ching Archive</span>
+                        </div>
+
+                        <div class="editorial-decision-grid">
+                            <!-- 主題一：wealth -->
+                            <article class="decision-quadrant">
+                                <div class="quadrant-top">
+                                    <span class="quadrant-index">I.</span>
+                                    <span class="quadrant-en">Wealth &amp; Career Horizon</span>
+                                </div>
+                                <h5 class="quadrant-title">財富與事業格局</h5>
+                                <p class="quadrant-body" id="sheetWealthText">正在載入財富與事業格局解析...</p>
+                            </article>
+
+                            <!-- 主題二：decision -->
+                            <article class="decision-quadrant">
+                                <div class="quadrant-top">
+                                    <span class="quadrant-index">II.</span>
+                                    <span class="quadrant-en">Pivotal Life Decisions</span>
+                                </div>
+                                <h5 class="quadrant-title">人生重大轉折與決策</h5>
+                                <p class="quadrant-body" id="sheetDecisionText">正在載入重大轉折與決策建議...</p>
+                            </article>
+
+                            <!-- 主題三：partner -->
+                            <article class="decision-quadrant">
+                                <div class="quadrant-top">
+                                    <span class="quadrant-index">III.</span>
+                                    <span class="quadrant-en">Alliances &amp; Fellowship</span>
+                                </div>
+                                <h5 class="quadrant-title">職場與人際合夥</h5>
+                                <p class="quadrant-body" id="sheetPartnerText">正在載入職場與人際合夥指南...</p>
+                            </article>
+
+                            <!-- 主題四：blindspot -->
+                            <article class="decision-quadrant quadrant-blindspot">
+                                <div class="quadrant-top">
+                                    <span class="quadrant-index">IV.</span>
+                                    <span class="quadrant-en">Inner State &amp; Blindspots</span>
+                                </div>
+                                <h5 class="quadrant-title">自身狀態與潛能盲點</h5>
+                                <p class="quadrant-body" id="sheetBlindspotText">正在載入自身狀態與潛能盲點提醒...</p>
+                            </article>
+                        </div>
+
+                        <!-- 底部行旅方位與動爻之卦膠囊列 -->
+                        <div class="itinerary-tags">
+                            <div class="itinerary-tag-item">
+                                <span class="tag-kicker">Auspicious Direction · 吉利方位</span>
+                                <div class="tag-val" id="destDirectionVal">正南 離宮 ／ 正北 坎宮</div>
+                            </div>
+                            <div class="itinerary-tag-item">
+                                <span class="tag-kicker">Changed Hexagram · 之卦走向</span>
+                                <div class="tag-val" id="destChangedHexVal">雷水解（春雷解凍之象）</div>
+                            </div>
+                            <div class="itinerary-tag-item">
+                                <span class="tag-kicker">Mindful Ritual · 旅宿療癒</span>
+                                <div class="tag-val" id="destRitualVal">臨水煎茶、暮時觀霞、靜坐調息</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 5. 先天八卦山海地景圖鑑 (點擊可快速體驗不同卦象風景) -->
+        <section class="curated-atlas-section">
+            <div class="section-divider">
+                <div class="section-divider-title">
+                    <h2>先天八宮 · 山海地景索引</h2>
+                    <span>The Eight Archetypal Landscapes of I-Ching</span>
+                </div>
+                <div class="section-formula-note">點擊任一地景卡，可即時預覽該卦象之山海輿圖</div>
+            </div>
+
+            <div class="atlas-cards-strip">
+                <article class="atlas-card" onclick="applyQuickPreset(1, 1, 1, 1)">
+                    <div class="atlas-card-thumb">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="乾為天 高原雪峰">
+                        <span class="atlas-trigram-symbol">☰ 乾宮 · 天</span>
+                    </div>
+                    <div class="atlas-card-content">
+                        <div>
+                            <div class="atlas-card-en">The Creative · Alpine Zenith</div>
+                            <h3 class="atlas-card-title">乾為天 · 崑崙雪嶺極境</h3>
+                            <p class="atlas-card-desc">雲海之上的蒼穹雪峰，剛健純粹，宜登高望遠、確立年度宏圖。</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="atlas-card" onclick="applyQuickPreset(2, 2, 2, 6)">
+                    <div class="atlas-card-thumb">
+                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=800&q=80" alt="坎為水 幽谷深潭">
+                        <span class="atlas-trigram-symbol">☵ 坎宮 · 水</span>
+                    </div>
+                    <div class="atlas-card-content">
+                        <div>
+                            <div class="atlas-card-en">The Abysmal · Fjord &amp; Gorge</div>
+                            <h3 class="atlas-card-title">坎為水 · 蒼山峽谷深潭</h3>
+                            <p class="atlas-card-desc">水流而不盈，行險而不失其信。於幽靜峽谷聽泉，沉澱心緒、以柔克剛。</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="atlas-card" onclick="applyQuickPreset(3, 4, 8, 6)">
+                    <div class="atlas-card-thumb">
+                        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" alt="火風鼎 丹霞古林">
+                        <span class="atlas-trigram-symbol">☲ 離巽 · 火風鼎</span>
+                    </div>
+                    <div class="atlas-card-content">
+                        <div>
+                            <div class="atlas-card-en">The Cauldron · Cultural Alchemy</div>
+                            <h3 class="atlas-card-title">火風鼎 · 千年古窯與松林</h3>
+                            <p class="atlas-card-desc">木助火勢，煉器成鼎。適合走訪人文古鎮、茶山書院，吐故納新。</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="atlas-card" onclick="applyQuickPreset(2, 3, 2, 7)">
+                    <div class="atlas-card-thumb">
+                        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" alt="艮為山 雲霧山居">
+                        <span class="atlas-trigram-symbol">☶ 艮宮 · 山</span>
+                    </div>
+                    <div class="atlas-card-content">
+                        <div>
+                            <div class="atlas-card-en">Keeping Still · Cloud Monastery</div>
+                            <h3 class="atlas-card-title">艮為山 · 暮靄空山隱居</h3>
+                            <p class="atlas-card-desc">時止則止，時行則行。在雲霧繚繞的岩山古剎中，體悟止語與安定。</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="editorial-footer">
+        <div>大宋天機院 · 梅花易數干支納甲與山海靈境推演系統</div>
+        <div class="footer-en">DESIGNED IN THE SPIRIT OF LUXURY EXPEDITION JOURNALS · SONG HERITAGE</div>
+    </footer>
+
+    <script>
+        // 1. 先天八卦完整資料庫（含三畫爻結構 [初爻, 二爻, 三爻]、自然地景、方位、旅遊意象）
+        const trigrams = {
+            1: {
+                name: "乾 (天)",
+                short: "乾",
+                nature: "天",
+                element: "金",
+                symbol: "☰",
+                lines: [1, 1, 1],
+                direction: "西北 乾宮",
+                enName: "Heaven · Alpine Peak",
+                landscape: "雪嶺蒼穹與高海拔雲海",
+                ritual: "登高觀星、晨間吐納、制定長遠決策",
+                photo: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=85"
+            },
+            2: {
+                name: "兌 (澤)",
+                short: "兌",
+                nature: "澤",
+                element: "金",
+                symbol: "☱",
+                lines: [1, 1, 0],
+                direction: "正西 兌宮",
+                enName: "Lake · Misty Wetland",
+                landscape: "靜謐高原湖泊與秋水蘆葦澤國",
+                ritual: "湖畔漫步、與摯友茗談、聆聽古琴清音",
+                photo: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1400&q=85"
+            },
+            3: {
+                name: "離 (火)",
+                short: "離",
+                nature: "火",
+                element: "火",
+                symbol: "☲",
+                lines: [1, 0, 1],
+                direction: "正南 離宮",
+                enName: "Fire · Sunlit Canyon",
+                landscape: "赤壁丹霞地貌與破曉日出海岸",
+                ritual: "迎曦冥想、鑑賞藝術典籍、點燭夜讀",
+                photo: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1400&q=85"
+            },
+            4: {
+                name: "震 (雷)",
+                short: "震",
+                nature: "雷",
+                element: "木",
+                symbol: "☳",
+                lines: [1, 0, 0],
+                direction: "正東 震宮",
+                enName: "Thunder · Awakening Forest",
+                landscape: "春雷驚蟄後的蒼翠竹海與飛瀑",
+                ritual: "山林疾行、破除舊習、開啟全新企劃",
+                photo: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=85"
+            },
+            5: {
+                name: "巽 (風)",
+                short: "巽",
+                nature: "風",
+                element: "木",
+                symbol: "☴",
+                lines: [0, 1, 1],
+                direction: "東南 巽宮",
+                enName: "Wind · Whispering Pines",
+                landscape: "長風穿林的松濤山谷與遠洋帆影",
+                ritual: "隨風遠行、森林浴、順應時勢靈活轉身",
+                photo: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=85"
+            },
+            6: {
+                name: "坎 (水)",
+                short: "坎",
+                nature: "水",
+                element: "水",
+                symbol: "☵",
+                lines: [0, 1, 0],
+                direction: "正北 坎宮",
+                enName: "Water · Deep Ravine",
+                landscape: "幽邃峽谷暗流與寒潭月影",
+                ritual: "溫泉沐浴、閉關深思、蓄積內在韌性",
+                photo: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85"
+            },
+            7: {
+                name: "艮 (山)",
+                short: "艮",
+                nature: "山",
+                element: "土",
+                symbol: "☶",
+                lines: [0, 0, 1],
+                direction: "東北 艮宮",
+                enName: "Mountain · Silent Sanctuary",
+                landscape: "雲深不知處的獨立岩峰與古剎",
+                ritual: "山居止語、抄經靜心、劃定人際邊界",
+                photo: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=85"
+            },
+            8: {
+                name: "坤 (地)",
+                short: "坤",
+                nature: "地",
+                element: "土",
+                symbol: "☷",
+                lines: [0, 0, 0],
+                direction: "西南 坤宮",
+                enName: "Earth · Golden Terraces",
+                landscape: "廣袤豐饒的大地梯田與曠野平原",
+                ritual: "赤足踏青、陶藝手作、厚德載物包容萬象",
+                photo: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=85"
+            }
+        };
+
+        // 2. 完整六十四卦標準對照表 (上卦-下卦 -> 卦名與卦辭意境)
+        const hexagramMap = {
+            "1-1": "乾為天", "1-2": "天澤履", "1-3": "天火同人", "1-4": "天雷無妄",
+            "1-5": "天風姤", "1-6": "天水訟", "1-7": "天山遯",   "1-8": "天地否",
+            "2-1": "澤天夬", "2-2": "兌為澤", "2-3": "澤火革",   "2-4": "澤雷隨",
+            "2-5": "澤風大過","2-6": "澤水困", "2-7": "澤山咸",   "2-8": "澤地萃",
+            "3-1": "火天大有","3-2": "火澤睽", "3-3": "離為火",   "3-4": "火雷噬嗑",
+            "3-5": "火風鼎", "3-6": "火水未濟","3-7": "火山旅",   "3-8": "火地晉",
+            "4-1": "雷天大壯","4-2": "雷澤歸妹","4-3": "雷火豐",  "4-4": "震為雷",
+            "4-5": "雷風恆", "4-6": "雷水解", "4-7": "雷山小過", "4-8": "雷地豫",
+            "5-1": "風天小畜","5-2": "風澤中孚","5-3": "風火家人","5-4": "風雷益",
+            "5-5": "巽為風", "5-6": "風水渙", "5-7": "風山漸",   "5-8": "風地觀",
+            "6-1": "水天需", "6-2": "水澤節", "6-3": "水火既濟", "6-4": "水雷屯",
+            "6-5": "水風井", "6-6": "坎為水", "6-7": "水山蹇",   "6-8": "水地比",
+            "7-1": "山天大畜","7-2": "山澤損", "7-3": "山火賁",   "7-4": "山雷頤",
+            "7-5": "山風蠱", "7-6": "山水蒙", "7-7": "艮為山",   "7-8": "山地剝",
+            "8-1": "地天泰", "8-2": "地澤臨", "8-3": "地火明夷", "8-4": "地雷復",
+            "8-5": "地風升", "8-6": "地水師", "8-7": "地山謙",   "8-8": "坤為地"
+        };
+
+        // Google Apps Script 易經六十四卦決策資料庫 API 端點
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbw-e7TdAhjLON3kUQTUVomq4KSfVe_UCy_5i2xyQonyjPdmm82IG6T5D6xaQw9ENdiy/exec";
+        // 前端記憶體快取與請求序號（避免快速切換時舊請求覆蓋新結果）
+        const hexSheetCache = new Map();
+        let activeFetchToken = 0;
+
+        // 精選名卦古籍旅宿判詞庫 (作為載入瞬間或離線時的預設典藏文案)
+        const curatedJudgments = {
+            "火風鼎": "「鼎，元吉，亨。」—— 木火相生，化生萬物。如宋代汝窯開窯之刻，萬象更新、器宇軒昂，最適合展開跨界合作與文化行旅。",
+            "火水未濟": "「未濟，亨。小狐汔濟，濡其尾。」—— 火在上而水在下，萬事處於破曉前的醞釀期。此時不急於強渡關山，宜在旅途中留白養晦。",
+            "水火既濟": "「既濟，亨小，利貞。初吉終亂。」—— 水火交融、萬事俱備之圓滿境地；然盛極必思守成，宜於靜水山房中檢視細節。",
+            "地天泰": "「泰，小往大來，吉亨。」—— 天地交泰、春風化雨。內外順遂通達，無論遠行拓荒或締結良緣，皆如順水行舟。",
+            "乾為天": "「天行健，君子以自強不息。」—— 六龍御天、雲海萬里。胸懷格局正值巔峰，當登高望遠，但戒驕戒躁。",
+            "坤為地": "「地勢坤，君子以厚德載物。」—— 大地廣袤無垠，順勢而為方得始終。宜深入鄉野大地，以柔韌之心承載萬物。",
+            "火山旅": "「旅，小亨，旅貞吉。」—— 山上有火，行旅之象。人生如寄，於陌生山城中保持謙和清明，處處皆是安心歸處。"
+        };
+
+        // 五行生剋解讀輔助
+        function analyzeFiveElements(upperEl, lowerEl, movingLine) {
+            // 動爻在1-3爻，則下卦為用、上卦為體；動爻在4-6爻，則上卦為用、下卦為體
+            const tiElement = movingLine <= 3 ? upperEl : lowerEl;
+            const yongElement = movingLine <= 3 ? lowerEl : upperEl;
+            const tiLabel = movingLine <= 3 ? "上卦為體" : "下卦為體";
+            return `${tiLabel}（體${tiElement}・用${yongElement}）`;
+        }
+
+        // 由六爻陣列反查對應的八卦編號 (1~8)
+        function findTrigramIdByLines(threeLines) {
+            for (const [id, obj] of Object.entries(trigrams)) {
+                if (
+                    obj.lines[0] === threeLines[0] &&
+                    obj.lines[1] === threeLines[1] &&
+                    obj.lines[2] === threeLines[2]
+                ) {
+                    return parseInt(id, 10);
+                }
+            }
+            return 1;
+        }
+
+        // 生成本地端備援決策文案（當網路延遲或試算表未命中時維持版面完整性）
+        function buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName) {
+            return {
+                id: `${upperObj.short}${lowerObj.short}`,
+                hexName: hexName,
+                upper: upperObj.name,
+                lower: lowerObj.name,
+                coreMeaning: curatedJudgments[hexName] ||
+                    `「${hexName}之象，外${upperObj.nature}而內${lowerObj.nature}。」—— 觀天之道，執天之行。當外境之${upperObj.landscape}遇見內在之${lowerObj.landscape}，萬物在動靜之間自有定數。`,
+                wealth: `外卦屬${upperObj.element}、內卦屬${lowerObj.element}。${upperObj.short}下${lowerObj.short}上之資源配置，宜順應「${upperObj.landscape}」之開闊氣度，穩健佈局中長期資產與核心事業護城河。`,
+                decision: `本次推演第 ${lineRemainder} 爻發動，本卦「${hexName}」轉化為之卦「${changedHexName}」。面對重大轉折宜審時度勢，先求內在立場清明，再順勢推進關鍵決策。`,
+                partner: `外境呈現「${upperObj.name}」特質，內心秉持「${lowerObj.name}」原則。在職場結盟與人際合夥上，宜尋求五行互補、價值觀契合之同行者，以誠信定立契約邊界。`,
+                blindspot: `留意第 ${lineRemainder} 爻動變所帶來的能量起伏。切忌在局勢未明時過度消耗心神，建議透過「${upperObj.ritual}」沉澱雜音，覺察潛藏的思維盲區。`
+            };
+        }
+
+        // 將回傳的資料物件渲染至 .destination-column
+        function renderDestinationSheetData(sheetData, upperObj, lowerObj, isFromCloud) {
+            const syncBadge = document.getElementById('sheetSyncBadge');
+            const syncText = document.getElementById('sheetSyncText');
+            const editorialBody = document.getElementById('destEditorialBody');
+
+            editorialBody.classList.remove('is-fetching');
+            syncBadge.classList.remove('is-loading', 'is-synced', 'is-fallback');
+
+            if (isFromCloud) {
+                syncBadge.classList.add('is-synced');
+                syncText.innerText = `ARCHIVE SYNCED · 雲端卷宗 #${sheetData.id || 'OK'}`;
+            } else {
+                syncBadge.classList.add('is-fallback');
+                syncText.innerText = `LOCAL ARCHIVE · 內建古籍備援`;
+            }
+
+            // 更新編號、標題與上下卦標記
+            const formattedId = sheetData.id
+                ? (isNaN(sheetData.id) ? `NO. ${sheetData.id}` : `NO. ${String(sheetData.id).padStart(2, '0')}`)
+                : `NO. --`;
+            document.getElementById('destArchiveId').innerText = formattedId;
+
+            const displayHexName = sheetData.hexName || `${upperObj.short}${lowerObj.short}卦`;
+            document.getElementById('destLandscapeTitle').innerText =
+                `${displayHexName} · ${upperObj.landscape}`;
+            document.getElementById('destSheetTrigrams').innerText =
+                `上卦：${sheetData.upper || upperObj.name} ｜ 下卦：${sheetData.lower || lowerObj.name}`;
+
+            // 更新五大資料庫欄位：coreMeaning, wealth, decision, partner, blindspot
+            document.getElementById('destCoreMeaning').innerText = sheetData.coreMeaning || "暫無核心大義記載。";
+            document.getElementById('sheetWealthText').innerText = sheetData.wealth || "暫無財富與事業格局記載。";
+            document.getElementById('sheetDecisionText').innerText = sheetData.decision || "暫無重大轉折與決策記載。";
+            document.getElementById('sheetPartnerText').innerText = sheetData.partner || "暫無職場與人際合夥記載。";
+            document.getElementById('sheetBlindspotText').innerText = sheetData.blindspot || "暫無自身狀態與潛能盲點記載。";
+        }
+
+        // 異步串接 Google Sheet 資料庫 (支援 ?hex= 與 ?upper=&lower= 雙重比對)
+        async function fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName) {
+            const currentToken = ++activeFetchToken;
+            const cacheKey = `${upperObj.short}-${lowerObj.short}-${hexName}`;
+
+            const syncBadge = document.getElementById('sheetSyncBadge');
+            const syncText = document.getElementById('sheetSyncText');
+            const editorialBody = document.getElementById('destEditorialBody');
+
+            // 若快取中已有此卦象資料，立即渲染不重複請求
+            if (hexSheetCache.has(cacheKey)) {
+                renderDestinationSheetData(hexSheetCache.get(cacheKey), upperObj, lowerObj, true);
+                return;
+            }
+
+            // 進入讀取狀態
+            syncBadge.classList.remove('is-synced', 'is-fallback');
+            syncBadge.classList.add('is-loading');
+            syncText.innerText = `QUERYING GOOGLE SHEET · 調閱【${hexName}】卷宗...`;
+            editorialBody.classList.add('is-fetching');
+
+            try {
+                // 同時傳入 hex、upper、lower 以配合 GAS 的精準與組合搜尋邏輯
+                const queryParams = new URLSearchParams({
+                    hex: hexName,
+                    upper: upperObj.short,
+                    lower: lowerObj.short
+                });
+
+                const response = await fetch(`${GAS_API_URL}?${queryParams.toString()}`, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP status ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                // 若期間使用者又點擊了其他卦象，忽略過期回應
+                if (currentToken !== activeFetchToken) return;
+
+                if (result && result.status === "success" && result.data) {
+                    hexSheetCache.set(cacheKey, result.data);
+                    renderDestinationSheetData(result.data, upperObj, lowerObj, true);
+                } else {
+                    // 若試算表依 hexName 沒比對到，嘗試僅以 upper & lower 二次查詢
+                    const retryParams = new URLSearchParams({
+                        upper: upperObj.short,
+                        lower: lowerObj.short
+                    });
+                    const retryRes = await fetch(`${GAS_API_URL}?${retryParams.toString()}`);
+                    const retryJson = await retryRes.json();
+
+                    if (currentToken !== activeFetchToken) return;
+
+                    if (retryJson && retryJson.status === "success" && retryJson.data) {
+                        hexSheetCache.set(cacheKey, retryJson.data);
+                        renderDestinationSheetData(retryJson.data, upperObj, lowerObj, true);
+                    } else {
+                        const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                        renderDestinationSheetData(fallback, upperObj, lowerObj, false);
+                    }
+                }
+            } catch (err) {
+                console.warn("Google Sheet API 調閱失敗，切換至內建古籍備援：", err);
+                if (currentToken !== activeFetchToken) return;
+                const fallback = buildLocalFallbackData(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+                renderDestinationSheetData(fallback, upperObj, lowerObj, false);
+            }
+        }
+
+        function calculateHexagram() {
+            const month = parseInt(document.getElementById('lunarMonth').value, 10) || 1;
+            const day = parseInt(document.getElementById('lunarDay').value, 10) || 1;
+            const zodiac = parseInt(document.getElementById('zodiac').value, 10) || 1;
+            const time = parseInt(document.getElementById('timeBranch').value, 10) || 1;
+
+            // 宋代梅花易數經典起卦公式：
+            // 上卦 = (年支數 + 月 + 日) ÷ 8 取餘數
+            // 下卦 = (年支數 + 月 + 日 + 時支數) ÷ 8 取餘數
+            // 動爻 = (年支數 + 月 + 日 + 時支數) ÷ 6 取餘數
+            const upperSum = zodiac + month + day;
+            const lowerSum = zodiac + month + day + time;
+
+            let upperRemainder = upperSum % 8;
+            if (upperRemainder === 0) upperRemainder = 8;
+
+            let lowerRemainder = lowerSum % 8;
+            if (lowerRemainder === 0) lowerRemainder = 8;
+
+            let lineRemainder = lowerSum % 6;
+            if (lineRemainder === 0) lineRemainder = 6;
+
+            const upperObj = trigrams[upperRemainder];
+            const lowerObj = trigrams[lowerRemainder];
+
+            // 組合鍵值查表
+            const key = `${upperRemainder}-${lowerRemainder}`;
+            const hexName = hexagramMap[key] || `${upperObj.name.split(' ')[0]}${lowerObj.name.split(' ')[0]}卦`;
+
+            // 1. 更新原有的 5 個核心 DOM 節點
+            document.getElementById('upperTrigram').innerText = upperObj.name;
+            document.getElementById('lowerTrigram').innerText = lowerObj.name;
+            document.getElementById('mainHexagram').innerText = hexName;
+            document.getElementById('movingLine').innerText = `第 ${lineRemainder} 爻動`;
+            document.getElementById('hexagramDesc').innerText = `主卦：${hexName}（上${upperObj.name}、下${lowerObj.name}）`;
+
+            // 2. 更新雜誌大標題與公式追蹤文字
+            document.getElementById('editorialHexHeadline').innerText = hexName;
+            document.getElementById('formulaTraceText').innerText =
+                `推演軌跡：上卦總和 ${upperSum} (餘${upperRemainder}為${upperObj.short}) ｜ 下卦總和 ${lowerSum} (餘${lowerRemainder}為${lowerObj.short}) ｜ 動爻餘 ${lineRemainder}`;
+
+            // 3. 組合六爻陣列 [初爻, 二爻, 三爻, 四爻, 五爻, 上爻] 並計算變卦(之卦)
+            const sixLines = [...lowerObj.lines, ...upperObj.lines];
+            const changedLines = [...sixLines];
+            changedLines[lineRemainder - 1] = changedLines[lineRemainder - 1] === 1 ? 0 : 1;
+
+            const changedLowerId = findTrigramIdByLines(changedLines.slice(0, 3));
+            const changedUpperId = findTrigramIdByLines(changedLines.slice(3, 6));
+            const changedHexName = hexagramMap[`${changedUpperId}-${changedLowerId}`] || "萬象更新之卦";
+
+            // 4. 渲染六爻水墨碑帖視覺
+            const yaoNames = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
+            const yaoStackEl = document.getElementById('yaoStackContainer');
+            yaoStackEl.innerHTML = sixLines.map((val, idx) => {
+                const posNum = idx + 1;
+                const isMoving = posNum === lineRemainder;
+                const yaoTitle = `${yaoNames[idx]} (${val === 1 ? '陽' : '陰'})`;
+                const barHtml = val === 1
+                    ? `<div class="yao-yang"></div>`
+                    : `<div class="yao-yin"></div><div class="yao-yin"></div>`;
+                const badgeText = isMoving ? (val === 1 ? "○ 老陽動" : "× 老陰動") : "靜爻";
+
+                return `
+                    <div class="yao-row ${isMoving ? 'is-moving' : ''}">
+                        <span class="yao-pos-label">${yaoTitle}</span>
+                        <div class="yao-bar-graphic">${barHtml}</div>
+                        <span class="yao-moving-badge">${badgeText}</span>
+                    </div>
+                `;
+            }).join('');
+
+            // 5. 更新右頁視覺圖、方位與底部膠囊列
+            document.getElementById('tiYongRelationBadge').innerText =
+                analyzeFiveElements(upperObj.element, lowerObj.element, lineRemainder);
+
+            document.getElementById('destImage').src = upperObj.photo;
+            document.getElementById('destCompass').innerText =
+                `SPIRITUAL COMPASS · 外${upperObj.short}(${upperObj.direction.split(' ')[0]}) 內${lowerObj.short}(${lowerObj.direction.split(' ')[0]})`;
+            document.getElementById('destEnSubtitle').innerText =
+                `${upperObj.enName} Meets ${lowerObj.enName}`;
+            document.getElementById('destLandscapeTitle').innerText =
+                `${hexName} · ${upperObj.landscape}`;
+
+            document.getElementById('destDirectionVal').innerText =
+                `${upperObj.direction} ／ ${lowerObj.direction}`;
+            document.getElementById('destChangedHexVal').innerText =
+                `變為「${changedHexName}」（第 ${lineRemainder} 爻變）`;
+            document.getElementById('destRitualVal').innerText =
+                upperObj.ritual;
+
+            document.getElementById('resultPanel').style.display = 'block';
+
+            // 6. 呼叫 Google Sheet 易經六十四卦決策資料庫 API 填寫 .destination-column 內容
+            fetchHexagramFromGoogleSheet(hexName, upperObj, lowerObj, lineRemainder, changedHexName);
+        }
+
+        // 點擊下方地景畫廊卡片時，快速帶入對應數值並滾動至結果區
+        function applyQuickPreset(month, day, zodiac, time) {
+            document.getElementById('lunarMonth').value = month;
+            document.getElementById('lunarDay').value = day;
+            document.getElementById('zodiac').value = zodiac;
+            document.getElementById('timeBranch').value = time;
+            calculateHexagram();
+            document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // 頂部導覽列「以當下歲時入卦」快捷功能
+        function fillCurrentLunarPreset() {
+            const now = new Date();
+            const approxMonth = ((now.getMonth() + 10) % 12) + 1;
+            const approxDay = (now.getDate() % 30) || 15;
+            const hour = now.getHours();
+            // 換算十二時辰 (23-1點為子時=1)
+            const branchIndex = Math.floor(((hour + 1) % 24) / 2) + 1;
+
+            document.getElementById('lunarMonth').value = approxMonth;
+            document.getElementById('lunarDay').value = approxDay;
+            document.getElementById('timeBranch').value = branchIndex;
+            calculateHexagram();
+        }
+
+        // 頁面載入時即自動展卷推演一次，呈現完整雜誌版面
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateHexagram();
+        });
+    </script>
+</body>
+
+</html>
