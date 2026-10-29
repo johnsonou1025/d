@@ -1966,17 +1966,27 @@
             };
         }
 
-        // 解析底部 .atlas-cards-strip 獨立專題卡片之圖片、對比膠囊標籤與標題
+        // 解析底部 .atlas-cards-strip 獨立專題卡片之圖片、對比膠囊標籤與標題（支援無限擴充新欄位）
         const atlasFeaturePhotos = [
             "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
             "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
             "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
-            "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85"
+            "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=85",
+            "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=85"
         ];
 
         function parseAtlasFeatureMeta(rawHeaderKey, featureIndex, upperObj, lowerObj) {
-            const meta = parseDynamicHeaderMeta(rawHeaderKey, featureIndex + 4);
-            // 擷取括號內的對比副標，若試算表表頭為純標題「財富真實相貌」或「金錢動態關係」則自動配對專屬膠囊標籤
+            const meta = parseDynamicHeaderMeta(rawHeaderKey, featureIndex);
+            // 若為未來新增的自訂標題（未命中特定英文關鍵字），給予獨立專題專屬英文副標
+            const isDefaultEnTag = /^Strategic Dimension/i.test(meta.enTag);
+            const enTag = isDefaultEnTag
+                ? `Extended Dossier · Feature ${String(featureIndex + 1).padStart(2, '0')}`
+                : meta.enTag;
+
+            // 若試算表標題帶有括號副標（例如「主題名稱（A vs B）」），自動拆出括號文字作為圖片右上角膠囊標籤
             const bracketMatch = meta.title.match(/[（(]([^）)]+)[）)]/);
             const cleanMainTitle = meta.title.replace(/\s*[（(][^）)]+[）)]\s*/g, '').trim() || meta.title;
 
@@ -1988,21 +1998,15 @@
             }
 
             const contrastPill = bracketMatch ? bracketMatch[1].trim() : defaultPill;
+            const photoUrl = atlasFeaturePhotos[featureIndex % atlasFeaturePhotos.length];
 
-            let photoUrl = atlasFeaturePhotos[featureIndex % atlasFeaturePhotos.length];
-            if (/相貌|名車名錶|藍白拖|隱形富豪/.test(meta.title)) {
-                photoUrl = atlasFeaturePhotos[0];
-            } else if (/動態關係|錢追著/.test(meta.title)) {
-                photoUrl = lowerObj.photo || atlasFeaturePhotos[1];
-            }
-
-            const zhNums = ["一", "二", "三", "四", "五", "六", "七", "八"];
+            const zhNums = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
             const badgeNum = zhNums[featureIndex] || (featureIndex + 1);
 
             return {
                 badgeLabel: `SPECIAL FEATURE · 專題${badgeNum}`,
                 contrastPill,
-                enTag: meta.enTag,
+                enTag,
                 title: cleanMainTitle,
                 photoUrl
             };
@@ -2049,37 +2053,17 @@
                 sheetData.coreMeaning || "暫無核心大義記載。";
 
             // 2. 動態擷取第 6 欄起的所有擴充主題欄位（排除前 5 個固定基本 key）
+            //    只要試算表有欄位標題 (key)，即自動納入，未來在試算表新增任何欄位皆無須修改 JS
             const fixedKeys = new Set(["id", "hexName", "upper", "lower", "coreMeaning"]);
             const rawDynamicEntries = Object.entries(sheetData).filter(
-                ([key, val]) => !fixedKeys.has(key) && String(key).trim() !== "" && val !== null && val !== undefined && String(val).trim() !== ""
+                ([key]) => !fixedKeys.has(key) && String(key).trim() !== ""
             );
 
-            // 依據您的 JSON 結構明確分流：
-            // (A) 下方 .atlas-cards-strip 獨立專題：匹配「財富真實相貌（名車名錶 vs 藍白拖實力）」、「金錢動態關係（錢追著你跑 vs 你追著錢跑）」或第 5 項之後的新增主題
-            // (B) 上方 #dynamicDecisionGrid 核心矩陣：匹配「事業格局」、「人生重大轉折與決策」、「職場與人際合夥」、「自身狀態與潛能盲點」
-            const isAtlasFeatureKey = (k) => /相貌|名車名錶|藍白拖|表面光鮮|隱形富豪|動態關係|錢追著你跑|你追著錢跑/.test(String(k));
+            // 前 5 欄固定分流至 #dynamicDecisionGrid，第 6 個動態欄起（slice(5)）只要有標題就自動在 #atlasCardsStrip 建立 .atlas-card
+            const gridPool = rawDynamicEntries.slice(0, 5);
+            const atlasPool = rawDynamicEntries.slice(5);
 
-            const gridPool = [];
-            const atlasPool = [];
-
-            rawDynamicEntries.forEach(([k, v]) => {
-                if (isAtlasFeatureKey(k)) {
-                    atlasPool.push([k, v]);
-                } else {
-                    gridPool.push([k, v]);
-                }
-            });
-
-            // 若總欄數超過 5 欄，將前 5 欄留在 #dynamicDecisionGrid，第 6 欄起全數移入 .atlas-cards-strip
-            if (gridPool.length > 5) {
-                const overflow = gridPool.splice(5);
-                atlasPool.push(...overflow);
-            }
-
-            // 紀錄雲端 GAS 是否有實際傳回第 6 欄以後的動態表頭資料
-            const hasCloudAtlasData = atlasPool.length > 0;
-
-            // 智慧備援：若試算表第一列 (rows[0]) 是合併標題且表頭位於第二列 (rows[1])，導致 GAS 未抓到動態表頭時，自動補齊 #dynamicDecisionGrid 五大核心主題
+            // 智慧備援：若離線或雲端未傳回前 5 欄時，補齊 #dynamicDecisionGrid 基本維度
             if (gridPool.length === 0) {
                 gridPool.push(
                     [
@@ -2103,23 +2087,6 @@
                         `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
                     ]
                 );
-            } else if (gridPool.length === 4) {
-                // 若試算表僅回傳前 4 欄核心維度，自動補齊第 5 欄「V. 財富格局」
-                gridPool.push([
-                    "財富格局",
-                    `上${upperObj.short}（${upperObj.element}）下${lowerObj.short}（${lowerObj.element}）之資源配置，象徵財源如「${upperObj.landscape}」般需順勢而行。宜採取守正出奇之資產佈局，重視中長期複利與現金流安全邊際。`
-                ]);
-            }
-
-            // .atlas-card-desc 僅帶入 Google Sheet 取得的欄位數據，不放任何預設生成內容
-            const hasVisageFeature = atlasPool.some(([k]) => /相貌|名車名錶|藍白拖|表面光鮮|隱形富豪/.test(String(k)));
-            const hasGravityFeature = atlasPool.some(([k]) => /動態關係|錢追著你跑|你追著錢跑/.test(String(k)));
-
-            if (!hasVisageFeature) {
-                atlasPool.push(["財富真實相貌", ""]);
-            }
-            if (!hasGravityFeature) {
-                atlasPool.push(["金錢動態關係", ""]);
             }
 
             const primaryEntries = gridPool;
@@ -2160,13 +2127,12 @@
                 `;
             }).join('');
 
-            // 4. 根據當前卦象 id，將對應主題（「財富真實相貌」、「金錢動態關係」）的欄位內容渲染至 #atlasCardsStrip .atlas-card-desc
+            // 4. 只要 #dynamicDecisionGrid 五欄之後捉到任何有標題的欄位，自動在 #atlasCardsStrip 建立對應數量的 .atlas-card 區塊
             const atlasStripEl = document.getElementById('atlasCardsStrip');
             const atlasNoteEl = document.getElementById('atlasSectionNote');
-            if (atlasNoteEl) {
-                atlasNoteEl.innerText = hasCloudAtlasData
-                    ? `已同步雲端試算表 ID #${sheetData.id || '--'}（${displayHexName}）之獨立專題欄位內容`
-                    : `當前對應 ID #${sheetData.id || '--'}（${displayHexName}）· 待 GAS 表頭指向 rows[1] 後即載入雲端儲存格原文`;
+            if (atlasNoteEl && extraAtlasEntries.length > 0) {
+                const topicNames = extraAtlasEntries.map(([k]) => String(k).trim()).join(' ／ ');
+                atlasNoteEl.innerText = `同步自 Google 試算表動態表頭（共 ${extraAtlasEntries.length} 項）：${topicNames}`;
             }
 
             if (atlasStripEl && extraAtlasEntries.length > 0) {
@@ -2174,10 +2140,6 @@
                 atlasStripEl.innerHTML = extraAtlasEntries.map(([headerKey, cellValue], idx) => {
                     const featureMeta = parseAtlasFeatureMeta(headerKey, idx, upperObj, lowerObj);
                     const isLastAndOdd = isOddAtlas && idx === extraAtlasEntries.length - 1;
-                    // 直接取用試算表該 id 列對應此主題之儲存格內容
-                    const directSheetVal = sheetData[headerKey] !== undefined && String(sheetData[headerKey]).trim() !== ""
-                        ? sheetData[headerKey]
-                        : cellValue;
 
                     return `
                         <article class="atlas-card ${isLastAndOdd ? 'atlas-full-span' : ''}" data-hex-id="${escapeHtmlText(sheetData.id || '')}" data-theme="${escapeHtmlText(featureMeta.title)}">
@@ -2190,7 +2152,7 @@
                                 <div>
                                     <div class="atlas-card-en">${escapeHtmlText(featureMeta.enTag)}</div>
                                     <h3 class="atlas-card-title">${escapeHtmlText(featureMeta.title)}</h3>
-                                    <p class="atlas-card-desc">${escapeHtmlText(directSheetVal)}</p>
+                                    <p class="atlas-card-desc">${escapeHtmlText(cellValue ?? '')}</p>
                                 </div>
                             </div>
                         </article>
