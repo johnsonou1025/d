@@ -1,52 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JoinJO | 全方位 UI 設計師 & 視覺前端工程師 — 打造極致用戶體驗</title>
     <meta name="description"
         content="我是 JoinJO，擁有 UI 設計與視覺前端工程的雙重專業。擅長從產品規劃、視覺設計到高品質代碼實現，曾主導多個成功網站專案，致力於將複雜邏輯轉化為直覺、流暢的數位體驗。">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KW29DQVDZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-9KW29DQVDZ');
+    </script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9KW29DQVDZ"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-9KW29DQVDZ');
-</script>
 
 <body>
-    <div class="page-featured">
-        <div class="header">
-            <!-- <div class="logo"><img src="img/logo.svg" alt=""></div> -->
-            <a href="index.html#works" class="close"><i></i></a>
-        </div>
-        <img src="img/vwin-1.jpg">
-        <img src="img/vwin-2.jpg">
-        <img src="img/vwin-3.jpg">
-        <img src="img/vwin-4.jpg">
-        <img src="img/vwin-5.jpg">
-        <img src="img/vwin-6.jpg">
-        <img src="img/vwin-7.jpg">
-        <img src="img/vwin-8.jpg">
-        <div class="section footer">
-            <div class="contact-box">
-                <p>讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。</p>
-                <a href="mailto:johnsonou1025@gmail.com?subject=尋問報價" class="btn">聯絡我們</a>
-            </div>
-            <div class="copy">
-                <div class="headline">JoinJO studio</div>
-                <p><span>以使用者為核心，打造符合需求的UX/UI設計方案，確保產品的易用性與高互動性</span><span>Copyright © 2025 JoinJO Studio. All rights
-                        reserved.</span></p>
-            </div>
-        </div>
+    <!-- TOP READING PROGRESS BAR -->
+    <div class="scroll-progress-track" aria-hidden="true">
+        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
     </div>
+
+    <!-- REAL-TIME 3D WEBGL CANVAS -->
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- CUSTOM MAGNETIC CURSOR -->
+    <div class="cursor-pill" id="cursorPill"><span id="cursorText"></span></div>
+
+    <!-- FLOATING LUSION PILL HEADER -->
+    <header class="lusion-header">
+        <a href="index.html" class="brand-logo" data-cursor="HOME">
+            <span class="dot"><img src="img/joinjo.png" alt="JoinJO"></span>
+            <span>JoinJO</span>
+        </a>
+
+        <nav class="nav-group">
+            <a href="index.html#work-vwin" class="nav-pill close-pill" aria-label="關閉並返回作品集">
+                <span>CLOSE</span>
+                <span class="close-icon" aria-hidden="true">✕</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <div class="page-featured" data-theme="dark">
+            <!-- Continuous Seamless Image Stream -->
+            <div class="work-seamless-canvas">
+                <img src="img/vwin-1.jpg" alt="VWIN Showcase 1" loading="eager" decoding="async">
+                <img src="img/vwin-2.jpg" alt="VWIN Showcase 2" loading="eager" decoding="async">
+                <img src="img/vwin-3.jpg" alt="VWIN Showcase 3" loading="lazy" decoding="async">
+                <img src="img/vwin-4.jpg" alt="VWIN Showcase 4" loading="lazy" decoding="async">
+                <img src="img/vwin-5.jpg" alt="VWIN Showcase 5" loading="lazy" decoding="async">
+                <img src="img/vwin-6.jpg" alt="VWIN Showcase 6" loading="lazy" decoding="async">
+                <img src="img/vwin-7.jpg" alt="VWIN Showcase 7" loading="lazy" decoding="async">
+                <img src="img/vwin-8.jpg" alt="VWIN Showcase 8" loading="lazy" decoding="async">
+            </div>
+
+            <!-- FOOTER SECTION -->
+            <footer class="section footer" data-theme="blue">
+                <div class="footer-cta-panel reveal">
+                    <div>
+                        <div class="section-tag footer-tag">06 // INITIATE COLLABORATION</div>
+                        <div class="headline">
+                            Let's Make Your<br>brand massive
+                        </div>
+                    </div>
+                    <div class="contact-box">
+                        <p>讓我們一起實現您的視覺目標，提升您的品牌價值！隨時聯絡我，讓我們開始這段旅程。</p>
+                        <a href="mailto:johnsonou1025@gmail.com?subject=尋問報價" class="lusion-cta-btn"
+                            data-cursor="LET'S TALK">
+                            <span>聯絡我們</span>
+                            <span class="arrow-circle">↗</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="copy reveal">
+                    <div class="brand-sign">JoinJO studio</div>
+                    <p>
+                        <span>以使用者為核心，打造符合需求的UX/UI設計方案，確保產品的易用性與高互動性</span>
+                        <span>Copyright © 2025 JoinJO Studio. All rights reserved.</span>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <!-- THREE.JS FOR LUSION-STYLE REAL-TIME INTERACTIVE 3D SPHERES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
-
 </html>
-
